@@ -64,12 +64,18 @@ export default function EventsPage({
     setActiveCity((prev) => (prev === city ? null : city));
   };
 
+  // Split upcoming vs past relative to now (set in getStaticProps cache window)
+  const now = Date.now();
+
+  // For the map: every upcoming event regardless of activeCity, so all city
+  // dots stay visible while a single city is selected (the active one just
+  // gets highlighted, the rest remain interactive).
+  const allUpcoming = events.filter((e) => +new Date(e.ends_at) >= now);
+
+  // For the lists below: respect activeCity if one is selected.
   const visibleEvents = activeCity
     ? events.filter((e) => e.city === activeCity)
     : events;
-
-  // Split upcoming vs past relative to now (set in getStaticProps cache window)
-  const now = Date.now();
   const upcoming = visibleEvents.filter((e) => +new Date(e.ends_at) >= now);
   const past = visibleEvents.filter((e) => +new Date(e.ends_at) < now);
 
@@ -83,8 +89,11 @@ export default function EventsPage({
         />
       </Head>
       <section className={styles.hero}>
+        {/* Pin only upcoming events on the map. Past events still appear in
+            the lists below — but the globe should reflect what someone can
+            actually go to. */}
         <EventsMap
-          events={events}
+          events={allUpcoming}
           onCityClick={handleCityClick}
           activeCity={activeCity}
           variant="dark"

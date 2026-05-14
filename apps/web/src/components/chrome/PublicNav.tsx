@@ -5,6 +5,7 @@
 import {Button} from '@gravity-ui/uikit';
 import Link from 'next/link';
 
+import {DocsMenu} from '@/components/chrome/DocsMenu';
 import {Logo} from '@/components/chrome/Logo';
 import {ThemeToggle} from '@/components/chrome/ThemeToggle';
 import {SearchProposal} from '@/components/search/SearchProposal';
@@ -39,6 +40,7 @@ export function PublicNav() {
               {item.label}
             </Link>
           ))}
+          <DocsMenu />
         </nav>
 
         <div className={styles.right}>
