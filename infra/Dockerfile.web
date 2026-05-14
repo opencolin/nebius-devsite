@@ -20,9 +20,18 @@ COPY apps/web ./apps/web
 ARG NEXT_PUBLIC_DIRECTUS_PUBLIC_URL
 ARG NEXT_PUBLIC_GTM_ID
 ARG NEXT_PUBLIC_GTM_PROXY
+
+# Server-side DIRECTUS_URL (+ admin token, if any) — needed by getStaticProps
+# / getStaticPaths to enumerate slugs and render content at build time. The
+# Container App's runtime DIRECTUS_URL env var still wins for live requests.
+ARG DIRECTUS_URL
+ARG DIRECTUS_ADMIN_TOKEN
+
 ENV NEXT_PUBLIC_DIRECTUS_PUBLIC_URL=$NEXT_PUBLIC_DIRECTUS_PUBLIC_URL \
     NEXT_PUBLIC_GTM_ID=$NEXT_PUBLIC_GTM_ID \
-    NEXT_PUBLIC_GTM_PROXY=$NEXT_PUBLIC_GTM_PROXY
+    NEXT_PUBLIC_GTM_PROXY=$NEXT_PUBLIC_GTM_PROXY \
+    DIRECTUS_URL=$DIRECTUS_URL \
+    DIRECTUS_ADMIN_TOKEN=$DIRECTUS_ADMIN_TOKEN
 
 ENV BUILD_STANDALONE=1
 RUN cd apps/web && npm run build

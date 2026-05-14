@@ -61,6 +61,9 @@ param webImageTag string = 'latest'
 @description('Name of the image repo inside ACR.')
 param webImageRepo string = 'web'
 
+@description('Deploy the web Container App + Front Door. Set false on the FIRST pass so the backend stack stands up without needing the web image to exist yet (the web image build needs a reachable DIRECTUS_URL).')
+param deployWeb bool = true
+
 resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
   name: resourceGroupName
   location: location
@@ -80,6 +83,7 @@ module stack 'modules/stack.bicep' = {
     directusAdminPassword: directusAdminPassword
     webImageTag: webImageTag
     webImageRepo: webImageRepo
+    deployWeb: deployWeb
   }
 }
 
@@ -87,10 +91,10 @@ module stack 'modules/stack.bicep' = {
 // Outputs — surface the URLs the bootstrap + smoke-test steps need.
 // -----------------------------------------------------------------------------
 
-@description('Front Door public URL — this is the customer-facing site.')
+@description('Front Door public URL — this is the customer-facing site. Empty until deployWeb=true.')
 output frontDoorUrl string = stack.outputs.frontDoorUrl
 
-@description('Web Container App URL — only needed for direct origin access (skip Front Door).')
+@description('Web Container App URL — only needed for direct origin access. Empty until deployWeb=true.')
 output webOriginUrl string = stack.outputs.webOriginUrl
 
 @description('Directus public URL — for bootstrap + admin UI.')

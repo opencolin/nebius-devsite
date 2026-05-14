@@ -5,25 +5,23 @@
 #   + Container App: web
 #   + Front Door Standard with cache rules
 #
-# Two-phase deploy:
-#   1. Create RG + ACR (small bicep, ~2 min)
-#   2. Build + push the web image (ACR Tasks, ~3 min)
-#   3. Full bicep deploy (~10 min — Front Door cert issuance is the
-#      long pole)
+# Two-pass deploy because the web image needs Directus reachable at build
+# time (getStaticPaths/getStaticProps fetches slugs at next build):
 #
-# Total: ~15 minutes end-to-end.
+#   Phase 1: ensure RG + ACR
+#   Phase 2: bicep deploy with deployWeb=false   → Directus + deps live
+#   Phase 3: patch Directus PUBLIC_URL, wait for ping
+#   Phase 4: bootstrap Directus (apply schema + seed)
+#   Phase 5: docker build with --build-arg DIRECTUS_URL=<live>, push to ACR
+#   Phase 6: bicep deploy with deployWeb=true    → web + Front Door live
+#   Phase 7: print URLs + smoke check
+#
+# Idempotent end-to-end. Re-running just rebuilds + redeploys the web image.
 #
 # Prereqs:
 #   - az CLI installed and logged in (`az login`)
-#   - Active subscription has Contributor role
-#
-# Usage:
-#   ./infra/azure/deploy.sh
-#
-# Env overrides:
-#   LOCATION=westeurope
-#   RG_NAME=nebius-devsite-rg
-#   NAME_PREFIX=nbdevsite
+#   - Active subscription has Contributor + ACR Tasks (or use BUILD_MODE=local)
+#   - Docker Desktop running if BUILD_MODE=local (default)
 
 set -euo pipefail
 
@@ -70,6 +68,7 @@ fi
 
 command -v az >/dev/null 2>&1 || { echo "ERROR: az not installed. brew install azure-cli" >&2; exit 1; }
 az account show >/dev/null 2>&1 || { echo "ERROR: not logged in. Run: az login" >&2; exit 1; }
+command -v jq >/dev/null 2>&1 || { echo "ERROR: jq not installed. brew install jq" >&2; exit 1; }
 
 SUB_ID="$(az account show --query id -o tsv)"
 SUB_NAME="$(az account show --query name -o tsv)"
@@ -104,10 +103,9 @@ for rp in \
   echo "  ✓ $rp"
 done
 
-# ---- Phase 1: create RG + ACR ---------------------------------------------
-#
-# We need ACR to exist *before* we build the web image. Using a tiny inline
-# template here so the rest of the stack stays in main.bicep.
+# ============================================================================
+# Phase 1 — RG + ACR
+# ============================================================================
 
 UNIQUE="$(echo "$RG_NAME" | shasum -a 256 | head -c 6)"
 ACR_NAME="${NAME_PREFIX}acr${UNIQUE}"
@@ -131,70 +129,19 @@ fi
 
 ACR_LOGIN_SERVER="$(az acr show --name "$ACR_NAME" --resource-group "$RG_NAME" --query loginServer -o tsv)"
 
-# ---- Phase 2: build + push the web image -----------------------------------
+# ============================================================================
+# Phase 2 — Bicep backend-only (deployWeb=false)
+# ============================================================================
 #
-# Two paths, in order of preference:
-#   a) LOCAL — docker buildx + docker push. Requires local Docker daemon.
-#      Faster (no upload), no extra Azure capabilities required.
-#   b) ACR_TASKS — `az acr build` runs the build inside Azure. No local
-#      Docker needed. But ACR Tasks isn't enabled on every subscription
-#      tier (TasksOperationsNotAllowed shows up on free/student/some
-#      pay-as-you-go subs).
-#
-# Picks LOCAL whenever Docker is reachable; otherwise falls through to
-# ACR Tasks. Override with BUILD_MODE=local|acr_tasks.
-
-BUILD_MODE="${BUILD_MODE:-auto}"
-if [[ "$BUILD_MODE" == "auto" ]]; then
-  if command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
-    BUILD_MODE="local"
-  else
-    BUILD_MODE="acr_tasks"
-  fi
-fi
+# Stands up Postgres, Redis, Storage, Container Apps env, Log Analytics, the
+# Directus Container App, and the UAMI/AcrPull binding. SKIPS the web
+# Container App + Front Door — those need the web image, which needs Directus
+# to be live to build.
 
 echo ""
-echo "→ Phase 2: building $WEB_IMAGE_REPO:$WEB_IMAGE_TAG (mode: $BUILD_MODE)..."
-
-if [[ "$BUILD_MODE" == "local" ]]; then
-  # Authenticate the local Docker daemon to the ACR using `az acr login`.
-  # This grabs a short-lived token from Entra ID and shoves it into Docker's
-  # credential store — no admin user required on the registry.
-  az acr login --name "$ACR_NAME" --output none
-
-  # Cross-build for linux/amd64 since Container Apps runs amd64 (and most
-  # macOS dev machines are arm64). buildx is bundled with Docker Desktop.
-  docker buildx build \
-    --platform linux/amd64 \
-    --file "$ROOT/infra/Dockerfile.web" \
-    --tag "$ACR_LOGIN_SERVER/$WEB_IMAGE_REPO:$WEB_IMAGE_TAG" \
-    --tag "$ACR_LOGIN_SERVER/$WEB_IMAGE_REPO:latest" \
-    --push \
-    "$ROOT"
-else
-  # Fallback: cloud build via ACR Tasks. Subscription must allow it.
-  az acr build \
-    --registry "$ACR_NAME" \
-    --image "$WEB_IMAGE_REPO:$WEB_IMAGE_TAG" \
-    --image "$WEB_IMAGE_REPO:latest" \
-    --file "$ROOT/infra/Dockerfile.web" \
-    --platform linux/amd64 \
-    "$ROOT" \
-    --output table
-fi
-
-# ---- Phase 3: deploy the full stack ----------------------------------------
-
-# Bicep needs the namePrefix to derive the same ACR name we used above.
-# We pass NAME_PREFIX through; the deterministic uniqueString() inside the
-# module produces the same ACR name as we just created (the resource will
-# be "imported" rather than re-created in Bicep's idempotent plan).
-
-echo ""
-echo "→ Phase 3: deploying the full stack (Bicep)..."
-echo "  This takes ~10 min — Front Door cert issuance is the long pole."
+echo "→ Phase 2: bicep deploy backend-only (~7 min)..."
 az deployment sub create \
-  --name "$DEPLOYMENT_NAME" \
+  --name "$DEPLOYMENT_NAME-backend" \
   --location "$LOCATION" \
   --template-file "$(dirname "$0")/main.bicep" \
   --parameters \
@@ -206,33 +153,29 @@ az deployment sub create \
       directusSecret="$DIRECTUS_SECRET" \
       directusAdminEmail="$DIRECTUS_ADMIN_EMAIL" \
       directusAdminPassword="$DIRECTUS_ADMIN_PASSWORD" \
-      webImageTag="$WEB_IMAGE_TAG" \
-      webImageRepo="$WEB_IMAGE_REPO" \
+      deployWeb=false \
+      webImageTag="latest" \
   --output table
 
-# ---- Read outputs ----------------------------------------------------------
+DIRECTUS_URL="$(az deployment sub show --name "$DEPLOYMENT_NAME-backend" --query 'properties.outputs.directusUrl.value' -o tsv)"
+POSTGRES_HOST="$(az deployment sub show --name "$DEPLOYMENT_NAME-backend" --query 'properties.outputs.postgresHost.value' -o tsv)"
 
-DIRECTUS_URL="$(az deployment sub show --name "$DEPLOYMENT_NAME" --query 'properties.outputs.directusUrl.value' -o tsv)"
-WEB_ORIGIN_URL="$(az deployment sub show --name "$DEPLOYMENT_NAME" --query 'properties.outputs.webOriginUrl.value' -o tsv)"
-FRONT_DOOR_URL="$(az deployment sub show --name "$DEPLOYMENT_NAME" --query 'properties.outputs.frontDoorUrl.value' -o tsv)"
-POSTGRES_HOST="$(az deployment sub show --name "$DEPLOYMENT_NAME" --query 'properties.outputs.postgresHost.value' -o tsv)"
-
-# ---- Post-deploy: patch PUBLIC_URL on Directus -----------------------------
+# ============================================================================
+# Phase 3 — Patch PUBLIC_URL on Directus + wait for ping
+# ============================================================================
 
 DIRECTUS_APP="$(az containerapp list --resource-group "$RG_NAME" --query "[?contains(name, 'directus')].name | [0]" -o tsv)"
+
 echo ""
-echo "→ Patching PUBLIC_URL on $DIRECTUS_APP..."
+echo "→ Phase 3: patch PUBLIC_URL on $DIRECTUS_APP → $DIRECTUS_URL"
 az containerapp update \
   --resource-group "$RG_NAME" \
   --name "$DIRECTUS_APP" \
   --set-env-vars "PUBLIC_URL=$DIRECTUS_URL" \
   --output none
 
-# ---- Wait for Directus to come up ------------------------------------------
-
-echo ""
 echo "→ Waiting for Directus..."
-for i in {1..40}; do
+for i in {1..60}; do
   if curl -fsS "$DIRECTUS_URL/server/ping" >/dev/null 2>&1; then
     echo "  ✓ $DIRECTUS_URL reachable"
     break
@@ -241,7 +184,147 @@ for i in {1..40}; do
   sleep 5
 done
 
-# ---- Done ------------------------------------------------------------------
+# ============================================================================
+# Phase 4 — Bootstrap Directus (mint admin token, apply schema, seed)
+# ============================================================================
+
+echo ""
+echo "→ Phase 4: bootstrapping Directus (login, apply schema, seed)..."
+
+# Try a few times — Directus might be reachable at /server/ping but still
+# initializing the bootstrap user.
+for i in {1..20}; do
+  TOKEN_RES="$(curl -fsS -X POST "$DIRECTUS_URL/auth/login" \
+       -H 'content-type: application/json' \
+       -d "{\"email\":\"$DIRECTUS_ADMIN_EMAIL\",\"password\":\"$DIRECTUS_ADMIN_PASSWORD\"}" \
+       2>/dev/null || echo "")"
+  TOKEN="$(echo "$TOKEN_RES" | jq -r '.data.access_token // empty' 2>/dev/null || echo "")"
+  if [[ -n "$TOKEN" ]]; then
+    echo "  ✓ Admin token minted"
+    break
+  fi
+  printf "."
+  sleep 5
+done
+
+if [[ -z "$TOKEN" ]]; then
+  echo "ERROR: could not log in to Directus after 100s. Check the container logs:"
+  echo "  az containerapp logs show --resource-group $RG_NAME --name $DIRECTUS_APP --tail 50"
+  exit 1
+fi
+
+export DIRECTUS_URL DIRECTUS_ADMIN_TOKEN="$TOKEN"
+
+echo "→ Applying schema..."
+node "$ROOT/apps/directus/scripts/apply-schema.mjs" || {
+  echo "WARNING: apply-schema.mjs failed — continuing. Inspect manually if needed."
+}
+
+echo "→ Seeding content..."
+node "$ROOT/apps/directus/scripts/seed.mjs" || {
+  echo "WARNING: seed.mjs failed — continuing. Inspect manually if needed."
+}
+
+# ============================================================================
+# Phase 5 — Build + push web image (with live DIRECTUS_URL baked in)
+# ============================================================================
+
+BUILD_MODE="${BUILD_MODE:-auto}"
+if [[ "$BUILD_MODE" == "auto" ]]; then
+  if command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
+    BUILD_MODE="local"
+  else
+    BUILD_MODE="acr_tasks"
+  fi
+fi
+
+echo ""
+echo "→ Phase 5: building $WEB_IMAGE_REPO:$WEB_IMAGE_TAG (mode: $BUILD_MODE, DIRECTUS_URL=$DIRECTUS_URL)..."
+
+if [[ "$BUILD_MODE" == "local" ]]; then
+  az acr login --name "$ACR_NAME" --output none
+  docker buildx build \
+    --platform linux/amd64 \
+    --file "$ROOT/infra/Dockerfile.web" \
+    --build-arg DIRECTUS_URL="$DIRECTUS_URL" \
+    --build-arg DIRECTUS_ADMIN_TOKEN="$TOKEN" \
+    --tag "$ACR_LOGIN_SERVER/$WEB_IMAGE_REPO:$WEB_IMAGE_TAG" \
+    --tag "$ACR_LOGIN_SERVER/$WEB_IMAGE_REPO:latest" \
+    --push \
+    "$ROOT"
+else
+  az acr build \
+    --registry "$ACR_NAME" \
+    --image "$WEB_IMAGE_REPO:$WEB_IMAGE_TAG" \
+    --image "$WEB_IMAGE_REPO:latest" \
+    --file "$ROOT/infra/Dockerfile.web" \
+    --platform linux/amd64 \
+    --build-arg DIRECTUS_URL="$DIRECTUS_URL" \
+    --build-arg DIRECTUS_ADMIN_TOKEN="$TOKEN" \
+    "$ROOT" \
+    --output table
+fi
+
+# ============================================================================
+# Phase 6 — Bicep with deployWeb=true (adds web Container App + Front Door)
+# ============================================================================
+
+echo ""
+echo "→ Phase 6: bicep deploy web + Front Door (~10 min — cert provisioning)..."
+az deployment sub create \
+  --name "$DEPLOYMENT_NAME-web" \
+  --location "$LOCATION" \
+  --template-file "$(dirname "$0")/main.bicep" \
+  --parameters \
+      location="$LOCATION" \
+      resourceGroupName="$RG_NAME" \
+      namePrefix="$NAME_PREFIX" \
+      postgresAdminPassword="$POSTGRES_PASSWORD" \
+      directusKey="$DIRECTUS_KEY" \
+      directusSecret="$DIRECTUS_SECRET" \
+      directusAdminEmail="$DIRECTUS_ADMIN_EMAIL" \
+      directusAdminPassword="$DIRECTUS_ADMIN_PASSWORD" \
+      deployWeb=true \
+      webImageTag="$WEB_IMAGE_TAG" \
+      webImageRepo="$WEB_IMAGE_REPO" \
+  --output table
+
+WEB_ORIGIN_URL="$(az deployment sub show --name "$DEPLOYMENT_NAME-web" --query 'properties.outputs.webOriginUrl.value' -o tsv)"
+FRONT_DOOR_URL="$(az deployment sub show --name "$DEPLOYMENT_NAME-web" --query 'properties.outputs.frontDoorUrl.value' -o tsv)"
+
+# ============================================================================
+# Phase 7 — Smoke check + done
+# ============================================================================
+
+echo ""
+echo "→ Phase 7: smoke checks..."
+
+# Origin: should respond with our app's HTML
+echo "→ Web origin..."
+for i in {1..30}; do
+  if curl -fsS "$WEB_ORIGIN_URL/" >/dev/null 2>&1; then
+    echo "  ✓ $WEB_ORIGIN_URL"
+    break
+  fi
+  printf "."
+  sleep 5
+done
+
+# Front Door: takes longer (cert + edge propagation)
+echo "→ Front Door (allow ~5 min for first-byte after cert provisions)..."
+for i in {1..60}; do
+  if curl -fsS "$FRONT_DOOR_URL/" >/dev/null 2>&1; then
+    echo "  ✓ $FRONT_DOOR_URL"
+    break
+  fi
+  printf "."
+  sleep 5
+done
+
+# Header check — confirms it really is going through Front Door
+echo ""
+echo "→ Front Door headers (expect x-azure-ref + x-fd-int-roxy-purgeid):"
+curl -sSI "$FRONT_DOOR_URL/" | grep -iE 'x-azure-ref|x-fd-|x-cache' || echo "  (none yet — wait a minute and curl manually)"
 
 cat <<EOF
 
@@ -257,26 +340,10 @@ cat <<EOF
   Directus admin email:    $DIRECTUS_ADMIN_EMAIL
   Directus admin password: (in .azure-secrets.local)
 
-Verify the Nebius-mirror headers come through Front Door:
-  curl -sSI $FRONT_DOOR_URL | grep -iE 'x-azure-ref|x-fd-|x-cache'
+To re-deploy with new code: ./infra/azure/deploy.sh
+  (Phase 5 rebuilds the image with the current git SHA + reseeds in
+  Phase 4. Phase 4 is idempotent — apply-schema + seed.mjs both no-op
+  on existing rows.)
 
-Next: bootstrap Directus (schema + seed):
-
-  # 1. Log in to mint a token (or use admin UI):
-  curl -sX POST $DIRECTUS_URL/auth/login \\
-       -H 'content-type: application/json' \\
-       -d '{"email":"$DIRECTUS_ADMIN_EMAIL","password":"<from-secrets>"}' \\
-    | jq -r .data.access_token
-
-  # 2. Apply schema + seed:
-  export DIRECTUS_URL=$DIRECTUS_URL
-  export DIRECTUS_ADMIN_TOKEN=<from-step-above>
-  node apps/directus/scripts/apply-schema.mjs
-  node apps/directus/scripts/seed.mjs
-
-After seeding, the web app already points at Directus — just refresh
-$FRONT_DOOR_URL to see the seeded content.
-
-To re-deploy with new code:
-  ./infra/azure/deploy.sh    # rebuilds + redeploys the web image
+To tear down everything: az group delete --name $RG_NAME --yes
 EOF

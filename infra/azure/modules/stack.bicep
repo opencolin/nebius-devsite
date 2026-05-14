@@ -37,6 +37,9 @@ param webImageTag string = 'latest'
 @description('Name of the image repo inside ACR (default "web").')
 param webImageRepo string = 'web'
 
+@description('Skip web Container App + Front Door on the first pass (image must exist + Directus must be live before this can be true).')
+param deployWeb bool = true
+
 // Random suffix to keep globally-unique names (Storage, Postgres, ACR) stable
 // across redeploys while still avoiding collisions if the resource group
 // is recreated. uniqueString() is deterministic per RG name.
@@ -343,7 +346,7 @@ resource directus 'Microsoft.App/containerApps@2024-03-01' = {
 
 var directusFqdn = directus.properties.configuration.ingress.fqdn
 
-resource web 'Microsoft.App/containerApps@2024-03-01' = {
+resource web 'Microsoft.App/containerApps@2024-03-01' = if (deployWeb) {
   name: webAppName
   location: location
   identity: {
@@ -419,7 +422,7 @@ resource web 'Microsoft.App/containerApps@2024-03-01' = {
 //   /* (HTML)       → public, s-maxage=60, swr=300, sif-error=31536000
 // -----------------------------------------------------------------------------
 
-resource fdProfile 'Microsoft.Cdn/profiles@2024-02-01' = {
+resource fdProfile 'Microsoft.Cdn/profiles@2024-02-01' = if (deployWeb) {
   name: fdProfileName
   location: 'global'
   sku: {name: 'Standard_AzureFrontDoor'}
@@ -428,7 +431,7 @@ resource fdProfile 'Microsoft.Cdn/profiles@2024-02-01' = {
   }
 }
 
-resource fdEndpoint 'Microsoft.Cdn/profiles/afdEndpoints@2024-02-01' = {
+resource fdEndpoint 'Microsoft.Cdn/profiles/afdEndpoints@2024-02-01' = if (deployWeb) {
   parent: fdProfile
   name: fdEndpointName
   location: 'global'
@@ -437,7 +440,7 @@ resource fdEndpoint 'Microsoft.Cdn/profiles/afdEndpoints@2024-02-01' = {
   }
 }
 
-resource fdOriginGroup 'Microsoft.Cdn/profiles/originGroups@2024-02-01' = {
+resource fdOriginGroup 'Microsoft.Cdn/profiles/originGroups@2024-02-01' = if (deployWeb) {
   parent: fdProfile
   name: 'web-origin-group'
   properties: {
@@ -456,7 +459,7 @@ resource fdOriginGroup 'Microsoft.Cdn/profiles/originGroups@2024-02-01' = {
   }
 }
 
-resource fdOrigin 'Microsoft.Cdn/profiles/originGroups/origins@2024-02-01' = {
+resource fdOrigin 'Microsoft.Cdn/profiles/originGroups/origins@2024-02-01' = if (deployWeb) {
   parent: fdOriginGroup
   name: 'web-origin'
   properties: {
@@ -473,12 +476,12 @@ resource fdOrigin 'Microsoft.Cdn/profiles/originGroups/origins@2024-02-01' = {
 
 // Rule set carrying the three cache rules. Each rule has a URL-path
 // condition and an `ModifyResponseHeader` action to set Cache-Control.
-resource fdRuleSet 'Microsoft.Cdn/profiles/ruleSets@2024-02-01' = {
+resource fdRuleSet 'Microsoft.Cdn/profiles/ruleSets@2024-02-01' = if (deployWeb) {
   parent: fdProfile
   name: 'cacherules'
 }
 
-resource fdRuleStatic 'Microsoft.Cdn/profiles/ruleSets/rules@2024-02-01' = {
+resource fdRuleStatic 'Microsoft.Cdn/profiles/ruleSets/rules@2024-02-01' = if (deployWeb) {
   parent: fdRuleSet
   name: 'staticImmutable'
   properties: {
@@ -509,7 +512,7 @@ resource fdRuleStatic 'Microsoft.Cdn/profiles/ruleSets/rules@2024-02-01' = {
   }
 }
 
-resource fdRuleApi 'Microsoft.Cdn/profiles/ruleSets/rules@2024-02-01' = {
+resource fdRuleApi 'Microsoft.Cdn/profiles/ruleSets/rules@2024-02-01' = if (deployWeb) {
   parent: fdRuleSet
   name: 'apiNoStore'
   properties: {
@@ -540,7 +543,7 @@ resource fdRuleApi 'Microsoft.Cdn/profiles/ruleSets/rules@2024-02-01' = {
   }
 }
 
-resource fdRuleHtml 'Microsoft.Cdn/profiles/ruleSets/rules@2024-02-01' = {
+resource fdRuleHtml 'Microsoft.Cdn/profiles/ruleSets/rules@2024-02-01' = if (deployWeb) {
   parent: fdRuleSet
   name: 'htmlSWR'
   properties: {
@@ -571,7 +574,7 @@ resource fdRuleHtml 'Microsoft.Cdn/profiles/ruleSets/rules@2024-02-01' = {
   }
 }
 
-resource fdRoute 'Microsoft.Cdn/profiles/afdEndpoints/routes@2024-02-01' = {
+resource fdRoute 'Microsoft.Cdn/profiles/afdEndpoints/routes@2024-02-01' = if (deployWeb) {
   parent: fdEndpoint
   name: 'default'
   properties: {
@@ -614,8 +617,8 @@ resource fdRoute 'Microsoft.Cdn/profiles/afdEndpoints/routes@2024-02-01' = {
 // -----------------------------------------------------------------------------
 
 output directusUrl string = 'https://${directus.properties.configuration.ingress.fqdn}'
-output webOriginUrl string = 'https://${web.properties.configuration.ingress.fqdn}'
-output frontDoorUrl string = 'https://${fdEndpoint.properties.hostName}'
+output webOriginUrl string = deployWeb ? 'https://${web.properties.configuration.ingress.fqdn}' : ''
+output frontDoorUrl string = deployWeb ? 'https://${fdEndpoint.properties.hostName}' : ''
 output acrLoginServer string = acr.properties.loginServer
 output postgresHost string = postgresHost
 output storageAccountName string = storage.name
