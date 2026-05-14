@@ -1,0 +1,45 @@
+// Shared layout helpers used across bespoke pages. Kept as a CSS Module so
+// hashed names mirror Nebius's convention (Layout_view__cSEKK).
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.containerNarrow {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @media (min-width: 640px) { grid-template-columns: 1fr 1fr; }
+  @media (min-width: 1024px) { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @media (min-width: 768px) { grid-template-columns: 1fr 1fr; }
+}
+
+.cardBody {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+}
+
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}

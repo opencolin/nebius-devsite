@@ -1,0 +1,21 @@
+// PhosphorMesh — wrapper styles.
+//
+// Just a positioning shell. The Three.js canvas is appended as a child and
+// fills the wrapper. Parent owns sizing (width / max-width / margin); the
+// component owns aspect-ratio (settable via prop, defaults to 16/9).
+
+.root {
+  position: relative;
+  width: 100%;
+  background: #04060a;
+  overflow: hidden;
+  display: block;
+
+  // Make the canvas fill the wrapper regardless of how three.js sized it.
+  // Useful during the moment between mount and the first ResizeObserver tick.
+  > canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}

@@ -1,0 +1,99 @@
+// Shared styles for PortalSidebar + AdminSidebar — fixed left rail with the
+// same grouping shape and active-state treatment.
+
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 240px;
+  background: var(--g-color-base-background);
+  border-right: 1px solid var(--g-color-line-generic);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+}
+
+.sidebarHead {
+  padding: 20px;
+  border-bottom: 1px solid var(--g-color-line-generic);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.adminBadge {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--g-color-line-generic);
+  background: var(--nb-color-private-navyblue-50);
+}
+
+.adminBadgeTitle {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--g-color-text-link);
+}
+
+.adminBadgeSub {
+  font-size: 11px;
+  color: var(--g-color-text-secondary);
+}
+
+.nav {
+  flex: 1;
+  padding: 12px 8px;
+  overflow-y: auto;
+}
+
+.group {
+  margin-bottom: 16px;
+}
+
+.groupLabel {
+  padding: 0 12px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--g-color-text-secondary);
+}
+
+.link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  margin: 2px 0;
+  border-radius: var(--g-border-radius-m);
+  font-size: 13px;
+  color: var(--g-color-text-secondary);
+  text-decoration: none;
+  transition: background 120ms ease, color 120ms ease;
+
+  &:hover {
+    color: var(--g-color-text-primary);
+    background: var(--nb-color-private-navyblue-50);
+  }
+}
+
+.linkActive {
+  color: var(--g-color-text-primary);
+  background: var(--nb-color-private-navyblue-100);
+  font-weight: 500;
+}
+
+.badge {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--g-color-text-link);
+  font-weight: 600;
+}
+
+.sidebarFoot {
+  padding: 12px 16px;
+  border-top: 1px solid var(--g-color-line-generic);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}

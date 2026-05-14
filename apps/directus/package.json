@@ -1,0 +1,16 @@
+{
+  "name": "@nebius-homepage/directus",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "apply-schema": "node scripts/apply-schema.mjs",
+    "snapshot": "node scripts/snapshot.mjs",
+    "seed": "node scripts/seed.mjs",
+    "reindex": "cd ../../infra/typesense && npm install --no-audit --silent && npm run sync"
+  },
+  "dependencies": {
+    "@directus/sdk": "^17.0.0",
+    "dotenv": "^16.4.5",
+    "yaml": "^2.6.0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "@nebius-homepage/typesense-sync",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync": "node sync.mjs"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "typesense": "^1.8.2"
+  }
+}

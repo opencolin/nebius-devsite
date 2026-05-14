@@ -1,0 +1,375 @@
+// Legacy vertical-list class — kept in case anything else references it.
+// The events grid now uses page.grid3 directly.
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// -----------------------------------------------------------------------------
+// Event card (used by /events index grid). Mirrors the cover + body + footer
+// shape of the library and apps cards so the three pages feel consistent,
+// but uses a shorter cover (h-36 / 144px) since events lean information-dense.
+// -----------------------------------------------------------------------------
+
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--g-color-base-float);
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: var(--g-border-radius-l);
+  overflow: hidden;
+  transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+
+  &:hover {
+    border-color: var(--nb-color-private-navyblue-300, rgba(5, 43, 66, 0.3));
+    box-shadow: var(--g-shadow-soft);
+    transform: translateY(-1px);
+  }
+}
+
+.cardBody {
+  padding: 14px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.cardEyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--g-color-text-primary);
+}
+
+.cardDesc {
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+.cardTagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.cardFooter {
+  padding: 10px 16px 14px;
+  border-top: 1px solid var(--g-color-line-generic);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// -----------------------------------------------------------------------------
+// Event cover area — shorter than the apps/library covers (144px instead of
+// aspect-video) since events lists tend to be longer and benefit from
+// denser information per row. Variant class drives the gradient.
+// -----------------------------------------------------------------------------
+
+.cover {
+  position: relative;
+  width: 100%;
+  height: 144px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.coverDefault {
+  background: linear-gradient(135deg, #1f2a32 0%, #122638 60%, #1d3a55 100%);
+}
+
+.coverOfficial {
+  background: linear-gradient(135deg, #122638 0%, #1d3a55 50%, #2c5b8a 100%);
+}
+
+.coverHack {
+  background: linear-gradient(135deg, #1f4a3a 0%, #2c7a3f 55%, #c0f53d 100%);
+}
+
+.coverWorkshop {
+  background: linear-gradient(135deg, #122638 0%, #1f4a3a 50%, #84cc16 100%);
+}
+
+.coverDemo {
+  background: linear-gradient(135deg, #1f2a32 0%, #2c4a3f 50%, #84cc16 100%);
+}
+
+.coverGlyph {
+  font-size: 56px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.22);
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+}
+
+.coverTopLeft {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.coverTopRight {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+}
+
+.coverPill {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.92);
+  color: #052b42;
+  line-height: 1;
+}
+
+.coverPillLive {
+  background: var(--nb-color-highlight, #e0ff4f);
+  color: #052b42;
+}
+
+.coverPillUpcoming {
+  background: rgba(255, 255, 255, 0.92);
+  color: #052b42;
+}
+
+.coverPillPast {
+  background: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.coverPillOfficial {
+  background: rgba(91, 140, 255, 0.96);
+  color: #ffffff;
+}
+
+// Section header row: "Upcoming" h2 on the left, optional action slot
+// (Refresh button) on the right.
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.sectionActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.row {
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 200px 1fr 100px;
+    gap: 24px;
+    align-items: center;
+  }
+}
+
+.when {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.title {
+  margin: 0;
+}
+
+.desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.actions {
+  font-size: 14px;
+
+  a {
+    color: var(--g-color-text-link);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// City-filter chip row — always visible, sits flush against the bottom of
+// the hero map. Sticky so it follows the user as they scroll through the
+// lists. Chips and map pins share the same activeCity state.
+.cityFilter {
+  position: sticky;
+  top: 64px; // sit just below the sticky PublicNav
+  z-index: 10;
+  // No top margin: this sits directly under the hero section.
+  padding: 12px 24px 16px;
+  background: var(--g-color-base-background);
+  border-bottom: 1px solid var(--g-color-line-generic);
+}
+
+.cityFilterInner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.cityFilterLabel {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.cityChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+// -----------------------------------------------------------------------------
+// Full-bleed dark map hero. The map (EventsMap variant="dark") sits as the
+// background; a small left-side gradient keeps the title readable; the rest
+// of the hero stays clickable so users can hit any city pin.
+// -----------------------------------------------------------------------------
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: clamp(440px, 60vh, 600px);
+  overflow: hidden;
+  background: #1a1a1a; // matches CARTO dark base before tiles arrive
+}
+
+// Fills the same space while tiles are still loading (no layout shift)
+.heroMapPlaceholder {
+  position: absolute;
+  inset: 0;
+  background: #1a1a1a;
+}
+
+// Bottom-edge gradient so the title (anchored at bottom-left) is readable
+// without covering North America at the top of the map.
+// pointer-events: none so clicks fall through to map dots.
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 22, 32, 0) 0%,
+    rgba(15, 22, 32, 0) 35%,
+    rgba(15, 22, 32, 0.55) 65%,
+    rgba(15, 22, 32, 0.92) 100%
+  );
+}
+
+// Container is non-interactive so clicks pass through to the map; only
+// children that need clicks (the RefreshButton) re-enable pointer events.
+// Anchored at the bottom-left so the title doesn't cover any continents.
+.heroContent {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 2;
+  pointer-events: none;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  color: #ffffff;
+}
+
+.heroEyebrow {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 12px;
+}
+
+.heroTitle {
+  margin: 0 0 12px;
+  font-size: clamp(32px, 4.5vw, 48px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  max-width: 18ch;
+}
+
+.heroDescription {
+  margin: 0;
+  max-width: 56ch;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.heroActions {
+  // Re-enable pointer events for the actions row so the Refresh button works.
+  pointer-events: auto;
+  align-self: flex-start;
+}

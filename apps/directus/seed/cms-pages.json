@@ -1,0 +1,766 @@
+[
+  {
+    "slug": "about-this-build",
+    "title": "About this build \u00b7 Mockup for review",
+    "seo_description": "Tech-stack demonstration of the Nebius Builders Network. Not affiliated with Nebius.",
+    "blocks": {
+      "blocks": [
+        {
+          "type": "header-block",
+          "title": "About this build",
+          "description": "This site is a tech-stack mockup of opencolin/nebius-builders rebuilt on Nebius.com's exact stack \u2014 Next.js Pages Router, Gravity UI + Page Constructor, Directus CMS, Typesense, Azure Front Door deploy. The goal is to make the Nebius web team comfortable adopting and maintaining the Builders portal without context-switching from how nebius.com works today.",
+          "width": "l",
+          "verticalOffset": "l",
+          "buttons": [
+            {
+              "text": "View source on GitHub",
+              "theme": "action",
+              "size": "xl",
+              "url": "https://github.com/opencolin/nebius-builders",
+              "target": "_blank"
+            },
+            {
+              "text": "Back to home",
+              "theme": "outlined",
+              "size": "xl",
+              "url": "/"
+            }
+          ]
+        },
+        {
+          "type": "extended-features-block",
+          "title": "What you're looking at",
+          "items": [
+            {
+              "title": "Brand chassis",
+              "text": "Mirrors nebius.com: warm off-white surface, navy text + buttons, Inter type, lime joy color on selection. Same g- and pc- class signatures."
+            },
+            {
+              "title": "CMS-driven",
+              "text": "Five marketing pages (home, builders, office-hours, localhosts, signup) live as Page Constructor JSON in Directus. Edit them in the Directus admin and ISR republishes."
+            },
+            {
+              "title": "Bespoke pages",
+              "text": "Eight data-driven pages (events, leaderboard, library, projects, team and detail routes) read directly from Directus collections via the typed SDK."
+            }
+          ]
+        },
+        {
+          "type": "header-block",
+          "title": "Architecture",
+          "description": "A request to /any-page traces this path: Browser \u2192 Azure Front Door (edge cache) \u2192 Next.js origin (Container Apps) \u2192 Directus over HTTPS for CMS pages or collection items \u2192 renders Page Constructor blocks or bespoke Gravity UI components \u2192 returns HTML cached with s-maxage=60, stale-while-revalidate=300 (matches the cache header on nebius.com today). Search hits a separate /api/search proxy that holds the Typesense search-only key server-side. Marketing analytics are gated behind a consent banner and only fire after acceptance.",
+          "width": "l"
+        },
+        {
+          "type": "card-layout-block",
+          "title": "The five layers",
+          "children": [
+            {
+              "type": "background-card",
+              "title": "1. Edge",
+              "text": "Azure Front Door \u2014 global CDN with route-shape cache rules. /_next/static/* one-year immutable, HTML 60s + 5min SWR, /api/* no-store. Mirrors nebius.com's x-azure-ref topology.",
+              "list": [
+                {
+                  "text": "Front Door Standard profile"
+                },
+                {
+                  "text": "Custom domain + managed cert"
+                },
+                {
+                  "text": "az afd endpoint purge for cache busts"
+                }
+              ]
+            },
+            {
+              "type": "background-card",
+              "title": "2. Application",
+              "text": "Next.js 14.2 Pages Router on Container Apps. Webpack (not Turbopack) + React 18. Standalone output for the prod image; default output for `next start` locally.",
+              "list": [
+                {
+                  "text": "Single /[[...slug]] catch-all for CMS pages"
+                },
+                {
+                  "text": "Bespoke Pages Router files for data-driven views"
+                },
+                {
+                  "text": "ISR via revalidate: 60 in getStaticProps"
+                }
+              ]
+            },
+            {
+              "type": "background-card",
+              "title": "3. Content",
+              "text": "Directus 11.17 self-hosted with Postgres 16 + PostGIS for the events.location field, Redis for the cache. Schema is hand-authored YAML and applied via the SDK.",
+              "list": [
+                {
+                  "text": "7 user collections + Directus internals"
+                },
+                {
+                  "text": "Page Constructor JSON in pages.blocks"
+                },
+                {
+                  "text": "Idempotent seed script via npm run seed"
+                }
+              ]
+            },
+            {
+              "type": "background-card",
+              "title": "4. Search",
+              "text": "Typesense Cloud in prod, Docker container locally. The admin key never leaves the indexer; the browser hits /api/search which talks to Typesense with a search-only key.",
+              "list": [
+                {
+                  "text": "Single nebius_builders collection"
+                },
+                {
+                  "text": "Indexer pulls library, events, builders"
+                },
+                {
+                  "text": "Header search box debounced at 150ms"
+                }
+              ]
+            },
+            {
+              "type": "background-card",
+              "title": "5. Auth",
+              "text": "Directus's built-in JWT auth, three roles. Tokens stored in httpOnly cookies; access token rotates transparently via the refresh token in getServerSession.",
+              "list": [
+                {
+                  "text": "Roles: public, builder, admin"
+                },
+                {
+                  "text": "/api/auth/login,/logout,/me proxy routes"
+                },
+                {
+                  "text": "requireRole helper for getServerSideProps"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card-layout-block",
+          "title": "Repository layout",
+          "children": [
+            {
+              "type": "background-card",
+              "title": "apps/web/",
+              "text": "The Next.js Pages Router app. pages/ for routes, src/components/chrome for the layout primitives (PublicNav, Footer, MockupBanner), src/lib for typed Directus and Typesense clients, src/styles/globals.scss for the Nebius brand layer over Gravity tokens."
+            },
+            {
+              "type": "background-card",
+              "title": "apps/directus/",
+              "text": "Directus tooling. snapshots/schema.yaml is the versioned schema. scripts/{apply-schema,snapshot,seed}.mjs handle apply, regenerate, and idempotent seeding. seed/ holds JSON fixtures + ported markdown for library articles."
+            },
+            {
+              "type": "background-card",
+              "title": "infra/",
+              "text": "docker-compose.yml for local dev (Postgres, Redis, Directus, Typesense, mailcatcher). Dockerfile.web is the multi-stage standalone build. azure/ has Bicep skeleton and a README walking through the az deployment commands. typesense/sync.mjs is the indexer."
+            }
+          ]
+        },
+        {
+          "type": "card-layout-block",
+          "title": "What's real in this mockup",
+          "children": [
+            {
+              "type": "background-card",
+              "title": "Live data layer",
+              "text": "Directus is fully wired. Schema applied, content seeded, every page reads through the typed SDK.",
+              "list": [
+                {
+                  "text": "12 builders, 8 projects, 8 events, 11 library articles"
+                },
+                {
+                  "text": "Idempotent seed script (re-run safely)"
+                },
+                {
+                  "text": "Schema versioned at apps/directus/snapshots/schema.yaml"
+                }
+              ]
+            },
+            {
+              "type": "background-card",
+              "title": "Auth",
+              "text": "Login flow ends at Directus's /auth/login with HTTP-only cookies and transparent refresh.",
+              "list": [
+                {
+                  "text": "/api/auth/{login,logout,me} routes"
+                },
+                {
+                  "text": "requireRole('builder' / 'admin') in getServerSideProps"
+                },
+                {
+                  "text": "Three roles: public, builder, admin"
+                }
+              ]
+            },
+            {
+              "type": "background-card",
+              "title": "Search",
+              "text": "Typesense client + indexer + /api/search proxy.",
+              "list": [
+                {
+                  "text": "Search-only API key never leaves the server"
+                },
+                {
+                  "text": "Indexer pulls from Directus collections"
+                },
+                {
+                  "text": "Header search box hits the proxy"
+                }
+              ]
+            },
+            {
+              "type": "background-card",
+              "title": "Local dev",
+              "text": "Docker Compose brings up Postgres, Redis, Directus, Typesense, mailcatcher.",
+              "list": [
+                {
+                  "text": "One docker compose up command"
+                },
+                {
+                  "text": "Schema apply + seed scripts ready"
+                },
+                {
+                  "text": "Mailcatcher captures Directus emails"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "card-layout-block",
+          "title": "What's still stubbed",
+          "children": [
+            {
+              "type": "background-card",
+              "title": "Portal & admin pages",
+              "text": "One worked example for each (/portal, ready for the requireRole('admin') admin pages). The remaining 14 portal + 8 admin pages from the upstream repo aren't ported yet \u2014 the patterns are set, the work is mechanical."
+            },
+            {
+              "type": "background-card",
+              "title": "Marketing analytics",
+              "text": "GTM bootstrap with consent gating is wired in _app.tsx, but no GTM container ID is set. Drop NEXT_PUBLIC_GTM_ID in env to fire it. HubSpot/Demandbase/Hotjar/Clarity placeholders sit in CSP."
+            },
+            {
+              "type": "background-card",
+              "title": "Hero decoration",
+              "text": "Nebius.com's hero has a custom lime-and-green wave SVG overlay. We use a clean Page Constructor header-block instead \u2014 adding the wave as a custom block is a future polish task."
+            },
+            {
+              "type": "background-card",
+              "title": "Azure deploy",
+              "text": "Bicep skeleton at infra/azure/main.bicep with inline notes for the resources to define (Container Apps, Postgres Flexible, Redis, Front Door cache rules). Needs a real subscription + region + image registry to deploy."
+            }
+          ]
+        },
+        {
+          "type": "extended-features-block",
+          "title": "Where to send feedback",
+          "items": [
+            {
+              "title": "GitHub issues",
+              "text": "Open an issue on opencolin/nebius-builders. Tag @opencolin for routing."
+            },
+            {
+              "title": "DM the maintainer",
+              "text": "Open a GitHub issue and @-mention @opencolin for anything time-sensitive or scoped to this build specifically."
+            },
+            {
+              "title": "Pull requests",
+              "text": "Direct edits welcome \u2014 the build is opinionated but every choice is documented inline. CONTRIBUTING.md will land alongside the next port."
+            }
+          ]
+        },
+        {
+          "type": "header-block",
+          "title": "View the source",
+          "description": "Every architectural decision in this build is documented inline in the source. The upstream content + types live in opencolin/nebius-builders; the Nebius-stack rebuild itself ships from this working tree.",
+          "width": "m",
+          "buttons": [
+            {
+              "text": "opencolin/nebius-builders \u2197",
+              "theme": "action",
+              "size": "xl",
+              "url": "https://github.com/opencolin/nebius-builders",
+              "target": "_blank"
+            },
+            {
+              "text": "Read the plan file",
+              "theme": "outlined",
+              "size": "xl",
+              "url": "https://github.com/opencolin/nebius-builders/issues",
+              "target": "_blank"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "slug": "home",
+    "title": "Nebius for AI Builders",
+    "seo_description": "From training and fine-tuning to production inference at scale \u2014 plus a community of builders shipping real work.",
+    "blocks": {
+      "blocks": [
+        {
+          "type": "header-block",
+          "title": "Nebius for AI Builders",
+          "description": "From training and fine-tuning to production inference at scale. Plus a community of builders shipping real work \u2014 workshops, demos, hackathons, office hours. Get started with $100 of Token Factory or AI Cloud credits.",
+          "width": "l",
+          "verticalOffset": "l",
+          "buttons": [
+            {
+              "text": "Start building",
+              "theme": "action",
+              "size": "xl",
+              "url": "/signup"
+            },
+            {
+              "text": "Read the docs",
+              "theme": "outlined",
+              "size": "xl",
+              "url": "https://docs.nebius.com",
+              "target": "_blank"
+            }
+          ]
+        },
+        {
+          "type": "extended-features-block",
+          "title": "What you get",
+          "items": [
+            {
+              "title": "$100 in credits",
+              "text": "Token Factory and AI Cloud intro credits when you sign up."
+            },
+            {
+              "title": "Builder community",
+              "text": "Workshops, demos, hackathons, office hours \u2014 run by builders, for builders."
+            },
+            {
+              "title": "Recognition",
+              "text": "Tier up from Builder \u2192 Contributor \u2192 Ambassador as you ship."
+            }
+          ]
+        },
+        {
+          "type": "card-layout-block",
+          "title": "Three ways to get started",
+          "children": [
+            {
+              "type": "background-card",
+              "title": "Run a workshop",
+              "text": "Got a meetup, a hackathon, an office? We'll send swag, advocate support, and per-event credits to give your attendees.",
+              "url": "/portal/events/new",
+              "list": [
+                {
+                  "text": "$50\u2013500 per event in credits"
+                },
+                {
+                  "text": "Tier up to Contributor / Ambassador"
+                }
+              ]
+            },
+            {
+              "type": "background-card",
+              "title": "Submit to the library",
+              "text": "Tutorials, workshops, video walkthroughs, repos. We promote the best ones to the front page.",
+              "url": "/library",
+              "list": [
+                {
+                  "text": "+50 pts per accepted submission"
+                },
+                {
+                  "text": "Recognition on the leaderboard"
+                }
+              ]
+            },
+            {
+              "type": "background-card",
+              "title": "Apply for credits",
+              "text": "$100 each on Token Factory and AI Cloud, plus per-event credits if you're hosting.",
+              "url": "/portal/credits",
+              "list": [
+                {
+                  "text": "5-minute claim, no contract"
+                },
+                {
+                  "text": "Stack on top of free trial"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "header-block",
+          "title": "Built on Nebius. Run by builders.",
+          "description": "Every event, every workshop, every line of code in the showcase came from someone in the community. See what's coming up, and meet the team behind it.",
+          "width": "m",
+          "buttons": [
+            {
+              "text": "Upcoming events",
+              "theme": "action",
+              "url": "/events"
+            },
+            {
+              "text": "Browse projects",
+              "theme": "outlined",
+              "url": "/apps"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "slug": "builders",
+    "title": "The Nebius Builders Network",
+    "seo_description": "Ambassadors, Contributors, and hackathon participants who shipped real projects on Nebius.",
+    "blocks": {
+      "blocks": [
+        {
+          "type": "header-block",
+          "title": "The Nebius Builders Network",
+          "description": "Ambassadors, Contributors, and hackathon participants who shipped real projects at Nebius.Build SF and the JetBrains \u00d7 Codex hackathon. Each one tied to a GitHub repo and one or more projects in the showcase.",
+          "width": "l",
+          "buttons": [
+            {
+              "text": "Browse the directory",
+              "theme": "action",
+              "url": "/builders/all"
+            },
+            {
+              "text": "Meet the DevRel team",
+              "theme": "outlined",
+              "url": "/team"
+            }
+          ]
+        },
+        {
+          "type": "extended-features-block",
+          "title": "How the program works",
+          "items": [
+            {
+              "title": "L1 Builder",
+              "text": "Anyone who's signed up. Get $100 in credits, +5 pts/month for shipping public work."
+            },
+            {
+              "title": "L2 Contributor",
+              "text": "Hosted an event or had a library submission accepted. Per-event credits, deeper office hours."
+            },
+            {
+              "title": "L3 Ambassador",
+              "text": "Recurring program lead \u2014 quarterly stipend, partner intros, joint launches."
+            }
+          ]
+        },
+        {
+          "type": "card-layout-block",
+          "title": "What we look for",
+          "children": [
+            {
+              "type": "background-card",
+              "title": "Ship in public",
+              "text": "Repos, blog posts, videos, conference talks, recurring meetups. We weight by quality and reach, not vanity metrics."
+            },
+            {
+              "type": "background-card",
+              "title": "Teach others",
+              "text": "Workshops, tutorials, code walkthroughs. Every accepted library submission earns points."
+            },
+            {
+              "type": "background-card",
+              "title": "Grow the community",
+              "text": "Refer other builders. Co-host with other companies. Run hackathon prizes. We pair people up across cities."
+            }
+          ]
+        },
+        {
+          "type": "header-block",
+          "title": "Ready to join?",
+          "description": "90-second sign-up, GitHub OAuth. Get $100 in credits and a +5 starter score.",
+          "width": "m",
+          "buttons": [
+            {
+              "text": "Sign up",
+              "theme": "action",
+              "size": "xl",
+              "url": "/signup"
+            },
+            {
+              "text": "See the team",
+              "theme": "outlined",
+              "size": "xl",
+              "url": "/team"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "slug": "office-hours",
+    "title": "Office Hours \u00b7 Drop in. Get unstuck.",
+    "seo_description": "Weekly office hours with the Nebius DevRel team. Bring your code, error, idea, or scoping question.",
+    "blocks": {
+      "blocks": [
+        {
+          "type": "header-block",
+          "title": "Drop in. Get unstuck.",
+          "description": "Weekly office hours with the Nebius DevRel team. Bring your code, your error, your design question, or your half-baked idea. We'll help you debug, tune performance, pick the right model, scope an event, or just sanity-check what you're building. No agenda, no slides.",
+          "width": "l"
+        },
+        {
+          "type": "extended-features-block",
+          "title": "Three formats \u2014 pick what you need",
+          "items": [
+            {
+              "title": "Drop-in",
+              "text": "No appointment needed. Show up to the published slot, ask your question, leave when you're unblocked. Group setting. Best for quick questions and demo-and-feedback loops."
+            },
+            {
+              "title": "1-on-1",
+              "text": "Book a 15\u201330 min slot in the advocate's calendar. Private, agenda is what you bring. Best for architecture reviews, event planning, partner intros, and longer code walk-throughs."
+            },
+            {
+              "title": "Group Q&A",
+              "text": "Themed deep-dive on a specific Nebius topic \u2014 Token Factory throughput, Soperator on K8s, fine-tuning. RSVP via Luma. Slides-light, code-heavy."
+            }
+          ]
+        },
+        {
+          "type": "header-block",
+          "title": "Pick a person",
+          "description": "Each team member runs their own recurring slots. Book directly with whoever covers your region or expertise area.",
+          "width": "m",
+          "buttons": [
+            {
+              "text": "Browse the team",
+              "theme": "action",
+              "url": "/team"
+            }
+          ]
+        },
+        {
+          "type": "card-layout-block",
+          "title": "Bring your\u2026",
+          "colSizes": {
+            "all": 12,
+            "md": 6,
+            "lg": 4
+          },
+          "children": [
+            {
+              "type": "background-card",
+              "title": "Half-finished agent",
+              "text": "Bring it in any state. We'll help you scope, ship, or pivot."
+            },
+            {
+              "type": "background-card",
+              "title": "Slow training job",
+              "text": "Latency, throughput, GPU utilization \u2014 let's profile it together."
+            },
+            {
+              "type": "background-card",
+              "title": "Confusing error",
+              "text": "Logs, stack trace, repro steps. We'll dig in live."
+            },
+            {
+              "type": "background-card",
+              "title": "Architecture sketch",
+              "text": "Whiteboard photo or Figma \u2014 let's pressure-test it before you commit."
+            },
+            {
+              "type": "background-card",
+              "title": "Event proposal",
+              "text": "Topic, audience, venue. We'll help you scope and budget."
+            },
+            {
+              "type": "background-card",
+              "title": "GPU bill that's too high",
+              "text": "Walk us through your spend; we'll suggest what to tune."
+            }
+          ]
+        },
+        {
+          "type": "header-block",
+          "title": "Don't see a slot that works?",
+          "description": "Reach out to Colin (Lead DevRel) \u2014 he handles unrouted requests and can pull in a Nebius engineer for technical questions outside DevRel's scope.",
+          "width": "m",
+          "buttons": [
+            {
+              "text": "Contact Colin",
+              "theme": "action",
+              "url": "/team/colin"
+            },
+            {
+              "text": "See the full team",
+              "theme": "outlined",
+              "url": "/team"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "slug": "localhosts",
+    "title": "Localhosts \u00b7 Run a Nebius event in your city",
+    "seo_description": "Workshops, hackathons, demo nights \u2014 anywhere there's a builder community.",
+    "blocks": {
+      "blocks": [
+        {
+          "type": "header-block",
+          "title": "Run a Nebius event in your city",
+          "description": "Workshops, hackathons, demo nights, office hours \u2014 anywhere there's a builder community. We send swag, code samples, advocate support, and per-event credits to give attendees.",
+          "width": "l",
+          "buttons": [
+            {
+              "text": "Apply to host",
+              "theme": "action",
+              "size": "xl",
+              "url": "/portal/events/new"
+            }
+          ]
+        },
+        {
+          "type": "extended-features-block",
+          "title": "What we cover",
+          "items": [
+            {
+              "title": "Per-event credits",
+              "text": "$50\u2013500 of Token Factory or AI Cloud credits per attendee, depending on event size and format."
+            },
+            {
+              "title": "Content + slides",
+              "text": "Workshop decks, code repos, recorded video walkthroughs you can adapt to your audience."
+            },
+            {
+              "title": "Co-marketing",
+              "text": "We promote your event across the Nebius newsletter, dev social channels, and partner network."
+            }
+          ]
+        },
+        {
+          "type": "card-layout-block",
+          "title": "Event formats we support",
+          "children": [
+            {
+              "type": "background-card",
+              "title": "Workshop",
+              "text": "60\u2013120 min hands-on. We supply the curriculum (Token Factory inference, fine-tuning, agents, deploy patterns)."
+            },
+            {
+              "type": "background-card",
+              "title": "Hackathon",
+              "text": "Half-day to weekend. Token Factory credits per team, prize sponsorship, optional advocate as a judge."
+            },
+            {
+              "type": "background-card",
+              "title": "Demo night",
+              "text": "5-min lightning demos. Bring your community, show what you've built, swap notes."
+            }
+          ]
+        },
+        {
+          "type": "header-block",
+          "title": "How it works",
+          "description": "Apply through the portal with date, venue, expected attendees. We respond within 48h with credit allocation, support level, and shipping logistics.",
+          "width": "m",
+          "buttons": [
+            {
+              "text": "Start an application",
+              "theme": "action",
+              "url": "/portal/events/new"
+            },
+            {
+              "text": "See past events",
+              "theme": "outlined",
+              "url": "/events"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "slug": "signup",
+    "title": "Join the Nebius Builders Network",
+    "seo_description": "90-second sign-up. Auto-detect Nebius repos. Get $100 in credits and a +5 starter score.",
+    "blocks": {
+      "blocks": [
+        {
+          "type": "header-block",
+          "title": "Join the Nebius Builders Network",
+          "description": "Sign up takes 90 seconds. We'll auto-detect any of your public GitHub repos that use Nebius and credit you 50 points immediately.",
+          "width": "l",
+          "buttons": [
+            {
+              "text": "Sign up with GitHub",
+              "theme": "action",
+              "size": "xl",
+              "url": "/login"
+            },
+            {
+              "text": "Read the program details",
+              "theme": "outlined",
+              "size": "xl",
+              "url": "/builders"
+            }
+          ]
+        },
+        {
+          "type": "extended-features-block",
+          "title": "What you'll get when you join",
+          "items": [
+            {
+              "title": "+5 pts",
+              "text": "Just for signing up."
+            },
+            {
+              "title": "+10 pts",
+              "text": "Connect GitHub (one click)."
+            },
+            {
+              "title": "+50 pts",
+              "text": "If a repo of yours already uses Nebius."
+            },
+            {
+              "title": "+25 pts",
+              "text": "Claim $100 of Token Factory credits."
+            },
+            {
+              "title": "+25 pts",
+              "text": "Apply for $100 of AI Cloud credits."
+            },
+            {
+              "title": "+$50",
+              "text": "Sign-up credit if you came via an event."
+            }
+          ]
+        },
+        {
+          "type": "card-layout-block",
+          "title": "After you sign up",
+          "children": [
+            {
+              "type": "background-card",
+              "title": "Your portal",
+              "text": "Track points, credits, milestones. Submit library entries. Apply to host events."
+            },
+            {
+              "type": "background-card",
+              "title": "Office hours",
+              "text": "Book direct slots with any Nebius DevRel team member, region by region."
+            },
+            {
+              "type": "background-card",
+              "title": "The leaderboard",
+              "text": "See where you rank, what other builders are shipping, who's earned which tier."
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

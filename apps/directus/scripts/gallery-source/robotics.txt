@@ -1,0 +1,735 @@
+#33
+Injester
+3 members
+
+GitHub Repository
+https://github.com/InjesterLol/Main
+Project Description
+Injester is an AI-native engine that transforms "agent-hostile" websites into structured data interfaces. While the web was built for human attention, our tool bridges the gap for LLMs by stripping 90% of token noise using Tavily and restructuring content via Nebius. Featuring a "Karpathy Loop," the system autonomously iterates to improve task accuracy from $2/5$ to $5/5$. It's the essential layer for Agent Experience Optimization (AEO).
+[AWARD: winner]
+Submitted by: Alex Shirazi
+
+#61
+Chase Brignac
+2 members
+
+GitHub Repository
+https://github.com/runrobotics/runrobot
+Project Description
+Generating the first human preference datasets for robot policies in simulation with Nebius GPUs to understand which policies work best in an objective way using ELO ratings and anti-cheating measures.
+[AWARD: runner-up]
+Submitted by: Chase Brignac
+
+#38
+RoboStore
+3 members
+
+GitHub Repository
+https://github.com/joshuaiokua/nebius-hackathon
+Project Description
+RoboStore is a self-expanding robot agent platform that enables robots to autonomously detect their own capability gaps, search for hardware solutions in real-time using Nebius LLMs, and auto-generate integration code. Uses OpenClaw orchestrator coordinating SCOUT (Qwen2-VL-72B), PLANNER (Qwen3-235B), and SAFETY agents in parallel.
+[AWARD: 3rd]
+Submitted by: Joshua Iokua Albano
+
+#53
+jimmy
+2 members
+
+GitHub Repository
+https://github.com/arminforoughi/nebius_k1
+Project Description
+Voice-controlled Booster K1 humanoid robot. Robots that understand surroundings, location and mapping. Built with Python, ROS2, YOLOv8, Gemini Live.
+[AWARD: finalist]
+Submitted by: Armin Foroughi
+
+#23
+Topology
+1 member
+
+GitHub Repository
+https://github.com/nxrobins/topology
+Project Description
+Evolutionary agent-org discovery — 10 teams of LLM agents compete on a task with randomly generated organizational genomes (hierarchy, communication, decision-making). Weakest dissolve, strongest mutate over 5 generations. Powered by DeepSeek-R1 on Nebius.
+[AWARD: finalist]
+Submitted by: Nigel Robinson
+
+#34
+Asha
+3 members
+
+GitHub Repository
+https://github.com/misran3/asha
+Project Description
+WhatsApp-native AI assistant for small home-based food businesses. Helps owners manage orders and remember customers without apps or dashboards. Built on Llama via Nebius, Twilio for WhatsApp delivery, Supabase, Next.js.
+[AWARD: finalist]
+Submitted by: Mohammed Misran
+
+#1
+cgames team
+1 member
+
+GitHub Repository
+https://github.com/vsuperfranchise/cartelfurypcgame.git
+Project Description
+AI Agent Red Team Security Testing — investigative gameplay where you gather evidence, undercover missions infiltrating a cartel, dynamic combat with stealth and strategy.
+Submitted by: Solomon Ubani
+
+#2
+Robo_chat
+1 member
+
+GitHub Repository
+https://github.com/sameershah21
+Project Description
+Chat with robo — chat interface for a simulated robot.
+Submitted by: Sameer Shah
+
+#3
+turtle
+2 members
+
+GitHub Repository
+https://github.com/mochiyaki/turtle
+Project Description
+Train and deploy your own tiny image model in a flash.
+Submitted by: sam sam
+
+#4
+agent + human
+1 member
+
+GitHub Repository
+https://github.com/seshadribt24/nebius
+Project Description
+Bot reaches a waypoint based on streaming Pi camera data; logs success/failure to JSONL; an analyzer agent improves the bot's objective from the log. Runs on Nebius.
+Submitted by: Seshadri Venkatesh
+
+#5
+SkillClaw
+2 members
+
+GitHub Repository
+https://github.com/lilyzhng/SkillClaw
+Project Description
+Multiple AI agents figure out robot manipulation by themselves — they try, fail, learn from failure. Solved skills get packaged as PRs, reviewed by an oversight agent, and added to a shared brain on Nebius. Currently 8 skills across 14 robotics benchmark tasks.
+Submitted by: Lily Zhang
+
+#6
+X-G1
+4 members
+
+GitHub Repository
+https://github.com/AIBotTeachesAI/quest3-g1-teleop
+Project Description
+Rapid-iteration humanoid pipeline for the Unitree G1: Meta Quest 3 + MuJoCo teleop, NVIDIA Sonic for low-latency control, GR00T fine-tuning on Nebius, Nomadic AI for failure-mode diagnostics.
+Submitted by: Kaushik Sivakumar
+
+#7
+thinktrace
+2 members
+
+GitHub Repository
+https://github.com/dliflc0617-sudo/thinktrace
+Project Description
+Behavior-aware AI learning agent built around an Observe → Infer → Adapt → Remember loop. Stores learner cognitive preferences as memory so future sessions start with a better teaching bias.
+Submitted by: Shane Li
+
+#8
+Electricgoat
+1 member
+
+GitHub Repository
+https://github.com/Electricgoatpod/prism
+Project Description
+Prism — a private edge inference agent that refracts your biometric stream into a personal performance forecast and acts autonomously on your behalf.
+Submitted by: Yaxin Wang
+
+#9
+CDMO.BOT / KETABALM
+1 member
+
+GitHub Repository
+https://github.com/FludAI/cdmobot-backend
+Project Description
+Autonomous robotic compounding system that turns idle pharmaceutical cleanroom capacity into a distributed manufacturing network. Continuous Nebius LLM dosing agent + simulated Unitree G1 in Isaac Sim + validation layer, all without human intervention. Stack: Nebius Token Factory Llama 3.1 70B continuous inference, Nebius AI Cloud L40S.
+Submitted by: Lorenzo Carver
+
+#10
+ConMan Agents
+1 member
+
+GitHub Repository
+https://github.com/SabeenSF/autonomous-contract-monitor
+Project Description
+Autonomous contract intelligence for healthcare companies — agents continuously monitor all company contracts to identify changes (expiry, clauses, market developments) and proactively alert on next steps.
+Submitted by: Sabeen Shaikh
+
+#11
+dronomy.io
+1 member
+
+GitHub Repository
+https://github.com/dronomyio/Hackathon_Autonomous_flight.git
+Project Description
+Dockerized autonomous drone simulator with full robotics stack: 24-ray LiDAR SLAM, EKF state estimation, A* + DWA planning, 8-state FSM. Dual-mode RL correction agent with one-button toggle between Q-learning and live LLM policy on Nebius Token Factory (Llama 3.1 8B on H100s).
+Submitted by: Suvasis Mukherjee
+
+#12
+Horizon Min
+1 member
+
+GitHub Repository
+https://github.com/dmayboroda/horizon_min
+Project Description
+Fine-tunes a vision-language model to play classic NES Duck Hunt from raw pixels.
+Submitted by: David Mayboroda
+
+#13
+NOC AI
+4 members
+
+GitHub Repository
+https://github.com/MasonD-007/NOC_Agent
+Project Description
+AI-powered Network Operations Center — Prometheus alert fires, an LLM agent analyzes the threat and executes iptables rules via SSH, all visible in a real-time chat UI.
+Submitted by: Mason Drake
+
+#14
+PhysProbe
+1 member
+
+GitHub Repository
+https://github.com/Sidra/physprobe-nebius
+Project Description
+Self-improving robot skill framework that uses predictive world models for safer robots. 8 world models benchmarked on Nebius Token Factory; Qwen3-235B wins at 90% accuracy in 696ms. AI swarm (Diagnostician → Inventor → Critic) invents new skills automatically.
+Submitted by: Sidra Miconi
+
+#15
+ghostfeed
+1 member
+
+GitHub Repository
+https://github.com/agi-developr/ghostfeed
+Project Description
+Agentically run social-media UGC company.
+Submitted by: Ilia Prikhodko
+
+#16
+Claw2Max - MechDog skill
+1 member
+
+GitHub Repository
+https://github.com/Maximilien-ai/mechdog-skill
+Project Description
+Created an OpenClaw skill and simulator for the Hiwonder MechDog robot.
+Submitted by: Max Maximilien
+
+#17
+Clawdit
+1 member
+
+GitHub Repository
+https://github.com/wuyuwenj/clawdit.git
+Project Description
+Auto-discovers an OpenClaw agent's linked Google account and makes it send malicious emails/calendar invites to itself. If the agent follows the hidden instructions, you have a vulnerability. Attack variants generated by Llama 3.3 70B on Nebius Token Factory; Tavily provides real-time threat intelligence.
+Submitted by: Yuwen Wu
+
+#18
+CRE808IVE
+1 member
+
+GitHub Repository
+https://github.com/ChainMailGlobal/Nebius.Build
+Project Description
+MMCP Trade Twins — constitutional multi-agent system that builds digital-twin knowledge bases for every licensed skilled trade simultaneously. 24 specialized agents on Nebius Token Factory (Mixtral-8x7B), Tavily for live trade codes, Toloka for human validation, Scroll blockchain for agent credit.
+Submitted by: Daniel Kaneshiro
+
+#19
+ShadowDance
+1 member
+
+GitHub Repository
+https://github.com/kristopolous/ShadowDance
+Project Description
+Python package for observability, tracing, logging, and cost-tracking from cloud to claw with one line of code.
+Submitted by: Christopher McKenzie
+
+#20
+Framewise
+1 member
+
+GitHub Repository
+https://github.com/agg111/framewise
+Project Description
+Cuts robot perception costs 80–90% by never sending the same scene twice. Pixel + semantic change detection gates inference; Gemma-27B answers first, escalates to Qwen-72B if uncertain. RAG, reranking, Tavily for additional robot context. All on Nebius.
+Submitted by: Aishwarya Gune
+
+#21
+Pool Watch
+1 member
+
+GitHub Repository
+https://github.com/Muifrend/pool-watch
+Project Description
+Privacy-first, on-device drowning detection pipeline. Captures real-time biomechanical signs of drowning and alerts instantly — no cloud, no subscription, no video leaving the property.
+Submitted by: Andrzej Firek
+
+#22
+JC
+1 member
+
+GitHub Repository
+https://github.com/tulang-nb2022/robotics-simulation-training-hackathon
+Project Description
+Tests whether chaos engineering / chaotic exploration patterns speed up robot learning. Uses natural-language descriptions to weight cautious / random / aggressive / strange exploration patterns.
+Submitted by: Janice Chan
+
+#24
+CHAI
+2 members
+
+GitHub Repository
+https://github.com/galileo-ml/nebius-hack
+Project Description
+Companion Humanoid AI for Unitree G1: detects approaching humans, greets them, and clears obstacles to act as a guide for visually impaired users. Nebius AI Studio Qwen2.5-VL-72B for vision + Llama-3.3-70B for decision-making. Runs in MuJoCo sim.
+Submitted by: Vatsal Bajaj
+
+#25
+SwitchCost
+1 member
+
+GitHub Repository
+https://github.com/Ayush10/switchcost
+Project Description
+AI inference migration engine — safely move from GPT-4/Claude/Gemini to open-source on Nebius Token Factory while maintaining quality parity. Decomposes tasks into typed subtasks, replays against open models, scores quality via LLM-as-judge, projects monthly savings.
+Submitted by: Ayush Ojha
+
+#26
+AgentCommerce
+1 member
+
+GitHub Repository
+https://github.com/dzuluaga/agentcommerce
+Project Description
+Two AI agents (Buyer + Merchant) negotiate purchases end-to-end with zero human intervention. Buyer on Nebius AI Studio (MiniMax-M2.1), Merchant on OpenRouter (MiniMax-M2). ISO 18013-5 mdoc credentials for verification, Tavily Search for real-time market prices.
+Submitted by: Diego Zuluaga
+
+#27
+Team Big Floofy Cat
+1 member
+
+GitHub Repository
+https://github.com/discordwell/doctor-auditor
+Project Description
+Local-first AI system for reviewing sensitive medical conversations without centralizing recordings/transcripts. Raw audio, transcripts, draft findings stay on the local machine; only approved artifacts cross the boundary.
+Submitted by: Robert Cordwell
+
+#28
+arm-pilot
+4 members
+
+GitHub Repository
+https://github.com/Sota-sota/nebius-build-sf-2026/tree/kush
+Project Description
+Autonomous task discovery — robot receives a job command, Nebius LLM searches the internet for the most suitable task, motion data is retrieved and deployed. Humanoid arm executes pick-and-press in real time. Tavily used for grounding.
+Submitted by: Sota Miyajima
+
+#29
+AutoRobots
+2 members
+
+GitHub Repository
+https://github.com/anjan04/nebiushack
+Project Description
+Autonomous AI scientist that teaches simulated robots to move. No human reward engineering. LLM agent iterates on reward functions, trains RL policies, evaluates results, accumulates improvements — all on Nebius infrastructure.
+Submitted by: Warner Wu
+
+#30
+ShopAgent
+4 members
+
+GitHub Repository
+https://github.com/jihwan-victor-park/NebiusHack
+Project Description
+AI shopping assistant that searches both major retailers and small businesses simultaneously. Ranks results by price, shipping speed, quality, and ethical sourcing. Built on Nebius for parallelized search and ranking.
+Submitted by: Victor Park
+
+#31
+AutoEvolve
+3 members
+
+GitHub Repository
+https://github.com/zhoumiaosen/AutoEvolve
+Project Description
+Cloud-side task planner runs Qwen 2.5 on Nebius Token Factory as a reasoning layer. Decomposes natural-language commands like "pick up the cup" into manipulation steps, then a fine-tuned GR00T N1.6-3B produces continuous joint actions.
+Submitted by: Miaosen Zhou
+
+#32
+voiceClaw
+1 member
+
+GitHub Repository
+https://github.com/aadebuger/voiceclaw-go
+Project Description
+Connect open-source voice hardware (Xiaozhi ESP32) to OpenClaw Agent Gateway — plug in, speak, get AI agent response. Lightweight server implementations in Python, Go, and Swift. Runs on Nebius.
+Submitted by: zhuang hua
+
+#35
+hideNseek
+1 member
+
+GitHub Repository
+https://github.com/r-agni/hideNseek
+Project Description
+Robots play Hide and Seek to learn dynamic interaction. Seeker and Hider use vision models + RL policies to change hiding strategies based on live feedback.
+Submitted by: aTG R
+
+#36
+Robots For Social Good
+1 member
+
+GitHub Repository
+https://github.com/deonmenezes/robotics-for-social-good
+Project Description
+Multimodal humanoid robotics system that learns socially beneficial behaviors from real-world human demonstrations. Vision-Language-Action architecture trained on uploaded demonstration videos via Nomadic ML for annotation.
+Submitted by: Deon Menezes
+
+#37
+AI Warehouse Fulfillment
+1 member
+
+GitHub Repository
+https://github.com/chinesepowered/hack-neb
+Project Description
+LLM-powered warehouse robot that reasons, routes, and adapts to chaos in real-time on Nebius. Analyzes incoming packages, plans routing, and re-plans on the fly when rush orders flood in.
+Submitted by: Nelson Lai
+
+#39
+Should-work
+1 member
+
+GitHub Repository
+https://github.com/arapat/should-work
+Project Description
+AI agent orchestration platform for solo developers — manages a fleet of Claude Code agents to build software. Humans prioritize issues and review PRs, agents do the implementation.
+Submitted by: Julaiti Alafate
+
+#40
+CrecerSpark
+2 members
+
+GitHub Repository
+https://github.com/marioToribi0/nebius-hackathon/tree/master
+Project Description
+Autonomous robotic tour guide with intelligent obstacle avoidance, natural-language interface for visitor queries, and a management dashboard for custom routes. Built on Nebius.
+Submitted by: Mario Toribio
+
+#41
+Controlled Friction
+1 member
+
+GitHub Repository
+https://github.com/kotrie/deployment-validation.yml
+Project Description
+"Controlled friction" in software deployment using Tavily Search on Nebius Token Factory — intentional pauses, checks, and manual validations to boost safety, quality, and compliance during shipping.
+Submitted by: Irina Poslavsky
+
+#42
+Quantbros
+3 members
+
+GitHub Repository
+https://github.com/elbionredenica/agentic-quant
+Project Description
+Agentic investing app: profiles user risk preferences, picks a quant strategy from backtested research, expands the strategy into a real investable universe, ranks stocks with technical indicators + sentiment, builds a capital-weighted buy plan.
+Submitted by: Elbion Redenica
+
+#43
+Mac Inference with an agent swarm
+4 members
+
+GitHub Repository
+https://github.com/tmc/autoresearch-go-ane/tree/autoresearch/qwen3
+Project Description
+Distributed autoresearch with a swarm of Macs linked through a collective intelligence cloud. Local inference on open-weight models.
+Submitted by: Travis Cline
+
+#44
+Miki the Robot
+2 members
+
+GitHub Repository
+https://github.com/lindamao/nebius_hackathon
+Project Description
+Robot companion that notices emotional changes and provides physical and emotional support. Built on Nebius.
+Submitted by: Linda Mao
+
+#45
+Grocery StockSense
+4 members
+
+GitHub Repository
+https://github.com/mansimane/nebius-hackathon
+Project Description
+Photo of fridge → AI inventory using Qwen2.5-VL-72B on Nebius Cloud. Cross-references against essential pantry staples, shows what's stocked vs missing. Telegram bot + dashboard. Robot opening the fridge simulated and trained in MJ Lab Studio.
+Submitted by: Mansi Mane
+
+#46
+Nerdtres
+1 member
+
+GitHub Repository
+https://github.com/kydycode/priceagent/tree/main
+Project Description
+Autonomous AI agent that manages e-commerce pricing across multiple marketplaces in real time. Connected to live production system (€1.4M inventory). 5-stage pipeline: Tavily/ITAD/Steam research → Nebius Token Factory (DeepSeek-V3) reasoning → pricing recommendations → channel deployment.
+Submitted by: Ionov Vitalii
+
+#47
+FBX2Robot
+2 members
+
+GitHub Repository
+https://github.com/rezasanatkar/mjlab-hackathon
+Project Description
+Automated pipeline that translates standard 3D human animations (FBX) into AI training data, eliminating hours of manual formatting so the Unitree G1 can learn complex movements.
+Submitted by: Reza Sanatkar
+
+#48
+Sous Bot
+3 members
+
+GitHub Repository
+https://github.com/DivyaNarahari97/sous-bot/tree/main
+Project Description
+Assistive grocery robot for visually impaired and elderly users. Helps pick items based on the meals you want.
+Submitted by: Sathvick Reddy Narahari
+
+#49
+rOCDbot
+1 member
+
+GitHub Repository
+https://github.com/kirilligum/rOCDbot-cerebral-valley-hackathon-260315
+Project Description
+Uses LLM familiarity with OCD to make higher-precision robots. Robot sees an object out of place, loops actions to get it perfectly placed; the trace is used in RL training. Built on Nebius.
+Submitted by: Kirill Igumenshchev
+
+#50
+Niwa (Self Improving Robots)
+4 members
+
+GitHub Repository
+https://github.com/TheApexWu/niwa
+Project Description
+Self-improving robots — continual reinforcement learning in sim for zero-shot transfer to playing Jenga. Powered by Nebius.
+Submitted by: Andres Nino
+
+#51
+Specter
+1 member
+
+GitHub Repository
+https://github.com/gad0lin/specter
+Project Description
+Space Perception Engine for Crime, Theater, and Exploration Research — robots that see what humans miss in crime scenes, museums, or mystery games.
+Submitted by: Krzysztof Barczynski
+
+#52
+Movebot
+1 member
+
+GitHub Repository
+https://github.com/LaraArias/MoveBot
+Project Description
+Move! A simple movement-control project.
+Submitted by: Carlos Lara
+
+#54
+nline
+1 member
+
+GitHub Repository
+https://github.com/runnerelectrode/nline-hack
+Project Description
+Uses Nebius Token Factory API to deploy an OpenClaw instance in Daytona Sandbox; uses RFC 8693 token exchange to connect to external services for tool calling (Linear in the demo). Extensible to Nebius cloud OAuth2.0 token exchange.
+Submitted by: Gaurav Shukla
+
+#55
+CaseSnipe.ai
+2 members
+
+GitHub Repository
+https://github.com/brandontautuan/caseSnipe.ai
+Project Description
+Multi-agent courtroom simulation where AI agents argue opposing sides of real cases; a Judge agent delivers the verdict. Doubles as a live LLM benchmark — swap different Nebius open LLMs into Prosecutor / Defendant / Judge roles. Tavily for case facts, RAG over 8,000 court case summaries.
+Submitted by: Brandon Tautuan
+
+#56
+SideLine
+4 members
+
+GitHub Repository
+https://github.com/nebiusbuildsf/sideline
+Project Description
+Modular AI sports robot for the coach/referee shortage in youth sports. Qwen vision-language model on Nebius watches gameplay, gives technical coaching feedback, and can switch into referee mode for unbiased calls.
+Submitted by: Vissh B
+
+#57
+dayops
+1 member
+
+GitHub Repository
+https://github.com/kiankyars/dayops
+Project Description
+Minimal backend for voice-memo planning into Google Calendar.
+Submitted by: Kian Kyars
+
+#58
+Splatica
+1 member
+
+GitHub Repository
+https://github.com/ashelomentsev/physical
+Project Description
+"Jumping into reality" — from live room video to world-modeled robotic control in Isaac Sim.
+Submitted by: Andrey Shelomentsev
+
+#59
+Frostbyte (zayd)
+1 member
+
+GitHub Repository
+https://github.com/zaydiscold/hooke-preview
+Project Description
+Hooke is a research assistant for bench scientists — turns a scientific question into a usable starting point by combining literature, computational analysis, and model-based insight into one brief.
+Submitted by: Zayd Khan
+
+#60
+SOS-Answered!
+1 member
+
+GitHub Repository
+https://github.com/aparekh02/SOS-Answered-
+Project Description
+Autonomous humanoid rescue system with multimodal AI (vision + audio + structural sensing from Oumi) and a fine-tuned world model on Nebius Cloud. Navigates rubble, locates trapped victims, clears debris.
+Submitted by: Aksh Parekh
+
+#62
+Swarm Protocol
+2 members
+
+GitHub Repository
+https://github.com/The-Swarm-Protocol/Swarm
+Project Description
+AI fleet coordination platform — command center for deploying, organizing, and communicating with fleets of AI agents. Channels, Tasks & Jobs, Agent Social Numbers (ASNs), on-chain identity. Coordination infrastructure, not the model itself.
+Submitted by: Eric Nans
+
+#63
+HUMMINGBIRD
+1 member
+
+GitHub Repository
+https://github.com/tiyembelabs
+Project Description
+Tool for clinical-trial biospecimen vendors that automatically identifies samples submitted but never resulted, replacing manual Excel work with regulatory context and an audit trail.
+Submitted by: Lyona
+
+#64
+Pulse
+3 members
+
+GitHub Repository
+https://github.com/waterdoog/agent-messenger.git
+Project Description
+Mobile-first AI app: send an AI agent (with packaged context: voice notes, docs, calendar) instead of repeatedly explaining yourself. Recipient interacts with the agent in chat to ask questions, understand decisions, schedule.
+Submitted by: Yu Chen
+
+#65
+Robot Agent
+2 members
+
+GitHub Repository
+https://github.com/brennanMKE/RobotAgent
+Project Description
+Mac app that uses an LLM to make tool calls to move a simulated robot arm.
+Submitted by: Brennan Stehling
+
+#66
+Kleiner Bot
+1 member
+
+GitHub Repository
+https://github.com/hagemt/reachy-emotes
+Project Description
+Teach robots emotion (by reading my own). Withdrew before demo.
+Submitted by: Tor
+
+#67
+Control Spaces
+1 member
+
+GitHub Repository
+https://github.com/dadisudhir/control-spaces-training
+Project Description
+Ambient cameras across a workspace passively observe human activities, converting visual streams into structured training data for robotic systems. The robot learns by watching people work.
+Submitted by: Sudhir D
+
+#68
+AW3 Technology
+1 member
+
+GitHub Repository
+https://github.com/aw3-technology/openeye.sh
+Project Description
+Open-source digital vision CLI tool and dashboard.
+Submitted by: William Schulz
+
+#69
+trinkss
+1 member
+
+GitHub Repository
+https://gitlab.com/trinkss-group/trinkss-project/
+Project Description
+Robot-Ready Workcell Compiler. Inspects any messy workspace, decides what operational structure is missing, and prints it — making the space legible to unskilled humans and cheap robots.
+Submitted by: sa sa
+
+#70
+cloneSMP
+2 members
+
+GitHub Repository
+https://github.com/seanchiuai/cloneSMP/
+Project Description
+Manhunt by AI — multiplayer manhunt game driven by AI agents.
+Submitted by: Sean Chiu
+
+#71
+zippling
+1 member
+
+GitHub Repository
+https://github.com/ParthGala2k/zippling_ai_commerce
+Project Description
+Agentic e-commerce customer service resolution and management — handles support resolution agentically based on platform policies, with text and vision.
+Submitted by: Parth Gala
+
+#72
+LabPilot
+1 member
+
+GitHub Repository
+https://github.com/rajathpatel23/LabPilot
+Project Description
+AI copilot for experiment optimization in pharma R&D labs. Surrogate model on historical data, adaptive decision policies (UCB / contextual LinUCB), literature evidence + explanation layers for trust.
+Submitted by: Rajat Patel
+
+#73
+Merit
+1 member
+
+GitHub Repository
+https://github.com/romorobo/rom
+Project Description
+Sim-to-real architecture for soil analysis. Custom MuJoCo environment for Unitree G1 + Llama-3 orchestrator. Parallelized stack ready for deployment to Nebius H100 clusters.
+Submitted by: Roman Stachur

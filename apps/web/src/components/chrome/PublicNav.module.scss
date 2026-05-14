@@ -1,0 +1,50 @@
+.root {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--g-color-base-background);
+  border-bottom: 1px solid var(--g-color-line-generic);
+  // Subtle backdrop on scroll so the nav reads against any block underneath
+  backdrop-filter: saturate(180%) blur(8px);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 12px 24px;
+}
+
+.links {
+  display: none;
+  gap: 4px;
+  flex: 1;
+
+  @media (min-width: 980px) {
+    display: flex;
+  }
+}
+
+.link {
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--g-color-text-secondary);
+  padding: 6px 10px;
+  border-radius: var(--g-border-radius-m);
+  transition: background 120ms ease, color 120ms ease;
+
+  &:hover {
+    color: var(--g-color-text-primary);
+    background: var(--nb-color-private-navyblue-50);
+  }
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}

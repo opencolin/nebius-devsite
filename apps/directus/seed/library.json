@@ -1,0 +1,50 @@
+{
+  "$schema": "./seed.schema.json",
+  "_comment": "Seed entries for the Builders Network Library. Imported by apps/web/prisma/seed.ts on first deploy. Each entry maps to one LibraryEntry row.",
+  "entries": [
+    {
+      "slug": "running-openclaw-on-nebius",
+      "type": "WORKSHOP",
+      "title": "Running OpenClaw on Nebius",
+      "blurb": "From zero to a live AI agent in 15 minutes. Walks through Token Factory, three deploy methods (npm / Docker / Nebius Serverless), and a hands-on agent build.",
+      "level": "BEGINNER",
+      "durationMin": 30,
+      "productFocus": [
+        "openclaw",
+        "tokenfactory"
+      ],
+      "contentBodyPath": "./workshops/running-openclaw-on-nebius.md",
+      "externalUrl": "https://github.com/opencolin/clawcamp-site/blob/master/workshops/running-openclaw-on-nebius.md",
+      "isOfficial": true,
+      "source": "clawcamp-site/workshops"
+    },
+    {
+      "slug": "gemma-finetune-rayyanzahid",
+      "type": "REPO",
+      "title": "QLoRA Fine-tune Gemma 4 on Nebius",
+      "blurb": "Validated recipe + Nebius infra skill + 9-node workshop fleet runbook. Built and run live at Sandbox VR SF (May 2026, ~30 attendees fine-tuned hands-on).",
+      "level": "INTERMEDIATE",
+      "durationMin": 90,
+      "productFocus": [
+        "aicloud",
+        "tokenfactory"
+      ],
+      "externalUrl": "https://github.com/RayyanZahid/gemma-finetune",
+      "metadata": {
+        "_note": "fetched live by github-metadata API in production; static here for seed",
+        "stars": 3,
+        "languages": [
+          "Shell",
+          "Python"
+        ],
+        "primaryLanguage": "Shell",
+        "lastPushedAt": "2026-05-06T18:45:25Z",
+        "defaultBranch": "master"
+      },
+      "isOfficial": false,
+      "submitterHandle": "RayyanZahid",
+      "submitterDisplayName": "Ray Zahid (Sandbox VR SF)",
+      "source": "community-submission"
+    }
+  ]
+}

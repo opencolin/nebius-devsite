@@ -1,0 +1,513 @@
+// -----------------------------------------------------------------------------
+// /apps — index page card grid (cover + body + optional footer)
+// -----------------------------------------------------------------------------
+
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--g-color-base-float);
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: var(--g-border-radius-l);
+  overflow: hidden;
+  transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+
+  &:hover {
+    border-color: var(--nb-color-private-navyblue-300, rgba(5, 43, 66, 0.3));
+    box-shadow: var(--g-shadow-soft);
+    transform: translateY(-1px);
+  }
+}
+
+.cardBody {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.cardHead {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.byline {
+  font-size: 12px;
+  letter-spacing: 0.01em;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--g-color-text-primary);
+}
+
+.cardTagline {
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.cardFooter {
+  padding: 10px 16px 14px;
+  border-top: 1px solid var(--g-color-line-generic);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filterBar {
+  margin: 24px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+// -----------------------------------------------------------------------------
+// Cover area at the top of each card. The variant classes choose the
+// gradient — they map to award/featured/hackathon (see coverVariant() in
+// the page component).
+// -----------------------------------------------------------------------------
+
+.cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.coverDefault {
+  background: linear-gradient(135deg, #1f2a32 0%, #122638 60%, #1d3a55 100%);
+}
+
+.coverFeatured {
+  background: linear-gradient(135deg, #122638 0%, #1d3a55 50%, #5b8cff 100%);
+}
+
+.coverAward {
+  background: linear-gradient(135deg, #1f4a3a 0%, #2c7a3f 55%, #c0f53d 100%);
+}
+
+.coverRobotics {
+  background: linear-gradient(135deg, #0f3344 0%, #1a6b6b 50%, #4ea49e 100%);
+}
+
+.coverJetbrains {
+  // JetBrains brand-evocative gradient (orange → magenta → indigo)
+  background: linear-gradient(135deg, #2c1d4a 0%, #6e2c8c 50%, #d62b6f 100%);
+}
+
+// Big watermark glyph at the center of the cover — the project's first
+// initial, very translucent. Adds visual weight without needing per-project
+// art. Slightly transformed so it reads as background, not foreground.
+.coverGlyph {
+  font-family: ui-sans-serif, -apple-system, system-ui, sans-serif;
+  font-size: 96px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.16);
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+}
+
+// Pill positioning over the cover.
+.coverTopLeft {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+}
+
+.coverTopRight {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+}
+
+.coverPill {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.92);
+  color: #052b42;
+  line-height: 1;
+}
+
+.coverPillAward {
+  background: var(--nb-color-highlight, #e0ff4f);
+  color: #052b42;
+}
+
+.coverPillFeatured {
+  background: rgba(91, 140, 255, 0.96);
+  color: #ffffff;
+}
+
+// Legacy back-link + body styles kept for any downstream consumers; the
+// detail page below uses its own dedicated classes.
+.backLink {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--g-color-text-secondary);
+  text-decoration: none;
+  margin-bottom: 16px;
+
+  &:hover {
+    color: var(--g-color-text-primary);
+  }
+}
+
+.linkBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 8px;
+
+  a {
+    color: var(--g-color-text-link);
+    text-decoration: none;
+    font-size: 14px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.body {
+  margin-top: 24px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+// -----------------------------------------------------------------------------
+// /apps/[slug] — bespoke detail layout (mirrors upstream
+// /projects/<slug>): dark navy hero + 2-column body with builders sidebar.
+// -----------------------------------------------------------------------------
+
+.detailHero {
+  position: relative;
+  width: 100%;
+  // Navy → lime gradient. Echoes the upstream hero where the lower-right
+  // corner gets a lime tint (the joy color bleeds into the page header).
+  background:
+    radial-gradient(circle at 92% 110%, rgba(224, 255, 79, 0.32) 0%, transparent 55%),
+    linear-gradient(135deg, #0a1822 0%, #122638 60%, #1d3a55 100%);
+  color: #ffffff;
+  border-bottom: 1px solid var(--g-color-line-generic);
+}
+
+.detailHeroInner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 56px 24px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.heroBackLink {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  margin-bottom: 8px;
+
+  &:hover {
+    color: #ffffff;
+  }
+}
+
+.heroPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.pillNeutral {
+  background: rgba(255, 255, 255, 0.92);
+  color: #052b42;
+}
+
+.pillFeatured {
+  background: rgba(91, 140, 255, 0.95);
+  color: #ffffff;
+}
+
+.pillAward {
+  background: var(--nb-color-highlight, #e0ff4f);
+  color: #052b42;
+}
+
+.heroTitle {
+  margin: 12px 0 0;
+  font-size: clamp(36px, 5.5vw, 60px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: #ffffff;
+  max-width: 22ch;
+}
+
+.heroTagline {
+  margin: 8px 0 0;
+  font-size: clamp(16px, 1.6vw, 19px);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 60ch;
+  font-weight: 500;
+}
+
+// -----------------------------------------------------------------------------
+// Body: 2-column at ≥900px, stacked below
+// -----------------------------------------------------------------------------
+
+.detailBody {
+  background: var(--g-color-base-background);
+}
+
+.detailBodyInner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 56px 24px 80px;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 48px;
+}
+
+@media (max-width: 899px) {
+  .detailBodyInner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 40px 24px 64px;
+  }
+}
+
+.detailMain {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detailH2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--g-color-text-primary);
+}
+
+.detailH3 {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--g-color-text-secondary);
+}
+
+.detailDesc {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--g-color-text-primary);
+  white-space: pre-line;
+}
+
+.detailLinkRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.detailTechBlock {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detailTagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.detailStars {
+  margin-top: 16px;
+}
+
+// -----------------------------------------------------------------------------
+// Sidebar
+// -----------------------------------------------------------------------------
+
+.detailSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidebarCard {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebarH3 {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--g-color-text-secondary);
+}
+
+.sidebarBody {
+  margin: 0;
+  font-size: 14px;
+  color: var(--g-color-text-primary);
+  line-height: 1.5;
+}
+
+.sidebarLink {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--g-color-text-link);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Builder list inside the Builders card
+.builderList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.builderRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.builderMeta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.builderName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--g-color-text-primary);
+  text-decoration: none;
+  line-height: 1.3;
+
+  &:hover {
+    color: var(--g-color-text-link);
+  }
+}
+
+.builderHandle {
+  font-size: 12px;
+  color: var(--g-color-text-secondary);
+  margin-top: 2px;
+}
+
+.builderTeamHint {
+  font-size: 12px;
+  color: var(--g-color-text-secondary);
+  padding-top: 6px;
+  border-top: 1px solid var(--g-color-line-generic);
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--nb-color-private-navyblue-100, rgba(5, 43, 66, 0.1));
+  color: var(--nb-color-private-navyblue-1000, #052b42);
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+// CTA card — dark navy version that pops at the bottom of the sidebar
+.sidebarCta {
+  background: #122638 !important;
+  color: rgba(255, 255, 255, 0.92);
+  gap: 10px;
+}
+
+.ctaCardTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.ctaCardBody {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.78);
+}

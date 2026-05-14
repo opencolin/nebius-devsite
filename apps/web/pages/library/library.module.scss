@@ -1,0 +1,237 @@
+// /library — index card grid + detail page styles.
+//
+// Cards mirror the upstream nebius-builders-3 design: a colored cover area
+// with overlaid icon at the top, then header / body / footer below.
+
+// -----------------------------------------------------------------------------
+// Card grid
+// -----------------------------------------------------------------------------
+
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--g-color-base-float);
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: var(--g-border-radius-l);
+  overflow: hidden;
+  transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+
+  &:hover {
+    border-color: var(--nb-color-private-navyblue-300, rgba(5, 43, 66, 0.3));
+    box-shadow: var(--g-shadow-soft);
+    transform: translateY(-1px);
+  }
+}
+
+// Cover area — aspect-video block at the top of every card, with a
+// type-specific gradient and a centered icon overlay.
+.cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.coverWorkshop {
+  background: linear-gradient(135deg, #122638 0%, #1f4a3a 55%, #84cc16 100%);
+}
+
+.coverVideo {
+  background: linear-gradient(135deg, #122638 0%, #1d3a55 50%, #28527a 100%);
+}
+
+.coverRepo {
+  background:
+    radial-gradient(circle at 90% 90%, rgba(224, 255, 79, 0.4) 0%, transparent 55%),
+    linear-gradient(135deg, #2c3a44 0%, #1f2a32 100%);
+}
+
+.coverIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+
+  // Nudge the play icon's optical center right since the triangle has
+  // more visual mass on the right edge.
+  > svg path[d^='M7'] {
+    transform: translateX(1.5px);
+  }
+}
+
+// Card header (pills row) — sits below the cover.
+.cardHead {
+  padding: 14px 16px 0;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cardBody {
+  padding: 10px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--g-color-text-primary);
+}
+
+.cardBlurb {
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+.cardFooter {
+  padding: 12px 16px 16px;
+  border-top: 1px solid var(--g-color-line-generic);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cardMeta {
+  font-size: 12px;
+}
+
+// -----------------------------------------------------------------------------
+// Detail page
+// -----------------------------------------------------------------------------
+
+.detailHeader {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--g-color-line-generic);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.backLink {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--g-color-text-secondary);
+  text-decoration: none;
+  margin-bottom: 16px;
+
+  &:hover {
+    color: var(--g-color-text-primary);
+  }
+}
+
+// YouTube iframe wrapper — responsive 16:9 container that holds the player
+// edge-to-edge inside the narrow content column.
+.videoEmbed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 24px 0 32px;
+  border-radius: var(--g-border-radius-l);
+  overflow: hidden;
+  background: #000;
+  border: 1px solid var(--g-color-line-generic);
+
+  > iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+}
+
+.markdown {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--g-color-text-primary);
+
+  h1, h2, h3, h4 {
+    margin-top: 1.6em;
+    margin-bottom: 0.6em;
+    line-height: 1.2;
+    color: var(--g-color-text-primary);
+  }
+  h1 { font-size: 28px; }
+  h2 { font-size: 22px; }
+  h3 { font-size: 18px; }
+
+  p {
+    margin: 0 0 1em;
+  }
+
+  ul, ol { padding-left: 22px; margin: 0 0 1em; }
+  li { margin: 0.25em 0; }
+
+  table {
+    border-collapse: collapse;
+    margin: 1em 0;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid var(--g-color-line-generic);
+    padding: 6px 12px;
+    text-align: left;
+  }
+
+  pre {
+    background: var(--g-color-base-misc-light);
+    padding: 12px 16px;
+    border-radius: var(--g-border-radius-m);
+    overflow-x: auto;
+    font-size: 13px;
+  }
+  code {
+    background: var(--g-color-base-misc-light);
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-size: 0.92em;
+  }
+  pre code { background: transparent; padding: 0; }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--g-color-line-generic);
+    margin: 2em 0;
+  }
+
+  a {
+    color: var(--g-color-text-link);
+    &:hover { text-decoration: underline; }
+  }
+}

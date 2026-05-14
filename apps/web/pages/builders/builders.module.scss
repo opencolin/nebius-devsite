@@ -1,0 +1,61 @@
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.search {
+  flex: 1;
+  min-width: 240px;
+}
+
+.count {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.card {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.headRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.bio {
+  flex: 1;
+}
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--g-color-line-generic);
+
+  a {
+    color: var(--g-color-text-link);
+    text-decoration: none;
+    font-size: 12px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

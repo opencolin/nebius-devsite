@@ -1,0 +1,30 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "apps/web", "run", "dev"],
+      "port": 3000,
+      "autoPort": false
+    },
+    {
+      "name": "directus",
+      "runtimeExecutable": "docker",
+      "runtimeArgs": ["compose", "-f", "infra/docker-compose.yml", "up", "directus"],
+      "port": 8055
+    },
+    {
+      "name": "typesense",
+      "runtimeExecutable": "docker",
+      "runtimeArgs": ["compose", "-f", "infra/docker-compose.yml", "up", "typesense"],
+      "port": 8108
+    },
+    {
+      "name": "mailcatcher",
+      "runtimeExecutable": "docker",
+      "runtimeArgs": ["compose", "-f", "infra/docker-compose.yml", "up", "mailcatcher"],
+      "port": 1080
+    }
+  ]
+}

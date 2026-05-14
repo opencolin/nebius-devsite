@@ -1,0 +1,56 @@
+// Bold, unmissable banner. Purple background mirrors nebius.com's "Early
+// Talent Program" announcement strip; lime "MOCKUP FOR REVIEW" badge picks
+// up the brand joy color so reviewers see it before anything else.
+
+.root {
+  width: 100%;
+  background: #6244ff;     // matches nebius.com's announcement-strip purple
+  color: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 8px 24px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.badge {
+  flex-shrink: 0;
+  display: inline-block;
+  padding: 2px 8px;
+  background: var(--nb-color-highlight);
+  // Use a hard-coded navy here, not --nb-color-private-navyblue-1000:
+  // that variable inverts to near-white in dark mode (text-on-dark scale),
+  // which would render white-on-lime and become unreadable.
+  color: #052b42;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: var(--g-border-radius-xs);
+}
+
+.copy {
+  flex: 1 1 auto;
+  min-width: 200px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.link {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+  flex-shrink: 0;
+
+  &:hover {
+    color: var(--nb-color-highlight);
+  }
+}

@@ -1,0 +1,42 @@
+# deps
+node_modules/
+.pnp/
+.pnp.js
+
+# next
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# env
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# editors
+.vscode/
+.idea/
+.DS_Store
+
+# docker volumes (mounted into infra/data when COMPOSE_PROJECT_NAME is set)
+infra/data/
+
+# directus
+apps/directus/uploads/
+apps/directus/extensions/*/dist/
+
+# typesense
+infra/typesense-data/
+
+# misc
+coverage/
+.cache/
+.gstack/

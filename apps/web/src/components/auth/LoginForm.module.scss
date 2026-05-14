@@ -1,0 +1,383 @@
+// Login layout — mirrors the Nebius Token Factory login screen.
+//
+// Two columns at ≥900px (dark banner | gradient + white card), stacked at
+// <900px. The dark banner background and card paddings are taken from
+// computed styles on the upstream page (verified 2026-05-14).
+
+// -----------------------------------------------------------------------------
+// Layout shell
+// -----------------------------------------------------------------------------
+
+.layout {
+  display: flex;
+  width: 100%;
+  // Fill the viewport minus the MockupBanner. The banner is ~36px tall in
+  // light mode, slightly more in dark; min-height keeps the gradient panel
+  // tall on short viewports without forcing scroll on tall ones.
+  min-height: calc(100vh - 36px);
+  background: #122638; // matches banner so it doesn't peek on flash-of-unstyled
+  overflow: hidden;
+}
+
+@media (max-width: 899px) {
+  .layout {
+    flex-direction: column;
+    min-height: calc(100vh - 36px);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Left: dark banner with the lockup + headline
+// -----------------------------------------------------------------------------
+
+.banner {
+  flex: 0 0 33%;
+  max-width: 480px;
+  min-width: 360px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 40px 32px;
+  background: #122638;
+  color: rgba(255, 255, 255, 0.95);
+  position: relative;
+}
+
+@media (max-width: 899px) {
+  .banner {
+    flex: 0 0 auto;
+    max-width: none;
+    min-width: 0;
+    width: 100%;
+    padding: 16px 24px 24px;
+  }
+}
+
+.lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px 4px 4px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  text-decoration: none;
+  color: inherit;
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color 120ms ease, background 120ms ease;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+// The Nebius mark already ships as a lime pill with navy NEBIUS text — it
+// reads great on dark, so no filter. Sized to match the Token Factory
+// upstream lockup (28px tall pill).
+.lockupMark {
+  display: block;
+  height: 28px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.lockupDivider {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1;
+}
+
+.lockupBadge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nb-color-highlight, #e0ff4f);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(224, 255, 79, 0.45);
+  border-radius: 999px;
+  line-height: 1;
+}
+
+.bannerCopy {
+  // Center the headline + lede vertically in the remaining space below
+  // the lockup. Matches upstream where the headline sits ~40% down the
+  // dark panel rather than at the very bottom.
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 899px) {
+  .bannerCopy {
+    margin: 16px 0 0;
+    padding: 0;
+  }
+}
+
+.bannerTitle {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.bannerLede {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 36ch;
+}
+
+
+// -----------------------------------------------------------------------------
+// Right: gradient + card
+// -----------------------------------------------------------------------------
+
+.main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  background-color: #d0ffc4; // fallback to the SVG's first stop
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+@media (max-width: 899px) {
+  .main {
+    flex: 1 0 auto;
+    padding: 32px 16px 56px;
+  }
+}
+
+// Wrapper from <ThemeProvider rootClassName>. Gravity's `g-root` paints a
+// background using `--g-color-base-background` (which Nebius overrides to
+// the warm off-white) — that beats the gradient panel below it. We force
+// transparent so the gradient shows through, and use flex so the card
+// stays centered inside the right panel.
+.cardScope {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: transparent !important;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  padding: 36px;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 1px 2px rgba(5, 43, 66, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (max-width: 899px) {
+  .card {
+    padding: 28px 24px;
+  }
+}
+
+.cardHead {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 26px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #111c30;
+}
+
+.cardTagline {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #5a6478;
+}
+
+// -----------------------------------------------------------------------------
+// OAuth-style buttons
+// -----------------------------------------------------------------------------
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.oauthBtn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  height: 44px;
+  padding: 0 24px;
+  border-radius: 999px;
+  border: 1px solid rgba(5, 43, 66, 0.15);
+  background: #ffffff;
+  color: #111c30;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease, transform 80ms ease;
+
+  &:hover {
+    border-color: rgba(5, 43, 66, 0.35);
+    background: #fafbfc;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #5b8cff;
+    outline-offset: 2px;
+  }
+}
+
+.oauthIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+// -----------------------------------------------------------------------------
+// Email/password fallback
+// -----------------------------------------------------------------------------
+
+.emailLink {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 4px;
+  margin: -4px auto 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #5b6b86;
+  font-family: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+
+  &:hover {
+    color: #111c30;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: -8px; // compensate the card gap so the form sits tight
+}
+
+.formHint {
+  margin: 0 0 4px;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.45;
+  background: #f3f6fc;
+  border: 1px solid #dde6f5;
+  border-radius: 12px;
+  color: #2c3e60;
+}
+
+.error {
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #b3261e;
+  background: #fdecea;
+  border: 1px solid #f5c2bf;
+  border-radius: 12px;
+}
+
+.cancel {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 4px;
+  margin: 4px auto 0;
+  font-size: 13px;
+  color: #5b6b86;
+  font-family: inherit;
+  cursor: pointer;
+
+  &:hover {
+    color: #111c30;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Footer
+// -----------------------------------------------------------------------------
+
+.privacy {
+  margin: 0;
+  text-align: left;
+  font-size: 12px;
+  color: #5a6478;
+  line-height: 1.5;
+}
+
+.privacyLink {
+  color: #5a3df6;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Dark mode — lighten the banner just enough to keep it from disappearing
+// into the dark-mode page background, and tone down the gradient panel.
+// -----------------------------------------------------------------------------
+
+:global(.g-root_theme_dark) {
+  .layout {
+    background: #0a1822;
+  }
+
+  .banner {
+    background: #0a1822;
+  }
+
+  .card {
+    background: #ffffff; // keep card light — the upstream stays light too
+  }
+}

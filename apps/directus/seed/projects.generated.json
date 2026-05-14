@@ -1,0 +1,1984 @@
+[
+  {
+    "slug": "jetbrains-thinking",
+    "title": "thinking",
+    "tagline": "Self-healing coding agent that searches over compact DSL implementation plans before generating code.",
+    "description": "Self-healing coding agent that searches over compact DSL implementation plans before generating code. LLM proposes semantic reasoning branches, Rainbow RL controller learns which branch to select / refine / backtrack from. Matches Codex 5.4 Low's 80% solve rate using ~140x fewer tokens, ~4x faster.",
+    "builder_handle": "aditya-mangalampalli",
+    "members": 1,
+    "tags": [
+      "rl",
+      "agents",
+      "codex"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/amangalampalli/hyperreasoning",
+    "stars": 0,
+    "featured": true,
+    "hackathon": "jetbrains",
+    "award": "winner",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-scopecreep",
+    "title": "Scopecreep",
+    "tagline": "Turns JetBrains IDE into an agentic hardware testbench.",
+    "description": "Turns JetBrains IDE into an agentic hardware testbench. Describe a test in plain English; an AI agent writes Python directly into the project, runs it against real lab instruments (Digilent Analog Discovery, FNIRSI DPS-150 PSU), and drops a timestamped results file back into the project tree.",
+    "builder_handle": "bhavik-sheoran",
+    "members": 4,
+    "tags": [
+      "python",
+      "typescript",
+      "agents",
+      "jetbrains"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/BhavikFTW/Scopecreep",
+    "stars": 0,
+    "featured": true,
+    "hackathon": "jetbrains",
+    "award": "runner-up",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-mesh-code",
+    "title": "Mesh Code",
+    "tagline": "Shared session state for coding agents.",
+    "description": "Shared session state for coding agents. Install mesh-code-mcp in any IDE and any agent — Claude, Cursor, Codex — sees the same feature card, event ledger, and decisions. Resume mid-sentence across machines.",
+    "builder_handle": "ayush-ojha",
+    "members": 4,
+    "tags": [
+      "typescript",
+      "agents",
+      "codex"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/ayushozha/mesh-code",
+    "stars": 0,
+    "featured": true,
+    "hackathon": "jetbrains",
+    "award": "3rd",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-latent-signal",
+    "title": "Latent Signal",
+    "tagline": "Periscope is a local-first viewer that shows exactly what's in your coding agent's context window, turn by turn, and recommends the next move (compact / branch / fresh / rewind).",
+    "description": "Periscope is a local-first viewer that shows exactly what's in your coding agent's context window, turn by turn, and recommends the next move (compact / branch / fresh / rewind). JetBrains plugin + Go server + SQLite + Svelte SPA.",
+    "builder_handle": "ann-catherine-jose",
+    "members": 2,
+    "tags": [
+      "agents",
+      "jetbrains"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/latentsignal-org/periscope",
+    "stars": 0,
+    "featured": true,
+    "hackathon": "jetbrains",
+    "award": "finalist",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-secureloop",
+    "title": "SecureLoop",
+    "tagline": "Turns production Sentry alerts into Codex-generated, sandbox-tested, human-approved fixes inside JetBrains.",
+    "description": "Turns production Sentry alerts into Codex-generated, sandbox-tested, human-approved fixes inside JetBrains.",
+    "builder_handle": "peyton-li",
+    "members": 3,
+    "tags": [
+      "typescript",
+      "jetbrains",
+      "codex"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/PeytonLi/JBHack",
+    "stars": 0,
+    "featured": true,
+    "hackathon": "jetbrains",
+    "award": "finalist",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-pinpoint",
+    "title": "Pinpoint",
+    "tagline": "Visual annotation overlay for frontend review — pinpoint things in complex software.",
+    "description": "Visual annotation overlay for frontend review — pinpoint things in complex software.",
+    "builder_handle": "het-patel",
+    "members": 1,
+    "tags": [],
+    "product_focus": [],
+    "repo_url": "https://github.com/hetpatel-11/Pinpoint.git",
+    "stars": 0,
+    "featured": true,
+    "hackathon": "jetbrains",
+    "award": "finalist",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-test",
+    "title": "Test",
+    "tagline": "Test entry.",
+    "description": "Test entry.",
+    "builder_handle": "nathan-maton",
+    "members": 1,
+    "tags": [],
+    "product_focus": [],
+    "repo_url": "https://github.com/NathanMaton/deal-analyzer#",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-runtimefix",
+    "title": "RuntimeFix",
+    "tagline": "Debugger-aware bug-fixing agent that actually sees what broke.",
+    "description": "Debugger-aware bug-fixing agent that actually sees what broke.",
+    "builder_handle": "nelson-lai",
+    "members": 1,
+    "tags": [
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/chinesepowered/hack-jetbrains",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-dronomy",
+    "title": "dronomy",
+    "tagline": "AI agent that migrates production ROS1 codebases (44 packages, 3,773 breaking changes) to ROS2 Jazzy.",
+    "description": "AI agent that migrates production ROS1 codebases (44 packages, 3,773 breaking changes) to ROS2 Jazzy. Generates multi-file edits from one natural-language instruction, validates with real colcon build in Docker, iterates on errors via o4-mini. 1,595 findings reviewed; 28/28 packages building clean.",
+    "builder_handle": "suvasis-mukherjee",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "ros2",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/dronomyio/ros1_to_ros2_migration_agent.git",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-doubley",
+    "title": "DoubleY",
+    "tagline": "IntelliJ plugin that scans a React project and draws an interactive component graph in a side panel — beginners see parent-child structure at a glance and jump to source from nodes.",
+    "description": "IntelliJ plugin that scans a React project and draws an interactive component graph in a side panel — beginners see parent-child structure at a glance and jump to source from nodes.",
+    "builder_handle": "yue-chen",
+    "members": 2,
+    "tags": [
+      "react",
+      "jetbrains"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/YiZhang527/react-flow-visualizer",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-goldfish",
+    "title": "goldfish",
+    "tagline": "Evolving AI agent that learns from every interaction — builds a persistent understanding of preferences, picks up new skills on the fly.",
+    "description": "Evolving AI agent that learns from every interaction — builds a persistent understanding of preferences, picks up new skills on the fly. Includes a JetBrains plugin.",
+    "builder_handle": "cal-cu",
+    "members": 1,
+    "tags": [
+      "agents",
+      "jetbrains"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/calcuis/goldfish",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-lintropy",
+    "title": "Lintropy",
+    "tagline": "Rust-based linter and LSP server that lets you define repo-specific rules in YAML using tree-sitter queries + regex.",
+    "description": "Rust-based linter and LSP server that lets you define repo-specific rules in YAML using tree-sitter queries + regex. Bundled SKILL.md teaches agents the rule schema, so they can author new rules from English and fix violations in a write→lint→fix loop via the LSP.",
+    "builder_handle": "jelle-maas",
+    "members": 2,
+    "tags": [
+      "typescript",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/Typiqally/lintropy",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-speedrunner",
+    "title": "SpeedRunner",
+    "tagline": "AI-assisted, human-governed incident response system that cuts P1 outage response and resolution times in half.",
+    "description": "AI-assisted, human-governed incident response system that cuts P1 outage response and resolution times in half. Eliminates triage slop, accelerates root cause analysis, enforces safe auditable remediation.",
+    "builder_handle": "irina-poslavsky",
+    "members": 1,
+    "tags": [
+      "typescript"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/kotrie/nopCommerce",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-phantom",
+    "title": "Phantom",
+    "tagline": "PR Autopilot — AI code review suite that analyzes every pull request for architectural integrity, deployment risk, and technical debt.",
+    "description": "PR Autopilot — AI code review suite that analyzes every pull request for architectural integrity, deployment risk, and technical debt. Web dashboard + CI/CD CLI with line-level GitHub feedback.",
+    "builder_handle": "vince-r",
+    "members": 1,
+    "tags": [],
+    "product_focus": [],
+    "repo_url": "https://github.com/lgcy-official/Phatom-PR-Autopilot",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-guardia",
+    "title": "Guardia",
+    "tagline": "Deployment risk copilot integrated in JetBrains IDE that proactively alerts about risks before deployment.",
+    "description": "Deployment risk copilot integrated in JetBrains IDE that proactively alerts about risks before deployment. Grounded in DataDog data + prior incident history; identifies the exact line of code that would break the codebase. Codex as the reasoning layer.",
+    "builder_handle": "steven-yang",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "jetbrains",
+      "codex"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/stevenybuilder/guardia",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-team-rankguard",
+    "title": "Team RankGuard",
+    "tagline": "Context-aware adversarial testing for ML and ranking pipelines, built into the JetBrains IDE via External Tools.",
+    "description": "Context-aware adversarial testing for ML and ranking pipelines, built into the JetBrains IDE via External Tools. OpenAI GPT-4o generates pytest harnesses for adversarial cases.",
+    "builder_handle": "isha-s",
+    "members": 1,
+    "tags": [
+      "jetbrains"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/GenieCode/rankguard-jetbrains-hackathon/",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-sky-is-blue",
+    "title": "Sky is Blue",
+    "tagline": "VS Code extension that shows in real time whether your transformer training is compute- or memory-bound.",
+    "description": "VS Code extension that shows in real time whether your transformer training is compute- or memory-bound. Auto-detects model architecture, plots ops on a live roofline chart, suggests optimizations via GPT-4o.",
+    "builder_handle": "sai-kavya",
+    "members": 1,
+    "tags": [
+      "typescript"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/MarthalaSaiKavya/roofline-analyzer",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-hindsight",
+    "title": "Hindsight",
+    "tagline": "Local-first memory layer for AI coding.",
+    "description": "Local-first memory layer for AI coding. Tracks coding attempts inside JetBrains (edits, test runs, failures, reverts) and turns them into structured attempt history. MCP integration so agents can query prior attempts before trying a new fix.",
+    "builder_handle": "shazil-farukh",
+    "members": 3,
+    "tags": [
+      "typescript",
+      "agents",
+      "jetbrains"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/elbionredenica/hindsight",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-redgreen",
+    "title": "RedGreen",
+    "tagline": "JetBrains plugin that turns the IDE into a self-healing runtime.",
+    "description": "JetBrains plugin that turns the IDE into a self-healing runtime. PyCharm debugger trips an exception → races four models in parallel with different \"hypothesis lenses\" → runs all candidates through Runner / Peers / Regression / Review gates → applies the survivor as a one-click gutter inlay. Built on Nebius for the racing models.",
+    "builder_handle": "rudy-a",
+    "members": 3,
+    "tags": [
+      "jetbrains"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/rudranshagrawal/redgreen",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains"
+  },
+  {
+    "slug": "jetbrains-quasa0-com",
+    "title": "quasa0.com",
+    "tagline": "JetBrains plugin in WebStorm that turns the IDE into a hands-free voice coding partner.",
+    "description": "JetBrains plugin in WebStorm that turns the IDE into a hands-free voice coding partner. Talk naturally; OpenAI Realtime API → Codex executes inside the IDE.",
+    "builder_handle": "anatolii-zhukovskyi",
+    "members": 1,
+    "tags": [
+      "voice",
+      "jetbrains",
+      "codex"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/quasa0/VoiceCodex",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-tatergang",
+    "title": "TaterGang",
+    "tagline": "Plannotator Live — collaborative plan-review surface for agentic engineering.",
+    "description": "Plannotator Live — collaborative plan-review surface for agentic engineering. Multi-player workspace where humans and agents align on the plan upfront with end-to-end zero-knowledge encryption.",
+    "builder_handle": "michael-ramos",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/backnotprop/plannotator/pull/591",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-chainmail",
+    "title": "ChainMail",
+    "tagline": "Council of specialized models deliberates and votes before any AI-generated change touches the codebase.",
+    "description": "Council of specialized models deliberates and votes before any AI-generated change touches the codebase. Three MoE models on Nebius Token Factory (Qwen3 235B, Nemotron Ultra 253B, Nemotron 120B). FIDO2 hardware-key human verification + hash-chained audit trail.",
+    "builder_handle": "daniel-kaneshiro",
+    "members": 1,
+    "tags": [],
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "repo_url": "https://github.com/ChainMailGlobal/chainmail-council",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains"
+  },
+  {
+    "slug": "jetbrains-true",
+    "title": "TRUE",
+    "tagline": "No review bottlenecks, no merge conflicts, no broken tests.",
+    "description": "No review bottlenecks, no merge conflicts, no broken tests. Verification-gated Codex runs from inside JetBrains via the CBC plugin. Vercel hosts dashboard + SSE run-streaming API; Supabase as a ledger mirror.",
+    "builder_handle": "yahya-alhinai",
+    "members": 3,
+    "tags": [
+      "typescript",
+      "jetbrains",
+      "codex",
+      "supabase",
+      "vercel"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/yhinai/true",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-dav-yaginuma",
+    "title": "Dav Yaginuma",
+    "tagline": "Plugin that adds a Spatial pane to the IDE plus MCP commands so an agent can render anything in 3D spatial visualizations — projects, algorithms, narratives.",
+    "description": "Plugin that adds a Spatial pane to the IDE plus MCP commands so an agent can render anything in 3D spatial visualizations — projects, algorithms, narratives. Works with WebXR.",
+    "builder_handle": "dav-yaginuma",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/dav/IntelliJSpatialPlugin",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-above-permanent-underclass",
+    "title": "above permanent underclass",
+    "tagline": "Local-first security review plugin and workflow for Codex — builds a repo-wide security model, saves a trusted baseline, then compares working state to surface newly introduced attack vectors.",
+    "description": "Local-first security review plugin and workflow for Codex — builds a repo-wide security model, saves a trusted baseline, then compares working state to surface newly introduced attack vectors.",
+    "builder_handle": "pranjal-paliwal",
+    "members": 1,
+    "tags": [
+      "codex"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/betterclever/shipsec-local",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-af",
+    "title": "AF*",
+    "tagline": "AI Forward-Deployed Engineer for ERP data ingestion — onboards unknown ERP systems automatically using multiple agents that research, improve iteratively, and deploy the pipeline.",
+    "description": "AI Forward-Deployed Engineer for ERP data ingestion — onboards unknown ERP systems automatically using multiple agents that research, improve iteratively, and deploy the pipeline.",
+    "builder_handle": "div-agarwal",
+    "members": 4,
+    "tags": [
+      "typescript",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/Lendica-PlayGround/erp-data-ingestion",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-rodex",
+    "title": "Rodex",
+    "tagline": "Cursor-style IDE that uses 4 AI agents (Nebius coding model + Blaxel sandboxes) for real-time security analysis, bug detection, and autonomous fix application on Python codebases.",
+    "description": "Cursor-style IDE that uses 4 AI agents (Nebius coding model + Blaxel sandboxes) for real-time security analysis, bug detection, and autonomous fix application on Python codebases.",
+    "builder_handle": "yuvraj-gupta",
+    "members": 2,
+    "tags": [
+      "python",
+      "typescript",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/YuvrajGupta1808/Rodex-IDE",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains"
+  },
+  {
+    "slug": "jetbrains-visualcode",
+    "title": "VisualCode",
+    "tagline": "Turns a simple user request into a structured plan and visualizes it as a growing tree graph — branches show what the agent intends to build and how the project is organized.",
+    "description": "Turns a simple user request into a structured plan and visualizes it as a growing tree graph — branches show what the agent intends to build and how the project is organized.",
+    "builder_handle": "barkley-dai",
+    "members": 1,
+    "tags": [
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/degaulle/visualcode",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-nikhil-s-team",
+    "title": "Nikhil's Team",
+    "tagline": "Two-tool platform: Excel + PPT template → executive-ready slide deck (for non-technical users) and feature-request → AI-generated diff → human-approved deploy (for technical users).",
+    "description": "Two-tool platform: Excel + PPT template → executive-ready slide deck (for non-technical users) and feature-request → AI-generated diff → human-approved deploy (for technical users).",
+    "builder_handle": "nikhil-tarigonda",
+    "members": 1,
+    "tags": [],
+    "product_focus": [],
+    "repo_url": "https://github.com/Nikhilt2910/deckcreator/",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-omnidev",
+    "title": "OmniDev",
+    "tagline": "Background coding agent you can hear, talk to, carry.",
+    "description": "Background coding agent you can hear, talk to, carry. Vercel Sandbox + GitHub App + Supabase for state. Narrates reasoning via Gemini Live; calls your phone via Twilio when blocked. Native macOS menu-bar overlay + Tauri desktop shell. Nebius-hosted models for reasoning.",
+    "builder_handle": "ming-lu",
+    "members": 2,
+    "tags": [
+      "agents",
+      "voice",
+      "supabase",
+      "vercel"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/rithm84/OmniDev",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains"
+  },
+  {
+    "slug": "jetbrains-memorylint",
+    "title": "MemoryLint",
+    "tagline": "IDE-native trust + governance layer for AI-written code in JetBrains.",
+    "description": "IDE-native trust + governance layer for AI-written code in JetBrains. AuthZed/SpiceDB for governed recall, Nebius Token Factory for multi-model consensus on high-severity decisions, Supabase for evidence packs, Neo4j for provenance/blast-radius.",
+    "builder_handle": "sidra-miconi",
+    "members": 1,
+    "tags": [
+      "jetbrains",
+      "supabase"
+    ],
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "repo_url": "https://github.com/Sidra/memorylint-hack",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains"
+  },
+  {
+    "slug": "jetbrains-berkeley-baris-boys",
+    "title": "Berkeley Baris Boys",
+    "tagline": "Blueprint — PyCharm plugin that helps developers plan a codebase architecturally before implementation.",
+    "description": "Blueprint — PyCharm plugin that helps developers plan a codebase architecturally before implementation. Editable Mermaid UML view; AI-assisted side chat refines design; converts design into scoped, dependency-aware implementation nodes with diff preview + apply.",
+    "builder_handle": "noah-lund-syrdal",
+    "members": 4,
+    "tags": [
+      "typescript",
+      "jetbrains"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/NoahLundSyrdal/blueprint",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-artificial-sixy",
+    "title": "Artificial Sixy",
+    "tagline": "Adaptive Change Harness — self-evolving verification + repair system for real codebases.",
+    "description": "Adaptive Change Harness — self-evolving verification + repair system for real codebases. Discovers latent failures, repairs with grounded context, validates deterministically, and converts validated fixes into reusable repair skills.",
+    "builder_handle": "hades-li",
+    "members": 1,
+    "tags": [
+      "typescript"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/Hades-HY-LI/Adaptive-Change-Harness",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-jetbio",
+    "title": "JetBio",
+    "tagline": "Reimagined IDE for computational biology that treats biological correctness as a debugging target.",
+    "description": "Reimagined IDE for computational biology that treats biological correctness as a debugging target. BioTrace (root cause), BioFuzz (synthetic edge cases), BioReview (peer-reviewer-style review). Powered by Nebius.",
+    "builder_handle": "mahtabin-rodela",
+    "members": 1,
+    "tags": [
+      "typescript"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/AUW160150/JetBrain",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains"
+  },
+  {
+    "slug": "jetbrains-code-lingua",
+    "title": "Code Lingua",
+    "tagline": "Code with voice in non-English Indic languages (Tamil, Hindi, Bengali).",
+    "description": "Code with voice in non-English Indic languages (Tamil, Hindi, Bengali). IntelliJ plugin: Alt+Shift+R records, Alt+Shift+S submits to backend that runs codex exec against the project root. Powered by Nebius.",
+    "builder_handle": "kaushik-sivakumar",
+    "members": 3,
+    "tags": [
+      "typescript",
+      "voice",
+      "jetbrains",
+      "codex"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/KaushikSiva/lingua-code",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains"
+  },
+  {
+    "slug": "jetbrains-bug-bounties",
+    "title": "Bug Bounties",
+    "tagline": "Research project on AI-agent danger to software.",
+    "description": "Research project on AI-agent danger to software. Describes danger level, learns from it, creates mitigation patterns, builds honeypots, ethically attacks agents.",
+    "builder_handle": "deon-menezes",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/deonmenezes/bug-bounty",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-safevibing",
+    "title": "Safevibing",
+    "tagline": "Reviews vibe-coded repository output for security, design quality, explainability, and engineering metrics.",
+    "description": "Reviews vibe-coded repository output for security, design quality, explainability, and engineering metrics.",
+    "builder_handle": "emahatsion-issac",
+    "members": 1,
+    "tags": [],
+    "product_focus": [],
+    "repo_url": "https://github.com/amahaeitbit/saveVibing",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-volta",
+    "title": "Volta",
+    "tagline": "Skills for coding agents to run code systematically.",
+    "description": "Skills for coding agents to run code systematically.",
+    "builder_handle": "saurabh-khire",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/Saurabhkhire/vibe-coding-agent-extension",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "jetbrains-cue",
+    "title": "Cue",
+    "tagline": "A coding agent with as many tools as you need — handcrafted UI, your next move on cue.",
+    "description": "A coding agent with as many tools as you need — handcrafted UI, your next move on cue.",
+    "builder_handle": "sajjaad-farzad",
+    "members": 4,
+    "tags": [
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/sf-tools/cue",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "jetbrains",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-injester",
+    "title": "Injester",
+    "tagline": "Injester is an AI-native engine that transforms \"agent-hostile\" websites into structured data interfaces.",
+    "description": "Injester is an AI-native engine that transforms \"agent-hostile\" websites into structured data interfaces. While the web was built for human attention, our tool bridges the gap for LLMs by stripping 90% of token noise using Tavily and restructuring content via Nebius. Featuring a \"Karpathy Loop,\" the system autonomously iterates to improve task accuracy from $2/5$ to $5/5$. It's the essential layer for Agent Experience Optimization (AEO).",
+    "builder_handle": "alex-shirazi",
+    "members": 3,
+    "tags": [
+      "tavily",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/InjesterLol/Main",
+    "stars": 0,
+    "featured": true,
+    "hackathon": "robotics",
+    "award": "winner"
+  },
+  {
+    "slug": "robotics-chase-brignac",
+    "title": "Chase Brignac",
+    "tagline": "Generating the first human preference datasets for robot policies in simulation with Nebius GPUs to understand which policies work best in an objective way using ELO ratings and anti-cheating measures",
+    "description": "Generating the first human preference datasets for robot policies in simulation with Nebius GPUs to understand which policies work best in an objective way using ELO ratings and anti-cheating measures.",
+    "builder_handle": "chase-brignac",
+    "members": 2,
+    "tags": [
+      "typescript",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/runrobotics/runrobot",
+    "stars": 0,
+    "featured": true,
+    "hackathon": "robotics",
+    "award": "runner-up"
+  },
+  {
+    "slug": "robotics-robostore",
+    "title": "RoboStore",
+    "tagline": "RoboStore is a self-expanding robot agent platform that enables robots to autonomously detect their own capability gaps, search for hardware solutions in real-time using Nebius LLMs, and auto-generate",
+    "description": "RoboStore is a self-expanding robot agent platform that enables robots to autonomously detect their own capability gaps, search for hardware solutions in real-time using Nebius LLMs, and auto-generate integration code. Uses OpenClaw orchestrator coordinating SCOUT (Qwen2-VL-72B), PLANNER (Qwen3-235B), and SAFETY agents in parallel.",
+    "builder_handle": "joshua-iokua-albano",
+    "members": 3,
+    "tags": [
+      "typescript",
+      "agents",
+      "robotics"
+    ],
+    "product_focus": [
+      "openclaw"
+    ],
+    "repo_url": "https://github.com/joshuaiokua/nebius-hackathon",
+    "stars": 0,
+    "featured": true,
+    "hackathon": "robotics",
+    "award": "3rd"
+  },
+  {
+    "slug": "robotics-jimmy",
+    "title": "jimmy",
+    "tagline": "Voice-controlled Booster K1 humanoid robot.",
+    "description": "Voice-controlled Booster K1 humanoid robot. Robots that understand surroundings, location and mapping. Built with Python, ROS2, YOLOv8, Gemini Live.",
+    "builder_handle": "armin-foroughi",
+    "members": 2,
+    "tags": [
+      "python",
+      "typescript",
+      "ros2",
+      "robotics",
+      "voice"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/arminforoughi/nebius_k1",
+    "stars": 0,
+    "featured": true,
+    "hackathon": "robotics",
+    "award": "finalist",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-topology",
+    "title": "Topology",
+    "tagline": "Evolutionary agent-org discovery — 10 teams of LLM agents compete on a task with randomly generated organizational genomes (hierarchy, communication, decision-making).",
+    "description": "Evolutionary agent-org discovery — 10 teams of LLM agents compete on a task with randomly generated organizational genomes (hierarchy, communication, decision-making). Weakest dissolve, strongest mutate over 5 generations. Powered by DeepSeek-R1 on Nebius.",
+    "builder_handle": "nigel-robinson",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "deepseek",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/nxrobins/topology",
+    "stars": 0,
+    "featured": true,
+    "hackathon": "robotics",
+    "award": "finalist"
+  },
+  {
+    "slug": "robotics-asha",
+    "title": "Asha",
+    "tagline": "WhatsApp-native AI assistant for small home-based food businesses.",
+    "description": "WhatsApp-native AI assistant for small home-based food businesses. Helps owners manage orders and remember customers without apps or dashboards. Built on Llama via Nebius, Twilio for WhatsApp delivery, Supabase, Next.js.",
+    "builder_handle": "mohammed-misran",
+    "members": 3,
+    "tags": [
+      "llama",
+      "nextjs",
+      "supabase"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/misran3/asha",
+    "stars": 0,
+    "featured": true,
+    "hackathon": "robotics",
+    "award": "finalist"
+  },
+  {
+    "slug": "robotics-cgames-team",
+    "title": "cgames team",
+    "tagline": "AI Agent Red Team Security Testing — investigative gameplay where you gather evidence, undercover missions infiltrating a cartel, dynamic combat with stealth and strategy.",
+    "description": "AI Agent Red Team Security Testing — investigative gameplay where you gather evidence, undercover missions infiltrating a cartel, dynamic combat with stealth and strategy.",
+    "builder_handle": "solomon-ubani",
+    "members": 1,
+    "tags": [
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/vsuperfranchise/cartelfurypcgame.git",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-robo-chat",
+    "title": "Robo_chat",
+    "tagline": "Chat with robo — chat interface for a simulated robot.",
+    "description": "Chat with robo — chat interface for a simulated robot.",
+    "builder_handle": "sameer-shah",
+    "members": 1,
+    "tags": [
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/sameershah21",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-turtle",
+    "title": "turtle",
+    "tagline": "Train and deploy your own tiny image model in a flash.",
+    "description": "Train and deploy your own tiny image model in a flash.",
+    "builder_handle": "sam-sam",
+    "members": 2,
+    "tags": [],
+    "product_focus": [],
+    "repo_url": "https://github.com/mochiyaki/turtle",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-agent-human",
+    "title": "agent + human",
+    "tagline": "Bot reaches a waypoint based on streaming Pi camera data; logs success/failure to JSONL; an analyzer agent improves the bot's objective from the log.",
+    "description": "Bot reaches a waypoint based on streaming Pi camera data; logs success/failure to JSONL; an analyzer agent improves the bot's objective from the log. Runs on Nebius.",
+    "builder_handle": "seshadri-venkatesh",
+    "members": 1,
+    "tags": [
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/seshadribt24/nebius",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-skillclaw",
+    "title": "SkillClaw",
+    "tagline": "Multiple AI agents figure out robot manipulation by themselves — they try, fail, learn from failure.",
+    "description": "Multiple AI agents figure out robot manipulation by themselves — they try, fail, learn from failure. Solved skills get packaged as PRs, reviewed by an oversight agent, and added to a shared brain on Nebius. Currently 8 skills across 14 robotics benchmark tasks.",
+    "builder_handle": "lily-zhang",
+    "members": 2,
+    "tags": [
+      "typescript",
+      "agents",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/lilyzhng/SkillClaw",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-x-g1",
+    "title": "X-G1",
+    "tagline": "Rapid-iteration humanoid pipeline for the Unitree G1: Meta Quest 3 + MuJoCo teleop, NVIDIA Sonic for low-latency control, GR00T fine-tuning on Nebius, Nomadic AI for failure-mode diagnostics.",
+    "description": "Rapid-iteration humanoid pipeline for the Unitree G1: Meta Quest 3 + MuJoCo teleop, NVIDIA Sonic for low-latency control, GR00T fine-tuning on Nebius, Nomadic AI for failure-mode diagnostics.",
+    "builder_handle": "kaushik-sivakumar",
+    "members": 4,
+    "tags": [
+      "mujoco",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/AIBotTeachesAI/quest3-g1-teleop",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-thinktrace",
+    "title": "thinktrace",
+    "tagline": "Behavior-aware AI learning agent built around an Observe → Infer → Adapt → Remember loop.",
+    "description": "Behavior-aware AI learning agent built around an Observe → Infer → Adapt → Remember loop. Stores learner cognitive preferences as memory so future sessions start with a better teaching bias.",
+    "builder_handle": "shane-li",
+    "members": 2,
+    "tags": [
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/dliflc0617-sudo/thinktrace",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-electricgoat",
+    "title": "Electricgoat",
+    "tagline": "Prism — a private edge inference agent that refracts your biometric stream into a personal performance forecast and acts autonomously on your behalf.",
+    "description": "Prism — a private edge inference agent that refracts your biometric stream into a personal performance forecast and acts autonomously on your behalf.",
+    "builder_handle": "yaxin-wang",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/Electricgoatpod/prism",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-cdmo-bot-ketabalm",
+    "title": "CDMO.BOT / KETABALM",
+    "tagline": "Autonomous robotic compounding system that turns idle pharmaceutical cleanroom capacity into a distributed manufacturing network.",
+    "description": "Autonomous robotic compounding system that turns idle pharmaceutical cleanroom capacity into a distributed manufacturing network. Continuous Nebius LLM dosing agent + simulated Unitree G1 in Isaac Sim + validation layer, all without human intervention. Stack: Nebius Token Factory Llama 3.1 70B continuous inference, Nebius AI Cloud L40S.",
+    "builder_handle": "lorenzo-carver",
+    "members": 1,
+    "tags": [
+      "llama",
+      "agents",
+      "robotics"
+    ],
+    "product_focus": [
+      "tokenfactory",
+      "aicloud"
+    ],
+    "repo_url": "https://github.com/FludAI/cdmobot-backend",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-conman-agents",
+    "title": "ConMan Agents",
+    "tagline": "Autonomous contract intelligence for healthcare companies — agents continuously monitor all company contracts to identify changes (expiry, clauses, market developments) and proactively alert on next s",
+    "description": "Autonomous contract intelligence for healthcare companies — agents continuously monitor all company contracts to identify changes (expiry, clauses, market developments) and proactively alert on next steps.",
+    "builder_handle": "sabeen-shaikh",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/SabeenSF/autonomous-contract-monitor",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-dronomy-io",
+    "title": "dronomy.io",
+    "tagline": "Dockerized autonomous drone simulator with full robotics stack: 24-ray LiDAR SLAM, EKF state estimation, A* + DWA planning, 8-state FSM.",
+    "description": "Dockerized autonomous drone simulator with full robotics stack: 24-ray LiDAR SLAM, EKF state estimation, A* + DWA planning, 8-state FSM. Dual-mode RL correction agent with one-button toggle between Q-learning and live LLM policy on Nebius Token Factory (Llama 3.1 8B on H100s).",
+    "builder_handle": "suvasis-mukherjee",
+    "members": 1,
+    "tags": [
+      "llama",
+      "rl",
+      "agents",
+      "robotics"
+    ],
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "repo_url": "https://github.com/dronomyio/Hackathon_Autonomous_flight.git",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-horizon-min",
+    "title": "Horizon Min",
+    "tagline": "Fine-tunes a vision-language model to play classic NES Duck Hunt from raw pixels.",
+    "description": "Fine-tunes a vision-language model to play classic NES Duck Hunt from raw pixels.",
+    "builder_handle": "david-mayboroda",
+    "members": 1,
+    "tags": [
+      "vision"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/dmayboroda/horizon_min",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-noc-ai",
+    "title": "NOC AI",
+    "tagline": "AI-powered Network Operations Center — Prometheus alert fires, an LLM agent analyzes the threat and executes iptables rules via SSH, all visible in a real-time chat UI.",
+    "description": "AI-powered Network Operations Center — Prometheus alert fires, an LLM agent analyzes the threat and executes iptables rules via SSH, all visible in a real-time chat UI.",
+    "builder_handle": "mason-drake",
+    "members": 4,
+    "tags": [
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/MasonD-007/NOC_Agent",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-physprobe",
+    "title": "PhysProbe",
+    "tagline": "Self-improving robot skill framework that uses predictive world models for safer robots.",
+    "description": "Self-improving robot skill framework that uses predictive world models for safer robots. 8 world models benchmarked on Nebius Token Factory; Qwen3-235B wins at 90% accuracy in 696ms. AI swarm (Diagnostician → Inventor → Critic) invents new skills automatically.",
+    "builder_handle": "sidra-miconi",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "robotics"
+    ],
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "repo_url": "https://github.com/Sidra/physprobe-nebius",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-ghostfeed",
+    "title": "ghostfeed",
+    "tagline": "Agentically run social-media UGC company.",
+    "description": "Agentically run social-media UGC company.",
+    "builder_handle": "ilia-prikhodko",
+    "members": 1,
+    "tags": [],
+    "product_focus": [],
+    "repo_url": "https://github.com/agi-developr/ghostfeed",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-claw2max-mechdog-skill",
+    "title": "Claw2Max - MechDog skill",
+    "tagline": "Created an OpenClaw skill and simulator for the Hiwonder MechDog robot.",
+    "description": "Created an OpenClaw skill and simulator for the Hiwonder MechDog robot.",
+    "builder_handle": "max-maximilien",
+    "members": 1,
+    "tags": [
+      "robotics"
+    ],
+    "product_focus": [
+      "openclaw"
+    ],
+    "repo_url": "https://github.com/Maximilien-ai/mechdog-skill",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-clawdit",
+    "title": "Clawdit",
+    "tagline": "Auto-discovers an OpenClaw agent's linked Google account and makes it send malicious emails/calendar invites to itself.",
+    "description": "Auto-discovers an OpenClaw agent's linked Google account and makes it send malicious emails/calendar invites to itself. If the agent follows the hidden instructions, you have a vulnerability. Attack variants generated by Llama 3.3 70B on Nebius Token Factory; Tavily provides real-time threat intelligence.",
+    "builder_handle": "yuwen-wu",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "llama",
+      "tavily",
+      "agents"
+    ],
+    "product_focus": [
+      "tokenfactory",
+      "openclaw"
+    ],
+    "repo_url": "https://github.com/wuyuwenj/clawdit.git",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-cre808ive",
+    "title": "CRE808IVE",
+    "tagline": "MMCP Trade Twins — constitutional multi-agent system that builds digital-twin knowledge bases for every licensed skilled trade simultaneously.",
+    "description": "MMCP Trade Twins — constitutional multi-agent system that builds digital-twin knowledge bases for every licensed skilled trade simultaneously. 24 specialized agents on Nebius Token Factory (Mixtral-8x7B), Tavily for live trade codes, Toloka for human validation, Scroll blockchain for agent credit.",
+    "builder_handle": "daniel-kaneshiro",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "tavily",
+      "agents"
+    ],
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "repo_url": "https://github.com/ChainMailGlobal/Nebius.Build",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-shadowdance",
+    "title": "ShadowDance",
+    "tagline": "Python package for observability, tracing, logging, and cost-tracking from cloud to claw with one line of code.",
+    "description": "Python package for observability, tracing, logging, and cost-tracking from cloud to claw with one line of code.",
+    "builder_handle": "christopher-mckenzie",
+    "members": 1,
+    "tags": [
+      "python"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/kristopolous/ShadowDance",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-framewise",
+    "title": "Framewise",
+    "tagline": "Cuts robot perception costs 80–90% by never sending the same scene twice.",
+    "description": "Cuts robot perception costs 80–90% by never sending the same scene twice. Pixel + semantic change detection gates inference; Gemma-27B answers first, escalates to Qwen-72B if uncertain. RAG, reranking, Tavily for additional robot context. All on Nebius.",
+    "builder_handle": "aishwarya-gune",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "qwen",
+      "gemma",
+      "tavily",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/agg111/framewise",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-pool-watch",
+    "title": "Pool Watch",
+    "tagline": "Privacy-first, on-device drowning detection pipeline.",
+    "description": "Privacy-first, on-device drowning detection pipeline. Captures real-time biomechanical signs of drowning and alerts instantly — no cloud, no subscription, no video leaving the property.",
+    "builder_handle": "andrzej-firek",
+    "members": 1,
+    "tags": [
+      "typescript"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/Muifrend/pool-watch",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-jc",
+    "title": "JC",
+    "tagline": "Tests whether chaos engineering / chaotic exploration patterns speed up robot learning.",
+    "description": "Tests whether chaos engineering / chaotic exploration patterns speed up robot learning. Uses natural-language descriptions to weight cautious / random / aggressive / strange exploration patterns.",
+    "builder_handle": "janice-chan",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/tulang-nb2022/robotics-simulation-training-hackathon",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-chai",
+    "title": "CHAI",
+    "tagline": "Companion Humanoid AI for Unitree G1: detects approaching humans, greets them, and clears obstacles to act as a guide for visually impaired users.",
+    "description": "Companion Humanoid AI for Unitree G1: detects approaching humans, greets them, and clears obstacles to act as a guide for visually impaired users. Nebius AI Studio Qwen2.5-VL-72B for vision + Llama-3.3-70B for decision-making. Runs in MuJoCo sim.",
+    "builder_handle": "vatsal-bajaj",
+    "members": 2,
+    "tags": [
+      "typescript",
+      "mujoco",
+      "llama",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/galileo-ml/nebius-hack",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-switchcost",
+    "title": "SwitchCost",
+    "tagline": "AI inference migration engine — safely move from GPT-4/Claude/Gemini to open-source on Nebius Token Factory while maintaining quality parity.",
+    "description": "AI inference migration engine — safely move from GPT-4/Claude/Gemini to open-source on Nebius Token Factory while maintaining quality parity. Decomposes tasks into typed subtasks, replays against open models, scores quality via LLM-as-judge, projects monthly savings.",
+    "builder_handle": "ayush-ojha",
+    "members": 1,
+    "tags": [
+      "typescript"
+    ],
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "repo_url": "https://github.com/Ayush10/switchcost",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-agentcommerce",
+    "title": "AgentCommerce",
+    "tagline": "Two AI agents (Buyer + Merchant) negotiate purchases end-to-end with zero human intervention.",
+    "description": "Two AI agents (Buyer + Merchant) negotiate purchases end-to-end with zero human intervention. Buyer on Nebius AI Studio (MiniMax-M2.1), Merchant on OpenRouter (MiniMax-M2). ISO 18013-5 mdoc credentials for verification, Tavily Search for real-time market prices.",
+    "builder_handle": "diego-zuluaga",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "tavily",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/dzuluaga/agentcommerce",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-team-big-floofy-cat",
+    "title": "Team Big Floofy Cat",
+    "tagline": "Local-first AI system for reviewing sensitive medical conversations without centralizing recordings/transcripts.",
+    "description": "Local-first AI system for reviewing sensitive medical conversations without centralizing recordings/transcripts. Raw audio, transcripts, draft findings stay on the local machine; only approved artifacts cross the boundary.",
+    "builder_handle": "robert-cordwell",
+    "members": 1,
+    "tags": [
+      "typescript"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/discordwell/doctor-auditor",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-arm-pilot",
+    "title": "arm-pilot",
+    "tagline": "Autonomous task discovery — robot receives a job command, Nebius LLM searches the internet for the most suitable task, motion data is retrieved and deployed.",
+    "description": "Autonomous task discovery — robot receives a job command, Nebius LLM searches the internet for the most suitable task, motion data is retrieved and deployed. Humanoid arm executes pick-and-press in real time. Tavily used for grounding.",
+    "builder_handle": "sota-miyajima",
+    "members": 4,
+    "tags": [
+      "tavily",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/Sota-sota/nebius-build-sf-2026/tree/kush",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-autorobots",
+    "title": "AutoRobots",
+    "tagline": "Autonomous AI scientist that teaches simulated robots to move.",
+    "description": "Autonomous AI scientist that teaches simulated robots to move. No human reward engineering. LLM agent iterates on reward functions, trains RL policies, evaluates results, accumulates improvements — all on Nebius infrastructure.",
+    "builder_handle": "warner-wu",
+    "members": 2,
+    "tags": [
+      "typescript",
+      "rl",
+      "agents",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/anjan04/nebiushack",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-shopagent",
+    "title": "ShopAgent",
+    "tagline": "AI shopping assistant that searches both major retailers and small businesses simultaneously.",
+    "description": "AI shopping assistant that searches both major retailers and small businesses simultaneously. Ranks results by price, shipping speed, quality, and ethical sourcing. Built on Nebius for parallelized search and ranking.",
+    "builder_handle": "victor-park",
+    "members": 4,
+    "tags": [
+      "typescript"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/jihwan-victor-park/NebiusHack",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-autoevolve",
+    "title": "AutoEvolve",
+    "tagline": "Cloud-side task planner runs Qwen 2.5 on Nebius Token Factory as a reasoning layer.",
+    "description": "Cloud-side task planner runs Qwen 2.5 on Nebius Token Factory as a reasoning layer. Decomposes natural-language commands like \"pick up the cup\" into manipulation steps, then a fine-tuned GR00T N1.6-3B produces continuous joint actions.",
+    "builder_handle": "miaosen-zhou",
+    "members": 3,
+    "tags": [
+      "qwen"
+    ],
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "repo_url": "https://github.com/zhoumiaosen/AutoEvolve",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-voiceclaw",
+    "title": "voiceClaw",
+    "tagline": "Connect open-source voice hardware (Xiaozhi ESP32) to OpenClaw Agent Gateway — plug in, speak, get AI agent response.",
+    "description": "Connect open-source voice hardware (Xiaozhi ESP32) to OpenClaw Agent Gateway — plug in, speak, get AI agent response. Lightweight server implementations in Python, Go, and Swift. Runs on Nebius.",
+    "builder_handle": "zhuang-hua",
+    "members": 1,
+    "tags": [
+      "python",
+      "agents",
+      "voice"
+    ],
+    "product_focus": [
+      "openclaw"
+    ],
+    "repo_url": "https://github.com/aadebuger/voiceclaw-go",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-hidenseek",
+    "title": "hideNseek",
+    "tagline": "Robots play Hide and Seek to learn dynamic interaction.",
+    "description": "Robots play Hide and Seek to learn dynamic interaction. Seeker and Hider use vision models + RL policies to change hiding strategies based on live feedback.",
+    "builder_handle": "atg-r",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "rl",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/r-agni/hideNseek",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-robots-for-social-good",
+    "title": "Robots For Social Good",
+    "tagline": "Multimodal humanoid robotics system that learns socially beneficial behaviors from real-world human demonstrations.",
+    "description": "Multimodal humanoid robotics system that learns socially beneficial behaviors from real-world human demonstrations. Vision-Language-Action architecture trained on uploaded demonstration videos via Nomadic ML for annotation.",
+    "builder_handle": "deon-menezes",
+    "members": 1,
+    "tags": [
+      "vision",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/deonmenezes/robotics-for-social-good",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-ai-warehouse-fulfillment",
+    "title": "AI Warehouse Fulfillment",
+    "tagline": "LLM-powered warehouse robot that reasons, routes, and adapts to chaos in real-time on Nebius.",
+    "description": "LLM-powered warehouse robot that reasons, routes, and adapts to chaos in real-time on Nebius. Analyzes incoming packages, plans routing, and re-plans on the fly when rush orders flood in.",
+    "builder_handle": "nelson-lai",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/chinesepowered/hack-neb",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-should-work",
+    "title": "Should-work",
+    "tagline": "AI agent orchestration platform for solo developers — manages a fleet of Claude Code agents to build software.",
+    "description": "AI agent orchestration platform for solo developers — manages a fleet of Claude Code agents to build software. Humans prioritize issues and review PRs, agents do the implementation.",
+    "builder_handle": "julaiti-alafate",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/arapat/should-work",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-crecerspark",
+    "title": "CrecerSpark",
+    "tagline": "Autonomous robotic tour guide with intelligent obstacle avoidance, natural-language interface for visitor queries, and a management dashboard for custom routes.",
+    "description": "Autonomous robotic tour guide with intelligent obstacle avoidance, natural-language interface for visitor queries, and a management dashboard for custom routes. Built on Nebius.",
+    "builder_handle": "mario-toribio",
+    "members": 2,
+    "tags": [
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/marioToribi0/nebius-hackathon/tree/master",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-controlled-friction",
+    "title": "Controlled Friction",
+    "tagline": "\"Controlled friction\" in software deployment using Tavily Search on Nebius Token Factory — intentional pauses, checks, and manual validations to boost safety, quality, and compliance during shipping.",
+    "description": "\"Controlled friction\" in software deployment using Tavily Search on Nebius Token Factory — intentional pauses, checks, and manual validations to boost safety, quality, and compliance during shipping.",
+    "builder_handle": "irina-poslavsky",
+    "members": 1,
+    "tags": [
+      "tavily"
+    ],
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "repo_url": "https://github.com/kotrie/deployment-validation.yml",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-quantbros",
+    "title": "Quantbros",
+    "tagline": "Agentic investing app: profiles user risk preferences, picks a quant strategy from backtested research, expands the strategy into a real investable universe, ranks stocks with technical indicators + s",
+    "description": "Agentic investing app: profiles user risk preferences, picks a quant strategy from backtested research, expands the strategy into a real investable universe, ranks stocks with technical indicators + sentiment, builds a capital-weighted buy plan.",
+    "builder_handle": "elbion-redenica",
+    "members": 3,
+    "tags": [],
+    "product_focus": [],
+    "repo_url": "https://github.com/elbionredenica/agentic-quant",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-mac-inference-with-an-agent-swarm",
+    "title": "Mac Inference with an agent swarm",
+    "tagline": "Distributed autoresearch with a swarm of Macs linked through a collective intelligence cloud.",
+    "description": "Distributed autoresearch with a swarm of Macs linked through a collective intelligence cloud. Local inference on open-weight models.",
+    "builder_handle": "travis-cline",
+    "members": 4,
+    "tags": [],
+    "product_focus": [],
+    "repo_url": "https://github.com/tmc/autoresearch-go-ane/tree/autoresearch/qwen3",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-miki-the-robot",
+    "title": "Miki the Robot",
+    "tagline": "Robot companion that notices emotional changes and provides physical and emotional support.",
+    "description": "Robot companion that notices emotional changes and provides physical and emotional support. Built on Nebius.",
+    "builder_handle": "linda-mao",
+    "members": 2,
+    "tags": [
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/lindamao/nebius_hackathon",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-grocery-stocksense",
+    "title": "Grocery StockSense",
+    "tagline": "Photo of fridge → AI inventory using Qwen2.5-VL-72B on Nebius Cloud.",
+    "description": "Photo of fridge → AI inventory using Qwen2.5-VL-72B on Nebius Cloud. Cross-references against essential pantry staples, shows what's stocked vs missing. Telegram bot + dashboard. Robot opening the fridge simulated and trained in MJ Lab Studio.",
+    "builder_handle": "mansi-mane",
+    "members": 4,
+    "tags": [
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/mansimane/nebius-hackathon",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-nerdtres",
+    "title": "Nerdtres",
+    "tagline": "Autonomous AI agent that manages e-commerce pricing across multiple marketplaces in real time.",
+    "description": "Autonomous AI agent that manages e-commerce pricing across multiple marketplaces in real time. Connected to live production system (€1.4M inventory). 5-stage pipeline: Tavily/ITAD/Steam research → Nebius Token Factory (DeepSeek-V3) reasoning → pricing recommendations → channel deployment.",
+    "builder_handle": "ionov-vitalii",
+    "members": 1,
+    "tags": [
+      "deepseek",
+      "tavily",
+      "agents"
+    ],
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "repo_url": "https://github.com/kydycode/priceagent/tree/main",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-fbx2robot",
+    "title": "FBX2Robot",
+    "tagline": "Automated pipeline that translates standard 3D human animations (FBX) into AI training data, eliminating hours of manual formatting so the Unitree G1 can learn complex movements.",
+    "description": "Automated pipeline that translates standard 3D human animations (FBX) into AI training data, eliminating hours of manual formatting so the Unitree G1 can learn complex movements.",
+    "builder_handle": "reza-sanatkar",
+    "members": 2,
+    "tags": [
+      "typescript"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/rezasanatkar/mjlab-hackathon",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-sous-bot",
+    "title": "Sous Bot",
+    "tagline": "Assistive grocery robot for visually impaired and elderly users.",
+    "description": "Assistive grocery robot for visually impaired and elderly users. Helps pick items based on the meals you want.",
+    "builder_handle": "sathvick-reddy-narahari",
+    "members": 3,
+    "tags": [
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/DivyaNarahari97/sous-bot/tree/main",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-rocdbot",
+    "title": "rOCDbot",
+    "tagline": "Uses LLM familiarity with OCD to make higher-precision robots.",
+    "description": "Uses LLM familiarity with OCD to make higher-precision robots. Robot sees an object out of place, loops actions to get it perfectly placed; the trace is used in RL training. Built on Nebius.",
+    "builder_handle": "kirill-igumenshchev",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "rl",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/kirilligum/rOCDbot-cerebral-valley-hackathon-260315",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-niwa-self-improving-robots",
+    "title": "Niwa (Self Improving Robots)",
+    "tagline": "Self-improving robots — continual reinforcement learning in sim for zero-shot transfer to playing Jenga.",
+    "description": "Self-improving robots — continual reinforcement learning in sim for zero-shot transfer to playing Jenga. Powered by Nebius.",
+    "builder_handle": "andres-nino",
+    "members": 4,
+    "tags": [
+      "typescript",
+      "rl",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/TheApexWu/niwa",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-specter",
+    "title": "Specter",
+    "tagline": "Space Perception Engine for Crime, Theater, and Exploration Research — robots that see what humans miss in crime scenes, museums, or mystery games.",
+    "description": "Space Perception Engine for Crime, Theater, and Exploration Research — robots that see what humans miss in crime scenes, museums, or mystery games.",
+    "builder_handle": "krzysztof-barczynski",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/gad0lin/specter",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-movebot",
+    "title": "Movebot",
+    "tagline": "Move!",
+    "description": "Move! A simple movement-control project.",
+    "builder_handle": "carlos-lara",
+    "members": 1,
+    "tags": [],
+    "product_focus": [],
+    "repo_url": "https://github.com/LaraArias/MoveBot",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-nline",
+    "title": "nline",
+    "tagline": "Uses Nebius Token Factory API to deploy an OpenClaw instance in Daytona Sandbox; uses RFC 8693 token exchange to connect to external services for tool calling (Linear in the demo).",
+    "description": "Uses Nebius Token Factory API to deploy an OpenClaw instance in Daytona Sandbox; uses RFC 8693 token exchange to connect to external services for tool calling (Linear in the demo). Extensible to Nebius cloud OAuth2.0 token exchange.",
+    "builder_handle": "gaurav-shukla",
+    "members": 1,
+    "tags": [],
+    "product_focus": [
+      "tokenfactory",
+      "openclaw"
+    ],
+    "repo_url": "https://github.com/runnerelectrode/nline-hack",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-casesnipe-ai",
+    "title": "CaseSnipe.ai",
+    "tagline": "Multi-agent courtroom simulation where AI agents argue opposing sides of real cases; a Judge agent delivers the verdict.",
+    "description": "Multi-agent courtroom simulation where AI agents argue opposing sides of real cases; a Judge agent delivers the verdict. Doubles as a live LLM benchmark — swap different Nebius open LLMs into Prosecutor / Defendant / Judge roles. Tavily for case facts, RAG over 8,000 court case summaries.",
+    "builder_handle": "brandon-tautuan",
+    "members": 2,
+    "tags": [
+      "typescript",
+      "tavily",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/brandontautuan/caseSnipe.ai",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-sideline",
+    "title": "SideLine",
+    "tagline": "Modular AI sports robot for the coach/referee shortage in youth sports.",
+    "description": "Modular AI sports robot for the coach/referee shortage in youth sports. Qwen vision-language model on Nebius watches gameplay, gives technical coaching feedback, and can switch into referee mode for unbiased calls.",
+    "builder_handle": "vissh-b",
+    "members": 4,
+    "tags": [
+      "typescript",
+      "qwen",
+      "vision",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/nebiusbuildsf/sideline",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-dayops",
+    "title": "dayops",
+    "tagline": "Minimal backend for voice-memo planning into Google Calendar.",
+    "description": "Minimal backend for voice-memo planning into Google Calendar.",
+    "builder_handle": "kian-kyars",
+    "members": 1,
+    "tags": [
+      "voice"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/kiankyars/dayops",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-splatica",
+    "title": "Splatica",
+    "tagline": "\"Jumping into reality\" — from live room video to world-modeled robotic control in Isaac Sim.",
+    "description": "\"Jumping into reality\" — from live room video to world-modeled robotic control in Isaac Sim.",
+    "builder_handle": "andrey-shelomentsev",
+    "members": 1,
+    "tags": [
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/ashelomentsev/physical",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-frostbyte-zayd",
+    "title": "Frostbyte (zayd)",
+    "tagline": "Hooke is a research assistant for bench scientists — turns a scientific question into a usable starting point by combining literature, computational analysis, and model-based insight into one brief.",
+    "description": "Hooke is a research assistant for bench scientists — turns a scientific question into a usable starting point by combining literature, computational analysis, and model-based insight into one brief.",
+    "builder_handle": "zayd-khan",
+    "members": 1,
+    "tags": [
+      "typescript"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/zaydiscold/hooke-preview",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-sos-answered",
+    "title": "SOS-Answered!",
+    "tagline": "Autonomous humanoid rescue system with multimodal AI (vision + audio + structural sensing from Oumi) and a fine-tuned world model on Nebius Cloud.",
+    "description": "Autonomous humanoid rescue system with multimodal AI (vision + audio + structural sensing from Oumi) and a fine-tuned world model on Nebius Cloud. Navigates rubble, locates trapped victims, clears debris.",
+    "builder_handle": "aksh-parekh",
+    "members": 1,
+    "tags": [
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/aparekh02/SOS-Answered-",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  },
+  {
+    "slug": "robotics-swarm-protocol",
+    "title": "Swarm Protocol",
+    "tagline": "AI fleet coordination platform — command center for deploying, organizing, and communicating with fleets of AI agents.",
+    "description": "AI fleet coordination platform — command center for deploying, organizing, and communicating with fleets of AI agents. Channels, Tasks & Jobs, Agent Social Numbers (ASNs), on-chain identity. Coordination infrastructure, not the model itself.",
+    "builder_handle": "eric-nans",
+    "members": 2,
+    "tags": [
+      "typescript",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/The-Swarm-Protocol/Swarm",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-hummingbird",
+    "title": "HUMMINGBIRD",
+    "tagline": "Tool for clinical-trial biospecimen vendors that automatically identifies samples submitted but never resulted, replacing manual Excel work with regulatory context and an audit trail.",
+    "description": "Tool for clinical-trial biospecimen vendors that automatically identifies samples submitted but never resulted, replacing manual Excel work with regulatory context and an audit trail.",
+    "builder_handle": "lyona",
+    "members": 1,
+    "tags": [],
+    "product_focus": [],
+    "repo_url": "https://github.com/tiyembelabs",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-pulse",
+    "title": "Pulse",
+    "tagline": "Mobile-first AI app: send an AI agent (with packaged context: voice notes, docs, calendar) instead of repeatedly explaining yourself.",
+    "description": "Mobile-first AI app: send an AI agent (with packaged context: voice notes, docs, calendar) instead of repeatedly explaining yourself. Recipient interacts with the agent in chat to ask questions, understand decisions, schedule.",
+    "builder_handle": "yu-chen",
+    "members": 3,
+    "tags": [
+      "typescript",
+      "agents",
+      "voice"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/waterdoog/agent-messenger.git",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-robot-agent",
+    "title": "Robot Agent",
+    "tagline": "Mac app that uses an LLM to make tool calls to move a simulated robot arm.",
+    "description": "Mac app that uses an LLM to make tool calls to move a simulated robot arm.",
+    "builder_handle": "brennan-stehling",
+    "members": 2,
+    "tags": [
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/brennanMKE/RobotAgent",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-kleiner-bot",
+    "title": "Kleiner Bot",
+    "tagline": "Teach robots emotion (by reading my own).",
+    "description": "Teach robots emotion (by reading my own). Withdrew before demo.",
+    "builder_handle": "tor",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/hagemt/reachy-emotes",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-control-spaces",
+    "title": "Control Spaces",
+    "tagline": "Ambient cameras across a workspace passively observe human activities, converting visual streams into structured training data for robotic systems.",
+    "description": "Ambient cameras across a workspace passively observe human activities, converting visual streams into structured training data for robotic systems. The robot learns by watching people work.",
+    "builder_handle": "sudhir-d",
+    "members": 1,
+    "tags": [
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/dadisudhir/control-spaces-training",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-aw3-technology",
+    "title": "AW3 Technology",
+    "tagline": "Open-source digital vision CLI tool and dashboard.",
+    "description": "Open-source digital vision CLI tool and dashboard.",
+    "builder_handle": "william-schulz",
+    "members": 1,
+    "tags": [],
+    "product_focus": [],
+    "repo_url": "https://github.com/aw3-technology/openeye.sh",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-trinkss",
+    "title": "trinkss",
+    "tagline": "Robot-Ready Workcell Compiler.",
+    "description": "Robot-Ready Workcell Compiler. Inspects any messy workspace, decides what operational structure is missing, and prints it — making the space legible to unskilled humans and cheap robots.",
+    "builder_handle": "sa-sa",
+    "members": 1,
+    "tags": [
+      "typescript",
+      "robotics"
+    ],
+    "product_focus": [],
+    "repo_url": "https://gitlab.com/trinkss-group/trinkss-project/",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-clonesmp",
+    "title": "cloneSMP",
+    "tagline": "Manhunt by AI — multiplayer manhunt game driven by AI agents.",
+    "description": "Manhunt by AI — multiplayer manhunt game driven by AI agents.",
+    "builder_handle": "sean-chiu",
+    "members": 2,
+    "tags": [
+      "typescript",
+      "agents"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/seanchiuai/cloneSMP/",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-zippling",
+    "title": "zippling",
+    "tagline": "Agentic e-commerce customer service resolution and management — handles support resolution agentically based on platform policies, with text and vision.",
+    "description": "Agentic e-commerce customer service resolution and management — handles support resolution agentically based on platform policies, with text and vision.",
+    "builder_handle": "parth-gala",
+    "members": 1,
+    "tags": [],
+    "product_focus": [],
+    "repo_url": "https://github.com/ParthGala2k/zippling_ai_commerce",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-labpilot",
+    "title": "LabPilot",
+    "tagline": "AI copilot for experiment optimization in pharma R&D labs.",
+    "description": "AI copilot for experiment optimization in pharma R&D labs. Surrogate model on historical data, adaptive decision policies (UCB / contextual LinUCB), literature evidence + explanation layers for trust.",
+    "builder_handle": "rajat-patel",
+    "members": 1,
+    "tags": [],
+    "product_focus": [],
+    "repo_url": "https://github.com/rajathpatel23/LabPilot",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics",
+    "category": "Other"
+  },
+  {
+    "slug": "robotics-merit",
+    "title": "Merit",
+    "tagline": "Sim-to-real architecture for soil analysis.",
+    "description": "Sim-to-real architecture for soil analysis. Custom MuJoCo environment for Unitree G1 + Llama-3 orchestrator. Parallelized stack ready for deployment to Nebius H100 clusters.",
+    "builder_handle": "roman-stachur",
+    "members": 1,
+    "tags": [
+      "mujoco",
+      "llama"
+    ],
+    "product_focus": [],
+    "repo_url": "https://github.com/romorobo/rom",
+    "stars": 0,
+    "featured": false,
+    "hackathon": "robotics"
+  }
+]

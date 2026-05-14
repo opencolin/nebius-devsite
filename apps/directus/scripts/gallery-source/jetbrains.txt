@@ -1,0 +1,395 @@
+#5
+thinking
+1 member
+
+GitHub Repository
+https://github.com/amangalampalli/hyperreasoning
+Project Description
+Self-healing coding agent that searches over compact DSL implementation plans before generating code. LLM proposes semantic reasoning branches, Rainbow RL controller learns which branch to select / refine / backtrack from. Matches Codex 5.4 Low's 80% solve rate using ~140x fewer tokens, ~4x faster.
+[AWARD: winner]
+Submitted by: Aditya Mangalampalli
+
+#34
+Scopecreep
+4 members
+
+GitHub Repository
+https://github.com/BhavikFTW/Scopecreep
+Project Description
+Turns JetBrains IDE into an agentic hardware testbench. Describe a test in plain English; an AI agent writes Python directly into the project, runs it against real lab instruments (Digilent Analog Discovery, FNIRSI DPS-150 PSU), and drops a timestamped results file back into the project tree.
+[AWARD: runner-up]
+Submitted by: Bhavik Sheoran
+
+#37
+Mesh Code
+4 members
+
+GitHub Repository
+https://github.com/ayushozha/mesh-code
+Project Description
+Shared session state for coding agents. Install mesh-code-mcp in any IDE and any agent — Claude, Cursor, Codex — sees the same feature card, event ledger, and decisions. Resume mid-sentence across machines.
+[AWARD: 3rd]
+Submitted by: Ayush Ojha
+
+#12
+Latent Signal
+2 members
+
+GitHub Repository
+https://github.com/latentsignal-org/periscope
+Project Description
+Periscope is a local-first viewer that shows exactly what's in your coding agent's context window, turn by turn, and recommends the next move (compact / branch / fresh / rewind). JetBrains plugin + Go server + SQLite + Svelte SPA.
+[AWARD: finalist]
+Submitted by: Ann Catherine Jose
+
+#23
+SecureLoop
+3 members
+
+GitHub Repository
+https://github.com/PeytonLi/JBHack
+Project Description
+Turns production Sentry alerts into Codex-generated, sandbox-tested, human-approved fixes inside JetBrains.
+[AWARD: finalist]
+Submitted by: Peyton Li
+
+#39
+Pinpoint
+1 member
+
+GitHub Repository
+https://github.com/hetpatel-11/Pinpoint.git
+Project Description
+Visual annotation overlay for frontend review — pinpoint things in complex software.
+[AWARD: finalist]
+Submitted by: Het Patel
+
+#1
+Test
+1 member
+
+GitHub Repository
+https://github.com/NathanMaton/deal-analyzer#
+Project Description
+Test entry.
+Submitted by: Nathan Maton
+
+#2
+RuntimeFix
+1 member
+
+GitHub Repository
+https://github.com/chinesepowered/hack-jetbrains
+Project Description
+Debugger-aware bug-fixing agent that actually sees what broke.
+Submitted by: Nelson Lai
+
+#3
+dronomy
+1 member
+
+GitHub Repository
+https://github.com/dronomyio/ros1_to_ros2_migration_agent.git
+Project Description
+AI agent that migrates production ROS1 codebases (44 packages, 3,773 breaking changes) to ROS2 Jazzy. Generates multi-file edits from one natural-language instruction, validates with real colcon build in Docker, iterates on errors via o4-mini. 1,595 findings reviewed; 28/28 packages building clean.
+Submitted by: Suvasis Mukherjee
+
+#4
+DoubleY
+2 members
+
+GitHub Repository
+https://github.com/YiZhang527/react-flow-visualizer
+Project Description
+IntelliJ plugin that scans a React project and draws an interactive component graph in a side panel — beginners see parent-child structure at a glance and jump to source from nodes.
+Submitted by: yue chen
+
+#6
+goldfish
+1 member
+
+GitHub Repository
+https://github.com/calcuis/goldfish
+Project Description
+Evolving AI agent that learns from every interaction — builds a persistent understanding of preferences, picks up new skills on the fly. Includes a JetBrains plugin.
+Submitted by: Cal Cu
+
+#7
+Lintropy
+2 members
+
+GitHub Repository
+https://github.com/Typiqally/lintropy
+Project Description
+Rust-based linter and LSP server that lets you define repo-specific rules in YAML using tree-sitter queries + regex. Bundled SKILL.md teaches agents the rule schema, so they can author new rules from English and fix violations in a write→lint→fix loop via the LSP.
+Submitted by: Jelle Maas
+
+#8
+SpeedRunner
+1 member
+
+GitHub Repository
+https://github.com/kotrie/nopCommerce
+Project Description
+AI-assisted, human-governed incident response system that cuts P1 outage response and resolution times in half. Eliminates triage slop, accelerates root cause analysis, enforces safe auditable remediation.
+Submitted by: Irina Poslavsky
+
+#9
+Phantom
+1 member
+
+GitHub Repository
+https://github.com/lgcy-official/Phatom-PR-Autopilot
+Project Description
+PR Autopilot — AI code review suite that analyzes every pull request for architectural integrity, deployment risk, and technical debt. Web dashboard + CI/CD CLI with line-level GitHub feedback.
+Submitted by: Vince R
+
+#10
+Guardia
+1 member
+
+GitHub Repository
+https://github.com/stevenybuilder/guardia
+Project Description
+Deployment risk copilot integrated in JetBrains IDE that proactively alerts about risks before deployment. Grounded in DataDog data + prior incident history; identifies the exact line of code that would break the codebase. Codex as the reasoning layer.
+Submitted by: Steven Yang
+
+#11
+Team RankGuard
+1 member
+
+GitHub Repository
+https://github.com/GenieCode/rankguard-jetbrains-hackathon/
+Project Description
+Context-aware adversarial testing for ML and ranking pipelines, built into the JetBrains IDE via External Tools. OpenAI GPT-4o generates pytest harnesses for adversarial cases.
+Submitted by: Isha S
+
+#13
+Sky is Blue
+1 member
+
+GitHub Repository
+https://github.com/MarthalaSaiKavya/roofline-analyzer
+Project Description
+VS Code extension that shows in real time whether your transformer training is compute- or memory-bound. Auto-detects model architecture, plots ops on a live roofline chart, suggests optimizations via GPT-4o.
+Submitted by: Sai Kavya
+
+#14
+Hindsight
+3 members
+
+GitHub Repository
+https://github.com/elbionredenica/hindsight
+Project Description
+Local-first memory layer for AI coding. Tracks coding attempts inside JetBrains (edits, test runs, failures, reverts) and turns them into structured attempt history. MCP integration so agents can query prior attempts before trying a new fix.
+Submitted by: Shazil Farukh
+
+#15
+RedGreen
+3 members
+
+GitHub Repository
+https://github.com/rudranshagrawal/redgreen
+Project Description
+JetBrains plugin that turns the IDE into a self-healing runtime. PyCharm debugger trips an exception → races four models in parallel with different "hypothesis lenses" → runs all candidates through Runner / Peers / Regression / Review gates → applies the survivor as a one-click gutter inlay. Built on Nebius for the racing models.
+Submitted by: Rudy A
+
+#16
+quasa0.com
+1 member
+
+GitHub Repository
+https://github.com/quasa0/VoiceCodex
+Project Description
+JetBrains plugin in WebStorm that turns the IDE into a hands-free voice coding partner. Talk naturally; OpenAI Realtime API → Codex executes inside the IDE.
+Submitted by: Anatolii Zhukovskyi
+
+#17
+TaterGang
+1 member
+
+GitHub Repository
+https://github.com/backnotprop/plannotator/pull/591
+Project Description
+Plannotator Live — collaborative plan-review surface for agentic engineering. Multi-player workspace where humans and agents align on the plan upfront with end-to-end zero-knowledge encryption.
+Submitted by: Michael Ramos
+
+#18
+ChainMail
+1 member
+
+GitHub Repository
+https://github.com/ChainMailGlobal/chainmail-council
+Project Description
+Council of specialized models deliberates and votes before any AI-generated change touches the codebase. Three MoE models on Nebius Token Factory (Qwen3 235B, Nemotron Ultra 253B, Nemotron 120B). FIDO2 hardware-key human verification + hash-chained audit trail.
+Submitted by: Daniel Kaneshiro
+
+#19
+TRUE
+3 members
+
+GitHub Repository
+https://github.com/yhinai/true
+Project Description
+No review bottlenecks, no merge conflicts, no broken tests. Verification-gated Codex runs from inside JetBrains via the CBC plugin. Vercel hosts dashboard + SSE run-streaming API; Supabase as a ledger mirror.
+Submitted by: Yahya Alhinai
+
+#20
+Dav Yaginuma
+1 member
+
+GitHub Repository
+https://github.com/dav/IntelliJSpatialPlugin
+Project Description
+Plugin that adds a Spatial pane to the IDE plus MCP commands so an agent can render anything in 3D spatial visualizations — projects, algorithms, narratives. Works with WebXR.
+Submitted by: Dav Yaginuma
+
+#21
+above permanent underclass
+1 member
+
+GitHub Repository
+https://github.com/betterclever/shipsec-local
+Project Description
+Local-first security review plugin and workflow for Codex — builds a repo-wide security model, saves a trusted baseline, then compares working state to surface newly introduced attack vectors.
+Submitted by: Pranjal Paliwal
+
+#22
+AF*
+4 members
+
+GitHub Repository
+https://github.com/Lendica-PlayGround/erp-data-ingestion
+Project Description
+AI Forward-Deployed Engineer for ERP data ingestion — onboards unknown ERP systems automatically using multiple agents that research, improve iteratively, and deploy the pipeline.
+Submitted by: Div Agarwal
+
+#24
+Rodex
+2 members
+
+GitHub Repository
+https://github.com/YuvrajGupta1808/Rodex-IDE
+Project Description
+Cursor-style IDE that uses 4 AI agents (Nebius coding model + Blaxel sandboxes) for real-time security analysis, bug detection, and autonomous fix application on Python codebases.
+Submitted by: Yuvraj Gupta
+
+#25
+VisualCode
+1 member
+
+GitHub Repository
+https://github.com/degaulle/visualcode
+Project Description
+Turns a simple user request into a structured plan and visualizes it as a growing tree graph — branches show what the agent intends to build and how the project is organized.
+Submitted by: Barkley Dai
+
+#26
+Nikhil's Team
+1 member
+
+GitHub Repository
+https://github.com/Nikhilt2910/deckcreator/
+Project Description
+Two-tool platform: Excel + PPT template → executive-ready slide deck (for non-technical users) and feature-request → AI-generated diff → human-approved deploy (for technical users).
+Submitted by: Nikhil Tarigonda
+
+#27
+OmniDev
+2 members
+
+GitHub Repository
+https://github.com/rithm84/OmniDev
+Project Description
+Background coding agent you can hear, talk to, carry. Vercel Sandbox + GitHub App + Supabase for state. Narrates reasoning via Gemini Live; calls your phone via Twilio when blocked. Native macOS menu-bar overlay + Tauri desktop shell. Nebius-hosted models for reasoning.
+Submitted by: Ming Lu
+
+#28
+MemoryLint
+1 member
+
+GitHub Repository
+https://github.com/Sidra/memorylint-hack
+Project Description
+IDE-native trust + governance layer for AI-written code in JetBrains. AuthZed/SpiceDB for governed recall, Nebius Token Factory for multi-model consensus on high-severity decisions, Supabase for evidence packs, Neo4j for provenance/blast-radius.
+Submitted by: Sidra Miconi
+
+#29
+Berkeley Baris Boys
+4 members
+
+GitHub Repository
+https://github.com/NoahLundSyrdal/blueprint
+Project Description
+Blueprint — PyCharm plugin that helps developers plan a codebase architecturally before implementation. Editable Mermaid UML view; AI-assisted side chat refines design; converts design into scoped, dependency-aware implementation nodes with diff preview + apply.
+Submitted by: Noah Lund Syrdal
+
+#30
+Artificial Sixy
+1 member
+
+GitHub Repository
+https://github.com/Hades-HY-LI/Adaptive-Change-Harness
+Project Description
+Adaptive Change Harness — self-evolving verification + repair system for real codebases. Discovers latent failures, repairs with grounded context, validates deterministically, and converts validated fixes into reusable repair skills.
+Submitted by: Hades Li
+
+#31
+JetBio
+1 member
+
+GitHub Repository
+https://github.com/AUW160150/JetBrain
+Project Description
+Reimagined IDE for computational biology that treats biological correctness as a debugging target. BioTrace (root cause), BioFuzz (synthetic edge cases), BioReview (peer-reviewer-style review). Powered by Nebius.
+Submitted by: Mahtabin Rodela
+
+#32
+Code Lingua
+3 members
+
+GitHub Repository
+https://github.com/KaushikSiva/lingua-code
+Project Description
+Code with voice in non-English Indic languages (Tamil, Hindi, Bengali). IntelliJ plugin: Alt+Shift+R records, Alt+Shift+S submits to backend that runs codex exec against the project root. Powered by Nebius.
+Submitted by: Kaushik Sivakumar
+
+#33
+Bug Bounties
+1 member
+
+GitHub Repository
+https://github.com/deonmenezes/bug-bounty
+Project Description
+Research project on AI-agent danger to software. Describes danger level, learns from it, creates mitigation patterns, builds honeypots, ethically attacks agents.
+Submitted by: Deon Menezes
+
+#35
+Safevibing
+1 member
+
+GitHub Repository
+https://github.com/amahaeitbit/saveVibing
+Project Description
+Reviews vibe-coded repository output for security, design quality, explainability, and engineering metrics.
+Submitted by: Emahatsion Issac
+
+#36
+Volta
+1 member
+
+GitHub Repository
+https://github.com/Saurabhkhire/vibe-coding-agent-extension
+Project Description
+Skills for coding agents to run code systematically.
+Submitted by: Saurabh Khire
+
+#38
+Cue
+4 members
+
+GitHub Repository
+https://github.com/sf-tools/cue
+Project Description
+A coding agent with as many tools as you need — handcrafted UI, your next move on cue.
+Submitted by: Sajjaad Farzad

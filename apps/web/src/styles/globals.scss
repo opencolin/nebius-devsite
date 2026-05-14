@@ -1,0 +1,211 @@
+// =============================================================================
+// Nebius brand layer.
+//
+// Strategy mirrors nebius.com:
+//   1. @import Gravity UI's primitives + theme tokens
+//   2. @import Page Constructor's defaults
+//   3. Override `.g-root_theme_light` with the Nebius-specific brand decisions
+//      that Nebius itself layers on top of Gravity (warm off-white background,
+//      lime as the joy color, navyblue scale, Inter only)
+//   4. Define a thin `--nb-*` namespace for project-only tokens, identical
+//      shape to nebius.com's --nb-color-* layer
+//
+// All values verified by curl-ing nebius.com's CSS bundle on 2026-05-13.
+// =============================================================================
+
+@import '@gravity-ui/uikit/styles/fonts';
+@import '@gravity-ui/uikit/styles/styles';
+@import '@gravity-ui/page-constructor/styles/styles';
+
+// -----------------------------------------------------------------------------
+// Light theme — overrides apply only when <html class="g-root_theme_light">
+// -----------------------------------------------------------------------------
+.g-root_theme_light {
+  // Brand layer (--nb-*). Mirror of nebius.com's --nb-color-* surface.
+  --nb-color-primary: rgba(243, 239, 232, 1);            // warm off-white page background
+  --nb-color-highlight-light: #e0ff4f;                    // neon-lime joy color
+  --nb-color-highlight: var(--nb-color-highlight-light);
+  --nb-color-text-highlight-light: var(--g-color-text-dark-primary);
+  --nb-color-text-highlight: var(--nb-color-text-highlight-light);
+
+  // Navy-blue scale (#052b42 alpha + solid). Used by Page Constructor blocks
+  // and our own card borders.
+  --nb-color-private-navyblue-1000: rgba(5, 43, 66, 1);
+  --nb-color-private-navyblue-800: rgba(5, 43, 66, 0.8);
+  --nb-color-private-navyblue-600: rgba(5, 43, 66, 0.6);
+  --nb-color-private-navyblue-400: rgba(5, 43, 66, 0.4);
+  --nb-color-private-navyblue-300: rgba(5, 43, 66, 0.3);
+  --nb-color-private-navyblue-250: rgba(5, 43, 66, 0.25);
+  --nb-color-private-navyblue-200: rgba(5, 43, 66, 0.2);
+  --nb-color-private-navyblue-150: rgba(5, 43, 66, 0.15);
+  --nb-color-private-navyblue-100: rgba(5, 43, 66, 0.1);
+  --nb-color-private-navyblue-70:  rgba(5, 43, 66, 0.07);
+  --nb-color-private-navyblue-50:  rgba(5, 43, 66, 0.05);
+  --nb-color-private-navyblue-150-solid: rgba(217, 223, 227, 1);
+  --nb-color-private-navyblue-100-solid: rgba(230, 234, 236, 1);
+  --nb-color-private-navyblue-50-solid:  rgba(242, 244, 246, 1);
+  --nb-color-private-navyblue-20-solid:  rgba(250, 251, 251, 1);
+
+  // Override Gravity's semantic tokens to point at the Nebius surface.
+  --g-color-base-background: var(--nb-color-primary);
+  --g-color-base-float:      #ffffff;             // cards/popovers stay pure white
+  --g-color-base-modal:      var(--nb-color-primary);
+  --g-color-line-generic:    var(--nb-color-private-navyblue-100);
+  --g-color-text-primary:    var(--nb-color-private-navyblue-1000);
+  --g-color-text-secondary:  var(--nb-color-private-navyblue-600);
+  --g-color-text-hint:       var(--nb-color-private-navyblue-400);
+
+  // BRAND override — Gravity ships yellow as the action color. Nebius uses
+  // dark navy for all action buttons (verified against nebius.com hero CTA);
+  // the lime is reserved for the joy-color moments (selection, the logo
+  // background, decoration).
+  --g-color-base-brand:           var(--nb-color-private-navyblue-1000);
+  --g-color-base-brand-hover:     var(--nb-color-private-navyblue-800);
+  --g-color-line-brand:           var(--nb-color-private-navyblue-1000);
+  --g-color-text-brand:           var(--nb-color-private-navyblue-1000);
+  --g-color-text-brand-contrast:  #ffffff;
+
+  // Typography — verified directly against nebius.com's .g-root block.
+  --g-font-family-sans: 'Inter', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  --g-font-family-monospace: 'Menlo', 'Monaco', 'Consolas', 'Ubuntu Mono', 'Liberation Mono',
+    'DejaVu Sans Mono', 'Courier New', 'Courier', monospace;
+}
+
+// -----------------------------------------------------------------------------
+// Dark theme. Mirrors opencolin/nebius-builders globals.css [data-theme=dark]:
+//   bg #061a26, surfaces #0a2638 / #0f3047, text #e8eff4, line rgba(text 0.12).
+// Lime is preserved (no muted dark variant) — it pops harder against the deep
+// navy background and the joy-color hierarchy stays intact.
+// -----------------------------------------------------------------------------
+.g-root_theme_dark {
+  // Brand layer (--nb-*). Inverted navyblue scale for dark surfaces; lime
+  // stays #e0ff4f (no muted dark variant — looks more vibrant against navy).
+  --nb-color-primary: #061a26;
+  --nb-color-highlight-light: #e0ff4f;
+  --nb-color-highlight: var(--nb-color-highlight-light);
+  --nb-color-text-highlight: var(--g-color-text-dark-primary);
+
+  --nb-color-private-navyblue-1000: #e8eff4;
+  --nb-color-private-navyblue-800:  rgba(232, 239, 244, 0.85);
+  --nb-color-private-navyblue-600:  rgba(232, 239, 244, 0.55);
+  --nb-color-private-navyblue-400:  rgba(232, 239, 244, 0.4);
+  --nb-color-private-navyblue-300:  rgba(232, 239, 244, 0.3);
+  --nb-color-private-navyblue-250:  rgba(232, 239, 244, 0.25);
+  --nb-color-private-navyblue-200:  rgba(232, 239, 244, 0.18);
+  --nb-color-private-navyblue-150:  rgba(232, 239, 244, 0.14);
+  --nb-color-private-navyblue-100:  rgba(232, 239, 244, 0.12);
+  --nb-color-private-navyblue-70:   rgba(232, 239, 244, 0.09);
+  --nb-color-private-navyblue-50:   rgba(232, 239, 244, 0.06);
+  --nb-color-private-navyblue-150-solid: #1e3a4f;
+  --nb-color-private-navyblue-100-solid: #1a3142;
+  --nb-color-private-navyblue-50-solid:  #142838;
+  --nb-color-private-navyblue-20-solid:  #0f2030;
+
+  // Override Gravity's semantic tokens for the dark surface.
+  --g-color-base-background: var(--nb-color-primary);
+  --g-color-base-float:      #0a2638;             // cards/popovers — slightly lifted
+  --g-color-base-modal:      var(--nb-color-primary);
+  --g-color-line-generic:    var(--nb-color-private-navyblue-100);
+  --g-color-text-primary:    var(--nb-color-private-navyblue-1000);
+  --g-color-text-secondary:  var(--nb-color-private-navyblue-600);
+  --g-color-text-hint:       var(--nb-color-private-navyblue-400);
+
+  // BRAND override — keep the lime as the action color in dark mode (more
+  // visible against the deep navy than navy-on-navy would be).
+  --g-color-base-brand:           var(--nb-color-highlight);
+  --g-color-base-brand-hover:     #c8e545;
+  --g-color-line-brand:           var(--nb-color-highlight);
+  --g-color-text-brand:           var(--nb-color-highlight);
+  --g-color-text-brand-contrast:  #061a26;
+}
+
+// -----------------------------------------------------------------------------
+// Project resets
+// -----------------------------------------------------------------------------
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--g-color-base-background);
+  color: var(--g-color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// The Nebius "joy moment" — text selection draws in the lime.
+::selection {
+  background: var(--nb-color-highlight);
+  color: var(--nb-color-text-highlight);
+}
+
+// -----------------------------------------------------------------------------
+// Hero events map (HeroEventsMap.tsx) — Leaflet container + breathing dots.
+// Uses NASA VIIRS City Lights tiles. Ported from opencolin/nebius-builders'
+// globals.css. Lives in globals (not a CSS Module) because Leaflet writes
+// classes onto runtime-created DOM elements.
+// -----------------------------------------------------------------------------
+
+// Bring in the Leaflet base CSS (positions tiles, sets z-index stacking).
+// Scoped to .nb-hero-map so it doesn't leak into other Leaflet uses.
+@import 'leaflet/dist/leaflet.css';
+
+.nb-hero-map {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: #0a1628; // dark navy that bleeds through before tiles load
+
+  .leaflet-control-attribution {
+    display: none;
+  }
+}
+
+.nb-hero-dot {
+  background: none;
+  border: none;
+}
+
+@keyframes nbHeroDotBreathe {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50%      { transform: scale(1.4); opacity: 0.55; }
+}
+
+@keyframes nbHeroDotRing {
+  0%   { transform: scale(0.6); opacity: 0.55; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.nb-hero-dot-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--nb-color-highlight, #e0ff4f);
+  box-shadow: 0 0 0 4px rgba(224, 255, 79, 0.18);
+  animation: nbHeroDotBreathe 3s ease-in-out infinite;
+  animation-delay: var(--nb-dot-delay, 0s);
+}
+
+.nb-hero-dot-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1.5px solid var(--nb-color-highlight, #e0ff4f);
+  animation: nbHeroDotRing 3s ease-out infinite;
+  animation-delay: var(--nb-dot-delay, 0s);
+  pointer-events: none;
+}
+
+// Smooth focus rings on interactive elements (Gravity already does most of this;
+// we just align the ring color to navy alpha).
+:focus-visible {
+  outline-color: var(--nb-color-private-navyblue-400);
+}

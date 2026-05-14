@@ -1,0 +1,392 @@
+# Directus schema snapshot.
+#
+# Hand-authored seed snapshot. Once Directus is running and you've made
+# changes through the admin UI, run `npm run snapshot` to overwrite this
+# file with the live schema. Apply to a fresh Directus with:
+#
+#   npm run apply-schema
+#
+# Versions matter: Directus refuses to apply a snapshot from a different
+# Directus version, so bump `version` and `directus` when you regenerate.
+
+version: 1
+directus: 11.4.1
+vendor: postgres
+
+collections:
+  - collection: pages
+    meta: { icon: web, sort: 1, archive_field: status, archive_value: archived, unarchive_value: draft, note: 'CMS pages rendered by /[[...slug]] in the web app.' }
+    schema: { name: pages }
+    fields:
+      - field: id
+        type: uuid
+        meta: { interface: input, special: ['uuid'], readonly: true, hidden: true }
+        schema: { is_primary_key: true, is_nullable: false }
+      - field: status
+        type: string
+        meta:
+          width: half
+          interface: select-dropdown
+          options: { choices: [{ text: Draft, value: draft }, { text: Published, value: published }, { text: Archived, value: archived }] }
+        schema: { default_value: 'draft', is_nullable: false }
+      - field: slug
+        type: string
+        meta: { width: half, interface: input, options: { placeholder: 'home' } }
+        schema: { is_unique: true, is_nullable: false }
+      - field: title
+        type: string
+        meta: { interface: input }
+        schema: { is_nullable: false }
+      - field: seo_description
+        type: text
+        meta: { interface: input-multiline }
+      - field: seo_image
+        type: uuid
+        meta: { interface: file-image, special: ['file'] }
+      - field: blocks
+        type: json
+        meta: { interface: input-code, options: { language: json }, note: 'Page Constructor content: { "blocks": [ ... ] }.' }
+      - field: date_updated
+        type: timestamp
+        meta: { interface: datetime, special: ['date-updated'], width: half, readonly: true }
+
+  - collection: builders
+    meta: { icon: groups, sort: 2 }
+    schema: { name: builders }
+    fields:
+      - field: id
+        type: uuid
+        meta: { special: ['uuid'], readonly: true, hidden: true }
+        schema: { is_primary_key: true, is_nullable: false }
+      - field: handle
+        type: string
+        meta: { interface: input, width: half }
+        schema: { is_unique: true, is_nullable: false }
+      - field: name
+        type: string
+        meta: { interface: input, width: half }
+      - field: bio
+        type: text
+        meta: { interface: input-multiline }
+      - field: city
+        type: string
+        meta: { interface: input, width: half }
+      - field: country
+        type: string
+        meta: { interface: input, width: half }
+      - field: tier
+        type: string
+        meta:
+          interface: select-dropdown
+          width: half
+          options: { choices: [{ text: Builder, value: BUILDER }, { text: Contributor, value: CONTRIBUTOR }, { text: Ambassador, value: AMBASSADOR }, { text: Founding, value: FOUNDING }] }
+        schema: { default_value: 'BUILDER' }
+      - field: points_total
+        type: integer
+        meta: { interface: input, width: half }
+        schema: { default_value: 0 }
+      - field: github_handle
+        type: string
+        meta: { interface: input }
+      - field: twitter_handle
+        type: string
+        meta: { interface: input }
+      - field: expertise
+        type: json
+        meta: { interface: tags }
+      - field: signed_up_at
+        type: timestamp
+        meta: { interface: datetime, special: ['date-created'] }
+      - field: last_active_at
+        type: timestamp
+        meta: { interface: datetime }
+      - field: attribution_slug
+        type: string
+        meta: { interface: input }
+        schema: { is_unique: true }
+      - field: wants_to_host
+        type: boolean
+        meta: { interface: boolean }
+        schema: { default_value: false }
+
+  - collection: team_members
+    meta: { icon: badge, sort: 3, note: 'Nebius DevRel team. Drives /team.' }
+    schema: { name: team_members }
+    fields:
+      - field: id
+        type: uuid
+        meta: { special: ['uuid'], readonly: true, hidden: true }
+        schema: { is_primary_key: true, is_nullable: false }
+      - field: slug
+        type: string
+        meta: { interface: input, width: half }
+        schema: { is_unique: true, is_nullable: false }
+      - field: name
+        type: string
+        meta: { interface: input, width: half }
+      - field: title
+        type: string
+        meta: { interface: input }
+      - field: bio
+        type: text
+        meta: { interface: input-multiline }
+      - field: region
+        type: string
+        meta: { interface: input, width: half }
+      - field: timezone
+        type: string
+        meta: { interface: input, width: half }
+      - field: expertise
+        type: json
+        meta: { interface: tags }
+      - field: languages
+        type: json
+        meta: { interface: tags }
+      - field: active
+        type: boolean
+        meta: { interface: boolean }
+        schema: { default_value: true }
+      - field: sort_order
+        type: integer
+        meta: { interface: input, width: half }
+        schema: { default_value: 100 }
+      - field: email
+        type: string
+        meta: { interface: input }
+      - field: twitter_handle
+        type: string
+        meta: { interface: input }
+      - field: github_handle
+        type: string
+        meta: { interface: input }
+      - field: linkedin_url
+        type: string
+        meta: { interface: input }
+      - field: slack_handle
+        type: string
+        meta: { interface: input }
+      - field: calendly_url
+        type: string
+        meta: { interface: input }
+
+  - collection: office_hours_sessions
+    meta: { icon: schedule, sort: 4 }
+    schema: { name: office_hours_sessions }
+    fields:
+      - field: id
+        type: uuid
+        meta: { special: ['uuid'], readonly: true, hidden: true }
+        schema: { is_primary_key: true, is_nullable: false }
+      - field: advocate
+        type: uuid
+        meta: { interface: select-dropdown-m2o, special: ['m2o'] }
+      - field: starts_at
+        type: timestamp
+        meta: { interface: datetime, width: half }
+      - field: duration_min
+        type: integer
+        meta: { interface: input, width: half }
+        schema: { default_value: 30 }
+      - field: format
+        type: string
+        meta:
+          interface: select-dropdown
+          width: half
+          options: { choices: [{ text: Drop-in, value: DROP_IN }, { text: 1-on-1, value: ONE_ON_ONE }, { text: Group Q&A, value: GROUP_QA }] }
+      - field: topic
+        type: string
+        meta: { interface: input }
+      - field: bookable
+        type: boolean
+        meta: { interface: boolean }
+        schema: { default_value: true }
+      - field: booking_url
+        type: string
+        meta: { interface: input }
+
+  - collection: events
+    meta: { icon: event, sort: 5 }
+    schema: { name: events }
+    fields:
+      - field: id
+        type: uuid
+        meta: { special: ['uuid'], readonly: true, hidden: true }
+        schema: { is_primary_key: true, is_nullable: false }
+      - field: title
+        type: string
+        meta: { interface: input }
+      - field: description
+        type: text
+        meta: { interface: input-multiline }
+      - field: format
+        type: string
+        meta:
+          interface: select-dropdown
+          options: { choices: [{ text: Workshop, value: WORKSHOP }, { text: Talk, value: TALK }, { text: Hackathon, value: HACKATHON }, { text: Office hours, value: OFFICE_HOURS }, { text: Demo night, value: DEMO_NIGHT }, { text: Other, value: OTHER }] }
+      - field: starts_at
+        type: timestamp
+        meta: { interface: datetime, width: half }
+      - field: ends_at
+        type: timestamp
+        meta: { interface: datetime, width: half }
+      - field: timezone
+        type: string
+        meta: { interface: input }
+      - field: venue_name
+        type: string
+        meta: { interface: input }
+      - field: city
+        type: string
+        meta: { interface: input, width: half }
+      - field: country
+        type: string
+        meta: { interface: input, width: half }
+      - field: location
+        type: geometry.Point
+        meta: { interface: map }
+      - field: is_online
+        type: boolean
+        meta: { interface: boolean }
+        schema: { default_value: false }
+      - field: product_focus
+        type: json
+        meta: { interface: tags }
+      - field: status
+        type: string
+        meta:
+          interface: select-dropdown
+          options: { choices: [{ text: Draft, value: DRAFT }, { text: Published, value: PUBLISHED }, { text: Completed, value: COMPLETED }, { text: Cancelled, value: CANCELLED }] }
+        schema: { default_value: 'DRAFT' }
+      - field: builder
+        type: uuid
+        meta: { interface: select-dropdown-m2o, special: ['m2o'], options: { template: '{{handle}}' } }
+      - field: is_official
+        type: boolean
+        meta: { interface: boolean }
+        schema: { default_value: false }
+      - field: official_url
+        type: string
+        meta: { interface: input }
+      - field: luma_url
+        type: string
+        meta: { interface: input }
+
+  - collection: library_articles
+    meta: { icon: library_books, sort: 6, archive_field: status, archive_value: archived, unarchive_value: draft }
+    schema: { name: library_articles }
+    fields:
+      - field: id
+        type: uuid
+        meta: { special: ['uuid'], readonly: true, hidden: true }
+        schema: { is_primary_key: true, is_nullable: false }
+      - field: status
+        type: string
+        meta:
+          interface: select-dropdown
+          options: { choices: [{ text: Draft, value: draft }, { text: Published, value: published }, { text: Archived, value: archived }] }
+        schema: { default_value: 'draft' }
+      - field: slug
+        type: string
+        meta: { interface: input }
+        schema: { is_unique: true, is_nullable: false }
+      - field: type
+        type: string
+        meta:
+          interface: select-dropdown
+          options: { choices: [{ text: Workshop, value: WORKSHOP }, { text: Video, value: VIDEO }, { text: Repo, value: REPO }] }
+      - field: title
+        type: string
+        meta: { interface: input }
+      - field: blurb
+        type: text
+        meta: { interface: input-multiline }
+      - field: level
+        type: string
+        meta:
+          interface: select-dropdown
+          options: { choices: [{ text: Beginner, value: BEGINNER }, { text: Intermediate, value: INTERMEDIATE }, { text: Advanced, value: ADVANCED }] }
+      - field: duration_min
+        type: integer
+        meta: { interface: input, width: half }
+      - field: product_focus
+        type: json
+        meta: { interface: tags }
+      - field: body_md
+        type: text
+        meta: { interface: input-rich-text-md }
+      - field: external_url
+        type: string
+        meta: { interface: input }
+      - field: is_official
+        type: boolean
+        meta: { interface: boolean }
+        schema: { default_value: false }
+      - field: submitter
+        type: uuid
+        meta: { interface: select-dropdown-m2o, special: ['m2o'] }
+
+  - collection: projects
+    meta: { icon: rocket_launch, sort: 7 }
+    schema: { name: projects }
+    fields:
+      - field: id
+        type: uuid
+        meta: { special: ['uuid'], readonly: true, hidden: true }
+        schema: { is_primary_key: true, is_nullable: false }
+      - field: slug
+        type: string
+        meta: { interface: input }
+        schema: { is_unique: true, is_nullable: false }
+      - field: title
+        type: string
+        meta: { interface: input }
+      - field: tagline
+        type: text
+        meta: { interface: input-multiline }
+      - field: description
+        type: text
+        meta: { interface: input-multiline }
+      - field: builder_handle
+        type: string
+        meta: { interface: input }
+      - field: tags
+        type: json
+        meta: { interface: tags }
+      - field: product_focus
+        type: json
+        meta: { interface: tags }
+      - field: repo_url
+        type: string
+        meta: { interface: input }
+      - field: demo_url
+        type: string
+        meta: { interface: input }
+      - field: stars
+        type: integer
+        meta: { interface: input, width: half }
+        schema: { default_value: 0 }
+      - field: featured
+        type: boolean
+        meta: { interface: boolean }
+        schema: { default_value: false }
+      - field: hackathon
+        type: string
+        meta:
+          interface: select-dropdown
+          options: { choices: [{ text: Robotics, value: robotics }, { text: JetBrains, value: jetbrains }, { text: None, value: none }] }
+        schema: { default_value: 'none' }
+      - field: award
+        type: string
+        meta:
+          interface: select-dropdown
+          options: { choices: [{ text: Winner, value: winner }, { text: Runner-up, value: runner-up }, { text: 3rd Place, value: 3rd }, { text: Finalist, value: finalist }] }
+      - field: category
+        type: string
+        meta:
+          interface: select-dropdown
+          options: { choices: [{ text: Other, value: Other }] }
+        schema: { default_value: null }
+      - field: members
+        type: integer
+        meta: { interface: input, width: half }
+        schema: { default_value: 1 }

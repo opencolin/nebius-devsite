@@ -1,0 +1,17 @@
+// Shared shell for portal/admin: fixed left sidebar + offset main area.
+
+.shell {
+  min-height: 100vh;
+  background: var(--g-color-base-background);
+}
+
+.main {
+  margin-left: 240px;
+  padding: 32px 40px;
+  min-height: calc(100vh - 80px);
+
+  @media (max-width: 768px) {
+    margin-left: 0;
+    padding: 24px;
+  }
+}

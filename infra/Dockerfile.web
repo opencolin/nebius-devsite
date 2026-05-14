@@ -1,0 +1,50 @@
+# Multi-stage build for the Next.js Pages Router app (apps/web).
+# Output: a minimal runtime image hosting the standalone server.
+#
+# In prod this runs in Azure Container Apps behind Azure Front Door — the same
+# x-azure-ref topology you can see on a `curl -I https://nebius.com`.
+
+# ---- builder ----------------------------------------------------------------
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Workspace files first, for cache-friendly installs
+COPY apps/web/package.json apps/web/package-lock.json* ./apps/web/
+RUN cd apps/web && npm ci --no-audit --no-fund
+
+# Now the source
+COPY apps/web ./apps/web
+
+# Build env (Next reads NEXT_PUBLIC_* into the bundle at build time)
+ARG NEXT_PUBLIC_DIRECTUS_PUBLIC_URL
+ARG NEXT_PUBLIC_GTM_ID
+ARG NEXT_PUBLIC_GTM_PROXY
+ENV NEXT_PUBLIC_DIRECTUS_PUBLIC_URL=$NEXT_PUBLIC_DIRECTUS_PUBLIC_URL \
+    NEXT_PUBLIC_GTM_ID=$NEXT_PUBLIC_GTM_ID \
+    NEXT_PUBLIC_GTM_PROXY=$NEXT_PUBLIC_GTM_PROXY
+
+ENV BUILD_STANDALONE=1
+RUN cd apps/web && npm run build
+
+# ---- runner -----------------------------------------------------------------
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+ENV NODE_ENV=production \
+    PORT=3000 \
+    HOSTNAME=0.0.0.0
+
+# Run as non-root
+RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
+
+# Copy standalone build (server.js + minimal node_modules)
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
+
+USER nextjs
+EXPOSE 3000
+
+CMD ["node", "apps/web/server.js"]

@@ -1,0 +1,339 @@
+// -----------------------------------------------------------------------------
+// /office-hours layout — five sections (hero, 1:1 cards, drop-in cards,
+// FAQ, footer CTA). Mirrors the structure of the upstream draft page.
+// -----------------------------------------------------------------------------
+
+// ---- Hero ----
+//
+// PhosphorMesh (variant-B1a Soft Haze) is positioned absolute behind the
+// content. The hero is dark-mode regardless of the global theme — the
+// ribbon's deep-forest scene background dominates and the lime peak draws
+// the eye. Text reads in white with a faint navy overlay for legibility
+// over the bright peak band when it sweeps under the headline.
+.hero {
+  position: relative;
+  width: 100%;
+  padding: 88px 24px 80px;
+  background: #04060a; // matches PhosphorMesh's scene background; pre-paint
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  // Tall enough that the ribbon visibly arcs across the hero on most
+  // viewports without forcing the headline below the fold.
+  min-height: 460px;
+  display: flex;
+  align-items: center;
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  // PhosphorMesh ships with aspect-ratio: 21/9 — but the hero may be wider
+  // or taller than that ratio. Stretch the inner div so the canvas fills
+  // the hero edge-to-edge regardless.
+  > div {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto !important;
+  }
+
+  > div > canvas {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+  }
+}
+
+// Soft top-left fade so the headline + lede sit on a darker patch and read
+// cleanly even when the lime peak sweeps underneath.
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      105deg,
+      rgba(4, 6, 10, 0.78) 0%,
+      rgba(4, 6, 10, 0.52) 38%,
+      rgba(4, 6, 10, 0.18) 70%,
+      rgba(4, 6, 10, 0) 100%
+    );
+  pointer-events: none;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(192, 245, 61, 0.95); // lime peak echo
+}
+
+.heroTitle {
+  margin: 0;
+  font-size: clamp(36px, 5.5vw, 56px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  max-width: 16ch;
+  text-shadow: 0 2px 24px rgba(4, 6, 10, 0.35);
+}
+
+.heroDescription {
+  margin: 0;
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 60ch;
+  text-shadow: 0 1px 12px rgba(4, 6, 10, 0.45);
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+// ---- Generic section wrapper ----
+.section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 64px 24px 16px;
+  scroll-margin-top: 80px; // nav offset for in-page anchors
+}
+
+.sectionHead {
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sectionEyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--g-color-text-primary);
+}
+
+.sectionLede {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--g-color-text-secondary);
+  max-width: 60ch;
+}
+
+// ---- Advocate (1:1) cards ----
+.advocateCard {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+}
+
+.advocateHead {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.advocateMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.advocateTitle {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.advocateBio {
+  flex: 1;
+  line-height: 1.55;
+}
+
+.advocateTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.advocateActions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--g-color-line-generic);
+}
+
+.profileLink {
+  font-size: 13px;
+  color: var(--g-color-text-secondary);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--g-color-text-primary);
+  }
+}
+
+// Inline "Sign in" link inside the section lede for unauthenticated visitors.
+.inlineSignIn {
+  color: var(--g-color-text-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: var(--g-color-text-link-hover);
+  }
+}
+
+// ---- Drop-in cards ----
+.dropInLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.dropInCard {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--g-shadow-soft);
+  }
+}
+
+.dropInMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.dropInBlurb {
+  flex: 1;
+  line-height: 1.55;
+}
+
+.dropInCta {
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+// ---- FAQ ----
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 720px;
+  border-top: 1px solid var(--g-color-line-generic);
+}
+
+.faqItem {
+  border-bottom: 1px solid var(--g-color-line-generic);
+
+  &[open] .faqQuestion::after {
+    transform: rotate(45deg);
+  }
+}
+
+.faqQuestion {
+  list-style: none;
+  cursor: pointer;
+  padding: 18px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--g-color-text-primary);
+  position: relative;
+  padding-right: 32px;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &::after {
+    content: '+';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    line-height: 1;
+    color: var(--g-color-text-secondary);
+    transition: transform 150ms ease;
+    transform-origin: center;
+  }
+
+  &:hover {
+    color: var(--g-color-text-link);
+  }
+}
+
+.faqAnswer {
+  margin: 0 0 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--g-color-text-secondary);
+  max-width: 64ch;
+}
+
+// ---- Footer CTA ----
+.ctaSection {
+  max-width: 1280px;
+  margin: 64px auto 0;
+  padding: 56px 24px 80px;
+  text-align: left;
+  border-top: 1px solid var(--g-color-line-generic);
+}
+
+.ctaTitle {
+  margin: 0 0 12px;
+  font-size: clamp(22px, 2.6vw, 28px);
+  font-weight: 600;
+  color: var(--g-color-text-primary);
+}
+
+.ctaDescription {
+  margin: 0 0 20px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--g-color-text-secondary);
+  max-width: 60ch;
+}
+
+.ctaActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
