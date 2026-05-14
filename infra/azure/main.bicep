@@ -55,8 +55,11 @@ param directusAdminEmail string = 'admin@nebius-devsite.local'
 @minLength(8)
 param directusAdminPassword string
 
-@description('Allow the Directus public HTTP ingress (so the Vercel app and your laptop can reach it).')
-param directusIngressExternal bool = true
+@description('Tag of the web image already pushed to ACR. Default "latest" is what deploy.sh pushes.')
+param webImageTag string = 'latest'
+
+@description('Name of the image repo inside ACR.')
+param webImageRepo string = 'web'
 
 resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
   name: resourceGroupName
@@ -75,18 +78,28 @@ module stack 'modules/stack.bicep' = {
     directusSecret: directusSecret
     directusAdminEmail: directusAdminEmail
     directusAdminPassword: directusAdminPassword
-    directusIngressExternal: directusIngressExternal
+    webImageTag: webImageTag
+    webImageRepo: webImageRepo
   }
 }
 
 // -----------------------------------------------------------------------------
-// Outputs — surface the URLs/secrets the Vercel + bootstrap steps need.
+// Outputs — surface the URLs the bootstrap + smoke-test steps need.
 // -----------------------------------------------------------------------------
 
-@description('Directus public URL — use as DIRECTUS_URL env var in Vercel.')
+@description('Front Door public URL — this is the customer-facing site.')
+output frontDoorUrl string = stack.outputs.frontDoorUrl
+
+@description('Web Container App URL — only needed for direct origin access (skip Front Door).')
+output webOriginUrl string = stack.outputs.webOriginUrl
+
+@description('Directus public URL — for bootstrap + admin UI.')
 output directusUrl string = stack.outputs.directusUrl
 
-@description('Postgres FQDN (host) — only needed if you want to connect with psql directly.')
+@description('ACR login server — for docker push / az acr build.')
+output acrLoginServer string = stack.outputs.acrLoginServer
+
+@description('Postgres FQDN — only needed if you want to connect with psql directly.')
 output postgresHost string = stack.outputs.postgresHost
 
 @description('Blob storage account name (for Directus file uploads).')

@@ -1,7 +1,20 @@
-// Resource-group-scoped module — provisions the full backend stack.
+// Resource-group-scoped module — full Nebius topology mirror.
 //
-// Everything Directus needs: Postgres, Redis, Blob storage, and the
-// Container App that runs the directus/directus:11.4.1 image.
+//   Front Door Standard                  ┐
+//        │                                │  global edge, cache rules,
+//        │  HTTPS                         │  x-azure-ref headers
+//        ▼                                │
+//   Container App: web   ◀────────────────┘
+//        │
+//        │  HTTPS (internal)
+//        ▼
+//   Container App: directus ◀──┐
+//        │                     │
+//        ├── Postgres Flex     │
+//        ├── Cache for Redis   │  Container Apps env (consumption)
+//        └── Storage / Blob    │  Log Analytics workspace
+//                              │
+//                              └─ ACR (web image source, AcrPull via UAMI)
 
 targetScope = 'resourceGroup'
 
@@ -17,21 +30,31 @@ param directusSecret string
 param directusAdminEmail string
 @secure()
 param directusAdminPassword string
-param directusIngressExternal bool
 
-// Random suffix to keep globally-unique names (Storage, Postgres) stable
+@description('Tag of the web image already pushed to ACR. Default "latest" is what deploy.sh pushes first.')
+param webImageTag string = 'latest'
+
+@description('Name of the image repo inside ACR (default "web").')
+param webImageRepo string = 'web'
+
+// Random suffix to keep globally-unique names (Storage, Postgres, ACR) stable
 // across redeploys while still avoiding collisions if the resource group
 // is recreated. uniqueString() is deterministic per RG name.
 var unique = take(uniqueString(resourceGroup().id), 6)
 var storageName = '${namePrefix}st${unique}'
 var pgServerName = '${namePrefix}-pg-${unique}'
 var redisName = '${namePrefix}-redis-${unique}'
+var acrName = '${namePrefix}acr${unique}'
 var lawName = '${namePrefix}-logs'
 var caeName = '${namePrefix}-cae'
+var uamiName = '${namePrefix}-acr-puller'
 var directusAppName = '${namePrefix}-directus'
+var webAppName = '${namePrefix}-web'
+var fdProfileName = '${namePrefix}-fd'
+var fdEndpointName = '${namePrefix}-edge'
 
 // -----------------------------------------------------------------------------
-// 1. Log Analytics workspace (required by Container Apps env)
+// 1. Log Analytics workspace
 // -----------------------------------------------------------------------------
 
 resource law 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
@@ -45,11 +68,40 @@ resource law 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
 }
 
 // -----------------------------------------------------------------------------
-// 2. Postgres Flexible Server + `directus` database
-//    - Burstable B1ms is the cheapest production-grade tier (~$15/mo)
-//    - SSL required (Directus connects via TLS by default)
-//    - Firewall allows "All Azure services" so Container Apps can reach it
-//      without VNet integration. For prod-grade you'd add a private endpoint.
+// 2. Azure Container Registry (Basic ~$5/mo) + User-Assigned Managed Identity
+//    bound to it via AcrPull so Container Apps can pull the web image.
+// -----------------------------------------------------------------------------
+
+resource acr 'Microsoft.ContainerRegistry/registries@2023-11-01-preview' = {
+  name: acrName
+  location: location
+  sku: {name: 'Basic'}
+  properties: {
+    adminUserEnabled: false
+    publicNetworkAccess: 'Enabled'
+  }
+}
+
+resource uami 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name: uamiName
+  location: location
+}
+
+// Built-in role: AcrPull
+var acrPullRoleId = '7f951dda-4ed3-4680-a7ca-43fe172d538d'
+
+resource acrPullAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  scope: acr
+  name: guid(acr.id, uami.id, acrPullRoleId)
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', acrPullRoleId)
+    principalId: uami.properties.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+
+// -----------------------------------------------------------------------------
+// 3. Postgres Flexible Server + `directus` database
 // -----------------------------------------------------------------------------
 
 resource pg 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' = {
@@ -77,7 +129,6 @@ resource pg 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' = {
       passwordAuth: 'Enabled'
     }
     network: {
-      // Public access; gated by firewall rules below.
       publicNetworkAccess: 'Enabled'
     }
   }
@@ -92,7 +143,7 @@ resource pgFwAzure 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2024
   }
 }
 
-// Open to the whole internet so seeding from a laptop works without VPN.
+// Open during initial seed so the script can run from a laptop.
 // Lock down to specific egress IPs after the initial seed.
 resource pgFwAll 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2024-08-01' = {
   parent: pg
@@ -113,7 +164,7 @@ resource pgDb 'Microsoft.DBforPostgreSQL/flexibleServers/databases@2024-08-01' =
 }
 
 // -----------------------------------------------------------------------------
-// 3. Cache for Redis (Basic C0, ~$16/mo)
+// 4. Cache for Redis (Basic C0, ~$16/mo)
 // -----------------------------------------------------------------------------
 
 resource redis 'Microsoft.Cache/redis@2024-11-01' = {
@@ -133,7 +184,7 @@ resource redis 'Microsoft.Cache/redis@2024-11-01' = {
 }
 
 // -----------------------------------------------------------------------------
-// 4. Storage Account + Blob container for Directus uploads
+// 5. Storage Account + Blob container for Directus uploads
 // -----------------------------------------------------------------------------
 
 resource storage 'Microsoft.Storage/storageAccounts@2024-01-01' = {
@@ -163,7 +214,7 @@ resource uploadsContainer 'Microsoft.Storage/storageAccounts/blobServices/contai
 }
 
 // -----------------------------------------------------------------------------
-// 5. Container Apps environment
+// 6. Container Apps environment
 // -----------------------------------------------------------------------------
 
 resource cae 'Microsoft.App/managedEnvironments@2024-03-01' = {
@@ -178,30 +229,19 @@ resource cae 'Microsoft.App/managedEnvironments@2024-03-01' = {
       }
     }
     workloadProfiles: [
-      {
-        name: 'Consumption'
-        workloadProfileType: 'Consumption'
-      }
+      {name: 'Consumption', workloadProfileType: 'Consumption'}
     ]
   }
 }
 
 // -----------------------------------------------------------------------------
-// 6. Container App: directus
-//    - Image: stock directus/directus:11.4.1 (no custom build needed)
-//    - Env: Postgres, Redis, Blob, KEY/SECRET, admin creds
-//    - Ingress: external HTTPS on 8055 (Container Apps terminates TLS)
-//    - Replicas: 1-3, scales on HTTP concurrency
+// 7. Container App: directus  (stock image, no ACR needed)
 // -----------------------------------------------------------------------------
 
 var postgresHost = '${pg.name}.postgres.database.azure.com'
 var redisHost = '${redis.name}.redis.cache.windows.net'
-// Build the Redis URL from the access key. listKeys() returns
-// {primaryKey, secondaryKey}; Redis uses primaryKey as the password.
 var redisPassword = redis.listKeys().primaryKey
 var storageKey = storage.listKeys().keys[0].value
-// Public URL of the directus app — emitted as the fqdn after creation.
-// Used both in the app's PUBLIC_URL env and as the deployment output.
 
 resource directus 'Microsoft.App/containerApps@2024-03-01' = {
   name: directusAppName
@@ -211,14 +251,12 @@ resource directus 'Microsoft.App/containerApps@2024-03-01' = {
     workloadProfileName: 'Consumption'
     configuration: {
       ingress: {
-        external: directusIngressExternal
+        external: true
         targetPort: 8055
         transport: 'http'
         allowInsecure: false
         traffic: [{latestRevision: true, weight: 100}]
         corsPolicy: {
-          // Permissive CORS so Vercel preview deploys can hit the API.
-          // Tighten when a single canonical web hostname is decided.
           allowedOrigins: ['*']
           allowedMethods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS']
           allowedHeaders: ['*']
@@ -244,7 +282,6 @@ resource directus 'Microsoft.App/containerApps@2024-03-01' = {
             memory: '1Gi'
           }
           env: [
-            // ---- Database ----
             {name: 'DB_CLIENT', value: 'pg'}
             {name: 'DB_HOST', value: postgresHost}
             {name: 'DB_PORT', value: '5432'}
@@ -252,39 +289,26 @@ resource directus 'Microsoft.App/containerApps@2024-03-01' = {
             {name: 'DB_USER', value: postgresAdminLogin}
             {name: 'DB_PASSWORD', secretRef: 'pg-password'}
             {name: 'DB_SSL__REJECT_UNAUTHORIZED', value: 'false'}
-            // ---- Cache (Redis) ----
             {name: 'CACHE_ENABLED', value: 'true'}
             {name: 'CACHE_STORE', value: 'redis'}
             {name: 'REDIS_HOST', value: redisHost}
             {name: 'REDIS_PORT', value: '6380'}
             {name: 'REDIS_PASSWORD', secretRef: 'redis-password'}
             {name: 'REDIS_TLS', value: 'true'}
-            // ---- File uploads (Azure Blob) ----
             {name: 'STORAGE_LOCATIONS', value: 'azure'}
             {name: 'STORAGE_AZURE_DRIVER', value: 'azure'}
             {name: 'STORAGE_AZURE_CONTAINER_NAME', value: 'directus-uploads'}
             {name: 'STORAGE_AZURE_ACCOUNT_NAME', value: storage.name}
             {name: 'STORAGE_AZURE_ACCOUNT_KEY', secretRef: 'storage-key'}
-            // ---- Auth ----
             {name: 'KEY', secretRef: 'directus-key'}
             {name: 'SECRET', secretRef: 'directus-secret'}
             {name: 'ADMIN_EMAIL', value: directusAdminEmail}
             {name: 'ADMIN_PASSWORD', secretRef: 'directus-admin-password'}
-            // ---- Networking ----
-            // PUBLIC_URL needs the actual fqdn — we'll patch it after the
-            // app is created since the fqdn is generated by ACA.
             {name: 'PUBLIC_URL', value: 'https://placeholder.invalid'}
             {name: 'CORS_ENABLED', value: 'true'}
             {name: 'CORS_ORIGIN', value: 'true'}
-            // ---- Misc ----
             {name: 'WEBSOCKETS_ENABLED', value: 'false'}
             {name: 'TELEMETRY', value: 'false'}
-            // ---- Behavior on first boot ----
-            // The first boot of a fresh image initializes the schema (the
-            // built-in Directus collections) and creates the admin user
-            // from ADMIN_EMAIL/ADMIN_PASSWORD. Our project schema gets
-            // applied later via `directus schema apply` (run from a
-            // bootstrap script against the live URL).
           ]
         }
       ]
@@ -294,9 +318,7 @@ resource directus 'Microsoft.App/containerApps@2024-03-01' = {
         rules: [
           {
             name: 'http-concurrency'
-            http: {
-              metadata: {concurrentRequests: '20'}
-            }
+            http: {metadata: {concurrentRequests: '20'}}
           }
         ]
       }
@@ -310,9 +332,290 @@ resource directus 'Microsoft.App/containerApps@2024-03-01' = {
 }
 
 // -----------------------------------------------------------------------------
+// 8. Container App: web  (Next.js — pulls from ACR via UAMI)
+//
+// On a first-ever deploy the image isn't pushed yet — deploy.sh does
+// `az acr build` *before* the bicep run, so by the time we hit this
+// resource the tag exists. If you want to deploy infra without an image
+// yet, set webImageTag='mcr.microsoft.com/k8se/quickstart:latest' and
+// override the FQDN-only image path in the env block.
+// -----------------------------------------------------------------------------
+
+var directusFqdn = directus.properties.configuration.ingress.fqdn
+
+resource web 'Microsoft.App/containerApps@2024-03-01' = {
+  name: webAppName
+  location: location
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${uami.id}': {}
+    }
+  }
+  properties: {
+    managedEnvironmentId: cae.id
+    workloadProfileName: 'Consumption'
+    configuration: {
+      ingress: {
+        external: true
+        targetPort: 3000
+        transport: 'http'
+        allowInsecure: false
+        traffic: [{latestRevision: true, weight: 100}]
+      }
+      registries: [
+        {
+          server: acr.properties.loginServer
+          identity: uami.id
+        }
+      ]
+    }
+    template: {
+      containers: [
+        {
+          name: 'web'
+          image: '${acr.properties.loginServer}/${webImageRepo}:${webImageTag}'
+          resources: {
+            cpu: json('0.5')
+            memory: '1Gi'
+          }
+          env: [
+            {name: 'DIRECTUS_URL', value: 'https://${directusFqdn}'}
+            // Admin token is injected by deploy.sh as a separate
+            // `az containerapp update` since the token is minted after
+            // Directus boots — see the bootstrap step in deploy.sh.
+            {name: 'AUTH_COOKIE_SECURE', value: '1'}
+            {name: 'NODE_ENV', value: 'production'}
+            {name: 'PORT', value: '3000'}
+          ]
+        }
+      ]
+      scale: {
+        minReplicas: 1
+        maxReplicas: 5
+        rules: [
+          {
+            name: 'http-concurrency'
+            http: {metadata: {concurrentRequests: '40'}}
+          }
+        ]
+      }
+    }
+  }
+  dependsOn: [
+    // ACR role assignment must exist before the app tries to pull. The
+    // `directus` dependency is implicit (we reference directusFqdn in env).
+    acrPullAssignment
+  ]
+}
+
+// -----------------------------------------------------------------------------
+// 9. Front Door Standard + endpoint + origin + route + cache rules
+//
+// Mirrors nebius.com's edge topology — the rule set below replicates the
+// three cache headers visible on a `curl -I https://nebius.com`:
+//   /_next/static/* → public, max-age=31536000, immutable
+//   /api/*          → private, no-store
+//   /* (HTML)       → public, s-maxage=60, swr=300, sif-error=31536000
+// -----------------------------------------------------------------------------
+
+resource fdProfile 'Microsoft.Cdn/profiles@2024-02-01' = {
+  name: fdProfileName
+  location: 'global'
+  sku: {name: 'Standard_AzureFrontDoor'}
+  properties: {
+    originResponseTimeoutSeconds: 60
+  }
+}
+
+resource fdEndpoint 'Microsoft.Cdn/profiles/afdEndpoints@2024-02-01' = {
+  parent: fdProfile
+  name: fdEndpointName
+  location: 'global'
+  properties: {
+    enabledState: 'Enabled'
+  }
+}
+
+resource fdOriginGroup 'Microsoft.Cdn/profiles/originGroups@2024-02-01' = {
+  parent: fdProfile
+  name: 'web-origin-group'
+  properties: {
+    loadBalancingSettings: {
+      sampleSize: 4
+      successfulSamplesRequired: 2
+      additionalLatencyInMilliseconds: 50
+    }
+    healthProbeSettings: {
+      probePath: '/'
+      probeRequestType: 'HEAD'
+      probeProtocol: 'Https'
+      probeIntervalInSeconds: 60
+    }
+    sessionAffinityState: 'Disabled'
+  }
+}
+
+resource fdOrigin 'Microsoft.Cdn/profiles/originGroups/origins@2024-02-01' = {
+  parent: fdOriginGroup
+  name: 'web-origin'
+  properties: {
+    hostName: web.properties.configuration.ingress.fqdn
+    httpPort: 80
+    httpsPort: 443
+    originHostHeader: web.properties.configuration.ingress.fqdn
+    priority: 1
+    weight: 1000
+    enabledState: 'Enabled'
+    enforceCertificateNameCheck: true
+  }
+}
+
+// Rule set carrying the three cache rules. Each rule has a URL-path
+// condition and an `ModifyResponseHeader` action to set Cache-Control.
+resource fdRuleSet 'Microsoft.Cdn/profiles/ruleSets@2024-02-01' = {
+  parent: fdProfile
+  name: 'cacherules'
+}
+
+resource fdRuleStatic 'Microsoft.Cdn/profiles/ruleSets/rules@2024-02-01' = {
+  parent: fdRuleSet
+  name: 'staticImmutable'
+  properties: {
+    order: 1
+    matchProcessingBehavior: 'Continue'
+    conditions: [
+      {
+        name: 'UrlPath'
+        parameters: {
+          typeName: 'DeliveryRuleUrlPathMatchConditionParameters'
+          operator: 'BeginsWith'
+          matchValues: ['/_next/static/']
+          negateCondition: false
+        }
+      }
+    ]
+    actions: [
+      {
+        name: 'ModifyResponseHeader'
+        parameters: {
+          typeName: 'DeliveryRuleHeaderActionParameters'
+          headerAction: 'Overwrite'
+          headerName: 'Cache-Control'
+          value: 'public, max-age=31536000, immutable'
+        }
+      }
+    ]
+  }
+}
+
+resource fdRuleApi 'Microsoft.Cdn/profiles/ruleSets/rules@2024-02-01' = {
+  parent: fdRuleSet
+  name: 'apiNoStore'
+  properties: {
+    order: 2
+    matchProcessingBehavior: 'Continue'
+    conditions: [
+      {
+        name: 'UrlPath'
+        parameters: {
+          typeName: 'DeliveryRuleUrlPathMatchConditionParameters'
+          operator: 'BeginsWith'
+          matchValues: ['/api/']
+          negateCondition: false
+        }
+      }
+    ]
+    actions: [
+      {
+        name: 'ModifyResponseHeader'
+        parameters: {
+          typeName: 'DeliveryRuleHeaderActionParameters'
+          headerAction: 'Overwrite'
+          headerName: 'Cache-Control'
+          value: 'private, no-store'
+        }
+      }
+    ]
+  }
+}
+
+resource fdRuleHtml 'Microsoft.Cdn/profiles/ruleSets/rules@2024-02-01' = {
+  parent: fdRuleSet
+  name: 'htmlSWR'
+  properties: {
+    order: 3
+    matchProcessingBehavior: 'Continue'
+    conditions: [
+      {
+        name: 'UrlPath'
+        parameters: {
+          typeName: 'DeliveryRuleUrlPathMatchConditionParameters'
+          operator: 'BeginsWith'
+          matchValues: ['/']
+          negateCondition: false
+        }
+      }
+    ]
+    actions: [
+      {
+        name: 'ModifyResponseHeader'
+        parameters: {
+          typeName: 'DeliveryRuleHeaderActionParameters'
+          headerAction: 'Overwrite'
+          headerName: 'Cache-Control'
+          value: 'public, s-maxage=60, stale-while-revalidate=300, stale-if-error=31536000'
+        }
+      }
+    ]
+  }
+}
+
+resource fdRoute 'Microsoft.Cdn/profiles/afdEndpoints/routes@2024-02-01' = {
+  parent: fdEndpoint
+  name: 'default'
+  properties: {
+    originGroup: {id: fdOriginGroup.id}
+    ruleSets: [{id: fdRuleSet.id}]
+    supportedProtocols: ['Http', 'Https']
+    patternsToMatch: ['/*']
+    forwardingProtocol: 'HttpsOnly'
+    linkToDefaultDomain: 'Enabled'
+    httpsRedirect: 'Enabled'
+    enabledState: 'Enabled'
+    cacheConfiguration: {
+      queryStringCachingBehavior: 'IgnoreQueryString'
+      compressionSettings: {
+        contentTypesToCompress: [
+          'text/html'
+          'text/css'
+          'text/plain'
+          'text/javascript'
+          'application/javascript'
+          'application/json'
+          'application/xml'
+          'application/x-javascript'
+          'image/svg+xml'
+        ]
+        isCompressionEnabled: true
+      }
+    }
+  }
+  dependsOn: [
+    fdOrigin
+    fdRuleStatic
+    fdRuleApi
+    fdRuleHtml
+  ]
+}
+
+// -----------------------------------------------------------------------------
 // Outputs
 // -----------------------------------------------------------------------------
 
 output directusUrl string = 'https://${directus.properties.configuration.ingress.fqdn}'
+output webOriginUrl string = 'https://${web.properties.configuration.ingress.fqdn}'
+output frontDoorUrl string = 'https://${fdEndpoint.properties.hostName}'
+output acrLoginServer string = acr.properties.loginServer
 output postgresHost string = postgresHost
 output storageAccountName string = storage.name
