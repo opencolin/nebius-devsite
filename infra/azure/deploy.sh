@@ -131,21 +131,57 @@ fi
 
 ACR_LOGIN_SERVER="$(az acr show --name "$ACR_NAME" --resource-group "$RG_NAME" --query loginServer -o tsv)"
 
-# ---- Phase 2: build + push the web image via ACR Tasks ---------------------
+# ---- Phase 2: build + push the web image -----------------------------------
 #
-# az acr build runs the Docker build inside Azure (no local Docker needed),
-# pushes the result to the registry, and tags it with the SHA.
+# Two paths, in order of preference:
+#   a) LOCAL — docker buildx + docker push. Requires local Docker daemon.
+#      Faster (no upload), no extra Azure capabilities required.
+#   b) ACR_TASKS — `az acr build` runs the build inside Azure. No local
+#      Docker needed. But ACR Tasks isn't enabled on every subscription
+#      tier (TasksOperationsNotAllowed shows up on free/student/some
+#      pay-as-you-go subs).
+#
+# Picks LOCAL whenever Docker is reachable; otherwise falls through to
+# ACR Tasks. Override with BUILD_MODE=local|acr_tasks.
+
+BUILD_MODE="${BUILD_MODE:-auto}"
+if [[ "$BUILD_MODE" == "auto" ]]; then
+  if command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
+    BUILD_MODE="local"
+  else
+    BUILD_MODE="acr_tasks"
+  fi
+fi
 
 echo ""
-echo "→ Phase 2: building $WEB_IMAGE_REPO:$WEB_IMAGE_TAG in ACR..."
-az acr build \
-  --registry "$ACR_NAME" \
-  --image "$WEB_IMAGE_REPO:$WEB_IMAGE_TAG" \
-  --image "$WEB_IMAGE_REPO:latest" \
-  --file "$ROOT/infra/Dockerfile.web" \
-  --platform linux/amd64 \
-  "$ROOT" \
-  --output table
+echo "→ Phase 2: building $WEB_IMAGE_REPO:$WEB_IMAGE_TAG (mode: $BUILD_MODE)..."
+
+if [[ "$BUILD_MODE" == "local" ]]; then
+  # Authenticate the local Docker daemon to the ACR using `az acr login`.
+  # This grabs a short-lived token from Entra ID and shoves it into Docker's
+  # credential store — no admin user required on the registry.
+  az acr login --name "$ACR_NAME" --output none
+
+  # Cross-build for linux/amd64 since Container Apps runs amd64 (and most
+  # macOS dev machines are arm64). buildx is bundled with Docker Desktop.
+  docker buildx build \
+    --platform linux/amd64 \
+    --file "$ROOT/infra/Dockerfile.web" \
+    --tag "$ACR_LOGIN_SERVER/$WEB_IMAGE_REPO:$WEB_IMAGE_TAG" \
+    --tag "$ACR_LOGIN_SERVER/$WEB_IMAGE_REPO:latest" \
+    --push \
+    "$ROOT"
+else
+  # Fallback: cloud build via ACR Tasks. Subscription must allow it.
+  az acr build \
+    --registry "$ACR_NAME" \
+    --image "$WEB_IMAGE_REPO:$WEB_IMAGE_TAG" \
+    --image "$WEB_IMAGE_REPO:latest" \
+    --file "$ROOT/infra/Dockerfile.web" \
+    --platform linux/amd64 \
+    "$ROOT" \
+    --output table
+fi
 
 # ---- Phase 3: deploy the full stack ----------------------------------------
 

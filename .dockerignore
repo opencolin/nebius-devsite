@@ -1,0 +1,51 @@
+# Build context exclusions for `docker build` (and `az acr build` upload).
+# Keep this short and aggressive — the only Dockerfile that consumes this
+# context is infra/Dockerfile.web, which only needs apps/web/{package*.json,
+# source files, public}. Without this file, the upload archive is ~161 MiB
+# (mostly node_modules and .next).
+
+# Dependencies — re-installed inside the build via npm ci
+**/node_modules
+
+# Build outputs — re-built inside the Docker build
+**/.next
+**/.turbo
+**/dist
+**/out
+
+# Local env / secrets — should NEVER end up in an image
+**/.env
+**/.env.*
+!**/.env.example
+.azure-secrets.local
+
+# Git / VCS metadata
+.git
+.gitignore
+.gitattributes
+
+# Editors / OS
+.vscode
+.idea
+.DS_Store
+
+# Docker compose state, infra data
+infra/data
+infra/typesense-data
+
+# Things irrelevant to the web image
+apps/directus
+infra/azure
+infra/typesense
+infra/docker-compose.yml
+README.md
+.claude
+.gstack
+
+# Logs, caches, coverage, tarballs
+**/*.log
+.cache
+coverage
+*.tar
+*.tar.gz
+*.tgz
