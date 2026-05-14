@@ -14,7 +14,7 @@ const COL_BUILD: Array<{href: string; label: string; external?: boolean}> = [
   {href: '/events', label: 'Events'},
   {href: '/apps', label: 'Apps'},
   {href: '/builders/all', label: 'Builders directory'},
-  {href: '/leaderboard', label: 'Leaderboard'},
+  // Leaderboard moved under /portal — signed-in only.
 ];
 
 const COL_PROGRAM: Array<{href: string; label: string; external?: boolean}> = [

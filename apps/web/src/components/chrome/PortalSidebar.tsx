@@ -44,6 +44,7 @@ const GROUPS: NavGroup[] = [
     items: [
       {href: '/portal/library', label: 'Library submissions'},
       {href: '/portal/activity', label: 'Activity'},
+      {href: '/portal/leaderboard', label: 'Leaderboard'},
       {href: '/portal/ambassador/apply', label: 'Apply for Ambassador'},
     ],
   },

@@ -41,7 +41,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     directus.request(
       readItems('builders', {
         sort: ['-points_total'],
-        fields: ['handle', 'name', 'city', 'country', 'tier', 'points_total'],
+        fields: ['handle', 'name', 'city', 'country', 'tier', 'points_total', 'github_handle'],
         limit: -1,
       }),
     ),
@@ -94,8 +94,13 @@ export default function BuildersPage({
           eyebrow="Builders Network"
           title={`Top ${showCount} this month`}
           description={`${builders.length} builders ranked by points from events, library submissions, attribution, and milestones.`}
+          // Full leaderboard moved under /portal — login-gated. The link
+          // bounces unauthenticated visitors to /login first.
           actions={
-            <Link href="/leaderboard" className={styles.fullLeaderboardLink}>
+            <Link
+              href="/login?next=%2Fportal%2Fleaderboard"
+              className={styles.fullLeaderboardLink}
+            >
               See the full leaderboard →
             </Link>
           }

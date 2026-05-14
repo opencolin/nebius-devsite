@@ -13,14 +13,17 @@ import styles from './PublicNav.module.scss';
 
 // Notes on what's NOT in the nav:
 //   - /builders (program pitch + top-10 leaderboard) is reachable via the
-//     footer "About the program" link; the nav exposes /leaderboard directly
+//     footer "About the program" link
 //   - /team is folded into /office-hours (DevRel team roster sits at the
 //     bottom of that page next to the booking copy)
+//   - /portal/leaderboard (full leaderboard) is signed-in only — surfaced
+//     in the PortalSidebar instead of the public nav, since the row links
+//     and tier breakdown are most useful to active builders comparing
+//     themselves to the field
 const NAV: Array<{href: string; label: string}> = [
   {href: '/events', label: 'Events'},
   {href: '/library', label: 'Library'},
   {href: '/apps', label: 'Apps'},
-  {href: '/leaderboard', label: 'Leaderboard'},
   {href: '/office-hours', label: 'Office Hours'},
 ];
 
