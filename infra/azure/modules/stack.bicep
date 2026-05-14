@@ -146,6 +146,19 @@ resource pgFwAzure 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2024
   }
 }
 
+// Allowlist the PostGIS extension at the server level so the bootstrap
+// script can run `CREATE EXTENSION postgis` inside the directus database.
+// Without this, Directus's events collection (which has a geometry column
+// for event coords) fails the schema apply with `type "geometry" does not exist`.
+resource pgConfigExtensions 'Microsoft.DBforPostgreSQL/flexibleServers/configurations@2024-08-01' = {
+  parent: pg
+  name: 'azure.extensions'
+  properties: {
+    value: 'POSTGIS,POSTGIS_RASTER,POSTGIS_TOPOLOGY'
+    source: 'user-override'
+  }
+}
+
 // Open during initial seed so the script can run from a laptop.
 // Lock down to specific egress IPs after the initial seed.
 resource pgFwAll 'Microsoft.DBforPostgreSQL/flexibleServers/firewallRules@2024-08-01' = {

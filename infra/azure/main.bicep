@@ -47,8 +47,8 @@ param directusKey string
 @secure()
 param directusSecret string
 
-@description('Directus admin email — created by Directus on first boot.')
-param directusAdminEmail string = 'admin@nebius-devsite.local'
+@description('Directus admin email — created by Directus on first boot. Avoid .local/.test/.example TLDs (rejected by Directus email validator).')
+param directusAdminEmail string = 'admin@nebiusdevsite.dev'
 
 @description('Directus admin password (8-128 chars).')
 @secure()

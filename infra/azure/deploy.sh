@@ -50,7 +50,10 @@ else
   DIRECTUS_KEY="$(uuidgen)"
   DIRECTUS_SECRET="$(openssl rand -hex 48)"
   DIRECTUS_ADMIN_PASSWORD="A!$(openssl rand -base64 18 | tr -d '/=+' | head -c 22)"
-  DIRECTUS_ADMIN_EMAIL="${DIRECTUS_ADMIN_EMAIL:-admin@nebius-devsite.local}"
+  # Avoid reserved/non-routable TLDs (.local, .test, .example, .invalid) —
+  # Directus's email validator rejects them. .dev is a real TLD and always
+  # passes. Set DIRECTUS_ADMIN_EMAIL=<you@yours> to override at run-time.
+  DIRECTUS_ADMIN_EMAIL="${DIRECTUS_ADMIN_EMAIL:-admin@nebiusdevsite.dev}"
 
   cat > "$SECRETS_FILE" <<EOF
 # Generated $(date -u +%Y-%m-%dT%H:%M:%SZ) — KEEP THIS FILE PRIVATE
@@ -189,10 +192,41 @@ done
 # ============================================================================
 
 echo ""
-echo "→ Phase 4: bootstrapping Directus (login, apply schema, seed)..."
+echo "→ Phase 4: bootstrapping Directus (CREATE EXTENSION, login, apply schema, seed)..."
 
-# Try a few times — Directus might be reachable at /server/ping but still
-# initializing the bootstrap user.
+# (a) Enable PostGIS inside the directus database. Directus's events
+# collection has a geometry(Point, 4326) column; without postgis the
+# schema apply fails with `type "geometry" does not exist`. The Bicep
+# allowlists the extension at the server level — we just need to
+# CREATE EXTENSION in the directus database.
+PG_HOST="$POSTGRES_HOST"
+if command -v psql >/dev/null 2>&1; then
+  PSQL_BIN="psql"
+elif [[ -x /opt/homebrew/opt/libpq/bin/psql ]]; then
+  PSQL_BIN="/opt/homebrew/opt/libpq/bin/psql"
+else
+  PSQL_BIN=""
+  echo "  ⚠ psql not found — skipping CREATE EXTENSION postgis. Install with: brew install libpq"
+fi
+if [[ -n "$PSQL_BIN" ]]; then
+  PGPASSWORD="$POSTGRES_PASSWORD" "$PSQL_BIN" \
+    "host=$PG_HOST port=5432 dbname=directus user=nbadmin sslmode=require" \
+    -c "CREATE EXTENSION IF NOT EXISTS postgis;" >/dev/null 2>&1 \
+    && echo "  ✓ postgis extension ready" \
+    || echo "  ⚠ postgis CREATE EXTENSION skipped (already present or insufficient grant)"
+
+  # The container needs to restart so its DB connection sees postgis types.
+  REVISION=$(az containerapp revision list --resource-group "$RG_NAME" --name "$DIRECTUS_APP" --query "[0].name" -o tsv)
+  az containerapp revision restart --resource-group "$RG_NAME" --name "$DIRECTUS_APP" --revision "$REVISION" --output none
+  echo "  ✓ Directus restarted"
+  for i in {1..30}; do
+    if curl -fsS "$DIRECTUS_URL/server/ping" >/dev/null 2>&1; then break; fi
+    printf "."; sleep 3
+  done
+fi
+
+# (b) Try a few times — Directus might be reachable at /server/ping but
+# still initializing the bootstrap user.
 for i in {1..20}; do
   TOKEN_RES="$(curl -fsS -X POST "$DIRECTUS_URL/auth/login" \
        -H 'content-type: application/json' \
