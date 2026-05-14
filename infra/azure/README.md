@@ -1,57 +1,107 @@
 # Azure deployment
 
-Mirrors Nebius.com's hosting topology: Next.js origin in **Azure Container
-Apps**, fronted by **Azure Front Door** for global edge caching. Directus runs
-as a sibling Container App backed by **Azure Database for PostgreSQL**, with
-**Azure Cache for Redis** and uploads in **Azure Blob Storage**. Search uses
-**Typesense Cloud** (no self-hosting in prod).
+Backend stack for nebius-devsite: Directus + Postgres + Redis + Blob storage,
+running on **Azure Container Apps**. The Next.js web app is hosted on
+**Vercel** — it talks to the Directus URL emitted as an output here.
 
-The `x-azure-ref` and `x-fd-int-roxy-purgeid` headers visible on
-`curl -I https://nebius.com` are the platform-side artifacts of this same
-Front Door setup.
+```
+   Vercel (Next.js, edge)
+            │
+            │  HTTPS
+            ▼
+   Container App: directus  ◀──┐
+            │                  │
+            ├─▶ Postgres Flex Server  (~$15/mo)
+            ├─▶ Cache for Redis       (~$16/mo)
+            └─▶ Storage Account/Blob  (~$2/mo)
+                                       │
+                          Container Apps env (consumption tier, scale-to-zero)
+                          Log Analytics workspace
+```
+
+Total estimated cost: **~$40/mo** for low-traffic. Front Door was deliberately
+omitted — Vercel fronts the web traffic, so the Front Door spend (~$35) on the
+backend wouldn't earn its keep.
 
 ## One-time setup
 
 ```bash
+brew install azure-cli   # if you don't have it
 az login
-az account set --subscription <sub-id>
-
-# Build and push the web image (Azure Container Registry)
-az acr login --name <acr-name>
-docker buildx build --platform linux/amd64 \
-  -f infra/Dockerfile.web -t <acr-name>.azurecr.io/nebius-homepage-web:$(git rev-parse --short HEAD) . \
-  --build-arg NEXT_PUBLIC_DIRECTUS_PUBLIC_URL=https://assets.your-domain.com \
-  --build-arg NEXT_PUBLIC_GTM_ID=$NEXT_PUBLIC_GTM_ID \
-  --push
+az account set --subscription <your-sub-id>   # if you have multiple
 ```
 
-## Deploy
+## Deploy the backend
 
 ```bash
-az deployment sub create \
-  --location westeurope \
-  --template-file infra/azure/main.bicep \
-  --parameters \
-      webImage='<acr-name>.azurecr.io/nebius-homepage-web:<sha>' \
-      directusImage='directus/directus:11.4.1' \
-      postgresAdminPassword='<secret>' \
-      directusKey='<uuid>' \
-      directusSecret='<long-random>' \
-      typesenseAdminKey='<from-typesense-cloud>'
+./infra/azure/deploy.sh
 ```
 
-## Cache rules (set on the Front Door route)
+The script:
+1. Generates random secrets on first run (saved to `.azure-secrets.local`,
+   gitignored). Subsequent runs reuse the same secrets.
+2. Registers the required resource providers (idempotent).
+3. Runs `az deployment sub create` with the Bicep template — takes ~5–10 min.
+4. Patches `PUBLIC_URL` on the Directus container with the freshly-minted FQDN.
+5. Waits for `/server/ping` to come back 200.
+6. Prints the Directus URL + next-step commands.
 
-| Path | Cache control |
-|---|---|
-| `/_next/static/*` | `public, max-age=31536000, immutable` |
-| `/api/*` | `private, no-store` |
-| `/*` (HTML) | `public, s-maxage=60, stale-while-revalidate=300, stale-if-error=31536000` |
+## Bootstrap Directus content
 
-These match the HTML cache header `nebius.com` serves today.
+The deploy creates an empty Directus. Apply the schema and seed content:
 
-## Rollback
+```bash
+# 1. Mint an admin token
+#    Either: log into https://<directus-url>/admin with the email/password
+#            from .azure-secrets.local, then User Directory → Admin User →
+#            Token (rotate / copy)
+#    Or: API call:
+#         curl -X POST https://<directus-url>/auth/login \
+#              -H 'content-type: application/json' \
+#              -d '{"email":"admin@nebius-devsite.local","password":"<from-secrets>"}'
 
-`az containerapp revision list --name nebius-homepage-web` to see active
-revisions; `az containerapp revision activate --revision <name>` flips traffic
-back instantly. Front Door cache purge: `az afd endpoint purge`.
+export DIRECTUS_URL='https://<from-deploy-output>'
+export DIRECTUS_ADMIN_TOKEN='<from-step-above>'
+
+# 2. Apply the schema
+node apps/directus/scripts/apply-schema.mjs
+
+# 3. Seed content
+node apps/directus/scripts/seed.mjs
+
+# 4. (Optional) import upstream library bodies
+node apps/directus/scripts/import-upstream-library-bodies.mjs
+
+# 5. (Optional) import builders from project repos
+node apps/directus/scripts/import-builders-from-projects.mjs
+```
+
+## Deploy the web to Vercel
+
+```bash
+DIRECTUS_URL='https://<from-deploy-output>' \
+DIRECTUS_ADMIN_TOKEN='<from-bootstrap>' \
+  ./infra/vercel/deploy.sh
+```
+
+First run will prompt for Vercel scope + project name; subsequent runs are
+non-interactive (uses `apps/web/.vercel/project.json`).
+
+## Cost rollback / teardown
+
+Everything is in one resource group, so:
+
+```bash
+az group delete --name nebius-devsite-rg --yes --no-wait
+```
+
+…drops the entire monthly cost to zero.
+
+## Future hardening (not in v1)
+
+- VNet integration + private endpoints for Postgres / Redis / Storage
+- Key Vault for secrets (currently inlined as Container App secrets)
+- Azure Container Registry + custom Directus image with the schema baked in
+- Front Door in front of the Container App if we move web hosting off Vercel
+- Application Insights for Directus telemetry
+- Azure Database for PostgreSQL Flexible Server: bump to Burstable B2s (HA)

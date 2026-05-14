@@ -1,79 +1,96 @@
-// Azure deployment skeleton for the nebius-homepage stack.
-// Mirrors nebius.com's topology: Container Apps + Front Door + Postgres + Redis + Storage.
+// Azure deployment for the nebius-homepage stack.
 //
-// This is a minimal starter — a production-grade revision will want VNet
-// integration, Private Endpoints, Key Vault for secrets, App Insights for
-// observability, and managed identity binding from Container Apps to ACR
-// and Blob Storage.
+// Scope: a single subscription deployment that creates the resource group
+// and stands up the Directus + Postgres + Redis + Storage stack inside.
+// The Next.js web app is hosted on Vercel — it talks to the Directus URL
+// emitted as an output here.
+//
+// Topology (simplified from the original nebius.com mirror — we skip
+// Front Door because Vercel fronts the public traffic):
+//
+//   Vercel (Next.js, edge) ─── HTTPS ───▶ Container App: directus
+//                                              │
+//                                              ├── Postgres Flexible Server (Burstable B1ms)
+//                                              ├── Cache for Redis (Basic C0)
+//                                              └── Storage Account / Blob container
+//
+// Container Apps environment is consumption-tier (scale-to-zero between
+// requests). Log Analytics workspace required by the env even when we
+// don't actively query logs.
 
 targetScope = 'subscription'
 
-@description('Azure region (westeurope, northeurope, eastus, etc).')
+@description('Azure region. Defaults to West Europe (Nebius\'s primary region).')
 param location string = 'westeurope'
 
 @description('Resource group name.')
-param resourceGroupName string = 'nebius-homepage-rg'
+param resourceGroupName string = 'nebius-devsite-rg'
 
-@description('Image for the web app (e.g. acr.azurecr.io/nebius-homepage-web:<sha>).')
-param webImage string
+@description('Short name used as a prefix for resource names. 3-10 lowercase letters.')
+@minLength(3)
+@maxLength(10)
+param namePrefix string = 'nbdevsite'
 
-@description('Image for Directus (e.g. directus/directus:11.4.1).')
-param directusImage string
+@description('Postgres admin login.')
+param postgresAdminLogin string = 'nbadmin'
 
+@description('Postgres admin password (12-128 chars).')
 @secure()
+@minLength(12)
 param postgresAdminPassword string
+
+@description('Directus KEY (any random UUID — used internally for cache keys).')
 @secure()
 param directusKey string
+
+@description('Directus SECRET (long random string — JWT signing key).')
 @secure()
 param directusSecret string
+
+@description('Directus admin email — created by Directus on first boot.')
+param directusAdminEmail string = 'admin@nebius-devsite.local'
+
+@description('Directus admin password (8-128 chars).')
 @secure()
-param typesenseAdminKey string
+@minLength(8)
+param directusAdminPassword string
+
+@description('Allow the Directus public HTTP ingress (so the Vercel app and your laptop can reach it).')
+param directusIngressExternal bool = true
 
 resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
   name: resourceGroupName
   location: location
 }
 
-// TODO(team): break the resources below out into modules/ as the deploy grows.
-// For now we define everything inline so a single `az deployment sub create`
-// stands up a working stack.
-//
-// Resources to define inside `rg`:
-//
-//   1. Azure Container Apps environment (consumption profile, scale-to-zero).
-//      type: Microsoft.App/managedEnvironments@2024-03-01
-//
-//   2. Postgres Flexible Server + database `directus`.
-//      type: Microsoft.DBforPostgreSQL/flexibleServers@2024-03-01-preview
-//      With administratorLogin = 'directus' and the secure parameter as password.
-//      Add a `directus` database under it.
-//
-//   3. Cache for Redis (Basic C0 for dev, Standard C1+ for prod).
-//      type: Microsoft.Cache/redis@2024-03-01
-//
-//   4. Storage Account + Blob container for Directus uploads.
-//      type: Microsoft.Storage/storageAccounts@2024-01-01
-//      With one container `directus-uploads`.
-//
-//   5. Container App `directus`: directusImage, env from Postgres + Redis + Storage,
-//      ingress external on port 8055.
-//      type: Microsoft.App/containerApps@2024-03-01
-//
-//   6. Container App `web`: webImage, env vars:
-//        DIRECTUS_URL=https://<directus-fqdn>
-//        DIRECTUS_ADMIN_TOKEN=<from Key Vault>
-//        TYPESENSE_HOST/PORT/PROTOCOL/* (point at Typesense Cloud)
-//        AUTH_COOKIE_SECURE=1
-//      Ingress external on port 3000.
-//
-//   7. Front Door Standard: profile + endpoint + origin group + route
-//      with cache rules:
-//        /_next/static/*  → public, max-age=31536000, immutable
-//        /api/*           → private, no-store
-//        /*               → public, s-maxage=60, swr=300, sif-error=31536000
-//      type: Microsoft.Cdn/profiles@2024-02-01 (Standard_AzureFrontDoor)
-//
-//   8. Custom domain + managed cert on the Front Door endpoint.
+module stack 'modules/stack.bicep' = {
+  name: 'stack'
+  scope: rg
+  params: {
+    location: location
+    namePrefix: namePrefix
+    postgresAdminLogin: postgresAdminLogin
+    postgresAdminPassword: postgresAdminPassword
+    directusKey: directusKey
+    directusSecret: directusSecret
+    directusAdminEmail: directusAdminEmail
+    directusAdminPassword: directusAdminPassword
+    directusIngressExternal: directusIngressExternal
+  }
+}
 
+// -----------------------------------------------------------------------------
+// Outputs — surface the URLs/secrets the Vercel + bootstrap steps need.
+// -----------------------------------------------------------------------------
+
+@description('Directus public URL — use as DIRECTUS_URL env var in Vercel.')
+output directusUrl string = stack.outputs.directusUrl
+
+@description('Postgres FQDN (host) — only needed if you want to connect with psql directly.')
+output postgresHost string = stack.outputs.postgresHost
+
+@description('Blob storage account name (for Directus file uploads).')
+output storageAccountName string = stack.outputs.storageAccountName
+
+@description('Resource group ID.')
 output rgId string = rg.id
-output todo string = 'Fill in resource definitions per inline guide.'

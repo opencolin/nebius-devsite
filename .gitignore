@@ -40,3 +40,8 @@ infra/typesense-data/
 coverage/
 .cache/
 .gstack/
+
+# azure deploy artifacts
+.azure-secrets.local
+infra/azure/main.json
+infra/azure/modules/*.json
