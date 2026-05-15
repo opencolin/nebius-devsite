@@ -64,20 +64,27 @@ export default function EventsPage({
     setActiveCity((prev) => (prev === city ? null : city));
   };
 
-  // Split upcoming vs past relative to now (set in getStaticProps cache window)
-  const now = Date.now();
+  // Split upcoming vs past based on the event's START date, anchored to the
+  // beginning of today (UTC). An event qualifies as "upcoming" if it
+  // hasn't started yet OR starts today. Anything that already started
+  // before today — even if it's still running — is treated as past, since
+  // the typical visitor question is "what can I attend from here on?",
+  // not "what's currently in progress?".
+  const startOfToday = new Date();
+  startOfToday.setUTCHours(0, 0, 0, 0);
+  const startOfTodayMs = startOfToday.getTime();
+  const isUpcoming = (e: EventRow) => +new Date(e.starts_at) >= startOfTodayMs;
 
   // For the map: every upcoming event regardless of activeCity, so all city
-  // dots stay visible while a single city is selected (the active one just
-  // gets highlighted, the rest remain interactive).
-  const allUpcoming = events.filter((e) => +new Date(e.ends_at) >= now);
+  // dots stay visible while a single city is selected.
+  const allUpcoming = events.filter(isUpcoming);
 
   // For the lists below: respect activeCity if one is selected.
   const visibleEvents = activeCity
     ? events.filter((e) => e.city === activeCity)
     : events;
-  const upcoming = visibleEvents.filter((e) => +new Date(e.ends_at) >= now);
-  const past = visibleEvents.filter((e) => +new Date(e.ends_at) < now);
+  const upcoming = visibleEvents.filter(isUpcoming);
+  const past = visibleEvents.filter((e) => !isUpcoming(e));
 
   return (
     <PublicLayout>
