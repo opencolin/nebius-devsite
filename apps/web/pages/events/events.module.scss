@@ -259,7 +259,11 @@
 // lists. Chips and map pins share the same activeCity state.
 .cityFilter {
   position: sticky;
-  top: 64px; // sit just below the sticky PublicNav
+  // PublicNav renders at ~52px (12px pad + 28px logo + 12px pad). Stick
+  // flush against its bottom border so there's no dead gap when both
+  // are pinned during scroll. Off-by-12px guesses (top: 64) leave a
+  // visible band of background between nav and filter.
+  top: 52px;
   z-index: 10;
   // No top margin: this sits directly under the hero section.
   padding: 12px 24px 16px;
