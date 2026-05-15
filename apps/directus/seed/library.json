@@ -1,50 +1,812 @@
-{
-  "$schema": "./seed.schema.json",
-  "_comment": "Seed entries for the Builders Network Library. Imported by apps/web/prisma/seed.ts on first deploy. Each entry maps to one LibraryEntry row.",
-  "entries": [
-    {
-      "slug": "running-openclaw-on-nebius",
-      "type": "WORKSHOP",
-      "title": "Running OpenClaw on Nebius",
-      "blurb": "From zero to a live AI agent in 15 minutes. Walks through Token Factory, three deploy methods (npm / Docker / Nebius Serverless), and a hands-on agent build.",
-      "level": "BEGINNER",
-      "durationMin": 30,
-      "productFocus": [
-        "openclaw",
-        "tokenfactory"
-      ],
-      "contentBodyPath": "./workshops/running-openclaw-on-nebius.md",
-      "externalUrl": "https://github.com/opencolin/clawcamp-site/blob/master/workshops/running-openclaw-on-nebius.md",
-      "isOfficial": true,
-      "source": "clawcamp-site/workshops"
-    },
-    {
-      "slug": "gemma-finetune-rayyanzahid",
-      "type": "REPO",
-      "title": "QLoRA Fine-tune Gemma 4 on Nebius",
-      "blurb": "Validated recipe + Nebius infra skill + 9-node workshop fleet runbook. Built and run live at Sandbox VR SF (May 2026, ~30 attendees fine-tuned hands-on).",
-      "level": "INTERMEDIATE",
-      "durationMin": 90,
-      "productFocus": [
-        "aicloud",
-        "tokenfactory"
-      ],
-      "externalUrl": "https://github.com/RayyanZahid/gemma-finetune",
-      "metadata": {
-        "_note": "fetched live by github-metadata API in production; static here for seed",
-        "stars": 3,
-        "languages": [
-          "Shell",
-          "Python"
-        ],
-        "primaryLanguage": "Shell",
-        "lastPushedAt": "2026-05-06T18:45:25Z",
-        "defaultBranch": "master"
-      },
-      "isOfficial": false,
-      "submitterHandle": "RayyanZahid",
-      "submitterDisplayName": "Ray Zahid (Sandbox VR SF)",
-      "source": "community-submission"
-    }
-  ]
-}
+[
+  {
+    "slug": "academy-coding-with-cursor",
+    "type": "WORKSHOP",
+    "title": "Make the Most of Cursor as an AI-Powered Coding Environment",
+    "blurb": "Free short video course featuring Cursor's co-founder + Nebius Academy experts. Learn agentic development end-to-end: context management, parallel agents, browser/CLI testing, custom rules, automated docs, and prompt patterns that hold up in production.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "openclaw"
+    ],
+    "external_url": "https://academy.nebius.com/aicoding/cursor",
+    "body_md": "## About this entry\n\nFree short video course featuring Cursor's co-founder + Nebius Academy experts. Learn agentic development end-to-end: context management, parallel agents, browser/CLI testing, custom rules, automated docs, and prompt patterns that hold up in production.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "academy-nebius-ai-cloud-onboarding",
+    "type": "WORKSHOP",
+    "title": "Nebius AI Cloud Onboarding Course",
+    "blurb": "Free, self-paced course. Get from your first login to real cloud workflows in 30 minutes — navigate the console, launch storage and VMs, deploy and run an LLM, configure access for a dev environment.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://academy.nebius.com/nebius-cloud-onboarding-course",
+    "body_md": "## About this entry\n\nFree, self-paced course. Get from your first login to real cloud workflows in 30 minutes — navigate the console, launch storage and VMs, deploy and run an LLM, configure access for a dev environment.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "cookbook-ml-deepep",
+    "type": "REPO",
+    "title": "ML Cookbook · DeepEP",
+    "blurb": "DeepEP (DeepSpeed Expert Parallelism) on Nebius. Configs and example launches for MoE training at scale.",
+    "level": "ADVANCED",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://github.com/nebius/ml-cookbook/tree/main/deepep",
+    "body_md": "## About this entry\n\nDeepEP (DeepSpeed Expert Parallelism) on Nebius. Configs and example launches for MoE training at scale.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "cookbook-ml-runai",
+    "type": "REPO",
+    "title": "ML Cookbook · Run:ai on Nebius",
+    "blurb": "Run:ai-based GPU orchestration on Nebius. Setup, scheduler config, and multi-tenant patterns.",
+    "level": "ADVANCED",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://github.com/nebius/ml-cookbook/tree/main/runai",
+    "body_md": "## About this entry\n\nRun:ai-based GPU orchestration on Nebius. Setup, scheduler config, and multi-tenant patterns.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "cookbook-ml-skypilot",
+    "type": "REPO",
+    "title": "ML Cookbook · SkyPilot on Nebius",
+    "blurb": "Run multi-cloud ML workloads on Nebius using SkyPilot. Recipe with sample configs and run scripts.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://github.com/nebius/ml-cookbook/tree/main/skypilot",
+    "body_md": "## About this entry\n\nRun multi-cloud ML workloads on Nebius using SkyPilot. Recipe with sample configs and run scripts.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "cookbook-ml-slurm",
+    "type": "REPO",
+    "title": "ML Cookbook · Slurm on Nebius",
+    "blurb": "Slurm-based training on Nebius compute clusters. Job submission scripts, sbatch templates, and orchestration patterns.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "aicloud",
+      "soperator"
+    ],
+    "external_url": "https://github.com/nebius/ml-cookbook/tree/main/slurm",
+    "body_md": "## About this entry\n\nSlurm-based training on Nebius compute clusters. Job submission scripts, sbatch templates, and orchestration patterns.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "cookbook-ml-volcano",
+    "type": "REPO",
+    "title": "ML Cookbook · Volcano on Nebius MK8s",
+    "blurb": "Volcano scheduler on Nebius Managed Kubernetes for batch ML workloads. Manifests + queue configurations.",
+    "level": "ADVANCED",
+    "product_focus": [
+      "aicloud",
+      "kubernetes"
+    ],
+    "external_url": "https://github.com/nebius/ml-cookbook/tree/main/volcano",
+    "body_md": "## About this entry\n\nVolcano scheduler on Nebius Managed Kubernetes for batch ML workloads. Manifests + queue configurations.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "cookbook-tf-agents",
+    "type": "REPO",
+    "title": "TF Cookbook · Building Agents",
+    "blurb": "Recipes for building agents on Nebius Token Factory. Tool-using LLMs, memory patterns, and orchestration examples.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "tokenfactory",
+      "openclaw"
+    ],
+    "external_url": "https://github.com/nebius/token-factory-cookbook/tree/main/agents",
+    "body_md": "## About this entry\n\nRecipes for building agents on Nebius Token Factory. Tool-using LLMs, memory patterns, and orchestration examples.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "cookbook-tf-distillation",
+    "type": "REPO",
+    "title": "TF Cookbook · Distillation",
+    "blurb": "Model distillation recipes — teach smaller, cheaper models from a larger teacher. Run on Nebius compute, serve via Token Factory.",
+    "level": "ADVANCED",
+    "product_focus": [
+      "tokenfactory",
+      "aicloud"
+    ],
+    "external_url": "https://github.com/nebius/token-factory-cookbook/tree/main/distillation",
+    "body_md": "## About this entry\n\nModel distillation recipes — teach smaller, cheaper models from a larger teacher. Run on Nebius compute, serve via Token Factory.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "cookbook-tf-lora",
+    "type": "REPO",
+    "title": "TF Cookbook · LoRA Fine-tuning",
+    "blurb": "LoRA / QLoRA fine-tuning recipes for Token Factory models. Includes sample datasets, training scripts, and serving the adapter.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "tokenfactory",
+      "aicloud"
+    ],
+    "external_url": "https://github.com/nebius/token-factory-cookbook/tree/main/lora",
+    "body_md": "## About this entry\n\nLoRA / QLoRA fine-tuning recipes for Token Factory models. Includes sample datasets, training scripts, and serving the adapter.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "cookbook-tf-post-training",
+    "type": "REPO",
+    "title": "TF Cookbook · Post-Training",
+    "blurb": "Post-training techniques for open-source models on Nebius — RLHF, DPO, instruction tuning. End-to-end working examples.",
+    "level": "ADVANCED",
+    "product_focus": [
+      "tokenfactory",
+      "aicloud"
+    ],
+    "external_url": "https://github.com/nebius/token-factory-cookbook/tree/main/post-training",
+    "body_md": "## About this entry\n\nPost-training techniques for open-source models on Nebius — RLHF, DPO, instruction tuning. End-to-end working examples.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "cookbook-tf-rag",
+    "type": "REPO",
+    "title": "TF Cookbook · RAG Patterns",
+    "blurb": "Retrieval-augmented generation recipes using Token Factory inference. Vector stores, chunking, hybrid retrieval, and evals.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "external_url": "https://github.com/nebius/token-factory-cookbook/tree/main/rag",
+    "body_md": "## About this entry\n\nRetrieval-augmented generation recipes using Token Factory inference. Vector stores, chunking, hybrid retrieval, and evals.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "cookbook-tf-tool-calling",
+    "type": "REPO",
+    "title": "TF Cookbook · Tool Calling",
+    "blurb": "Tool-calling patterns on Token Factory. Schema design, parallel calls, error handling, structured outputs.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "external_url": "https://github.com/nebius/token-factory-cookbook/tree/main/tool-calling",
+    "body_md": "## About this entry\n\nTool-calling patterns on Token Factory. Schema design, parallel calls, error handling, structured outputs.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "futurecoding-ai",
+    "type": "WORKSHOP",
+    "title": "The Future of Software Development (Nebius x JetBrains)",
+    "blurb": "Become an AI-powered engineer through self-paced training in AI-assisted programming. Industry experts and tutors from leading tech companies. Includes 3 months of any JetBrains IDE free.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "openclaw"
+    ],
+    "external_url": "https://futurecoding.ai/",
+    "body_md": "## About this entry\n\nBecome an AI-powered engineer through self-paced training in AI-assisted programming. Industry experts and tutors from leading tech companies. Includes 3 months of any JetBrains IDE free.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "gemma-finetune-rayyanzahid",
+    "type": "REPO",
+    "title": "QLoRA Fine-tune Gemma 4 on Nebius",
+    "blurb": "Validated recipe + Nebius infra skill + 9-node workshop fleet runbook. Built and run live at Sandbox VR SF (May 2026, ~30 attendees fine-tuned hands-on).",
+    "level": "INTERMEDIATE",
+    "duration_min": 90,
+    "product_focus": [
+      "aicloud",
+      "tokenfactory"
+    ],
+    "external_url": "https://github.com/RayyanZahid/gemma-finetune",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "nebius-science",
+    "type": "WORKSHOP",
+    "title": "Nebius Science",
+    "blurb": "Follow how AI and science co-evolve through the lens of the cloud powering it. Research, interviews, and case studies on AI's impact on scientific discovery.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://nebius.science/",
+    "body_md": "## About this entry\n\nFollow how AI and science co-evolve through the lens of the cloud powering it. Research, interviews, and case studies on AI's impact on scientific discovery.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "repo-ai-in-math-course",
+    "type": "REPO",
+    "title": "AI in Mathematical Research",
+    "blurb": "Course materials for AI in Mathematical Research. Lean-based exercises and lectures on AI-assisted theorem proving and mathematical discovery.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://github.com/Nebius-Academy/ai-in-math-course",
+    "body_md": "## About this entry\n\nCourse materials for AI in Mathematical Research. Lean-based exercises and lectures on AI-assisted theorem proving and mathematical discovery.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "repo-boltz2-mk8s",
+    "type": "REPO",
+    "title": "Boltz-2 Inference on Managed Kubernetes",
+    "blurb": "Step-by-step manifests + commands to run Boltz-2 protein structure inference at scale on Nebius Managed Kubernetes. Pairs with the YouTube tutorial.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "aicloud",
+      "kubernetes"
+    ],
+    "external_url": "https://github.com/Nebius-Academy/boltz2-mk8s",
+    "body_md": "## About this entry\n\nStep-by-step manifests + commands to run Boltz-2 protein structure inference at scale on Nebius Managed Kubernetes. Pairs with the YouTube tutorial.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "repo-claude-code-proxy",
+    "type": "REPO",
+    "title": "Claude Code → OpenAI API Proxy",
+    "blurb": "Proxy Claude Code requests through any OpenAI-compatible endpoint — point it at Nebius Token Factory and run Claude Code on open-source models.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "tokenfactory",
+      "openclaw"
+    ],
+    "external_url": "https://github.com/KiranChilledOut/claude-code-proxy",
+    "body_md": "## About this entry\n\nProxy Claude Code requests through any OpenAI-compatible endpoint — point it at Nebius Token Factory and run Claude Code on open-source models.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "repo-codex-nebius",
+    "type": "REPO",
+    "title": "Codex CLI + Nebius",
+    "blurb": "Wire OpenAI's Codex CLI to Nebius Token Factory. Use Codex's coding workflow with open-source models at lower cost.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "tokenfactory",
+      "openclaw"
+    ],
+    "external_url": "https://github.com/opencolin/codex-nebius",
+    "body_md": "## About this entry\n\nWire OpenAI's Codex CLI to Nebius Token Factory. Use Codex's coding workflow with open-source models at lower cost.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "repo-contree-mcp",
+    "type": "REPO",
+    "title": "ConTree MCP Server",
+    "blurb": "Run code in isolated cloud containers. ConTree gives AI agents secure sandboxed execution environments with full root access, network, and persistent images. MCP-compatible.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "openclaw"
+    ],
+    "external_url": "https://github.com/opencolin/contree-mcp",
+    "body_md": "## About this entry\n\nRun code in isolated cloud containers. ConTree gives AI agents secure sandboxed execution environments with full root access, network, and persistent images. MCP-compatible.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "repo-contree-skill",
+    "type": "REPO",
+    "title": "ConTree Skill",
+    "blurb": "Claude Code skill for using ConTree — sandboxed container execution with Git-like branching of agent state.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "openclaw"
+    ],
+    "external_url": "https://github.com/opencolin/contree-skill",
+    "body_md": "## About this entry\n\nClaude Code skill for using ConTree — sandboxed container execution with Git-like branching of agent state.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "repo-knowledge-base",
+    "type": "REPO",
+    "title": "LLM Engineering Knowledge Base",
+    "blurb": "Supporting reference materials for the LLM Engineering Essentials course. Lookup-style HTML pages organized by topic.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "external_url": "https://github.com/Nebius-Academy/knowledge-base",
+    "body_md": "## About this entry\n\nSupporting reference materials for the LLM Engineering Essentials course. Lookup-style HTML pages organized by topic.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "repo-langchain-nebius",
+    "type": "REPO",
+    "title": "LangChain + Nebius",
+    "blurb": "Configure Nebius Token Factory as the inference provider in LangChain apps. Drop-in replacement for OpenAI client.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "external_url": "https://github.com/opencolin/langchain-nebius",
+    "body_md": "## About this entry\n\nConfigure Nebius Token Factory as the inference provider in LangChain apps. Drop-in replacement for OpenAI client.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "repo-llm-engineering-essentials",
+    "type": "REPO",
+    "title": "LLM Engineering Essentials",
+    "blurb": "Materials for the LLM Engineering Essentials course. Notebooks covering training, fine-tuning, evals, and deployment patterns.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "tokenfactory",
+      "aicloud"
+    ],
+    "external_url": "https://github.com/Nebius-Academy/LLM-Engineering-Essentials",
+    "body_md": "## About this entry\n\nMaterials for the LLM Engineering Essentials course. Notebooks covering training, fine-tuning, evals, and deployment patterns.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "repo-llmops-essentials",
+    "type": "REPO",
+    "title": "LLMOps Essentials",
+    "blurb": "LLMOps educational project — covers deployment, monitoring, and lifecycle management for LLM systems in production.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "tokenfactory",
+      "aicloud"
+    ],
+    "external_url": "https://github.com/Nebius-Academy/LLMOps-Essentials",
+    "body_md": "## About this entry\n\nLLMOps educational project — covers deployment, monitoring, and lifecycle management for LLM systems in production.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "repo-ml-starter-pack",
+    "type": "REPO",
+    "title": "Machine Learning Starter Pack",
+    "blurb": "Open ML course — fundamentals through hands-on Jupyter notebooks. Good first stop for anyone newer to ML before going deeper.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://github.com/Nebius-Academy/ML-Starter-Pack",
+    "body_md": "## About this entry\n\nOpen ML course — fundamentals through hands-on Jupyter notebooks. Good first stop for anyone newer to ML before going deeper.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "repo-nebius-mcp",
+    "type": "REPO",
+    "title": "Nebius MCP Server",
+    "blurb": "Model Context Protocol server for Nebius. Lets MCP-aware clients (Claude Code, OpenClaw) operate Nebius resources as native tools.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "aicloud",
+      "openclaw"
+    ],
+    "external_url": "https://github.com/opencolin/nebius-mcp",
+    "body_md": "## About this entry\n\nModel Context Protocol server for Nebius. Lets MCP-aware clients (Claude Code, OpenClaw) operate Nebius resources as native tools.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "repo-nebius-skill",
+    "type": "REPO",
+    "title": "Nebius Skill (Claude Code + OpenClaw)",
+    "blurb": "Dual-compatible Claude Code + OpenClaw skill for managing Nebius AI Cloud infrastructure via CLI. Drop it in, get instant Nebius CLI mastery in your agent.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "aicloud",
+      "openclaw"
+    ],
+    "external_url": "https://github.com/opencolin/nebius-skill",
+    "body_md": "## About this entry\n\nDual-compatible Claude Code + OpenClaw skill for managing Nebius AI Cloud infrastructure via CLI. Drop it in, get instant Nebius CLI mastery in your agent.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "repo-openclaw-nebius",
+    "type": "REPO",
+    "title": "OpenClaw + Nebius",
+    "blurb": "OpenClaw provider plugin for Nebius, plus the deployment UI (claw.moi) and the Claude Code skill. The reference implementation if you want to wire OpenClaw to Nebius end-to-end.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "tokenfactory",
+      "aicloud",
+      "openclaw"
+    ],
+    "external_url": "https://github.com/opencolin/openclaw-nebius",
+    "body_md": "## About this entry\n\nOpenClaw provider plugin for Nebius, plus the deployment UI (claw.moi) and the Claude Code skill. The reference implementation if you want to wire OpenClaw to Nebius end-to-end.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "repo-openclaw-nebius-plugin",
+    "type": "REPO",
+    "title": "OpenClaw Nebius Token Factory Plugin",
+    "blurb": "Token Factory provider plugin for OpenClaw — 44+ open-source models via a single endpoint. The TypeScript provider that powers the rest of the OpenClaw + Nebius stack.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "tokenfactory",
+      "openclaw"
+    ],
+    "external_url": "https://github.com/opencolin/openclaw-nebius-plugin",
+    "body_md": "## About this entry\n\nToken Factory provider plugin for OpenClaw — 44+ open-source models via a single endpoint. The TypeScript provider that powers the rest of the OpenClaw + Nebius stack.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "running-openclaw-on-nebius",
+    "type": "WORKSHOP",
+    "title": "Running OpenClaw on Nebius",
+    "blurb": "From zero to a live AI agent in 15 minutes. Walks through Token Factory, three deploy methods (npm / Docker / Nebius Serverless), and a hands-on agent build.",
+    "level": "BEGINNER",
+    "duration_min": 30,
+    "product_focus": [
+      "openclaw",
+      "tokenfactory"
+    ],
+    "external_url": "https://github.com/opencolin/clawcamp-site/blob/master/workshops/running-openclaw-on-nebius.md",
+    "body_md": "# Running OpenClaw on Nebius\n## 30-Minute Workshop Presentation\n\n**Event:** ClawCamp Workshop Series\n**Duration:** 30 minutes (15 min presentation + 15 min hands-on)\n**Level:** Beginner\n**Prerequisites:** Laptop with browser, Nebius account (free trial), Node.js 18+\n\n---\n\n## SLIDE 1: Title\n\n**Running OpenClaw on Nebius**\nFrom zero to a live AI agent in 15 minutes\n\nClawCamp Workshop\nclaw.camp/curriculum/agent-inference\n\n---\n\n## SLIDE 2: The Problem\n\n**Running AI agents is expensive and complicated**\n\n- A Mac Mini for local inference: $1,000+\n- Exposes your home network\n- Runs ONE agent at a time\n- No scaling, no redundancy, no sleep\n\n**What if you could run 100 agents for the cost of one Mac Mini?**\n\n---\n\n## SLIDE 3: Liberate Your OpenClaw\n\n**You don't need to use Claude or OpenAI.**\n\nOpenClaw works with ANY OpenAI-compatible model provider. Today we'll use **Nebius Token Factory** — open-source models, pay-per-token, no GPU reservation.\n\n| Provider | Models | Pricing |\n|----------|--------|---------|\n| **Nebius Token Factory** | Kimi K2.5, Llama 3.3 70B, DeepSeek-R1, Qwen3, GLM-5 | Pay per token |\n| Hugging Face | GLM-5, thousands more | $2/mo free credits |\n| Local (llama.cpp) | Any GGUF model | Free (your hardware) |\n\n**Today's focus: Token Factory. Fast, cheap, production-ready.**\n\n---\n\n## SLIDE 4: The Architecture\n\n**Orchestration and inference are separate.**\n\n```\nYour Agent (OpenClaw)          Token Factory (Nebius)\n┌─────────────────────┐       ┌─────────────────────┐\n│  Agent logic (CPU)  │──────▶│  Model inference     │\n│  Tool calling       │  API  │  (GPU)               │\n│  WebSocket gateway  │◀──────│  Llama / GLM / Qwen  │\n└─────────────────────┘       └─────────────────────┘\n     Runs anywhere               Pay per token\n     $0.01/hr                    No GPU needed\n```\n\nYour agent runs on cheap CPU. The expensive GPU work goes through Token Factory's API.\n\n---\n\n## SLIDE 5: Three Ways to Deploy\n\n| Method | Time | Best For |\n|--------|------|----------|\n| **npm install** | 5 min | Local dev, fastest start |\n| **Docker** | 10 min | Isolated, repeatable, server deploys |\n| **Nebius Serverless** | 20 min | Production, auto-scaling, zero-ops |\n\n**We'll start with npm (fastest), then show Docker and Serverless.**\n\n---\n\n## SLIDE 6: Step 1 — Get Your Token Factory API Key (2 min)\n\n1. Go to **console.nebius.com**\n2. Navigate to **Token Factory** in the sidebar\n3. Click **Create API Key**\n4. Copy the key\n\nSet it in your terminal:\n```bash\nexport NEBIUS_API_KEY=\"your-key-here\"\n```\n\nTo persist across sessions, add it to your shell profile:\n```bash\necho 'export NEBIUS_API_KEY=\"your-key-here\"' >> ~/.zshrc  # macOS\necho 'export NEBIUS_API_KEY=\"your-key-here\"' >> ~/.bashrc  # Linux\n```\n\n**This key gives you access to models including Kimi K2.5, Llama 3.3 70B, DeepSeek-R1, and Qwen3. Never commit this key to git.**\n\n---\n\n## SLIDE 7: Step 2 — Install OpenClaw (1 min)\n\n```bash\nnpm install -g @openclaw/cli\n```\n\nVerify:\n```bash\nopenclaw --version\n```\n\nThat's it. No Docker, no containers, no VMs (yet).\n\n---\n\n## SLIDE 8: Step 3 — Connect to Token Factory (2 min)\n\n**Option A: Quick onboard (CLI)**\n\n```bash\nopenclaw onboard --non-interactive \\\n  --auth-choice custom-api-key \\\n  --custom-base-url \"https://api.tokenfactory.nebius.com/v1/\" \\\n  --custom-model-id \"meta-llama/Llama-3.3-70B-Instruct-fast\" \\\n  --custom-api-key \"$NEBIUS_API_KEY\" \\\n  --secret-input-mode plaintext \\\n  --custom-compatibility openai\n```\n\n**Option B: Config file (recommended for production)**\n\nEdit `~/.openclaw/openclaw.json`:\n\n```json5\n{\n  models: {\n    mode: \"merge\",\n    providers: {\n      nebius: {\n        baseUrl: \"https://api.tokenfactory.nebius.com/v1/\",\n        apiKey: \"${NEBIUS_API_KEY}\",\n        api: \"openai-completions\",\n        models: [\n          {\n            id: \"moonshotai/Kimi-K2.5\",\n            name: \"Kimi K2.5\",\n            contextWindow: 128000,\n            maxTokens: 32000\n          },\n          {\n            id: \"meta-llama/Llama-3.3-70B-Instruct-fast\",\n            name: \"Llama 3.3 70B\",\n            contextWindow: 128000,\n            maxTokens: 32000\n          },\n          {\n            id: \"deepseek-ai/DeepSeek-R1-0528\",\n            name: \"DeepSeek R1\",\n            reasoning: true,\n            contextWindow: 128000,\n            maxTokens: 32000\n          }\n        ]\n      }\n    }\n  },\n  agents: {\n    defaults: {\n      model: { primary: \"nebius/moonshotai/Kimi-K2.5\" },\n      models: {\n        \"nebius/moonshotai/Kimi-K2.5\": { alias: \"kimi\" },\n        \"nebius/meta-llama/Llama-3.3-70B-Instruct-fast\": { alias: \"llama70b\" },\n        \"nebius/deepseek-ai/DeepSeek-R1-0528\": { alias: \"deepseek\" }\n      }\n    }\n  }\n}\n```\n\n**Key details:**\n- `mode: \"merge\"` keeps built-in providers while adding Nebius\n- `apiKey: \"${NEBIUS_API_KEY}\"` reads from your environment variable\n- `api: \"openai-completions\"` — Token Factory is OpenAI-compatible\n- Model aliases let you switch fast: `/model kimi` or `/model llama70b`\n\n---\n\n## SLIDE 9: Step 4 — Start and Verify (1 min)\n\nStart the gateway:\n```bash\nopenclaw start\n```\n\nOpen your browser: **`http://localhost:18789`**\n\nVerify models are loaded:\n```\n/models        # List all available models\n/model kimi    # Switch to Kimi K2.5\n/status        # Check current model and connection\n```\n\nTest the connection directly:\n```bash\ncurl -H \"Authorization: Bearer $NEBIUS_API_KEY\" \\\n  https://api.tokenfactory.nebius.com/v1/models\n```\n\nYour agent is live. Connected to Kimi K2.5 on Nebius. No GPU on your machine.\n\n---\n\n## SLIDE 10: Model Selection\n\nPick the right model for your use case:\n\n| Model | ID | Speed | Best For |\n|-------|----|-------|----------|\n| **Llama 3.3 70B** | `meta-llama/Llama-3.3-70B-Instruct-fast` | Fast | General agents, tool calling |\n| **Kimi K2.5** | `moonshotai/Kimi-K2.5` | Fast | Great all-rounder, recommended |\n| **DeepSeek-R1** | `deepseek-ai/DeepSeek-R1-0528` | Medium | Reasoning, complex chains |\n| **GLM-5** | `zai-org/GLM-5` | Very Fast | High throughput, simple tasks |\n| **Qwen3** | `Qwen/Qwen3-30B-A3B` | Fast | Code generation, multilingual |\n\nSwitch models anytime:\n```bash\nopenclaw config set agents.defaults.model.primary \"moonshotai/Kimi-K2.5\"\n```\n\n---\n\n## SLIDE 11: Is Docker Right for Me?\n\n**Use Docker when:**\n- You want an isolated, throwaway environment\n- You're deploying to a server\n- You need repeatable builds\n\n**Skip Docker when:**\n- You want the fastest local dev cycle\n- You're just prototyping\n\n### Docker Quick Start\n\n```bash\n# Clone and build\ngit clone https://github.com/openclaw/openclaw.git\ncd openclaw\n\n# Automated setup (handles everything)\nexport OPENCLAW_IMAGE=\"ghcr.io/openclaw/openclaw:latest\"\n./scripts/docker/setup.sh\n```\n\nOr manual:\n```bash\ndocker build -t openclaw:local -f Dockerfile .\ndocker compose up -d openclaw-gateway\n```\n\nAccess at `http://127.0.0.1:18789/`\n\nHealth check:\n```bash\ncurl -fsS http://127.0.0.1:18789/healthz\ncurl -fsS http://127.0.0.1:18789/readyz\n```\n\n---\n\n## SLIDE 12: Docker + Token Factory\n\nConnect your Docker container to Nebius. Two options:\n\n**Option A: Mount your config file**\nIf you already have `~/.openclaw/openclaw.json` configured (from Slide 8), Docker picks it up automatically via the volume mount.\n\n**Option B: Onboard inside the container**\n```bash\ndocker compose run --rm --no-deps --entrypoint node \\\n  openclaw-gateway dist/index.js onboard \\\n  --auth-choice custom-api-key \\\n  --custom-base-url \"https://api.tokenfactory.nebius.com/v1/\" \\\n  --custom-model-id \"meta-llama/Llama-3.3-70B-Instruct-fast\" \\\n  --custom-api-key \"$NEBIUS_API_KEY\" \\\n  --custom-compatibility openai\n```\n\n**Your agent runs in Docker. Inference runs on Nebius GPUs. Best of both worlds.**\n\n---\n\n## SLIDE 13: Structured Tool Calling\n\nThe real power: **JSON mode for reliable tool calling.**\n\n```json\n{\n  \"tool\": \"get_weather\",\n  \"arguments\": {\n    \"city\": \"Oakland\",\n    \"units\": \"fahrenheit\"\n  }\n}\n```\n\nToken Factory supports JSON mode natively — no prompt engineering hacks.\n\nWorks with Kimi K2.5, Llama 3.3, and DeepSeek-R1.\n\n---\n\n## SLIDE 14: Going to Production (Nebius Serverless)\n\nWhen you're ready to deploy for real:\n\n```bash\n# Install Nebius CLI\ncurl -sSL https://storage.ai.nebius.cloud/ncp/install.sh | bash\n\n# Deploy OpenClaw on Serverless\nnebius msp serverless v1alpha1 endpoint create \\\n  --name openclaw-agent \\\n  --image openclaw/gateway:latest \\\n  --memory 512MB\n```\n\n**Auto-scales to zero when idle. Spins up on demand. No VM management.**\n\n---\n\n## SLIDE 15: Cost Breakdown\n\n| Usage | Tokens/day | Cost/day | Cost/month |\n|-------|-----------|----------|------------|\n| Light (100 msgs) | ~500K | $0.15 | $4.50 |\n| Medium (1K msgs) | ~5M | $1.50 | $45 |\n| Heavy (10K msgs) | ~50M | $15 | $450 |\n\nCompare: A single H100 GPU = **$2-3/hour** = **$1,500-2,200/month**\n\n**Token Factory: pay per token, not per hour.**\n\n---\n\n## SLIDE 16: Security Checklist\n\nBefore going live:\n\n- [ ] Set a gateway token (auth for all connections)\n- [ ] Bind to loopback in dev, 0.0.0.0 in production behind a proxy\n- [ ] Enable HTTPS via reverse proxy (nginx/Caddy)\n- [ ] Set API budget caps in Token Factory\n- [ ] Use network security groups to restrict port access\n- [ ] For Docker: container runs as non-root user `node` (uid 1000)\n\n---\n\n## SLIDE 17: Troubleshooting Quick Reference\n\n| Problem | Fix |\n|---------|-----|\n| Gateway won't start | Check port 18789: `lsof -i :18789` |\n| Token Factory 401 | Verify API key: `curl -H \"Authorization: Bearer $KEY\" https://api.tokenfactory.nebius.com/v1/models` |\n| \"model not allowed\" | Add model to `agents.defaults.models` allowlist (see Slide 8) |\n| Model not in `/models` | Verify model exists in BOTH `models.providers[].models[]` AND the allowlist |\n| Wrong model called | Check `id` matches Token Factory exactly (e.g., `moonshotai/Kimi-K2.5`) |\n| Docker OOM (exit 137) | Increase memory to 2GB minimum |\n| Slow responses | Try Kimi K2.5: `/model kimi` |\n| Connection refused | Check bind address and firewall rules |\n\n---\n\n## SLIDE 18: What You Built Today\n\n1. Installed OpenClaw (npm or Docker)\n2. Connected to Nebius Token Factory (open-source models)\n3. Selected a model and configured tool calling\n4. Understand three deployment methods (npm, Docker, Serverless)\n5. Know how to go from prototype to production\n\n**Your agent is live. No Claude API key needed. No OpenAI. Just open-source models on Nebius.**\n\n---\n\n## SLIDE 19: Resources\n\n| Resource | Link |\n|----------|------|\n| OpenClaw Docs | docs.openclaw.ai |\n| Docker Install | docs.openclaw.ai/install/docker |\n| Token Factory Docs | docs.tokenfactory.nebius.com |\n| Token Factory Cookbook | github.com/nebius/token-factory-cookbook |\n| ClawCamp Tutorials | claw.camp/curriculum |\n| Agent Inference Workshop | claw.camp/curriculum/agent-inference |\n| Discord | discord.gg/clawcamp |\n\n---\n\n## SLIDE 20: Next Steps\n\n**Beginner:**\n- Deploy via Web Console (20 min) — claw.camp/curriculum/deploy-console\n- Deploy with Install Scripts (15 min) — claw.camp/curriculum/deploy-scripts\n\n**Intermediate:**\n- Deployment Patterns & Troubleshooting (45 min) — claw.camp/curriculum/deploy-patterns\n- Private Agents for sensitive data (55 min) — claw.camp/curriculum/private-agents\n\n**Advanced:**\n- Agent Lifecycle & Fine-Tuning (70 min) — claw.camp/curriculum/agent-lifecycle\n- Robotics with Solo CLI (75 min) — claw.camp/curriculum/robotics\n\n---\n\n## SLIDE 21: Thank You\n\n**Running OpenClaw on Nebius**\nFrom zero to a live AI agent in 15 minutes\n\nOpen-source models. Pay-per-token. No vendor lock-in.\n\nQuestions? Find us at:\n- claw.camp\n- discord.gg/clawcamp\n- hello@claw.camp\n\n**Join the personal AI revolution.**\n",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "solutions-anyscale",
+    "type": "REPO",
+    "title": "Solutions · Anyscale on Nebius",
+    "blurb": "Run Anyscale (managed Ray) on Nebius infrastructure. Terraform module for the integration plus reference workloads.",
+    "level": "ADVANCED",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://github.com/nebius/nebius-solutions-library/tree/main/anyscale",
+    "body_md": "## About this entry\n\nRun Anyscale (managed Ray) on Nebius infrastructure. Terraform module for the integration plus reference workloads.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "solutions-gpu-slicing",
+    "type": "REPO",
+    "title": "Solutions · GPU Slicing",
+    "blurb": "Multi-tenant GPU slicing setup for Nebius — partition a GPU across workloads with MIG / time-slicing. For shared dev environments.",
+    "level": "ADVANCED",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://github.com/nebius/nebius-solutions-library/tree/main/gpu_slicing",
+    "body_md": "## About this entry\n\nMulti-tenant GPU slicing setup for Nebius — partition a GPU across workloads with MIG / time-slicing. For shared dev environments.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "solutions-k8s-training",
+    "type": "REPO",
+    "title": "Solutions · Kubernetes Training Cluster",
+    "blurb": "Terraform module for a Nebius Managed Kubernetes cluster optimized for distributed training. GPU node pools, NCCL networking, fast storage.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "aicloud",
+      "kubernetes"
+    ],
+    "external_url": "https://github.com/nebius/nebius-solutions-library/tree/main/k8s-training",
+    "body_md": "## About this entry\n\nTerraform module for a Nebius Managed Kubernetes cluster optimized for distributed training. GPU node pools, NCCL networking, fast storage.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "solutions-soperator",
+    "type": "REPO",
+    "title": "Solutions · Soperator (Slurm on Kubernetes)",
+    "blurb": "Reference Terraform setup for Soperator — Nebius's Slurm-on-Kubernetes operator. Deploy a Slurm cluster on managed K8s with one terraform apply.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "aicloud",
+      "soperator",
+      "kubernetes"
+    ],
+    "external_url": "https://github.com/nebius/nebius-solutions-library/tree/main/soperator",
+    "body_md": "## About this entry\n\nReference Terraform setup for Soperator — Nebius's Slurm-on-Kubernetes operator. Deploy a Slurm cluster on managed K8s with one terraform apply.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "solutions-vm-instance",
+    "type": "REPO",
+    "title": "Solutions · VM Instance (Terraform)",
+    "blurb": "Baseline Terraform module for a Nebius VM. Building block — fork it as the starting point for your own infra modules.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://github.com/nebius/nebius-solutions-library/tree/main/vm-instance",
+    "body_md": "## About this entry\n\nBaseline Terraform module for a Nebius VM. Building block — fork it as the starting point for your own infra modules.",
+    "is_official": false,
+    "status": "published"
+  },
+  {
+    "slug": "webinar-running-openclaw-on-nebius",
+    "type": "VIDEO",
+    "title": "Workshop: Running OpenClaw on Nebius",
+    "blurb": "Live webinar with Colin Lowenberg + Michal from Nebius demoing OpenClaw end-to-end: install locally with Token Factory, deploy to Nebius Serverless via Docker (with a CLI skill that automates it), configure sub-agents, and Q&A covering cost, model switching, GitHub deployment roadmap, and Tavily for web search.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "tokenfactory",
+      "aicloud",
+      "openclaw"
+    ],
+    "external_url": "https://nebius.zoom.us/rec/share/W7W_7xxYZBSGjcHEro0egvt2xhH00z3CIjdcSwuLI0-AZ0sDr7PiYrPJ5WeB_rnC.YsDri-mrKWuiSVj8",
+    "body_md": "## About this entry\n\nLive webinar with Colin Lowenberg + Michal from Nebius demoing OpenClaw end-to-end: install locally with Token Factory, deploy to Nebius Serverless via Docker (with a CLI skill that automates it), configure sub-agents, and Q&A covering cost, model switching, GitHub deployment roadmap, and Tavily for web search.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-agent-testing",
+    "type": "VIDEO",
+    "title": "Agent Testing: Browser and CLI",
+    "blurb": "End-to-end testing strategies for browser and CLI agents. Practical patterns for keeping agents reliable.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "openclaw"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=wYZU5AUkI-M",
+    "body_md": "## About this entry\n\nEnd-to-end testing strategies for browser and CLI agents. Practical patterns for keeping agents reliable.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-agents-md-bad",
+    "type": "VIDEO",
+    "title": "AGENTS.md Is Making Your Agent Worse",
+    "blurb": "Common pitfalls in agent prompt engineering — what AGENTS.md gets wrong and what to do instead.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "openclaw"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=cQFTK3NiO6U",
+    "body_md": "## About this entry\n\nCommon pitfalls in agent prompt engineering — what AGENTS.md gets wrong and what to do instead.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-ai-coders-fail",
+    "type": "VIDEO",
+    "title": "Why AI Coders Like Cursor and Claude Code Fail Long-Term",
+    "blurb": "Failure modes of AI coding agents and patterns that hold up in production. Honest critique + remediation.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "openclaw"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=AF2vqs8Trfo",
+    "body_md": "## About this entry\n\nFailure modes of AI coding agents and patterns that hold up in production. Honest critique + remediation.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-ai-day-nemotron",
+    "type": "VIDEO",
+    "title": "AI Day: Nemotron — Open and Accelerated (Bryan Catanzaro, NVIDIA)",
+    "blurb": "AI Day by Nebius Academy. Bryan Catanzaro on NVIDIA's open-model approach with Nemotron and the future of accelerated AI infrastructure.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=n9BTl3tQWlU",
+    "body_md": "## About this entry\n\nAI Day by Nebius Academy. Bryan Catanzaro on NVIDIA's open-model approach with Nemotron and the future of accelerated AI infrastructure.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-ai-dna-amsterdam",
+    "type": "VIDEO",
+    "title": "AI DNA Amsterdam — Recap",
+    "blurb": "Talks, discussions, and connections from the AI DNA event in Amsterdam. Highlight reel.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=Ftr-6JF08ZI",
+    "body_md": "## About this entry\n\nTalks, discussions, and connections from the AI DNA event in Amsterdam. Highlight reel.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-automated-docs",
+    "type": "VIDEO",
+    "title": "Automated Documentation: Backend & Frontend",
+    "blurb": "Practical patterns for keeping docs in sync with code, backend and frontend. Tooling + agent flows.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "openclaw"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=DFEgod82SlM",
+    "body_md": "## About this entry\n\nPractical patterns for keeping docs in sync with code, backend and frontend. Tooling + agent flows.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-boltz2-tutorial",
+    "type": "VIDEO",
+    "title": "How to Run Boltz-2 at Scale on Kubernetes",
+    "blurb": "End-to-end tutorial on running Boltz-2 protein structure inference at scale on Nebius MK8s. Pairs with the boltz2-mk8s repo.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "aicloud",
+      "kubernetes"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=tMvAWi1Wfiw",
+    "body_md": "## About this entry\n\nEnd-to-end tutorial on running Boltz-2 protein structure inference at scale on Nebius MK8s. Pairs with the boltz2-mk8s repo.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-claude-subagents-tutorial",
+    "type": "VIDEO",
+    "title": "Claude Code Subagents Tutorial",
+    "blurb": "Parallel execution and custom agent patterns with Claude Code. Worked examples + best practices.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "openclaw"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=6VC-TuWVlCc",
+    "body_md": "## About this entry\n\nParallel execution and custom agent patterns with Claude Code. Worked examples + best practices.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-defining-cursor-rules",
+    "type": "VIDEO",
+    "title": "Defining Cursor's Rules",
+    "blurb": "Get consistent, predictable behavior from your AI pair programmer. How to author Cursor rules that hold.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "openclaw"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=GV62OTdLLhw",
+    "body_md": "## About this entry\n\nGet consistent, predictable behavior from your AI pair programmer. How to author Cursor rules that hold.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-deploy-serverless-endpoints",
+    "type": "VIDEO",
+    "title": "How to Deploy a Model with Nebius Serverless Endpoints",
+    "blurb": "From container to live API. Walks through deploying a model as a serverless endpoint on Nebius.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=Zjq8HSMgFr4",
+    "body_md": "## About this entry\n\nFrom container to live API. Walks through deploying a model as a serverless endpoint on Nebius.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-english-programming-language",
+    "type": "VIDEO",
+    "title": "English = New Programming Language",
+    "blurb": "The future of coding agents and natural-language software development. Where the agent paradigm is heading.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "openclaw"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=rZ2eVAeXx6k",
+    "body_md": "## About this entry\n\nThe future of coding agents and natural-language software development. Where the agent paradigm is heading.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-finetune-serverless-jobs",
+    "type": "VIDEO",
+    "title": "How to Fine-tune a Model with Nebius Serverless Jobs",
+    "blurb": "End-to-end fine-tuning workflow using Nebius Serverless Jobs — from data prep to deployed checkpoint.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=Cx7BlL6PdKk",
+    "body_md": "## About this entry\n\nEnd-to-end fine-tuning workflow using Nebius Serverless Jobs — from data prep to deployed checkpoint.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-object-storage-buckets",
+    "type": "VIDEO",
+    "title": "How to Create Object Storage Buckets on Nebius",
+    "blurb": "Quick walkthrough for creating Object Storage buckets on Nebius — fundamentals you'll use for every training and inference job.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=DRSdfi0mINs",
+    "body_md": "## About this entry\n\nQuick walkthrough for creating Object Storage buckets on Nebius — fundamentals you'll use for every training and inference job.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-recap-next-steps",
+    "type": "VIDEO",
+    "title": "Recap & Next Steps with Nebius Cloud",
+    "blurb": "Recap of what you've learned about Nebius Cloud and a roadmap for what to explore next.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=ZjD489E0lls",
+    "body_md": "## About this entry\n\nRecap of what you've learned about Nebius Cloud and a roadmap for what to explore next.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-sharing-agent-rules",
+    "type": "VIDEO",
+    "title": "Sharing Rules Between Agents",
+    "blurb": "Keep coding agents consistent across teams and codebases. Patterns for shared rules and config.",
+    "level": "INTERMEDIATE",
+    "product_focus": [
+      "openclaw"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=9aMa7KBExuc",
+    "body_md": "## About this entry\n\nKeep coding agents consistent across teams and codebases. Patterns for shared rules and config.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-soperator-overview",
+    "type": "VIDEO",
+    "title": "Managed Soperator: Slurm on Kubernetes",
+    "blurb": "Marouane Khoukh introduces Managed Soperator — Slurm on Kubernetes for scalable AI workloads on Nebius.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "soperator",
+      "kubernetes"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=iQstLUA0oiA",
+    "body_md": "## About this entry\n\nMarouane Khoukh introduces Managed Soperator — Slurm on Kubernetes for scalable AI workloads on Nebius.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-welcome-nebius-cloud",
+    "type": "VIDEO",
+    "title": "Welcome to Nebius Cloud",
+    "blurb": "Orientation video for new Nebius Cloud users. Tour of the console and core concepts.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "aicloud"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=N_DRDMiBfl4",
+    "body_md": "## About this entry\n\nOrientation video for new Nebius Cloud users. Tour of the console and core concepts.",
+    "is_official": true,
+    "status": "published"
+  },
+  {
+    "slug": "yt-welcome-token-factory",
+    "type": "VIDEO",
+    "title": "Welcome to Nebius Token Factory",
+    "blurb": "2-minute introduction to Nebius Token Factory — the next evolution of AI Studio with OpenAI-compatible API.",
+    "level": "BEGINNER",
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "external_url": "https://www.youtube.com/watch?v=mMdnzO6rBDU",
+    "body_md": "## About this entry\n\n2-minute introduction to Nebius Token Factory — the next evolution of AI Studio with OpenAI-compatible API.",
+    "is_official": true,
+    "status": "published"
+  }
+]
