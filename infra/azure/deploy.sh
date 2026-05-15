@@ -247,11 +247,30 @@ if [[ -z "$TOKEN" ]]; then
   exit 1
 fi
 
+# (c) Mint or reuse a STATIC admin token. The session token from /auth/login
+# expires after 15 min — too short for the rest of the deploy, especially
+# the `next build` inside docker which runs ~5–10 min into Phase 5. A
+# static token (stored on the user row, no expiry) survives the whole
+# deploy and is what the live web Container App also reads at runtime.
+if [[ -z "${DIRECTUS_STATIC_TOKEN:-}" ]]; then
+  echo "→ Minting a static admin token (one-time, persists in $SECRETS_FILE)..."
+  DIRECTUS_STATIC_TOKEN="$(openssl rand -hex 32)"
+  curl -fsS -X PATCH "$DIRECTUS_URL/users/me" \
+    -H "authorization: Bearer $TOKEN" \
+    -H 'content-type: application/json' \
+    -d "{\"token\":\"$DIRECTUS_STATIC_TOKEN\"}" >/dev/null
+  echo "DIRECTUS_STATIC_TOKEN='$DIRECTUS_STATIC_TOKEN'" >> "$SECRETS_FILE"
+  echo "  ✓ saved"
+else
+  echo "  ✓ Reusing existing static token from $SECRETS_FILE"
+fi
+TOKEN="$DIRECTUS_STATIC_TOKEN"
 export DIRECTUS_URL DIRECTUS_ADMIN_TOKEN="$TOKEN"
 
 echo "→ Applying schema..."
 node "$ROOT/apps/directus/scripts/apply-schema.mjs" || {
-  echo "WARNING: apply-schema.mjs failed — continuing. Inspect manually if needed."
+  echo "ERROR: apply-schema.mjs failed. Inspect manually."
+  exit 1
 }
 
 echo "→ Seeding content..."
@@ -325,6 +344,29 @@ az deployment sub create \
 
 WEB_ORIGIN_URL="$(az deployment sub show --name "$DEPLOYMENT_NAME-web" --query 'properties.outputs.webOriginUrl.value' -o tsv)"
 FRONT_DOOR_URL="$(az deployment sub show --name "$DEPLOYMENT_NAME-web" --query 'properties.outputs.frontDoorUrl.value' -o tsv)"
+
+# ============================================================================
+# Phase 6.5 — Inject DIRECTUS_ADMIN_TOKEN as a runtime env var on the web
+#             Container App. Bicep can't carry a runtime-minted secret
+#             through cleanly, so we patch it post-deploy. Without this,
+#             the live web app's getServerSideProps + ISR revalidations
+#             call Directus unauthenticated and 403.
+# ============================================================================
+
+WEB_APP="$(az containerapp list --resource-group "$RG_NAME" --query "[?contains(name, 'web')].name | [0]" -o tsv)"
+if [[ -n "$WEB_APP" ]]; then
+  echo ""
+  echo "→ Phase 6.5: setting DIRECTUS_ADMIN_TOKEN on $WEB_APP..."
+  az containerapp update \
+    --resource-group "$RG_NAME" \
+    --name "$WEB_APP" \
+    --set-env-vars \
+      "DIRECTUS_ADMIN_TOKEN=$TOKEN" \
+      "AUTH_COOKIE_SECURE=1" \
+      "NEXT_PUBLIC_DIRECTUS_PUBLIC_URL=$DIRECTUS_URL" \
+    --output none
+  echo "  ✓ runtime env updated"
+fi
 
 # ============================================================================
 # Phase 7 — Smoke check + done
