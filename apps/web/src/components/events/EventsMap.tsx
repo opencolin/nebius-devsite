@@ -71,8 +71,12 @@ export default function EventsMap({events, onCityClick, activeCity, variant = 'l
       }
 
       const map = L.map(mapRef.current, {
-        center: [25, 5],
-        zoom: 2,
+        // Initial framing — dialed in from zoom 2 → 3 and centered slightly
+        // further north so the typical event spread (US west coast ↔ EU ↔
+        // Bengaluru) fills the frame instead of getting lost in the ocean.
+        // fitBounds below tightens this further once markers are added.
+        center: [35, 15],
+        zoom: 3,
         // Hide the +/- zoom buttons in the dark/hero variant so the title
         // overlay isn't cluttered. Light variant keeps them for the
         // standalone map use case.
@@ -111,10 +115,13 @@ export default function EventsMap({events, onCityClick, activeCity, variant = 'l
           iconAnchor: active ? [9, 9] : [7, 7],
         });
 
+      const markerCoords: Array<[number, number]> = [];
+
       events
         .filter((e) => e.location?.coordinates?.length === 2)
         .forEach((e) => {
           const [lng, lat] = e.location!.coordinates;
+          markerCoords.push([lat, lng]);
           const isActive = activeCity === e.city;
           const marker = L.marker([lat, lng], {icon: makeIcon(isActive)}).addTo(map);
 
@@ -142,6 +149,17 @@ export default function EventsMap({events, onCityClick, activeCity, variant = 'l
             // Otherwise let Leaflet open the popup (its default behavior)
           });
         });
+
+      // Auto-fit to actual events so the frame is always tight regardless of
+      // which cities are upcoming this week. Capped at zoom 5 so a single
+      // event doesn't slam to street level. Padding leaves the title overlay
+      // and the city-chip strip room without covering pins.
+      if (markerCoords.length > 0) {
+        map.fitBounds(L.latLngBounds(markerCoords), {
+          padding: [60, 60],
+          maxZoom: 5,
+        });
+      }
     }
 
     loadAndInit();
