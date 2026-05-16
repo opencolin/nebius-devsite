@@ -57,3 +57,26 @@
   font-size: 12px;
   color: var(--g-color-text-secondary);
 }
+
+// "View all results" footer link — separates from the row hits with a
+// top border + lime accent so it reads as "see the whole grid" not
+// "another hit".
+.viewAll {
+  appearance: none;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--g-color-line-generic);
+  margin-top: 4px;
+  padding: 12px 16px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--nb-color-text-highlight, var(--g-color-text-link));
+  cursor: pointer;
+
+  &:hover {
+    background: var(--g-color-base-simple-hover);
+  }
+}

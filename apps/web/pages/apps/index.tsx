@@ -113,14 +113,14 @@ export default function ProjectsPage({
         <title>{`Apps · Nebius Builders`}</title>
         <meta
           name="description"
-          content="Open-source apps built on Nebius by community leaders, plus hackathon submissions from Nebius.Build SF and the JetBrains × Codex hackathon."
+          content="Open-source apps built on Nebius by the community."
         />
       </Head>
       <div className={page.container}>
         <PageHeader
           eyebrow="Apps"
           title="Built on Nebius"
-          description={`${projects.length} apps across the curated showcase, the Nebius.Build robotics hackathon, and the JetBrains × Codex IDE-reimagined hackathon. Featured + award-winning entries surface first; "Other" tags entries that don't use Nebius/Tavily.`}
+          description={`${projects.length} community apps. Featured + award-winning entries surface first.`}
         />
 
         <div className={styles.filterBar}>

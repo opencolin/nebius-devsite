@@ -1,15 +1,14 @@
-// /integrations page (route renamed from /integrations) — slim hero,
-// sticky filter bar with one chip row, then a 3-up card grid that
-// mirrors the homepage EcosystemPartners section so the visual rhythm
-// carries between surfaces.
+// /search page — same hero + sticky filter + card grid pattern as
+// /integrations. Kept as its own module so the spacing can drift if
+// search ever grows its own UI (snippets, highlights, etc).
 
 .hero {
   background: var(--g-color-base-background);
-  padding: 64px 0 48px;
+  padding: 48px 0 32px;
   border-bottom: 1px solid var(--g-color-line-generic);
 
   @media (min-width: 1024px) {
-    padding: 88px 0 64px;
+    padding: 72px 0 48px;
   }
 }
 
@@ -19,11 +18,16 @@
   letter-spacing: 0.1em;
   font-weight: 600;
   color: var(--g-color-text-hint);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .heroTitle {
-  margin: 0 0 16px;
+  margin: 0 0 12px;
+  max-width: 28ch;
+}
+
+.queryHighlight {
+  color: var(--nb-color-text-highlight, var(--g-color-text-link));
 }
 
 .heroLede {
@@ -31,58 +35,27 @@
   max-width: 60ch;
 }
 
-// Filter strip — sticks under the nav so the chips follow the user
-// while they scroll long result sets. Same pattern as /events.
-// Tight vertical padding so the pinned strip doesn't eat scroll real
-// estate; chip row is already ~36px on its own.
 .filters {
   position: sticky;
-  top: 52px; // matches PublicNav height (12 + 28 + 12)
+  top: 52px; // matches PublicNav
   z-index: 10;
   background: var(--g-color-base-background);
   border-bottom: 1px solid var(--g-color-line-generic);
-  // Tight padding so the pinned strip doesn't eat scroll real estate.
-  // Chip row is already ~36px on its own.
   padding: 4px 0;
-}
-
-.filterRow {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-
-  @media (min-width: 768px) {
-    flex-direction: row;
-    align-items: center;
-    gap: 16px;
-  }
-}
-
-.filterLabel {
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  min-width: 80px;
-  flex-shrink: 0;
 }
 
 .chips {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  padding: 6px 0;
 }
 
-.resultCount {
-  margin-bottom: 16px;
-}
-
-.empty {
+.error {
   display: block;
-  padding: 48px 0;
-  text-align: center;
+  padding: 24px 0;
 }
 
-// Card grid — identical shape to the homepage ecosystem section so the
-// transition from / → /integrations feels like the same component zoomed in.
 .grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -98,14 +71,16 @@
   }
 }
 
+// Card identical in spirit to /integrations card so the visual family
+// holds across search/integrations/community sections.
 .card {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   background: var(--g-color-base-float);
   border: 1px solid var(--g-color-line-generic);
   border-radius: 16px;
-  padding: 24px;
+  padding: 20px;
   text-decoration: none;
   color: var(--g-color-text-primary);
   transition: border-color 150ms, box-shadow 150ms, transform 150ms;
@@ -136,13 +111,18 @@
   transition: color 150ms;
 }
 
-.cardBlurb {
+.cardMeta {
   margin: 0;
 }
 
-// Tag row — product chips (info/blue) + category chip (utility/grey).
-// Replaces both the old top-of-card category pill and the bottom
-// productRow so both axes live together at a glance.
+.cardBlurb {
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .tagRow {
   display: flex;
   flex-wrap: wrap;
@@ -150,9 +130,9 @@
 }
 
 .cardCta {
+  margin-top: auto;
+  padding-top: 8px;
   border-top: 1px solid var(--g-color-line-generic);
-  padding-top: 12px;
-  margin-top: 4px;
   font-size: 12px;
   font-weight: 600;
   color: #052b42;
