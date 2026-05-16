@@ -363,9 +363,21 @@ resource directus 'Microsoft.App/containerApps@2024-03-01' = {
             {name: 'SESSION_COOKIE_DOMAIN', value: '.buildspace.sh'}
             {name: 'REFRESH_TOKEN_COOKIE_DOMAIN', value: '.buildspace.sh'}
             {name: 'AUTH_PROVIDERS', value: 'github'}
-            {name: 'AUTH_GITHUB_DRIVER', value: 'github'}
+            // Directus 11 doesn't ship a built-in `github` driver — use
+            // the generic oauth2 driver with the GitHub authorize / token /
+            // profile endpoints below. The friendly provider NAME is still
+            // "github" (so the route is /auth/login/github), which is
+            // what the LoginForm builds.
+            {name: 'AUTH_GITHUB_DRIVER', value: 'oauth2'}
             {name: 'AUTH_GITHUB_CLIENT_ID', secretRef: 'auth-github-client-id'}
             {name: 'AUTH_GITHUB_CLIENT_SECRET', secretRef: 'auth-github-client-secret'}
+            {name: 'AUTH_GITHUB_AUTHORIZE_URL', value: 'https://github.com/login/oauth/authorize'}
+            {name: 'AUTH_GITHUB_ACCESS_URL', value: 'https://github.com/login/oauth/access_token'}
+            {name: 'AUTH_GITHUB_PROFILE_URL', value: 'https://api.github.com/user'}
+            {name: 'AUTH_GITHUB_SCOPE', value: 'read:user user:email'}
+            {name: 'AUTH_GITHUB_IDENTIFIER_KEY', value: 'email'}
+            {name: 'AUTH_GITHUB_EMAIL_KEY', value: 'email'}
+            {name: 'AUTH_GITHUB_FIRST_NAME_KEY', value: 'name'}
             {name: 'AUTH_GITHUB_DEFAULT_ROLE_ID', value: defaultBuilderRoleId}
             {name: 'AUTH_GITHUB_REDIRECT_ALLOW_LIST', value: githubRedirectAllowList}
             {name: 'AUTH_GITHUB_ALLOW_PUBLIC_REGISTRATION', value: 'true'}
