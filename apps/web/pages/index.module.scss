@@ -16,12 +16,15 @@
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  // Dialed back from 0.92 / 0.78 / 0.4 / 0.15 to ~80% of each so the map
+  // tiles + city dots come through more clearly. Title stays comfortably
+  // legible: white on rgba(5, 27, 41, 0.75) still has high contrast.
   background: linear-gradient(
     105deg,
-    rgba(5, 27, 41, 0.92) 0%,
-    rgba(5, 27, 41, 0.78) 35%,
-    rgba(5, 27, 41, 0.4) 70%,
-    rgba(5, 27, 41, 0.15) 100%
+    rgba(5, 27, 41, 0.75) 0%,
+    rgba(5, 27, 41, 0.6) 35%,
+    rgba(5, 27, 41, 0.3) 70%,
+    rgba(5, 27, 41, 0.1) 100%
   );
 }
 
