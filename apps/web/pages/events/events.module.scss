@@ -191,6 +191,35 @@
   margin-bottom: 16px;
 }
 
+// Collapsible section (used by Recent on /events). Native <details>/<summary>
+// — no JS state, accessible by default. We hide the browser's default
+// disclosure triangle and add our own chevron on the right so the layout
+// matches the non-collapsible sections.
+.collapsible {
+  > summary {
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    margin-bottom: 0;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::after {
+      content: '▾';
+      font-size: 14px;
+      color: var(--g-color-text-secondary);
+      margin-left: auto;
+      transition: transform 150ms ease;
+    }
+  }
+
+  &[open] > summary::after {
+    transform: rotate(180deg);
+  }
+}
+
 .sectionActions {
   display: flex;
   align-items: center;

@@ -84,7 +84,11 @@ export default function EventsPage({
     ? events.filter((e) => e.city === activeCity)
     : events;
   const upcoming = visibleEvents.filter(isUpcoming);
-  const past = visibleEvents.filter((e) => !isUpcoming(e));
+  // Past events: reverse-chronological so the most recently-finished events
+  // sit at the top — that's what someone scanning "what just happened" wants.
+  const past = visibleEvents
+    .filter((e) => !isUpcoming(e))
+    .sort((a, b) => +new Date(b.starts_at) - +new Date(a.starts_at));
 
   return (
     <PublicLayout>
@@ -132,7 +136,12 @@ export default function EventsPage({
           emptyText={activeCity ? `No upcoming events in ${activeCity}.` : 'No upcoming events.'}
           actions={<RefreshButton />}
         />
-        <Section title="Recent" events={past.slice(0, 12)} emptyText={activeCity ? undefined : 'No recent events.'} />
+        <Section
+          title="Recent"
+          events={past.slice(0, 12)}
+          emptyText={activeCity ? undefined : 'No recent events.'}
+          collapsible
+        />
       </div>
     </PublicLayout>
   );
@@ -143,13 +152,48 @@ function Section({
   events,
   emptyText,
   actions,
+  collapsible,
 }: {
   title: string;
   events: EventRow[];
   emptyText?: string;
   actions?: React.ReactNode;
+  // When true, the section is wrapped in a native <details>/<summary> and
+  // closed by default. Used for /events Recent — visitors come for upcoming
+  // events first; past ones live one click away.
+  collapsible?: boolean;
 }) {
   if (!events.length && !emptyText) return null;
+
+  const body =
+    events.length === 0 ? (
+      <Text color="secondary">{emptyText}</Text>
+    ) : (
+      <div className={page.grid3}>
+        {events.map((e) => (
+          <EventCard key={e.id} event={e} />
+        ))}
+      </div>
+    );
+
+  if (collapsible) {
+    return (
+      <section style={{marginTop: 32}}>
+        <details className={styles.collapsible}>
+          <summary className={styles.sectionHeader}>
+            <Text variant="header-1" as="h2">
+              {title}{' '}
+              <Text variant="header-1" color="secondary">
+                ({events.length})
+              </Text>
+            </Text>
+          </summary>
+          <div style={{marginTop: 16}}>{body}</div>
+        </details>
+      </section>
+    );
+  }
+
   return (
     <section style={{marginTop: 32}}>
       <div className={styles.sectionHeader}>
@@ -158,15 +202,7 @@ function Section({
         </Text>
         {actions ? <div className={styles.sectionActions}>{actions}</div> : null}
       </div>
-      {events.length === 0 ? (
-        <Text color="secondary">{emptyText}</Text>
-      ) : (
-        <div className={page.grid3}>
-          {events.map((e) => (
-            <EventCard key={e.id} event={e} />
-          ))}
-        </div>
-      )}
+      {body}
     </section>
   );
 }
