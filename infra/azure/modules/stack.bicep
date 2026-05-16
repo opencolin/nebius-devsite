@@ -601,6 +601,13 @@ resource fdRoute 'Microsoft.Cdn/profiles/afdEndpoints/routes@2024-02-01' = if (d
     enabledState: 'Enabled'
     cacheConfiguration: {
       queryStringCachingBehavior: 'IgnoreQueryString'
+      // Compression DISABLED: Front Door Standard's on-the-fly Brotli/Gzip
+      // negotiation hangs HTTP/2 streams when browsers send the canonical
+      // Accept-Encoding: gzip, deflate, br header (single-encoding curls work
+      // fine, but the browser-style multi-encoding negotiation deadlocks).
+      // Without compression, the page renders but you eat ~10x bandwidth on
+      // CSS/JS — fine for a mockup. Revisit when AFD fixes the bug or
+      // when we move to pre-compressed Brotli served by Next directly.
       compressionSettings: {
         contentTypesToCompress: [
           'text/html'
@@ -613,7 +620,7 @@ resource fdRoute 'Microsoft.Cdn/profiles/afdEndpoints/routes@2024-02-01' = if (d
           'application/x-javascript'
           'image/svg+xml'
         ]
-        isCompressionEnabled: true
+        isCompressionEnabled: false
       }
     }
   }

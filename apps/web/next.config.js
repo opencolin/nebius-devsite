@@ -3,6 +3,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Disable Next's built-in gzip. Azure Front Door's HTTP/2 + gzip pass-through
+  // hangs browser streams when ~25 parallel asset requests are issued at once
+  // (single curl works fine; browser fan-out doesn't). With compress:false here
+  // and AFD compression also off, assets are served uncompressed end-to-end —
+  // larger over the wire, but the browser can actually load them. CDN
+  // compression can be re-enabled at a real CDN tier later.
+  compress: false,
   // Standalone output is enabled only when we're building for the prod Docker
   // image (infra/Dockerfile.web sets BUILD_STANDALONE=1). For local dev and
   // `next start` it's disabled, because `next start` is incompatible with
