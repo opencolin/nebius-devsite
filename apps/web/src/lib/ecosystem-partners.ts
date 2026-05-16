@@ -14,6 +14,7 @@ export type PartnerCategory =
   | 'inference'
   | 'router'
   | 'agents'
+  | 'nocode'
   | 'training'
   | 'orchestration'
   | 'mlops'
@@ -42,6 +43,7 @@ export const CATEGORY_LABEL: Record<PartnerCategory, string> = {
   inference: 'Inference',
   router: 'Gateway',
   agents: 'Agents',
+  nocode: 'No-code',
   training: 'Training',
   orchestration: 'Orchestration',
   mlops: 'MLOps',
@@ -260,6 +262,205 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
       'Drop-in skills that give your agent web search, extraction, and crawling.',
     docsUrl: 'https://docs.tavily.com/documentation/agent-skills',
     category: 'agents',
+    products: ['tavily'],
+  },
+
+  // ============================== Tavily — third-party integrations ===============================
+  // Pulled from docs.tavily.com/llms.txt (27 entries). Each is a guide for
+  // wiring Tavily web search/extraction into the named tool. Naming pattern
+  // "Tavily for X" so it's clear these are Tavily integrations and not
+  // duplicates of the Nebius-side TF integrations above.
+  {
+    name: 'Tavily for OpenAI Agent Builder',
+    blurb: "Wire Tavily's MCP server into OpenAI Agent Builder.",
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/agent-builder',
+    category: 'nocode',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for Agno',
+    blurb: 'Use Tavily as a tool inside Agno agents.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/agno',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for Anthropic',
+    blurb: "Add live web search to Anthropic Claude via Tavily's API.",
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/anthropic',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily on Arcade.dev',
+    blurb:
+      "Governed web search, extraction, and research via Arcade's MCP Gateway.",
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/arcade-dev',
+    category: 'router',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for Cartesia',
+    blurb: "Real-time voice agents that search the web via Cartesia's Line SDK.",
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/cartesia',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for Claude',
+    blurb:
+      'Use Tavily across the Claude ecosystem as a Connector or Plugin.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/claude',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily on Composio',
+    blurb: 'Tavily available as a tool through Composio.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/composio',
+    category: 'nocode',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for CrewAI',
+    blurb: 'Equip CrewAI agents with web search and extraction.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/crewai',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily on Dify',
+    blurb: 'No-code Tavily integration inside Dify workflows.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/dify',
+    category: 'nocode',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily on FlowiseAI',
+    blurb: 'Tavily as a tool inside Flowise visual agent builds.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/flowise',
+    category: 'nocode',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for Google ADK',
+    blurb:
+      "Connect Google's Agent Development Kit to Tavily's search API.",
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/google-adk',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for Haystack',
+    blurb: 'Use Tavily inside Haystack pipelines via `tavily-haystack`.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/haystack',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for LangChain',
+    blurb: "LangChain's recommended search tool — official partnership.",
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/langchain',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily on Langflow',
+    blurb: 'Visual multi-agent + RAG builds with Tavily search nodes.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/langflow',
+    category: 'nocode',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for LibreChat',
+    blurb: 'Search, extract, and use Tavily as a built-in agent tool.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/librechat',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for LlamaIndex',
+    blurb: 'Search the web from LlamaIndex RAG/agent flows.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/llamaindex',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily on Make',
+    blurb: 'No-code Tavily steps in Make scenarios.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/make',
+    category: 'nocode',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for Mastra',
+    blurb: 'First-class Mastra tools for search, extract, crawl, and map.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/mastra',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily on n8n',
+    blurb: 'No-code Tavily nodes for n8n automation workflows.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/n8n',
+    category: 'nocode',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for OpenAI',
+    blurb: 'Add real-time web search to OpenAI Responses + Agents.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/openai',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for OpenClaw',
+    blurb:
+      'Web search across WhatsApp, Telegram, Discord, iMessage agents.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/openclaw',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for Pydantic AI',
+    blurb: 'Type-safe Tavily tool calls inside Pydantic AI agents.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/pydantic-ai',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily on StackAI',
+    blurb: 'Plug Tavily into StackAI workflows for real-time web data.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/stackai',
+    category: 'nocode',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily on Tines',
+    blurb: 'Automated, no-code intelligence workflows in Tines.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/tines',
+    category: 'nocode',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for Vellum',
+    blurb: 'Built-in web search inside the Vellum Assistant desktop app.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/vellum',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily for Vercel AI SDK',
+    blurb: 'Search, extraction, crawl, and map for Vercel AI agents.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/vercel',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Tavily on Zapier',
+    blurb: 'No-code Tavily steps across thousands of Zapier integrations.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/zapier',
+    category: 'nocode',
     products: ['tavily'],
   },
 ];
