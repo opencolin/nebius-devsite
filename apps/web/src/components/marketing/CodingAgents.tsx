@@ -22,15 +22,8 @@ interface Entry {
 }
 
 const ENTRIES: Entry[] = [
-  // Lead with the most-used coding agent. Cursor + Token Factory is the
-  // fastest path for somebody coming to this section cold.
-  {
-    name: 'Cursor',
-    blurb: 'Wire Token Factory into Cursor as a custom model provider.',
-    url: 'https://docs.tokenfactory.nebius.com/integrations/coding/cursor',
-  },
-  // Claude Code paths next — both the Nebius skill (deep integration)
-  // and the Tavily MCP server (web search inside the shell).
+  // Lead with the two Claude Code paths — the Nebius skill (deep
+  // integration) and the Tavily MCP server (web search inside the shell).
   {
     name: 'Nebius Skill for Claude Code',
     blurb:
@@ -42,6 +35,12 @@ const ENTRIES: Entry[] = [
     blurb:
       'Add the Tavily MCP server to Claude Code with `claude mcp add`. Search the live web from your shell.',
     url: 'https://docs.tavily.com/documentation/mcp#connect-to-claude-code',
+  },
+  // Cursor next — second-most-common coding agent setup.
+  {
+    name: 'Cursor',
+    blurb: 'Wire Token Factory into Cursor as a custom model provider.',
+    url: 'https://docs.tokenfactory.nebius.com/integrations/coding/cursor',
   },
   // The rest, grouped by family.
   {
