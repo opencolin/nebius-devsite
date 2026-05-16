@@ -1,8 +1,6 @@
-# nebius-homepage
+# nebius-builders
 
-A Nebius Builders Network site rebuilt on **Nebius.com's exact tech stack** so the
-Nebius web team can adopt and maintain it without context-switching from how
-their main marketing site works.
+A Nebius Builders site built following **Nebius.com's exact tech stack** so the web team can adopt and maintain it without context-switching.
 
 ## The stack (mirrors nebius.com)
 
