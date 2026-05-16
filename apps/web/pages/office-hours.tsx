@@ -35,6 +35,7 @@ interface TeamMember {
   name: string;
   title: string;
   bio: string;
+  city: string | null;
   region: string;
   timezone: string;
   expertise: string[];
@@ -53,7 +54,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
     readItems('team_members', {
       filter: {active: {_eq: true}},
       sort: ['sort_order', 'name'],
-      fields: ['slug', 'name', 'title', 'bio', 'region', 'timezone', 'expertise', 'calendly_url', 'github_handle'],
+      fields: ['slug', 'name', 'title', 'bio', 'city', 'region', 'timezone', 'expertise', 'calendly_url', 'github_handle'],
       limit: -1,
     }),
   )) as TeamMember[];
@@ -252,7 +253,7 @@ export default function OfficeHoursPage({
                     {m.title.replace(', Nebius', '')}
                   </Text>
                   <Text variant="caption-2" color="secondary">
-                    {m.region} · {m.timezone}
+                    {m.city ? `${m.city} · ${m.timezone}` : `${m.region} · ${m.timezone}`}
                   </Text>
                 </div>
               </div>
