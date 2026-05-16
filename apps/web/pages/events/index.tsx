@@ -84,9 +84,16 @@ export default function EventsPage({
   const allUpcoming = events.filter(isUpcoming);
 
   // For the lists below: respect activeCity if one is selected.
-  const visibleEvents = activeCity
-    ? events.filter((e) => e.city === activeCity)
-    : events;
+  // The sentinel 'Online' isn't a real city — it maps to is_online=true so
+  // virtual events (webinars, AMAs, livestreams) get their own bucket. No
+  // real city in our data is named "Online" so the sentinel collision is
+  // safe.
+  const visibleEvents =
+    activeCity === 'Online'
+      ? events.filter((e) => e.is_online)
+      : activeCity
+        ? events.filter((e) => e.city === activeCity)
+        : events;
   const upcoming = visibleEvents.filter(isUpcoming);
   // Past events: reverse-chronological so the most recently-finished events
   // sit at the top — that's what someone scanning "what just happened" wants.
@@ -216,6 +223,13 @@ function Section({
   );
 }
 
+// Chips pinned to the front of the city row, in this exact order, after
+// Online. Editorial picks: SF + NY + London + Berlin are the metros with
+// recurring Nebius presence, so they get permanent shelf space even on
+// quiet weeks when their count would otherwise sort them down. The rest
+// of the cities follow by count desc, then alpha.
+const PINNED_CITIES = ['San Francisco', 'New York', 'London', 'Berlin'];
+
 function CityFilter({
   events,
   activeCity,
@@ -225,19 +239,33 @@ function CityFilter({
   activeCity: string | null;
   onChange: (city: string | null) => void;
 }) {
-  // Unique cities sorted by event count (most events first), then alpha.
-  // Skip blanks / placeholders so the chip row stays clean.
+  // Count cities. Blanks + the "—" placeholder don't qualify as chips.
   const counts = new Map<string, number>();
   for (const e of events) {
     const c = e.city?.trim();
     if (!c || c === '—') continue;
     counts.set(c, (counts.get(c) ?? 0) + 1);
   }
-  const cities = Array.from(counts.entries())
+
+  // Online lives outside the city map — it's a virtual-vs-physical axis,
+  // not a geography. Count from is_online so webinars + AMAs without a
+  // city stop getting hidden by the !c filter above.
+  const onlineCount = events.filter((e) => e.is_online).length;
+
+  // Two-tier sort: pinned cities in their fixed order (skipping any with
+  // zero events to match the "no chip for empty city" rule), then the
+  // rest by count desc + alpha tiebreak.
+  const pinned = PINNED_CITIES
+    .map((city) => ({city, count: counts.get(city) ?? 0}))
+    .filter(({count}) => count > 0);
+  const others = Array.from(counts.entries())
+    .filter(([city]) => !PINNED_CITIES.includes(city))
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
     .map(([city, count]) => ({city, count}));
+  const cities = [...pinned, ...others];
 
-  if (cities.length === 0) return null;
+  // Nothing to show? Skip the whole row, including the All chip.
+  if (cities.length === 0 && onlineCount === 0) return null;
 
   return (
     <div className={styles.cityFilter}>
@@ -253,6 +281,15 @@ function CityFilter({
           >
             All ({events.length})
           </Button>
+          {onlineCount > 0 ? (
+            <Button
+              view={activeCity === 'Online' ? 'action' : 'outlined'}
+              size="m"
+              onClick={() => onChange(activeCity === 'Online' ? null : 'Online')}
+            >
+              Online ({onlineCount})
+            </Button>
+          ) : null}
           {cities.map(({city, count}) => (
             <Button
               key={city}
