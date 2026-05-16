@@ -179,17 +179,22 @@ export function PhosphorMesh({
       let height = mount.clientHeight || 1;
 
       const scene = new THREE.Scene();
-      // Matches the nebius.com dark-mode background (deep navy, not black) —
-      // tested against the screenshot the user provided on 2026-05-13.
-      scene.background = new THREE.Color(0x0c1825);
+      // Background lives on the parent .root via CSS (#0c1825 — nebius.com
+      // dark navy). Setting scene.background here would route the color
+      // through ACES tone mapping + UnrealBloom, which crushes the navy
+      // toward black. Transparent canvas + CSS-driven bg gives us a clean,
+      // exact match without fighting the post-processing chain.
+      scene.background = null;
 
       const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 100);
       camera.position.set(0, 0.4, 6.2);
       camera.lookAt(0, 0, 0);
 
-      const renderer = new THREE.WebGLRenderer({antialias: true, alpha: false});
+      const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.setSize(width, height);
+      // Transparent clear so the parent .root background shows through.
+      renderer.setClearColor(0x000000, 0);
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.05;
