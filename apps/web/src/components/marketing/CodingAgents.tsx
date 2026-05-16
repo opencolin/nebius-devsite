@@ -1,92 +1,129 @@
 // CodingAgents — section that points engineers at the skills + MCP
-// integrations they can drop into their existing coding agent (Claude
-// Code, Cursor, OpenAI clients). Card pattern: name + blurb + "View
-// docs →" CTA. No category pill on the card — visitors can read the
-// destination URL or click through if they want to know what kind of
-// integration it is.
+// integrations they can drop into their existing coding agent. Card
+// shape: name + blurb + one or more "View X →" links at the bottom.
 //
-// Card order is hand-tuned, not alphabetical, so the most-likely flows
-// (Cursor first, then the two Claude Code paths) lead.
-//
-// Each card is an external link. The list is inline for now; moves into
-// a Directus collection when one exists.
+// Combined cards: editors that have both a Nebius-model integration AND
+// a Tavily-search integration get a single card with two CTAs (Claude
+// Code, Cursor) rather than two separate cards. The Entry shape uses an
+// array of links to support both cases — single-link cards render as one
+// wrapped <a>, multi-link cards render as a <div> with link buttons.
 
 import {Text} from '@gravity-ui/uikit';
 
 import styles from './CodingAgents.module.scss';
 
-interface Entry {
-  name: string;
-  blurb: string;
+interface EntryLink {
+  label: string;
   url: string;
 }
 
+interface Entry {
+  name: string;
+  blurb: string;
+  links: EntryLink[];
+}
+
 const ENTRIES: Entry[] = [
-  // Lead with the two Claude Code paths — the Nebius skill (deep
-  // integration) and the Tavily MCP server (web search inside the shell).
+  // Lead with Claude Code — two integrations combined into one card.
   {
-    name: 'Nebius Skill for Claude Code',
+    name: 'Claude Code',
     blurb:
-      'Drop-in skill that teaches Claude Code about Nebius — Token Factory, AI Cloud, Serverless. Open source.',
-    url: 'https://github.com/opencolin/nebius-skill',
+      'Drop in the open-source Nebius Skill so Claude Code knows Token Factory, AI Cloud, and Serverless. Add the Tavily MCP server to search the live web from your shell.',
+    links: [
+      {label: 'Nebius Skill', url: 'https://github.com/opencolin/nebius-skill'},
+      {
+        label: 'Tavily MCP',
+        url: 'https://docs.tavily.com/documentation/mcp#connect-to-claude-code',
+      },
+    ],
   },
-  {
-    name: 'Tavily MCP in Claude Code',
-    blurb:
-      'Add the Tavily MCP server to Claude Code with `claude mcp add`. Search the live web from your shell.',
-    url: 'https://docs.tavily.com/documentation/mcp#connect-to-claude-code',
-  },
-  // Cursor next — second-most-common coding agent setup.
+  // Cursor — also combined.
   {
     name: 'Cursor',
-    blurb: 'Wire Token Factory into Cursor as a custom model provider.',
-    url: 'https://docs.tokenfactory.nebius.com/integrations/coding/cursor',
+    blurb:
+      'Wire Token Factory in as a custom model provider, and add the Tavily MCP server for in-editor web search and extraction.',
+    links: [
+      {
+        label: 'Nebius models',
+        url: 'https://docs.tokenfactory.nebius.com/integrations/coding/cursor',
+      },
+      {
+        label: 'Tavily MCP',
+        url: 'https://docs.tavily.com/documentation/mcp#connect-to-cursor',
+      },
+    ],
   },
-  // The rest, grouped by family.
+  // Single-link entries.
   {
     name: 'Tavily Agent Skills',
     blurb:
       'Pre-built skills that give your agent web search, extraction, and crawling out of the box.',
-    url: 'https://docs.tavily.com/documentation/agent-skills',
-  },
-  {
-    name: 'Tavily MCP in Cursor',
-    blurb:
-      'Wire Tavily search + extraction into Cursor in two steps. Search, scrape, and crawl from the chat sidebar.',
-    url: 'https://docs.tavily.com/documentation/mcp#connect-to-cursor',
+    links: [
+      {label: 'View docs', url: 'https://docs.tavily.com/documentation/agent-skills'},
+    ],
   },
   {
     name: 'Tavily MCP for OpenAI',
     blurb:
       'OpenAI Responses + Agents SDK setup. Hosted Tavily tools, ready to call.',
-    url: 'https://docs.tavily.com/documentation/mcp#openai',
+    links: [
+      {
+        label: 'View docs',
+        url: 'https://docs.tavily.com/documentation/mcp#openai',
+      },
+    ],
   },
   {
     name: 'VS Code (Github Copilot)',
     blurb:
       "Hugging Face's VS Code Chat extension — routes Github Copilot through Nebius Token Factory models.",
-    url: 'https://marketplace.visualstudio.com/items?itemName=HuggingFace.huggingface-vscode-chat',
+    links: [
+      {
+        label: 'View extension',
+        url: 'https://marketplace.visualstudio.com/items?itemName=HuggingFace.huggingface-vscode-chat',
+      },
+    ],
   },
   {
     name: 'Zed',
     blurb: "Configure Zed's inline assistant against Token Factory models.",
-    url: 'https://docs.tokenfactory.nebius.com/integrations/coding/zed',
+    links: [
+      {
+        label: 'View docs',
+        url: 'https://docs.tokenfactory.nebius.com/integrations/coding/zed',
+      },
+    ],
   },
   {
     name: 'Cline',
     blurb:
       'Open-source AI coding agent for VSCode + JetBrains. Direct access to Nebius coding models.',
-    url: 'https://docs.tokenfactory.nebius.com/integrations/coding/cline',
+    links: [
+      {
+        label: 'View docs',
+        url: 'https://docs.tokenfactory.nebius.com/integrations/coding/cline',
+      },
+    ],
   },
   {
     name: 'Continue',
     blurb: 'Open-source autopilot for VS Code & JetBrains, pointed at Nebius.',
-    url: 'https://docs.tokenfactory.nebius.com/integrations/coding/continue',
+    links: [
+      {
+        label: 'View docs',
+        url: 'https://docs.tokenfactory.nebius.com/integrations/coding/continue',
+      },
+    ],
   },
   {
     name: 'Kilo Code',
     blurb: 'Multi-mode coding agent for VS Code on Token Factory models.',
-    url: 'https://docs.tokenfactory.nebius.com/integrations/coding/kilo',
+    links: [
+      {
+        label: 'View docs',
+        url: 'https://docs.tokenfactory.nebius.com/integrations/coding/kilo',
+      },
+    ],
   },
 ];
 
@@ -109,25 +146,56 @@ export function CodingAgents() {
 
         <div className={styles.grid}>
           {ENTRIES.map((e) => (
-            <a
-              key={e.name}
-              href={e.url}
-              target="_blank"
-              rel="noreferrer"
-              className={styles.card}
-            >
-              <Text variant="subheader-2" as="h3" className={styles.cardTitle}>
-                {e.name}
-              </Text>
-              <Text variant="body-2" color="secondary" className={styles.cardBlurb}>
-                {e.blurb}
-              </Text>
-              <span className={styles.cardCta}>View docs &rarr;</span>
-            </a>
+            <CodingCard key={e.name} entry={e} />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+// CodingCard — single-link cards wrap the whole tile in <a> (hover-lift
+// affordance, full-card click target). Multi-link cards render as <div>
+// with separate link buttons at the bottom so each destination is its
+// own clear click target.
+function CodingCard({entry}: {entry: Entry}) {
+  if (entry.links.length === 1) {
+    const {label, url} = entry.links[0];
+    return (
+      <a href={url} target="_blank" rel="noreferrer" className={styles.card}>
+        <Text variant="subheader-2" as="h3" className={styles.cardTitle}>
+          {entry.name}
+        </Text>
+        <Text variant="body-2" color="secondary" className={styles.cardBlurb}>
+          {entry.blurb}
+        </Text>
+        <span className={styles.cardCta}>{label} &rarr;</span>
+      </a>
+    );
+  }
+
+  return (
+    <div className={`${styles.card} ${styles.cardStatic}`}>
+      <Text variant="subheader-2" as="h3" className={styles.cardTitle}>
+        {entry.name}
+      </Text>
+      <Text variant="body-2" color="secondary" className={styles.cardBlurb}>
+        {entry.blurb}
+      </Text>
+      <div className={styles.cardCtaRow}>
+        {entry.links.map((l) => (
+          <a
+            key={l.url}
+            href={l.url}
+            target="_blank"
+            rel="noreferrer"
+            className={styles.cardCtaLink}
+          >
+            {l.label} &rarr;
+          </a>
+        ))}
+      </div>
+    </div>
   );
 }
 

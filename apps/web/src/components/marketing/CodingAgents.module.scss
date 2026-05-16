@@ -111,3 +111,47 @@
     color: var(--nb-color-highlight);
   }
 }
+
+// Multi-link variant: the card itself isn't a link (cursor is default),
+// hover-lift is suppressed since each CTA owns its own click target.
+.cardStatic {
+  cursor: default;
+
+  &:hover {
+    border-color: var(--g-color-line-generic);
+    box-shadow: none;
+    transform: none;
+
+    .cardTitle {
+      color: inherit;
+    }
+  }
+}
+
+// Row of small CTA links at the bottom of a multi-link card, separated
+// by a vertical divider for a chip-rail feel without adding a border
+// per link.
+.cardCtaRow {
+  border-top: 1px solid var(--g-color-line-generic);
+  padding-top: 12px;
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+.cardCtaLink {
+  font-size: 12px;
+  font-weight: 600;
+  color: #052b42;
+  text-decoration: none;
+  text-underline-offset: 4px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  :global(.g-root_theme_dark) & {
+    color: var(--nb-color-highlight);
+  }
+}
