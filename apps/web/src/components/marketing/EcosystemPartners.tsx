@@ -14,10 +14,12 @@ import styles from './EcosystemPartners.module.scss';
 
 type Category =
   | 'inference'
+  | 'router'
   | 'agents'
   | 'training'
   | 'orchestration'
   | 'mlops'
+  | 'observability'
   | 'iac';
 
 interface Partner {
@@ -40,16 +42,35 @@ const PARTNERS: Partner[] = [
     category: 'inference',
   },
   {
-    name: 'LiteLLM',
-    blurb: 'Unified LLM gateway routing to Nebius endpoints.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api/litellm',
-    category: 'inference',
-  },
-  {
     name: 'NVIDIA NIM',
     blurb: 'Self-hosted GPU inference microservices, turnkey.',
     docsUrl: 'https://docs.nebius.com/applications/standalone/nvidia-nim',
     category: 'inference',
+  },
+  {
+    name: 'AISuite',
+    blurb: 'Multi-provider LLM router with a unified Python API.',
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api/aisuite',
+    category: 'inference',
+  },
+  // Routers / gateways
+  {
+    name: 'LiteLLM',
+    blurb: 'Unified LLM gateway routing to Nebius endpoints.',
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api/litellm',
+    category: 'router',
+  },
+  {
+    name: 'OpenRouter',
+    blurb: 'OpenRouter exposes Nebius models through its unified API.',
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api-routers/openrouter',
+    category: 'router',
+  },
+  {
+    name: 'Portkey',
+    blurb: 'LLM gateway with caching, retries, and budget guardrails.',
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api-routers/portkey',
+    category: 'router',
   },
   // Agents
   {
@@ -68,6 +89,30 @@ const PARTNERS: Partner[] = [
     name: 'CrewAI',
     blurb: 'Open-source agentic framework on Token Factory models.',
     docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/agents/crewai',
+    category: 'agents',
+  },
+  {
+    name: 'Agno',
+    blurb: 'Lightweight multi-modal agent framework.',
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/agents/agno',
+    category: 'agents',
+  },
+  {
+    name: 'Google ADK',
+    blurb: "Google's Agent Development Kit, wired to Nebius models.",
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/agents/google-adk',
+    category: 'agents',
+  },
+  {
+    name: 'Pydantic AI',
+    blurb: 'Type-safe agent framework with Pydantic validation.',
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/agents/pydantic',
+    category: 'agents',
+  },
+  {
+    name: 'AWS Strands',
+    blurb: "Amazon's agent SDK, model-agnostic and Nebius-ready.",
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/agents/strands',
     category: 'agents',
   },
   // Orchestration
@@ -118,6 +163,13 @@ const PARTNERS: Partner[] = [
     docsUrl: 'https://docs.nebius.com/mlflow',
     category: 'mlops',
   },
+  // Observability
+  {
+    name: 'Helicone',
+    blurb: 'LLM observability: traces, costs, prompts, and evals.',
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/observability/helicone',
+    category: 'observability',
+  },
   // IaC
   {
     name: 'Terraform',
@@ -135,10 +187,12 @@ const PARTNERS: Partner[] = [
 
 const CATEGORY_LABEL: Record<Category, string> = {
   inference: 'Inference',
+  router: 'Gateway',
   agents: 'Agents',
   training: 'Training',
   orchestration: 'Orchestration',
   mlops: 'MLOps',
+  observability: 'Observability',
   iac: 'IaC',
 };
 

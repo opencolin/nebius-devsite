@@ -10,7 +10,7 @@ import {Label, Text} from '@gravity-ui/uikit';
 
 import styles from './CodingAgents.module.scss';
 
-type Category = 'skill' | 'mcp';
+type Category = 'skill' | 'mcp' | 'editor';
 
 interface Entry {
   name: string;
@@ -62,11 +62,51 @@ const ENTRIES: Entry[] = [
     url: 'https://docs.tavily.com/documentation/mcp#openai',
     category: 'mcp',
   },
+  // Editor / IDE integrations — use Token Factory as the model backend
+  // inside your existing coding tool. Each URL is the Token Factory
+  // integration guide for that editor.
+  {
+    name: 'Cursor',
+    blurb: 'Wire Token Factory into Cursor as a custom model provider.',
+    url: 'https://docs.tokenfactory.nebius.com/integrations/coding/cursor',
+    category: 'editor',
+  },
+  {
+    name: 'VS Code (Copilot Chat)',
+    blurb: 'Use Token Factory as the LLM backend for Copilot Chat in VS Code.',
+    url: 'https://docs.tokenfactory.nebius.com/integrations/coding/vscode',
+    category: 'editor',
+  },
+  {
+    name: 'Zed',
+    blurb: "Configure Zed's inline assistant against Token Factory models.",
+    url: 'https://docs.tokenfactory.nebius.com/integrations/coding/zed',
+    category: 'editor',
+  },
+  {
+    name: 'Cline',
+    blurb: 'Open-source coding agent for VS Code, routed through Token Factory.',
+    url: 'https://docs.tokenfactory.nebius.com/integrations/coding/cline',
+    category: 'editor',
+  },
+  {
+    name: 'Continue',
+    blurb: 'Open-source autopilot for VS Code & JetBrains, pointed at Nebius.',
+    url: 'https://docs.tokenfactory.nebius.com/integrations/coding/continue',
+    category: 'editor',
+  },
+  {
+    name: 'Kilo Code',
+    blurb: 'Multi-mode coding agent for VS Code on Token Factory models.',
+    url: 'https://docs.tokenfactory.nebius.com/integrations/coding/kilo',
+    category: 'editor',
+  },
 ];
 
 const CATEGORY_LABEL: Record<Category, string> = {
   skill: 'Skill',
   mcp: 'MCP',
+  editor: 'Editor',
 };
 
 export function CodingAgents() {
