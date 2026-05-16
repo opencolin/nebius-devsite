@@ -36,5 +36,10 @@
     "eslint-config-next": "14.2.35",
     "sass": "^1.80.0",
     "typescript": "^5.6.3"
+  },
+  "overrides": {
+    "@gravity-ui/page-constructor": {
+      "sanitize-html": "^2.17.4"
+    }
   }
 }

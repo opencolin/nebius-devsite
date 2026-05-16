@@ -53,6 +53,38 @@ const nextConfig = {
         source: '/_next/static/:path*',
         headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
       },
+      // HTML revalidation policy. Without this, every deploy churns the
+      // BUILD_ID embedded in HTML; users with cached HTML from a previous
+      // deploy then prefetch /_next/data/<old-BUILD_ID>/<route>.json on
+      // <Link> hover and the JSON 404s, because the new deploy only knows
+      // the new BUILD_ID. Pages still work (Next falls back to a hard nav)
+      // but the console fills with red 404s after every redeploy.
+      //
+      // Policy:
+      //   public                      proxies + browsers may cache
+      //   max-age=0                   browser revalidates on every navigation
+      //   must-revalidate             stale browser copy is unusable till checked
+      //   s-maxage=60                 Front Door holds the response for 60s
+      //   stale-while-revalidate=300  Front Door may serve up to 5min stale
+      //                               while it fetches a fresh copy in the bg
+      //
+      // Net effect: edge cache benefits preserved; browsers stop reusing
+      // HTML with a dead BUILD_ID across redeploys. Long-open tabs still
+      // hit 404s on hover until the user navigates (no header alone can
+      // fix that without a service worker or skew-protection routing).
+      //
+      // Negative match `((?!_next/static/|favicon\\.ico).*)` so static chunks
+      // keep their immutable header (set above) and aren't accidentally
+      // downgraded by this catch-all.
+      {
+        source: '/:path((?!_next/static/|favicon\\.ico).*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate, s-maxage=60, stale-while-revalidate=300',
+          },
+        ],
+      },
     ];
   },
 };

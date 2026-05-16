@@ -302,9 +302,13 @@ export function PhosphorMesh({
       cancelled = true;
       cleanup();
     };
-    // Re-init only when the heavy props change. spinSpeed/palette/bloom changes
-    // recompile/reinit the scene — fine, this isn't a frequently-rerendering
-    // component.
+    // Re-init only when the heavy props change. We list bloom/palette field
+    // PRIMITIVES instead of the whole objects on purpose: consumers usually
+    // pass `bloom={{strength: 1.1}}` as an inline object literal that gets a
+    // new identity every render, which would tear down + rebuild the WebGL
+    // scene on every parent rerender. Spreading the primitives gives us
+    // structural equality. The lint rule can't see that — disable with intent.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     aspectRatio,
     bloom?.radius,
