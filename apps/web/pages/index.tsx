@@ -22,6 +22,7 @@ import {BuildInPublic} from '@/components/marketing/BuildInPublic';
 import {BuilderSpotlight, type SpotlightProject} from '@/components/marketing/BuilderSpotlight';
 import {Community} from '@/components/marketing/Community';
 import {Contact} from '@/components/marketing/Contact';
+import {EcosystemPartners} from '@/components/marketing/EcosystemPartners';
 import {Products} from '@/components/marketing/Products';
 import {Programs} from '@/components/marketing/Programs';
 import {UseCases} from '@/components/marketing/UseCases';
@@ -307,6 +308,7 @@ export default function HomePage({
       <BuilderSpotlight project={monthlyProject} monthLabel={monthLabel} />
       <Community />
       <Programs />
+      <EcosystemPartners />
       <Contact />
       <BuildInPublic />
     </PublicLayout>
