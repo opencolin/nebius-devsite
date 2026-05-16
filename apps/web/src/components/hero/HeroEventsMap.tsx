@@ -68,6 +68,11 @@ export default function HeroEventsMap({events}: HeroEventsMapProps) {
         {maxZoom: 8, maxNativeZoom: 8},
       ).addTo(map);
 
+      // Drop one dot per event at THREE longitudes: original, +360, -360.
+      // The map pans east indefinitely (resets at lng>540 → lng-360), so
+      // the visible viewport sweeps across multiple world copies. Without
+      // these duplicates, dots disappear from view after one full rotation
+      // and don't come back until the next reset.
       events
         .filter((e) => e.location?.coordinates?.length === 2)
         .forEach((e, i) => {
@@ -79,11 +84,13 @@ export default function HeroEventsMap({events}: HeroEventsMapProps) {
             iconSize: [16, 16],
             iconAnchor: [8, 8],
           });
-          L.marker([lat, lng], {
-            icon: dotIcon,
-            interactive: false,
-            keyboard: false,
-          }).addTo(map);
+          for (const lngOffset of [-360, 0, 360]) {
+            L.marker([lat, lng + lngOffset], {
+              icon: dotIcon,
+              interactive: false,
+              keyboard: false,
+            }).addTo(map);
+          }
         });
 
       // Slow eastward rotation — matches the clawcamp pan rhythm.

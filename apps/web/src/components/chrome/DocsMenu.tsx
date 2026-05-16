@@ -25,21 +25,13 @@ const PRODUCTS: DocItem[] = [
   {label: 'AI Cloud',       tagline: 'GPU clusters, VMs, networking',                href: 'https://docs.nebius.com/',                          external: true},
   {label: 'Token Factory',  tagline: 'Open-source models via OpenAI-compatible API', href: 'https://docs.tokenfactory.nebius.com/quickstart',   external: true},
   {label: 'Serverless AI',  tagline: 'Endpoints + jobs without infra',               href: 'https://docs.nebius.com/serverless',                external: true},
+  {label: 'Tavily',         tagline: 'Real-time web search and content extraction',  href: 'https://docs.tavily.com/',                          external: true},
   {label: 'Soperator',      tagline: 'Slurm workload manager on Kubernetes',         href: 'https://github.com/nebius/soperator',               external: true},
   {label: 'Kubernetes',     tagline: 'Managed K8s clusters',                         href: 'https://docs.nebius.com/kubernetes',                external: true},
   {label: 'Compute & GPUs', tagline: 'VMs, containers, GPU drivers',                 href: 'https://docs.nebius.com/compute',                   external: true},
   {label: 'Object Storage', tagline: 'S3-compatible buckets',                        href: 'https://docs.nebius.com/object-storage',            external: true},
   {label: 'Applications',   tagline: 'Turnkey apps for ML/AI workloads',             href: 'https://docs.nebius.com/applications',              external: true},
-  {label: 'CLI & SDKs',     tagline: 'nebius CLI, Terraform, Python/JS SDKs',        href: 'https://docs.nebius.com/cli',                       external: true},
 ];
-
-const CHANGELOG: DocItem = {
-  label: 'Changelog',
-  tagline: 'What shipped recently',
-  href: 'https://docs.nebius.com/changelog',
-  external: true,
-  accent: true,
-};
 
 // Grace period after the cursor leaves trigger/dropdown before the menu
 // closes. Long enough to span the ~10px gap, short enough that
@@ -137,9 +129,6 @@ export function DocsMenu() {
               {PRODUCTS.map((d) => (
                 <ItemLink key={d.href} item={d} />
               ))}
-            </div>
-            <div className={styles.changelogWrap}>
-              <ItemLink item={CHANGELOG} />
             </div>
           </div>
         </div>

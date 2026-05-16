@@ -14,13 +14,15 @@ export type PartnerCategory =
   | 'inference'
   | 'router'
   | 'agents'
+  | 'coding'
   | 'nocode'
   | 'training'
   | 'orchestration'
   | 'mlops'
   | 'observability'
   | 'iac'
-  | 'search';
+  | 'search'
+  | 'tooling';
 
 export interface EcosystemPartner {
   name: string;
@@ -43,6 +45,7 @@ export const CATEGORY_LABEL: Record<PartnerCategory, string> = {
   inference: 'Inference',
   router: 'Gateway',
   agents: 'Agents',
+  coding: 'Coding',
   nocode: 'No-code',
   training: 'Training',
   orchestration: 'Orchestration',
@@ -50,6 +53,7 @@ export const CATEGORY_LABEL: Record<PartnerCategory, string> = {
   observability: 'Observability',
   iac: 'IaC',
   search: 'Search',
+  tooling: 'Tooling',
 };
 
 export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
@@ -226,12 +230,93 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     category: 'agents',
     products: ['token-factory'],
   },
+  // More agents — added from the TF integrations overview index
+  {
+    name: 'Camel AI',
+    blurb: 'Multi-agent framework with role-playing and task pipelines.',
+    docsUrl:
+      'https://docs.tokenfactory.nebius.com/integrations/agents/camelai',
+    category: 'agents',
+    products: ['token-factory'],
+  },
+  // Coding assistants — Token Factory models inside your editor
+  {
+    name: 'Cursor (Token Factory)',
+    blurb: 'Wire Token Factory in as a custom model provider in Cursor.',
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/coding/cursor',
+    category: 'coding',
+    products: ['token-factory'],
+  },
+  {
+    name: 'VS Code (Copilot Chat)',
+    blurb:
+      'Hugging Face VS Code Chat extension routes Copilot through Nebius.',
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/coding/vscode',
+    category: 'coding',
+    products: ['token-factory'],
+  },
+  {
+    name: 'Zed (Token Factory)',
+    blurb: "Configure Zed's inline assistant against Token Factory models.",
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/coding/zed',
+    category: 'coding',
+    products: ['token-factory'],
+  },
+  {
+    name: 'Cline',
+    blurb:
+      'Open-source AI coding agent for VSCode + JetBrains, powered by Nebius.',
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/coding/cline',
+    category: 'coding',
+    products: ['token-factory'],
+  },
+  {
+    name: 'Continue',
+    blurb: 'Open-source autopilot for VS Code & JetBrains, pointed at Nebius.',
+    docsUrl:
+      'https://docs.tokenfactory.nebius.com/integrations/coding/continue',
+    category: 'coding',
+    products: ['token-factory'],
+  },
+  {
+    name: 'Kilo Code',
+    blurb: 'Multi-mode coding agent for VS Code on Token Factory models.',
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/coding/kilo',
+    category: 'coding',
+    products: ['token-factory'],
+  },
+  // Search / tools
+  {
+    name: 'Linkup',
+    blurb: 'Web search and content extraction API for agents.',
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/tools/linkup',
+    category: 'search',
+    products: ['token-factory'],
+  },
+  // Dev tools
+  {
+    name: 'Postman',
+    blurb: 'Pre-built Postman collection for the Token Factory API.',
+    docsUrl:
+      'https://docs.tokenfactory.nebius.com/integrations/dev-tools/postman',
+    category: 'tooling',
+    products: ['token-factory'],
+  },
   // Observability
   {
     name: 'Helicone',
     blurb: 'LLM observability: traces, costs, prompts, and evals.',
     docsUrl:
       'https://docs.tokenfactory.nebius.com/integrations/observability/helicone',
+    category: 'observability',
+    products: ['token-factory'],
+  },
+  {
+    name: 'Keywords AI',
+    blurb:
+      'Production LLM monitoring — logs, evals, prompt tracking, alerts.',
+    docsUrl:
+      'https://docs.tokenfactory.nebius.com/integrations/observability/keywords-ai',
     category: 'observability',
     products: ['token-factory'],
   },
