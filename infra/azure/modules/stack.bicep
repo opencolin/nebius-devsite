@@ -292,7 +292,7 @@ resource directus 'Microsoft.App/containerApps@2024-03-01' = {
       containers: [
         {
           name: 'directus'
-          image: 'directus/directus:11.4.1'
+          image: 'directus/directus:11.17.4'
           resources: {
             cpu: json('0.5')
             memory: '1Gi'
