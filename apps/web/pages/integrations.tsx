@@ -1,9 +1,12 @@
-// /ecosystem — full filterable directory of ecosystem partner integrations.
+// /integrations — full filterable directory of ecosystem partner integrations.
 // Same card shape as the homepage <EcosystemPartners /> section. Single
 // filter row: an "All" chip, then product chips, then category chips. The
 // chosen filter is a tagged union (kind: 'product' | 'category'), so
 // picking one chip auto-clears whatever was picked before — much simpler
 // state model than the two-row AND-filter we shipped first.
+//
+// Route renamed from /ecosystem; the data file + section component name
+// keep the legacy "ecosystem" naming since they're not user-facing.
 
 import type {GetStaticProps, InferGetStaticPropsType} from 'next';
 import Head from 'next/head';
@@ -22,7 +25,7 @@ import {
 } from '@/lib/ecosystem-partners';
 
 import page from '@/styles/page.module.scss';
-import styles from './ecosystem.module.scss';
+import styles from './integrations.module.scss';
 
 interface Props {
   partners: EcosystemPartner[];
@@ -46,7 +49,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   return {props: {partners: ECOSYSTEM_PARTNERS}};
 };
 
-export default function EcosystemPage({
+export default function IntegrationsPage({
   partners,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [active, setActive] = useState<ActiveFilter>(null);
@@ -90,17 +93,17 @@ export default function EcosystemPage({
   return (
     <PublicLayout>
       <Head>
-        <title>Ecosystem · Nebius Builders</title>
+        <title>Integrations · Nebius Builders</title>
         <meta
           name="description"
-          content="Every Nebius ecosystem partner integration in one filterable directory — products (AI Cloud, Token Factory, Tavily) and categories (agents, gateway, orchestration, and more)."
+          content="Every Nebius integration in one filterable directory — products (AI Cloud, Token Factory, Tavily) and categories (agents, gateway, orchestration, and more)."
         />
       </Head>
 
       <section className={styles.hero}>
         <div className={page.container}>
           <Text variant="caption-2" className={styles.heroEyebrow}>
-            Ecosystem
+            Integrations
           </Text>
           <Text variant="display-2" as="h1" className={styles.heroTitle}>
             Every integration. One page.

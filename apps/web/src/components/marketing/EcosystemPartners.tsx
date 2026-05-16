@@ -1,6 +1,8 @@
-// EcosystemPartners — homepage marketing section. Shows the full partner
-// roster as a 3-up grid of cards. Data lives in `@/lib/ecosystem-partners`
-// so the /ecosystem filter page can share it.
+// EcosystemPartners — homepage marketing section (eyebrow reads
+// "Integrations"; the component name keeps its legacy "Ecosystem" prefix
+// since it's not user-facing). Shows the full partner roster as a 3-up
+// grid of cards. Data lives in `@/lib/ecosystem-partners` so the
+// /integrations filter page can share it.
 //
 // Each card is a docs link, opening in a new tab. Category pill above the
 // title; product pills below the blurb so visitors can see which Nebius
@@ -24,7 +26,7 @@ export function EcosystemPartners() {
       <div className={styles.inner}>
         <header className={styles.head}>
           <Text variant="caption-2" className={styles.eyebrow}>
-            Ecosystem Partners
+            Integrations
           </Text>
           <Text variant="header-2" as="h2" className={styles.title}>
             Pick the tools you already love. They work on Nebius.
@@ -33,7 +35,7 @@ export function EcosystemPartners() {
             First-party integration docs for the frameworks, gateways, and
             orchestrators we&apos;ve tested end-to-end. Each card links to the
             Nebius doc page for that partner.{' '}
-            <Link href="/ecosystem" className={styles.headLink}>
+            <Link href="/integrations" className={styles.headLink}>
               See all and filter &rarr;
             </Link>
           </Text>
