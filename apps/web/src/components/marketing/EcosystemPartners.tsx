@@ -27,13 +27,31 @@ interface Partner {
   category: Category;
 }
 
+// All 15 entries 200-verified against docs.nebius.com /
+// docs.tokenfactory.nebius.com / docs.anyscale.com / nebius.com/blog.
+// Sorted by category so the eyebrow pills cluster visually even though
+// the grid is one continuous flow.
 const PARTNERS: Partner[] = [
+  // Inference
   {
     name: 'Hugging Face',
     blurb: 'Open-source models and datasets via inference API.',
     docsUrl: 'https://docs.nebius.com/studio/inference/integrations/huggingface',
     category: 'inference',
   },
+  {
+    name: 'LiteLLM',
+    blurb: 'Unified LLM gateway routing to Nebius endpoints.',
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api/litellm',
+    category: 'inference',
+  },
+  {
+    name: 'NVIDIA NIM',
+    blurb: 'Self-hosted GPU inference microservices, turnkey.',
+    docsUrl: 'https://docs.nebius.com/applications/standalone/nvidia-nim',
+    category: 'inference',
+  },
+  // Agents
   {
     name: 'LangChain',
     blurb: 'Chat models, embeddings, retrievers via langchain-nebius.',
@@ -52,40 +70,65 @@ const PARTNERS: Partner[] = [
     docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/agents/crewai',
     category: 'agents',
   },
+  // Orchestration
   {
-    name: 'LiteLLM',
-    blurb: 'Unified LLM gateway routing to Nebius endpoints.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api/litellm',
-    category: 'inference',
+    name: 'Anyscale',
+    blurb:
+      'Scale AI workloads with Anyscale deployed on Managed Kubernetes.',
+    docsUrl: 'https://docs.anyscale.com/clouds/kubernetes/nebius',
+    category: 'orchestration',
   },
   {
-    name: 'NVIDIA NIM',
-    blurb: 'Self-hosted GPU inference microservices, turnkey.',
-    docsUrl: 'https://docs.nebius.com/applications/standalone/nvidia-nim',
-    category: 'inference',
+    name: 'dstack',
+    blurb: 'Install dstack and orchestrate AI workloads end-to-end.',
+    docsUrl: 'https://docs.nebius.com/3p-integrations/dstack',
+    category: 'orchestration',
+  },
+  {
+    name: 'Run:ai',
+    blurb:
+      'Optimize GPU resources for ML/AI workloads on Managed Kubernetes.',
+    docsUrl: 'https://docs.nebius.com/3p-integrations/run-ai',
+    category: 'orchestration',
   },
   {
     name: 'SkyPilot',
-    blurb: 'Managed SkyPilot API server for multi-cloud jobs.',
+    blurb: 'Run, manage and scale AI workloads with SkyPilot.',
     docsUrl: 'https://docs.nebius.com/3p-integrations/skypilot',
     category: 'orchestration',
   },
   {
-    name: 'Slurm (Soperator)',
-    blurb: 'Slurm on Kubernetes for ML and AI training clusters.',
-    docsUrl: 'https://docs.nebius.com/slurm-soperator/overview/architecture',
+    name: 'Outerbounds (Metaflow)',
+    blurb: 'Production-grade ML pipelines via the Outerbounds partnership.',
+    docsUrl:
+      'https://nebius.com/blog/posts/nebius-outerbounds-strategic-technology-partnership-integration',
+    category: 'orchestration',
+  },
+  // Training
+  {
+    name: 'MPIrun',
+    blurb: 'Configure a Compute GPU cluster and run NCCL tests with MPIrun.',
+    docsUrl: 'https://docs.nebius.com/3p-integrations/mpirun',
     category: 'training',
   },
+  // MLOps
   {
     name: 'MLflow',
     blurb: 'Managed experiment tracking and model registry.',
     docsUrl: 'https://docs.nebius.com/mlflow',
     category: 'mlops',
   },
+  // IaC
   {
     name: 'Terraform',
     blurb: 'Official Nebius provider for IaC resource management.',
     docsUrl: 'https://docs.nebius.com/terraform-provider',
+    category: 'iac',
+  },
+  {
+    name: 'Pulumi',
+    blurb: 'Manage Nebius resources from Pulumi via the Terraform bridge.',
+    docsUrl: 'https://docs.nebius.com/terraform-provider/pulumi',
     category: 'iac',
   },
 ];
