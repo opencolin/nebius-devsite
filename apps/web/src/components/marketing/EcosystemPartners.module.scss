@@ -53,9 +53,10 @@
   }
 }
 
-// Product chips beneath the blurb — visually distinct from the category
-// pill at the top of the card.
-.productRow {
+// Tag row beneath the blurb — product pills (info/blue) followed by the
+// category pill (utility/grey) so visitors can see both axes at a glance
+// without the category competing for the top-of-card position.
+.tagRow {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;

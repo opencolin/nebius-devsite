@@ -181,21 +181,21 @@ export default function IntegrationsPage({
                 rel="noreferrer"
                 className={styles.card}
               >
-                <Label theme="utility" size="s">
-                  {CATEGORY_LABEL[p.category]}
-                </Label>
                 <Text variant="subheader-2" as="h3" className={styles.cardTitle}>
                   {p.name}
                 </Text>
                 <Text variant="body-2" color="secondary" className={styles.cardBlurb}>
                   {p.blurb}
                 </Text>
-                <div className={styles.productRow}>
+                <div className={styles.tagRow}>
                   {p.products.map((prod) => (
                     <Label key={prod} theme="info" size="xs">
                       {PRODUCT_LABEL[prod]}
                     </Label>
                   ))}
+                  <Label theme="utility" size="xs">
+                    {CATEGORY_LABEL[p.category]}
+                  </Label>
                 </div>
                 <span className={styles.cardCta}>View docs &rarr;</span>
               </a>

@@ -138,7 +138,10 @@
   margin: 0;
 }
 
-.productRow {
+// Tag row — product chips (info/blue) + category chip (utility/grey).
+// Replaces both the old top-of-card category pill and the bottom
+// productRow so both axes live together at a glance.
+.tagRow {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
