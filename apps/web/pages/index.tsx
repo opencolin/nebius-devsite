@@ -1,127 +1,58 @@
-// Bespoke home page: full-bleed dark hero with the slowly-panning event map
-// behind the title, then the rest of the CMS-managed marketing content
-// rendered through Page Constructor.
+// Placeholder home page — stays valid (avoids `/` 404'ing) while the new
+// homepage composition lands in follow-up commits. Once the marketing
+// sections (Hero, ActiveEvents, Products, UseCases, ...) are ported, this
+// file becomes their composition shell.
 //
-// Shadows the catch-all (pages/[[...slug]].tsx) for `/` only — `home` is in
-// RESERVED_SLUGS so the catch-all doesn't double-pre-render the same path.
-// Marketing copy below the map is still authored in Directus.
+// In the interim it just renders the navigation chrome + a short note +
+// links to the routes that ARE finished. The CMS-driven landing page that
+// used to live here is now at /signup.
 
-import {readItems} from '@directus/sdk';
-import type {GetStaticProps, InferGetStaticPropsType} from 'next';
-import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import Link from 'next/link';
 
-import {Button} from '@gravity-ui/uikit';
-import type {PageContent} from '@gravity-ui/page-constructor';
+import {Button, Text} from '@gravity-ui/uikit';
 
 import {PublicLayout} from '@/components/chrome/PublicLayout';
-import {assetUrl, directusServer} from '@/lib/directus';
-import type {PageRow} from '@/lib/types';
 
-import styles from './index.module.scss';
+import page from '@/styles/page.module.scss';
 
-// Hero map is client-only (Leaflet touches `window`).
-const HeroEventsMap = dynamic(() => import('@/components/hero/HeroEventsMap'), {
-  ssr: false,
-});
-
-// Page Constructor body still loaded through the dynamic CmsRenderer to keep
-// the swiper-resolution workaround in place.
-const CmsRenderer = dynamic(() => import('@/components/CmsRenderer'), {ssr: true});
-
-interface HeroEvent {
-  id: string;
-  title: string;
-  location?: {type: 'Point'; coordinates: [number, number]} | null;
-}
-
-interface Props {
-  cms: PageRow | null;
-  events: HeroEvent[];
-}
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const directus = directusServer();
-  const [pages, events] = await Promise.all([
-    directus.request(
-      readItems('pages', {
-        filter: {slug: {_eq: 'home'}, status: {_eq: 'published'}},
-        limit: 1,
-      }),
-    ),
-    directus.request(
-      readItems('events', {
-        filter: {status: {_eq: 'PUBLISHED'}},
-        fields: ['id', 'title', 'location'],
-        limit: -1,
-      }),
-    ),
-  ]);
-  return {
-    props: {
-      cms: ((pages as PageRow[])[0] ?? null) as PageRow | null,
-      events: events as HeroEvent[],
-    },
-    revalidate: 60,
-  };
-};
-
-export default function HomePage({
-  cms,
-  events,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  // Drop the first CMS block (it's a header-block hero — we replace it with
-  // our map hero). The rest of the marketing content renders below.
-  const allBlocks = (cms?.blocks?.blocks as Array<{type?: string}> | undefined) ?? [];
-  const cmsContent: PageContent = {
-    blocks: (allBlocks[0]?.type === 'header-block'
-      ? allBlocks.slice(1)
-      : allBlocks) as PageContent['blocks'],
-  };
-  const ogImage = assetUrl(cms?.seo_image ?? null, {width: 1280, height: 640, format: 'auto'});
-
+export default function HomePage() {
   return (
     <PublicLayout>
       <Head>
-        <title>{cms?.title ?? 'Nebius for AI Builders'}</title>
-        {cms?.seo_description ? (
-          <meta name="description" content={cms.seo_description} />
-        ) : null}
-        <meta property="og:title" content={cms?.title ?? 'Nebius for AI Builders'} />
-        {cms?.seo_description ? (
-          <meta property="og:description" content={cms.seo_description} />
-        ) : null}
-        {ogImage ? <meta property="og:image" content={ogImage} /> : null}
+        <title>Nebius for AI Builders</title>
+        <meta
+          name="description"
+          content="From training and fine-tuning to production inference at scale. Plus a community of builders shipping real work."
+        />
       </Head>
-
-      <section className={styles.hero}>
-        <HeroEventsMap events={events} />
-        <div className={styles.heroOverlay} />
-        <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>
-            {cms?.title ?? 'Nebius for AI Builders'}
-          </h1>
-          <p className={styles.heroDescription}>
-            From training and fine-tuning to production inference at scale.
-            Plus a community of builders shipping real work — workshops, demos,
-            hackathons, office hours.
-          </p>
-          <div className={styles.heroActions}>
-            <Button view="action" size="xl" href="/signup">
-              Start building
-            </Button>
-            <Button view="outlined" size="xl" href="https://docs.nebius.com" target="_blank">
-              Read the docs
-            </Button>
-          </div>
-          <div className={styles.heroFootnote}>
-            Live map · {events.filter((e) => e.location?.coordinates?.length === 2).length}{' '}
-            event locations across the network
-          </div>
+      <main className={page.container} style={{paddingTop: 80, paddingBottom: 80}}>
+        <Text variant="display-2" as="h1">
+          Nebius for AI Builders
+        </Text>
+        <Text variant="body-2" color="secondary" as="p" style={{maxWidth: 640, marginTop: 16}}>
+          New homepage composition lands in follow-up commits — Hero, events,
+          products, use-cases, builder spotlight, programs, partner wall, and
+          contact. Until then, head to one of the existing routes:
+        </Text>
+        <div style={{display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 24}}>
+          <Button view="action" size="l" href="/events">
+            Events
+          </Button>
+          <Button view="outlined" size="l" href="/library">
+            Library
+          </Button>
+          <Button view="outlined" size="l" href="/office-hours">
+            Office hours
+          </Button>
+          <Button view="outlined" size="l" href="/team">
+            Team
+          </Button>
+          <Button view="flat" size="l" href="/signup">
+            Sign up
+          </Button>
         </div>
-      </section>
-
-      <CmsRenderer content={cmsContent} />
+      </main>
     </PublicLayout>
   );
 }
