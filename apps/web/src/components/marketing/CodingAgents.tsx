@@ -51,12 +51,6 @@ const ENTRIES: Entry[] = [
     url: 'https://docs.tavily.com/documentation/agent-skills',
   },
   {
-    name: 'Tavily MCP — Remote Server',
-    blurb:
-      'Hosted MCP endpoint. One URL, any MCP-aware client. Auth via Tavily API key.',
-    url: 'https://docs.tavily.com/documentation/mcp#remote-mcp-server',
-  },
-  {
     name: 'Tavily MCP in Cursor',
     blurb:
       'Wire Tavily search + extraction into Cursor in two steps. Search, scrape, and crawl from the chat sidebar.',
