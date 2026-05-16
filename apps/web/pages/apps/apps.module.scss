@@ -77,8 +77,20 @@
   align-items: center;
 }
 
+// Sticky filter strip — mirrors /integrations so the chips follow the
+// user through a long grid. Sits OUTSIDE page.container so the bg + border
+// span full width when pinned; the inner page.container re-centers the
+// chip row at the 1240px max. top: 52px = PublicNav height (12 + 28 + 12).
 .filterBar {
-  margin: 24px 0;
+  position: sticky;
+  top: 52px;
+  z-index: 10;
+  background: var(--g-color-base-background);
+  border-bottom: 1px solid var(--g-color-line-generic);
+  padding: 4px 0;
+}
+
+.filterChips {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;

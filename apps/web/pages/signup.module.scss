@@ -18,7 +18,11 @@
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-weight: 700;
-  color: var(--nb-color-text-highlight, var(--g-color-text-link));
+  // --nb-color-text-highlight resolves to a dark-on-lime color (intended
+  // for use ON the lime swatch). On a dark page bg that reads as
+  // black-on-dark — invisible. Use the lime itself so the eyebrow
+  // contrasts on either theme.
+  color: var(--nb-color-highlight, var(--g-color-text-link));
   margin-bottom: 16px;
 }
 

@@ -122,21 +122,30 @@ export default function ProjectsPage({
           title="Built on Nebius"
           description={`${projects.length} community apps. Featured + award-winning entries surface first.`}
         />
+      </div>
 
-        <div className={styles.filterBar}>
-          <SegmentedRadioGroup
-            value={filter}
-            onUpdate={(v) => setFilter(v as Filter)}
-            size="m"
-          >
-            {FILTERS.map((f) => (
-              <SegmentedRadioGroup.Option key={f} value={f}>
-                {f} ({counts[f]})
-              </SegmentedRadioGroup.Option>
-            ))}
-          </SegmentedRadioGroup>
+      {/* Sticky filter strip — full-width wrapper outside page.container so
+          bg + border-bottom span the viewport when pinned. Inner container
+          re-centers the chip row at the 1240px max. */}
+      <div className={styles.filterBar}>
+        <div className={page.container}>
+          <div className={styles.filterChips}>
+            <SegmentedRadioGroup
+              value={filter}
+              onUpdate={(v) => setFilter(v as Filter)}
+              size="m"
+            >
+              {FILTERS.map((f) => (
+                <SegmentedRadioGroup.Option key={f} value={f}>
+                  {f} ({counts[f]})
+                </SegmentedRadioGroup.Option>
+              ))}
+            </SegmentedRadioGroup>
+          </div>
         </div>
+      </div>
 
+      <div className={page.container}>
         <div className={page.grid3}>
           {filtered.map((p) => (
             <Link key={p.slug} href={`/apps/${p.slug}`} className={styles.cardLink}>

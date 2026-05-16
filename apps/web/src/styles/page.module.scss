@@ -4,13 +4,16 @@
 .container {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 48px 24px;
+  // 12px top/bottom (was 48px) so PublicNav and sticky filter strips
+  // lead straight into content. Pages that want more breathing room
+  // above the first section add it explicitly via marginTop.
+  padding: 12px 24px;
 }
 
 .containerNarrow {
   max-width: 860px;
   margin: 0 auto;
-  padding: 48px 24px;
+  padding: 12px 24px;
 }
 
 .grid3 {

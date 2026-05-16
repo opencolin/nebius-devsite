@@ -4,6 +4,30 @@
 // with overlaid icon at the top, then header / body / footer below.
 
 // -----------------------------------------------------------------------------
+// Sticky filter strip
+// -----------------------------------------------------------------------------
+//
+// Same pattern as /apps and /integrations: full-width wrapper outside
+// page.container so bg + border-bottom span the viewport when pinned,
+// with an inner page.container to re-center the chip row at 1240px.
+// top: 52px = PublicNav height (12 + 28 + 12).
+
+.filterBar {
+  position: sticky;
+  top: 52px;
+  z-index: 10;
+  background: var(--g-color-base-background);
+  border-bottom: 1px solid var(--g-color-line-generic);
+  padding: 4px 0;
+}
+
+.filterChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+// -----------------------------------------------------------------------------
 // Card grid
 // -----------------------------------------------------------------------------
 

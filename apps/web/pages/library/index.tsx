@@ -9,8 +9,9 @@ import {readItems} from '@directus/sdk';
 import type {GetStaticProps, InferGetStaticPropsType} from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import {useMemo, useState} from 'react';
 
-import {Label, Text} from '@gravity-ui/uikit';
+import {Label, SegmentedRadioGroup, Text} from '@gravity-ui/uikit';
 
 import {PageHeader} from '@/components/chrome/PageHeader';
 import {PublicLayout} from '@/components/chrome/PublicLayout';
@@ -18,6 +19,37 @@ import {directusServer} from '@/lib/directus';
 
 import page from '@/styles/page.module.scss';
 import styles from './library.module.scss';
+
+// Mixed-axis filter row (matches /apps): All / type / product. A single
+// segmented group keeps state model trivial — pick one, everything else
+// clears. PRODUCT_FILTER_KEY maps display labels to Directus product_focus
+// enum values so the filter matches the chips on each card.
+const FILTERS = [
+  'All',
+  'Workshop',
+  'Video',
+  'Repo',
+  'Token Factory',
+  'AI Cloud',
+  'OpenClaw',
+  'Soperator',
+  'Tavily',
+] as const;
+type Filter = (typeof FILTERS)[number];
+
+const TYPE_FILTER_KEY: Record<string, string> = {
+  Workshop: 'WORKSHOP',
+  Video: 'VIDEO',
+  Repo: 'REPO',
+};
+
+const PRODUCT_FILTER_KEY: Record<string, string> = {
+  'Token Factory': 'token_factory',
+  'AI Cloud': 'ai_cloud',
+  OpenClaw: 'openclaw',
+  Soperator: 'soperator',
+  Tavily: 'tavily',
+};
 
 interface LibraryEntry {
   slug: string;
@@ -47,6 +79,33 @@ export const getStaticProps: GetStaticProps<{entries: LibraryEntry[]}> = async (
 export default function LibraryPage({
   entries,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const [filter, setFilter] = useState<Filter>('All');
+
+  const filtered = useMemo(() => {
+    if (filter === 'All') return entries;
+    const typeKey = TYPE_FILTER_KEY[filter];
+    if (typeKey) return entries.filter((e) => e.type === typeKey);
+    const productKey = PRODUCT_FILTER_KEY[filter];
+    if (productKey) {
+      return entries.filter((e) => (e.product_focus ?? []).includes(productKey));
+    }
+    return entries;
+  }, [entries, filter]);
+
+  // Counts computed off the full set so each chip's number is a stable
+  // "if I pick this, here's what I get" preview, not a post-filter total.
+  const counts = useMemo(() => {
+    const c: Record<Filter, number> = {} as Record<Filter, number>;
+    c.All = entries.length;
+    for (const [label, key] of Object.entries(TYPE_FILTER_KEY)) {
+      c[label as Filter] = entries.filter((e) => e.type === key).length;
+    }
+    for (const [label, key] of Object.entries(PRODUCT_FILTER_KEY)) {
+      c[label as Filter] = entries.filter((e) => (e.product_focus ?? []).includes(key)).length;
+    }
+    return c;
+  }, [entries]);
+
   return (
     <PublicLayout>
       <Head>
@@ -62,9 +121,32 @@ export default function LibraryPage({
           title="Workshops, videos, and code"
           description={`${entries.length} resources for getting productive on Nebius — from a 5-minute first-deploy walkthrough to deep training-job recipes.`}
         />
+      </div>
 
+      {/* Sticky filter strip — full-width wrapper outside page.container so
+          bg + border-bottom span the viewport when pinned. Same pattern as
+          /apps and /integrations. */}
+      <div className={styles.filterBar}>
+        <div className={page.container}>
+          <div className={styles.filterChips}>
+            <SegmentedRadioGroup
+              value={filter}
+              onUpdate={(v) => setFilter(v as Filter)}
+              size="m"
+            >
+              {FILTERS.map((f) => (
+                <SegmentedRadioGroup.Option key={f} value={f}>
+                  {f} ({counts[f]})
+                </SegmentedRadioGroup.Option>
+              ))}
+            </SegmentedRadioGroup>
+          </div>
+        </div>
+      </div>
+
+      <div className={page.container}>
         <div className={page.grid3}>
-          {entries.map((e) => (
+          {filtered.map((e) => (
             <Link key={e.slug} href={`/library/${e.slug}`} className={styles.cardLink}>
               <article className={styles.card}>
                 <LibraryCover type={e.type} />
