@@ -74,7 +74,8 @@ const ENTRIES: Entry[] = [
   },
   {
     name: 'Cline',
-    blurb: 'Open-source coding agent for VS Code, routed through Token Factory.',
+    blurb:
+      'Open-source AI coding agent for VSCode + JetBrains. Direct access to Nebius coding models.',
     url: 'https://docs.tokenfactory.nebius.com/integrations/coding/cline',
   },
   {
