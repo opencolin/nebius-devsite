@@ -305,7 +305,10 @@ export function Hero3D() {
         dpr={[1, 2]}
         gl={{antialias: true, alpha: true}}
         camera={{position: [1.4, 0.2, 4.2], fov: 45}}
-        style={{background: '#06060c'}}
+        // var() resolves at the <canvas> element via the cascade from
+        // HeroSection's .root; the fallback keeps the canvas visible if
+        // it's ever rendered outside HeroSection.
+        style={{background: 'var(--nb-hero-bg, #0a1628)'}}
       >
         <ambientLight intensity={0.6} />
         <pointLight position={[3, 3, 3]} intensity={2.0} color="#8a6bff" />

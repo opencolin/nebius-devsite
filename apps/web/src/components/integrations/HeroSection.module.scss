@@ -7,11 +7,19 @@
 // canvas's z-index: -10 would render behind the entire page, including the
 // PublicNav above. With it, the negative z-index stays scoped to this
 // section: under .mask and .copy but above .root's background fill.
+//
+// --nb-hero-bg is the website's canonical dark navy (#0a1628 — same value
+// used as the homepage tile-load showthrough and globals.scss base). Declared
+// once on .root and inherited through the DOM cascade, so .canvasWrap and
+// the Canvas inline style pick it up via var() without each scope having to
+// know the literal. Keeping the hex in one place means future palette
+// shifts touch one line, not four.
 .root {
+  --nb-hero-bg: #0a1628;
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: #06060c;
+  background: var(--nb-hero-bg);
   color: #ffffff;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding: 96px 0 88px;
@@ -26,13 +34,14 @@
   }
 }
 
-// Left-to-right legibility mask. Solid #06060c on the left (where the copy
+// Left-to-right legibility mask. Solid navy on the left (where the copy
 // sits) so the title pops; fully transparent through the middle where the
 // membrane's bright lobes breathe; then a softer right-edge wash to keep
 // the canvas from bleeding into the sticky filter strip below.
 //
-// Translated from the spec's Tailwind:
-//   bg-gradient-to-r  from-[#06060c]  via-transparent  to-[#06060c]/40
+// rgba uses the channel breakdown of --nb-hero-bg (#0a1628 → 10, 22, 40)
+// inline since CSS rgba() can't compose a custom property's hex. If the
+// hex on .root changes, update these three rgba calls in lockstep.
 .mask {
   position: absolute;
   inset: 0;
@@ -40,9 +49,9 @@
   pointer-events: none;
   background-image: linear-gradient(
     to right,
-    #06060c 0%,
-    rgba(6, 6, 12, 0) 50%,
-    rgba(6, 6, 12, 0.4) 100%
+    rgb(10, 22, 40) 0%,
+    rgba(10, 22, 40, 0) 50%,
+    rgba(10, 22, 40, 0.4) 100%
   );
 }
 

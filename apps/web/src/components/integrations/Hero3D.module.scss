@@ -3,6 +3,10 @@
 // canvas behind the mask + copy but scoped inside the hero section. Without
 // the isolation it'd fall behind the entire page.
 //
+// Background uses --nb-hero-bg declared on HeroSection's .root, inherited
+// through the DOM cascade. The fallback #0a1628 makes this file self-
+// sufficient if it's ever rendered outside HeroSection.
+//
 // Translated from the spec's Tailwind utilities:
 //   absolute  inset-0     -z-10
 //   ↓        ↓           ↓
@@ -12,5 +16,5 @@
   position: absolute;
   inset: 0;
   z-index: -10;
-  background: #06060c;
+  background: var(--nb-hero-bg, #0a1628);
 }
