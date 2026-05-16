@@ -123,8 +123,13 @@ export default function EventsPage({
         </div>
       </section>
 
+      {/* City chips reflect upcoming events only — same scope as the map
+          dots above, so the filter answers "where can I go?", not
+          "where has Nebius been?". A city with only past events won't
+          show as a chip; if its past entries are wanted, expand the
+          collapsed Recent section below to see them. */}
       <CityFilter
-        events={events}
+        events={allUpcoming}
         activeCity={activeCity}
         onChange={setActiveCity}
       />
