@@ -103,10 +103,15 @@ export default function IntegrationsPage({
 
       {/* Dark hero with the R3F membrane scene behind the copy. Dynamic-
           imported under the hood so neither three nor R3F ships on SSR
-          or to any other page's bundle. */}
+          or to any other page's bundle.
+
+          `One page.` uses a non-breaking space so the last sentence
+          stays atomic — when the line would otherwise wrap between "One"
+          and "page." it wraps before "One" instead, keeping the second
+          sentence intact. */}
       <HeroSection
         eyebrow="Integrations"
-        title="Every integration. One page."
+        title={'Every integration. One page.'}
         lede="Frameworks, gateways, orchestrators, and observability tools that integrate with Nebius products. Pick a filter to narrow it down."
       />
 
