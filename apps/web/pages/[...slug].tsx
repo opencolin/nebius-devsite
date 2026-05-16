@@ -33,7 +33,7 @@ interface CmsPageProps {
 // Slugs that have a dedicated Pages Router file (e.g. pages/builders.tsx).
 // We skip them here so the catch-all doesn't try to pre-render the same path
 // — Next refuses to build when two routes claim the same URL.
-const RESERVED_SLUGS = new Set(['builders', 'office-hours', 'home']);
+const RESERVED_SLUGS = new Set(['builders', 'office-hours', 'home', 'signup']);
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const directus = directusServer();
