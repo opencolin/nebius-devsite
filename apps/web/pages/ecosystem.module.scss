@@ -32,24 +32,25 @@
 
 // Filter strip — sticks under the nav so the chips follow the user
 // while they scroll long result sets. Same pattern as /events.
+// Tight vertical padding so the pinned strip doesn't eat scroll real
+// estate; chip row is already ~36px on its own.
 .filters {
   position: sticky;
   top: 52px; // matches PublicNav height (12 + 28 + 12)
   z-index: 10;
   background: var(--g-color-base-background);
   border-bottom: 1px solid var(--g-color-line-generic);
-  padding: 16px 0 12px;
+  padding: 8px 0;
 }
 
 .filterRow {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 6px 0;
 
   @media (min-width: 768px) {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     gap: 16px;
   }
 }
