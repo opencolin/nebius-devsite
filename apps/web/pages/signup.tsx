@@ -115,10 +115,6 @@ export default function SignupPage({
             >
               Sign up for free &rarr;
             </Button>
-            <Text variant="caption-2" color="hint" className={styles.heroFinePrint}>
-              No credit card needed. Free trial credits land in your account
-              instantly.
-            </Text>
           </div>
         </div>
       </section>
