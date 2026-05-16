@@ -1,0 +1,113 @@
+// CodingAgents.module.scss — same shape as EcosystemPartners + Community
+// (3-up white-bg cards on the page background with a lime hover state).
+// Kept as its own module so the spacing rhythm can drift if it ever
+// needs to.
+
+.root {
+  background: var(--g-color-base-background);
+  padding: 80px 0;
+
+  @media (min-width: 1024px) {
+    padding: 112px 0;
+  }
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 640px;
+  margin-bottom: 40px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--g-color-text-hint);
+}
+
+.title {
+  margin: 0;
+}
+
+.body {
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: start;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--g-color-base-float);
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: 16px;
+  padding: 24px;
+  text-decoration: none;
+  color: var(--g-color-text-primary);
+  transition: border-color 150ms, box-shadow 150ms, transform 150ms;
+
+  &:hover {
+    border-color: var(--nb-color-private-navyblue-300);
+    box-shadow: 0 10px 30px -10px rgba(5, 43, 66, 0.12);
+    transform: translateY(-1px);
+
+    .cardTitle {
+      color: #052b42;
+    }
+
+    .cardCta {
+      text-decoration: underline;
+    }
+  }
+
+  :global(.g-root_theme_dark) & {
+    &:hover .cardTitle {
+      color: var(--nb-color-highlight);
+    }
+  }
+}
+
+.cardTitle {
+  margin: 0;
+  transition: color 150ms;
+}
+
+.cardBlurb {
+  margin: 0;
+}
+
+.cardCta {
+  border-top: 1px solid var(--g-color-line-generic);
+  padding-top: 12px;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #052b42;
+  text-underline-offset: 4px;
+
+  :global(.g-root_theme_dark) & {
+    color: var(--nb-color-highlight);
+  }
+}

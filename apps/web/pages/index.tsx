@@ -20,6 +20,7 @@ import {PublicLayout} from '@/components/chrome/PublicLayout';
 import {ActiveEvents, type MarketingEvent} from '@/components/marketing/ActiveEvents';
 import {BuildInPublic} from '@/components/marketing/BuildInPublic';
 import {BuilderSpotlight, type SpotlightProject} from '@/components/marketing/BuilderSpotlight';
+import {CodingAgents} from '@/components/marketing/CodingAgents';
 import {Community} from '@/components/marketing/Community';
 import {Contact} from '@/components/marketing/Contact';
 import {EcosystemPartners} from '@/components/marketing/EcosystemPartners';
@@ -303,6 +304,7 @@ export default function HomePage({
 
       <ActiveEvents events={events} />
       <Products />
+      <CodingAgents />
       <UseCases />
       <WorkshopSpotlight featured={featuredWorkshop} related={relatedWorkshops} />
       <BuilderSpotlight project={monthlyProject} monthLabel={monthLabel} />

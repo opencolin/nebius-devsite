@@ -26,18 +26,18 @@ const PRODUCTS: Product[] = [
     name: 'AI Cloud',
     blurb:
       'Spin up GPU VMs and multi-node clusters for training and custom stacks, with full control.',
-    primaryHref: '/ai-cloud',
+    primaryHref: 'https://docs.nebius.com/compute/quickstart',
     primaryLabel: 'Start building',
-    secondaryHref: 'https://docs.nebius.com/',
+    secondaryHref: 'https://docs.nebius.com/tutorials/rag',
     secondaryLabel: 'How-tos',
   },
   {
     name: 'Token Factory',
     blurb:
       'Serve open-source models via an OpenAI-compatible API with real-time and batch inference, dedicated endpoints, and production SLAs.',
-    primaryHref: '/token-factory',
+    primaryHref: 'https://docs.tokenfactory.nebius.com/quickstart',
     primaryLabel: 'Start building',
-    secondaryHref: 'https://docs.tokenfactory.nebius.com/quickstart',
+    secondaryHref: 'https://github.com/nebius/token-factory-cookbook',
     secondaryLabel: 'How-tos',
     highlight: true,
   },
@@ -45,18 +45,18 @@ const PRODUCTS: Product[] = [
     name: 'Serverless',
     blurb:
       'Build and deploy serverless AI jobs and endpoints from your container in minutes — no Kubernetes, no infrastructure.',
-    primaryHref: '/serverless',
+    primaryHref: 'https://docs.nebius.com/serverless/quickstart/jobs',
     primaryLabel: 'Start building',
-    secondaryHref: 'https://docs.nebius.com/',
+    secondaryHref: 'https://docs.nebius.com/serverless/tutorials/deploy-model',
     secondaryLabel: 'How-tos',
   },
   {
     name: 'Tavily',
     blurb:
       'Real-time web search and content extraction for LLMs and agents via API and SDKs.',
-    primaryHref: 'https://tavily.com',
+    primaryHref: 'https://docs.tavily.com/documentation/quickstart',
     primaryLabel: 'Start building',
-    secondaryHref: 'https://docs.tavily.com',
+    secondaryHref: 'https://docs.tavily.com/examples/hub',
     secondaryLabel: 'How-tos',
   },
 ];
