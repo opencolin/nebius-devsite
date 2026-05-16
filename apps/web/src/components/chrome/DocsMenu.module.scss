@@ -1,4 +1,7 @@
 // Docs dropdown styles. Hover-reveal on desktop, click-to-toggle on touch.
+// The dropdown is now full-width (pinned to the viewport under the nav)
+// instead of a 420px-wide vertical list — fits all 9 product doc links
+// in a 3-column grid without scrolling.
 
 .root {
   position: relative;
@@ -39,25 +42,36 @@
   }
 }
 
-// Floating popover under the trigger. 420px wide, raised, soft shadow.
+// Full-width popover pinned beneath the PublicNav (52px tall). Spans the
+// viewport edge-to-edge so it looks like a mega-menu rather than a
+// dropdown anchored to the trigger.
+//
+// Important for hover: the dropdown sits with `top: 52px` and the nav's
+// bottom edge is also at ~52px, so there's no visual gap to fall into.
+// Combined with the 200ms close timer on the TSX side, cursor traversal
+// from trigger → dropdown stays open even on slow movement.
 .dropdown {
-  position: absolute;
-  top: calc(100% + 6px);
+  position: fixed;
+  top: 52px;
   left: 0;
+  right: 0;
   z-index: 60;
-  width: 420px;
-  max-width: calc(100vw - 32px);
-  padding: 12px;
   background: var(--g-color-base-float);
-  border: 1px solid var(--g-color-line-generic);
-  border-radius: var(--g-border-radius-l);
+  border-bottom: 1px solid var(--g-color-line-generic);
   box-shadow:
-    0 6px 24px rgba(5, 43, 66, 0.08),
-    0 2px 6px rgba(5, 43, 66, 0.04);
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+    0 12px 32px rgba(5, 43, 66, 0.1),
+    0 4px 8px rgba(5, 43, 66, 0.04);
   animation: docsMenuFadeIn 120ms ease-out;
+}
+
+.dropdownInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+
+  @media (min-width: 1024px) {
+    padding: 28px 32px 32px;
+  }
 }
 
 @keyframes docsMenuFadeIn {
@@ -72,7 +86,7 @@
 }
 
 .heading {
-  padding: 6px 12px 8px;
+  padding-bottom: 16px;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -80,15 +94,33 @@
   color: var(--g-color-text-secondary);
 }
 
-.divider {
-  height: 1px;
-  margin: 6px 8px;
-  background: var(--g-color-line-generic);
+// Multi-column grid of doc items. 1 → 2 → 3 columns as the viewport
+// widens — same breakpoints as the rest of the marketing grids.
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px 16px;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+// Changelog sits under the grid behind a divider — same visual rhythm
+// as the old single-column layout.
+.changelogWrap {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--g-color-line-generic);
 }
 
 // Each item: title (top), blurb (below), ↗ arrow on the right.
 // Title + blurb are on stacked rows; ↗ floats to the trailing edge via
-// flex layout.
+// grid layout.
 .item {
   display: grid;
   grid-template-columns: 1fr auto;

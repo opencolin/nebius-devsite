@@ -1,11 +1,12 @@
-// Docs dropdown for PublicNav. Hover-or-click reveals a popover with the
-// product-doc set + a Changelog footer item. Mirrors the Docs menu shape on
-// nebius-builders-3 but with our full product list (10 entries) instead of
-// the 4 it ships with.
+// Docs dropdown for PublicNav. Hover-or-click reveals a wide popover
+// pinned under the nav bar — multi-column grid of product docs with a
+// changelog accent footer.
 //
-// Each item has a title + one-line tagline + ↗ marker for external links.
-// Changelog is accent-styled (lime) since it's the "what's new this week"
-// touchpoint, not a reference-doc.
+// Hover discipline: mouseLeave on EITHER the trigger or the dropdown
+// schedules a 200ms close timer; mouseEnter on either cancels it. That's
+// what fixes the "menu disappears if I don't dive at it" bug — the
+// timer absorbs the few-pixel gap as the cursor travels between trigger
+// and dropdown, even though they're not in the same bounding box.
 
 import Link from 'next/link';
 import {useEffect, useRef, useState} from 'react';
@@ -40,11 +41,38 @@ const CHANGELOG: DocItem = {
   accent: true,
 };
 
+// Grace period after the cursor leaves trigger/dropdown before the menu
+// closes. Long enough to span the ~10px gap, short enough that
+// abandoned hovers don't linger.
+const CLOSE_DELAY_MS = 200;
+
 export function DocsMenu() {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Close on outside click + Escape key. Hover open is handled inline.
+  const cancelClose = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+
+  const scheduleClose = () => {
+    cancelClose();
+    closeTimer.current = setTimeout(() => {
+      setOpen(false);
+      closeTimer.current = null;
+    }, CLOSE_DELAY_MS);
+  };
+
+  const handleOpen = () => {
+    cancelClose();
+    setOpen(true);
+  };
+
+  // Close on outside click + Escape key. Hover open/close handled via the
+  // cancelClose/scheduleClose pair on trigger AND dropdown.
   useEffect(() => {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
@@ -63,12 +91,18 @@ export function DocsMenu() {
     };
   }, [open]);
 
+  // Clear any pending close on unmount so we don't setState on a
+  // disposed component.
+  useEffect(() => {
+    return cancelClose;
+  }, []);
+
   return (
     <div
       ref={rootRef}
       className={styles.root}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={handleOpen}
+      onMouseLeave={scheduleClose}
     >
       <button
         type="button"
@@ -91,13 +125,23 @@ export function DocsMenu() {
       </button>
 
       {open ? (
-        <div className={styles.dropdown} role="menu">
-          <div className={styles.heading}>Product docs</div>
-          {PRODUCTS.map((d) => (
-            <ItemLink key={d.href} item={d} />
-          ))}
-          <div className={styles.divider} />
-          <ItemLink item={CHANGELOG} />
+        <div
+          className={styles.dropdown}
+          role="menu"
+          onMouseEnter={handleOpen}
+          onMouseLeave={scheduleClose}
+        >
+          <div className={styles.dropdownInner}>
+            <div className={styles.heading}>Product docs</div>
+            <div className={styles.grid}>
+              {PRODUCTS.map((d) => (
+                <ItemLink key={d.href} item={d} />
+              ))}
+            </div>
+            <div className={styles.changelogWrap}>
+              <ItemLink item={CHANGELOG} />
+            </div>
+          </div>
         </div>
       ) : null}
     </div>
