@@ -21,7 +21,15 @@ interface Props {
   nextHref?: string;
 }
 
-type EmailModeReason = 'google' | 'github' | 'sso' | 'email' | null;
+// GitHub used to be in here as a "coming soon" branch; now it's a real
+// OAuth redirect handled by onGithubLogin so it's out of the email-mode
+// fallback list. Google + SSO still stub to email.
+type EmailModeReason = 'google' | 'sso' | 'email' | null;
+
+// Public Directus URL — used for OAuth init. NEXT_PUBLIC_ so the
+// browser bundle has it.
+const DIRECTUS_PUBLIC_URL =
+  process.env.NEXT_PUBLIC_DIRECTUS_PUBLIC_URL ?? 'https://cms.buildspace.sh';
 
 export function LoginForm({nextHref = '/portal'}: Props) {
   const router = useRouter();
@@ -33,6 +41,20 @@ export function LoginForm({nextHref = '/portal'}: Props) {
   // the small banner above the form so users understand why they landed in
   // the email flow.
   const [emailMode, setEmailMode] = useState<EmailModeReason>(null);
+
+  // GitHub OAuth — redirect to Directus's built-in /auth/login/github
+  // endpoint. Directus handles the GitHub round-trip and sets its
+  // session cookie on .buildspace.sh (Domain set via
+  // SESSION_COOKIE_DOMAIN in the Directus container env), then redirects
+  // back to our `redirect` URL. The destination URL must be in
+  // Directus's AUTH_GITHUB_REDIRECT_ALLOW_LIST.
+  const onGithubLogin = () => {
+    if (typeof window === 'undefined') return;
+    const dest = new URL(nextHref, window.location.origin).toString();
+    const u = new URL('/auth/login/github', DIRECTUS_PUBLIC_URL);
+    u.searchParams.set('redirect', dest);
+    window.location.href = u.toString();
+  };
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -135,7 +157,7 @@ export function LoginForm({nextHref = '/portal'}: Props) {
               type="button"
               className={styles.oauthBtn}
               data-qa="login-github"
-              onClick={() => setEmailMode('github')}
+              onClick={onGithubLogin}
             >
               <span className={styles.oauthIcon} aria-hidden>
                 <GitHubIcon />
@@ -170,7 +192,7 @@ export function LoginForm({nextHref = '/portal'}: Props) {
                 <p className={styles.formHint} role="status">
                   {emailMode === 'sso'
                     ? 'SSO is coming soon. Use your email and password for now.'
-                    : `${emailMode === 'google' ? 'Google' : 'GitHub'} sign-in is coming soon. Use your email and password for now.`}
+                    : 'Google sign-in is coming soon. Use your email and password for now.'}
                 </p>
               ) : null}
 

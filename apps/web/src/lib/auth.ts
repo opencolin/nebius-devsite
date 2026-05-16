@@ -107,11 +107,22 @@ export function clearSessionCookies(res: ServerResponse) {
   ]);
 }
 
+// Directus 11 sets these cookie names natively when SESSION mode is used
+// (i.e. the OAuth flow). They live on .buildspace.sh in prod because we
+// set SESSION_COOKIE_DOMAIN on the Directus container.
+const DIRECTUS_SESSION_COOKIE = 'directus_session_token';
+const DIRECTUS_REFRESH_COOKIE = 'directus_refresh_token';
+
 export function readSessionCookies(req: IncomingMessage) {
   const cookies = parse(req.headers.cookie ?? '');
   return {
+    // Email/password login path: cookies we set ourselves.
     accessToken: cookies[COOKIE_ACCESS] ?? null,
     refreshToken: cookies[COOKIE_REFRESH] ?? null,
+    // OAuth path (GitHub today, Google/SSO later): Directus's own cookies,
+    // visible to us because they're scoped to the parent domain.
+    directusSessionToken: cookies[DIRECTUS_SESSION_COOKIE] ?? null,
+    directusRefreshToken: cookies[DIRECTUS_REFRESH_COOKIE] ?? null,
   };
 }
 
@@ -131,8 +142,11 @@ export async function getServerSession(
   req: IncomingMessage,
   res?: ServerResponse,
 ): Promise<SessionUser | null> {
-  const {accessToken, refreshToken} = readSessionCookies(req);
-  if (!accessToken && !refreshToken) return null;
+  const {accessToken, refreshToken, directusSessionToken, directusRefreshToken} =
+    readSessionCookies(req);
+  if (!accessToken && !refreshToken && !directusSessionToken && !directusRefreshToken) {
+    return null;
+  }
 
   const tryFetchMe = async (token: string) => {
     const r = await fetch(
@@ -141,6 +155,26 @@ export async function getServerSession(
     );
     return r;
   };
+
+  // OAuth-first attempt: if Directus's own session token is present (set
+  // by the GitHub flow), use it. It IS the access token in the new
+  // SESSION mode — just pass it as a Bearer credential.
+  if (directusSessionToken) {
+    const me = await tryFetchMe(directusSessionToken);
+    if (me.ok) {
+      const json = (await me.json()) as {data: DirectusUserRow};
+      const u = json.data;
+      return {
+        id: u.id,
+        email: u.email,
+        firstName: u.first_name ?? null,
+        lastName: u.last_name ?? null,
+        role: normalizeRole(u.role?.name),
+      };
+    }
+    // Fall through to refresh/email-cookie paths if the session token
+    // didn't validate — could be expired.
+  }
 
   let token = accessToken;
   let me: Response | null = null;

@@ -40,6 +40,27 @@ param webImageRepo string = 'web'
 @description('Skip web Container App + Front Door on the first pass (image must exist + Directus must be live before this can be true).')
 param deployWeb bool = true
 
+// ---- GitHub OAuth (for Directus auth_github provider) ----
+// These default to empty so a fresh bicep run doesn't fail when the
+// developer hasn't registered the OAuth App yet. Populate them via
+// `az containerapp secret set` once the OAuth App exists on
+// github.com/settings/developers. With empty values, the provider
+// stays disabled and the GitHub login button on /login 502s — that's
+// the intended fail-loud behavior, not silent fallback.
+@secure()
+@description('GitHub OAuth App client ID (github.com/settings/developers).')
+param githubClientId string = ''
+
+@secure()
+@description('GitHub OAuth App client secret.')
+param githubClientSecret string = ''
+
+@description('Comma-separated list of post-OAuth redirect URLs. Each one must exactly match what the LoginForm sends in the `redirect` query param.')
+param githubRedirectAllowList string = 'https://demo.buildspace.sh/portal,https://demo.buildspace.sh/portal/checklist,https://demo.buildspace.sh'
+
+@description('UUID of the Directus role that GitHub-authed users land in by default (created out-of-band via /roles).')
+param defaultBuilderRoleId string = '8ad54e0b-0e9f-414c-8558-8134c30f79d9'
+
 // Random suffix to keep globally-unique names (Storage, Postgres, ACR) stable
 // across redeploys while still avoiding collisions if the resource group
 // is recreated. uniqueString() is deterministic per RG name.
@@ -286,6 +307,13 @@ resource directus 'Microsoft.App/containerApps@2024-03-01' = {
         {name: 'directus-admin-password', value: directusAdminPassword}
         {name: 'redis-password', value: redisPassword}
         {name: 'storage-key', value: storageKey}
+        // GitHub OAuth — leave blank during bicep create; populate via
+        // `az containerapp secret set` once the OAuth App exists on
+        // github.com/settings/developers. Empty string is treated as
+        // "not configured" by Directus, so the provider stays inert
+        // until creds land. See infra/azure/README.md.
+        {name: 'auth-github-client-id', value: githubClientId}
+        {name: 'auth-github-client-secret', value: githubClientSecret}
       ]
     }
     template: {
@@ -325,6 +353,22 @@ resource directus 'Microsoft.App/containerApps@2024-03-01' = {
             {name: 'CORS_ORIGIN', value: 'true'}
             {name: 'WEBSOCKETS_ENABLED', value: 'false'}
             {name: 'TELEMETRY', value: 'false'}
+            // ---- GitHub OAuth ----
+            // SESSION_COOKIE_DOMAIN must include a leading dot so the
+            // cookie crosses subdomains (cms.* sets it, demo.* reads it).
+            // Together with AUTH_PROVIDERS=github + the AUTH_GITHUB_*
+            // env vars below, the Builder Network signup flow works
+            // end-to-end. The CLIENT_ID/SECRET are wired as secrets;
+            // they're empty until the OAuth App is registered.
+            {name: 'SESSION_COOKIE_DOMAIN', value: '.buildspace.sh'}
+            {name: 'REFRESH_TOKEN_COOKIE_DOMAIN', value: '.buildspace.sh'}
+            {name: 'AUTH_PROVIDERS', value: 'github'}
+            {name: 'AUTH_GITHUB_DRIVER', value: 'github'}
+            {name: 'AUTH_GITHUB_CLIENT_ID', secretRef: 'auth-github-client-id'}
+            {name: 'AUTH_GITHUB_CLIENT_SECRET', secretRef: 'auth-github-client-secret'}
+            {name: 'AUTH_GITHUB_DEFAULT_ROLE_ID', value: defaultBuilderRoleId}
+            {name: 'AUTH_GITHUB_REDIRECT_ALLOW_LIST', value: githubRedirectAllowList}
+            {name: 'AUTH_GITHUB_ALLOW_PUBLIC_REGISTRATION', value: 'true'}
           ]
         }
       ]
