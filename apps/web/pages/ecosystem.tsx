@@ -172,7 +172,7 @@ export default function EcosystemPage({
           <div className={styles.grid}>
             {visible.map((p) => (
               <a
-                key={p.name}
+                key={p.docsUrl}
                 href={p.docsUrl}
                 target="_blank"
                 rel="noreferrer"

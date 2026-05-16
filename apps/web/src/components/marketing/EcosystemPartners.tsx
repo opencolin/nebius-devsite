@@ -42,7 +42,7 @@ export function EcosystemPartners() {
         <div className={styles.grid}>
           {ECOSYSTEM_PARTNERS.map((p) => (
             <a
-              key={p.name}
+              key={p.docsUrl}
               href={p.docsUrl}
               target="_blank"
               rel="noreferrer"
