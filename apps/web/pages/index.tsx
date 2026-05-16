@@ -23,7 +23,6 @@ import {BuilderSpotlight, type SpotlightProject} from '@/components/marketing/Bu
 import {Community} from '@/components/marketing/Community';
 import {Contact} from '@/components/marketing/Contact';
 import {DualPitch} from '@/components/marketing/DualPitch';
-import {PartnerWall} from '@/components/marketing/PartnerWall';
 import {Products} from '@/components/marketing/Products';
 import {Programs} from '@/components/marketing/Programs';
 import {UseCases} from '@/components/marketing/UseCases';
@@ -308,7 +307,6 @@ export default function HomePage({
       <Community />
       <Programs />
       <DualPitch />
-      <PartnerWall />
       <Contact />
       <BuildInPublic />
     </PublicLayout>
