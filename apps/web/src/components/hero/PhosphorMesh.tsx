@@ -179,7 +179,9 @@ export function PhosphorMesh({
       let height = mount.clientHeight || 1;
 
       const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x04060a);
+      // Matches the nebius.com dark-mode background (deep navy, not black) —
+      // tested against the screenshot the user provided on 2026-05-13.
+      scene.background = new THREE.Color(0x0c1825);
 
       const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 100);
       camera.position.set(0, 0.4, 6.2);

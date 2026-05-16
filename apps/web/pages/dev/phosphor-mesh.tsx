@@ -22,7 +22,7 @@ export default function PhosphorMeshDemo() {
       <main
         style={{
           minHeight: '100vh',
-          background: '#04060a',
+          background: '#0c1825',
           color: '#c9d1d9',
           fontFamily: 'ui-sans-serif, -apple-system, system-ui, sans-serif',
           padding: '32px',
