@@ -1,10 +1,12 @@
 // GET /api/search?q=…&limit=24
 //
-// Fans out to Directus for events + library_articles + projects in parallel
-// and returns a unified hit list. Replaces an earlier Typesense-backed
-// implementation — Typesense isn't deployed in this stack, and the
-// browser was getting a 500 here that bubbled up as the "client-side
-// exception" the user saw in the header search bar.
+// Primary path: Typesense (`nebius_builders` collection), populated by
+// infra/typesense/sync.mjs from Directus. Fast, typo-tolerant, faceted.
+//
+// Fallback path: Directus `_icontains` across events + library_articles +
+// projects. Slower but always available — used when Typesense env vars
+// aren't set (local dev without TS_HOST) or when the Typesense query
+// throws (collection missing, network blip, etc.).
 //
 // Each hit carries enough shape to render a uniform card on /search:
 //   { id, kind: 'event'|'library'|'app', title, blurb, url, meta, tags }
@@ -14,8 +16,57 @@ import type {NextApiRequest, NextApiResponse} from 'next';
 
 import {directusServer} from '@/lib/directus';
 import type {SearchHit, SearchResponse} from '@/lib/search-types';
+import {TYPESENSE_COLLECTION, typesenseConfigured, typesenseSearch} from '@/lib/typesense';
 
 export type {SearchHit, SearchResponse};
+
+// Typesense returns "kind" values matching our SearchHit.kind union plus
+// `builder` (team_member) which we surface as `library` for the homepage
+// search (those entries don't have their own page). Anything else is
+// dropped.
+type TsKind = SearchHit['kind'] | 'builder';
+const KIND_PASSTHROUGH: Record<TsKind, SearchHit['kind']> = {
+  event: 'event',
+  library: 'library',
+  app: 'app',
+  // Builders surface under "library" for now since /team isn't part of
+  // the requested search corpus. If we ever add team to the chip filter,
+  // remap this to its own 'team' kind.
+  builder: 'library',
+};
+
+async function searchTypesense(q: string, limit: number): Promise<SearchResponse> {
+  const result = await typesenseSearch()
+    .collections(TYPESENSE_COLLECTION)
+    .documents()
+    .search({
+      q,
+      query_by: 'title,blurb,tags',
+      per_page: limit,
+    });
+
+  const counts = {event: 0, library: 0, app: 0, total: 0};
+  const hits: SearchHit[] = [];
+
+  for (const h of result.hits ?? []) {
+    const doc = h.document as Record<string, unknown>;
+    const rawKind = String(doc.kind ?? '') as TsKind;
+    const kind = KIND_PASSTHROUGH[rawKind];
+    if (!kind) continue;
+
+    hits.push({
+      id: String(doc.id ?? ''),
+      kind,
+      title: String(doc.title ?? ''),
+      blurb: typeof doc.blurb === 'string' ? doc.blurb : '',
+      url: String(doc.url ?? '/'),
+      tags: Array.isArray(doc.tags) ? (doc.tags as string[]) : undefined,
+    });
+    counts[kind] += 1;
+  }
+  counts.total = hits.length;
+  return {hits, counts};
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -35,6 +86,18 @@ export default async function handler(
     return res
       .status(200)
       .json({hits: [], counts: {event: 0, library: 0, app: 0, total: 0}});
+  }
+
+  // Primary: Typesense. Throws if collection missing, network unavailable,
+  // or env unset — caught below and we fall back to Directus.
+  if (typesenseConfigured()) {
+    try {
+      const ts = await searchTypesense(q, limit);
+      return res.status(200).json(ts);
+    } catch (err) {
+      // Log but don't fail the request — Directus fallback below.
+      console.warn('[search] Typesense failed, falling back to Directus:', (err as Error).message);
+    }
   }
 
   try {

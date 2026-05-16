@@ -77,23 +77,39 @@ for (const a of await fetchAll('library_articles', ['id', 'slug', 'title', 'blur
   docs.push({
     id: `library_${a.id}`,
     kind: 'library',
-    title: a.title,
-    blurb: a.blurb,
+    title: a.title ?? 'Untitled',
+    blurb: a.blurb ?? '',
     tags: a.product_focus ?? [],
     url: `/library/${a.slug}`,
     sort: 0,
   });
 }
 
-for (const e of await fetchAll('events', ['id', 'title', 'description', 'product_focus', 'starts_at'])) {
+for (const e of await fetchAll('events', [
+  'id', 'title', 'description', 'product_focus', 'starts_at', 'luma_url', 'official_url',
+])) {
   docs.push({
     id: `event_${e.id}`,
     kind: 'event',
-    title: e.title,
-    blurb: e.description,
+    title: e.title ?? 'Untitled event',
+    blurb: e.description ?? '',
     tags: e.product_focus ?? [],
-    url: `/events#${e.id}`,
+    // Prefer luma → official → fallback to /events. Matches /api/search
+    // behavior so dropdown hits and full-grid hits go to the same place.
+    url: e.luma_url || e.official_url || '/events',
     sort: e.starts_at ? Math.floor(new Date(e.starts_at).getTime() / 1000) : 0,
+  });
+}
+
+for (const p of await fetchAll('projects', ['id', 'slug', 'title', 'tagline', 'description', 'tags'])) {
+  docs.push({
+    id: `app_${p.id}`,
+    kind: 'app',
+    title: p.title ?? 'Untitled project',
+    blurb: p.tagline || p.description || '',
+    tags: p.tags ?? [],
+    url: `/apps/${p.slug}`,
+    sort: 0,
   });
 }
 
@@ -101,8 +117,8 @@ for (const t of await fetchAll('builders', ['id', 'handle', 'name', 'bio', 'expe
   docs.push({
     id: `builder_${t.id}`,
     kind: 'builder',
-    title: t.name,
-    blurb: t.bio,
+    title: t.name ?? t.handle ?? 'Unnamed builder',
+    blurb: t.bio ?? '',
     tags: t.expertise ?? [],
     url: `/team/${t.handle}`,
     sort: 0,
@@ -116,11 +132,19 @@ if (docs.length === 0) {
 
 console.log(`→ Upserting ${docs.length} docs into ${COLLECTION}…`);
 const result = await ts.collections(COLLECTION).documents().import(docs, {action: 'upsert'});
-const failed = result.split('\n').filter((l) => {
-  try {
-    return !JSON.parse(l).success;
-  } catch {
-    return true;
-  }
-});
-console.log(`✓ Indexed (${docs.length - failed.length} ok, ${failed.length} failed).`);
+// Newer typesense-node returns an array of {success, error?} objects; older
+// versions returned a JSONL string. Handle both.
+const lines = Array.isArray(result)
+  ? result
+  : String(result).split('\n').map((l) => {
+      try {
+        return JSON.parse(l);
+      } catch {
+        return {success: false};
+      }
+    });
+const failed = lines.filter((l) => l && !l.success);
+console.log(`✓ Indexed (${lines.length - failed.length} ok, ${failed.length} failed).`);
+if (failed.length > 0 && failed[0].error) {
+  console.log('  first failure:', failed[0].error);
+}

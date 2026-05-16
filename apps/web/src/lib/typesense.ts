@@ -15,9 +15,22 @@
 import {Client} from 'typesense';
 
 const HOST = process.env.TYPESENSE_HOST ?? 'localhost';
+// Container Apps front their ingress on 443 with HTTPS — `TYPESENSE_PORT`
+// defaults to 8108 (local dev), prod overrides to 443.
 const PORT = Number(process.env.TYPESENSE_PORT ?? 8108);
 const PROTOCOL =
   (process.env.TYPESENSE_PROTOCOL as 'http' | 'https' | undefined) ?? 'http';
+
+// `typesenseConfigured()` — true when the env vars look real, false when
+// they're still defaults. Caller uses this to decide between Typesense
+// and the Directus fallback in /api/search.
+export function typesenseConfigured(): boolean {
+  return (
+    HOST !== 'localhost' &&
+    Boolean(process.env.TYPESENSE_SEARCH_KEY) &&
+    Boolean(process.env.TYPESENSE_ADMIN_KEY)
+  );
+}
 
 let _admin: Client | undefined;
 let _search: Client | undefined;

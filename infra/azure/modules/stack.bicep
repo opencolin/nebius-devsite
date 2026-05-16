@@ -61,6 +61,15 @@ param githubRedirectAllowList string = 'https://demo.buildspace.sh/portal,https:
 @description('UUID of the Directus role that GitHub-authed users land in by default (created out-of-band via /roles).')
 param defaultBuilderRoleId string = '8ad54e0b-0e9f-414c-8558-8134c30f79d9'
 
+// ---- Typesense (search backend) ----
+@secure()
+@description('Typesense admin API key (used by the indexer + as the parent for the scoped search-only key).')
+param typesenseAdminKey string = ''
+
+@secure()
+@description('Typesense search-only API key (read documents:search, scoped to all collections).')
+param typesenseSearchKey string = ''
+
 // Random suffix to keep globally-unique names (Storage, Postgres, ACR) stable
 // across redeploys while still avoiding collisions if the resource group
 // is recreated. uniqueString() is deterministic per RG name.
@@ -404,7 +413,55 @@ resource directus 'Microsoft.App/containerApps@2024-03-01' = {
 }
 
 // -----------------------------------------------------------------------------
-// 8. Container App: web  (Next.js — pulls from ACR via UAMI)
+// 8. Container App: typesense  (search backend, populated by
+//    infra/typesense/sync.mjs from Directus)
+//
+// EmptyDir volume at /data — the index lives only for the container's
+// lifetime. After a restart, re-run sync.mjs to repopulate. Acceptable
+// for a mockup with ~225 docs; switch to Azure Files when the corpus
+// grows past a few thousand entries.
+// -----------------------------------------------------------------------------
+
+resource typesense 'Microsoft.App/containerApps@2024-03-01' = {
+  name: '${namePrefix}-typesense'
+  location: location
+  properties: {
+    managedEnvironmentId: cae.id
+    workloadProfileName: 'Consumption'
+    configuration: {
+      ingress: {
+        external: true
+        targetPort: 8108
+        transport: 'http'
+        allowInsecure: false
+        traffic: [{latestRevision: true, weight: 100}]
+      }
+      secrets: [
+        {name: 'typesense-admin-key', value: typesenseAdminKey}
+      ]
+    }
+    template: {
+      containers: [
+        {
+          name: '${namePrefix}-typesense'
+          image: 'typesense/typesense:29.0'
+          resources: {cpu: json('0.5'), memory: '1Gi'}
+          env: [
+            {name: 'TYPESENSE_API_KEY', secretRef: 'typesense-admin-key'}
+            {name: 'TYPESENSE_DATA_DIR', value: '/data'}
+            {name: 'TYPESENSE_ENABLE_CORS', value: 'true'}
+          ]
+          volumeMounts: [{volumeName: 'tsdata', mountPath: '/data'}]
+        }
+      ]
+      volumes: [{name: 'tsdata', storageType: 'EmptyDir'}]
+      scale: {minReplicas: 1, maxReplicas: 1}
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// 9. Container App: web  (Next.js — pulls from ACR via UAMI)
 //
 // On a first-ever deploy the image isn't pushed yet — deploy.sh does
 // `az acr build` *before* the bicep run, so by the time we hit this
@@ -414,6 +471,7 @@ resource directus 'Microsoft.App/containerApps@2024-03-01' = {
 // -----------------------------------------------------------------------------
 
 var directusFqdn = directus.properties.configuration.ingress.fqdn
+var typesenseFqdn = typesense.properties.configuration.ingress.fqdn
 
 resource web 'Microsoft.App/containerApps@2024-03-01' = if (deployWeb) {
   name: webAppName
@@ -441,6 +499,10 @@ resource web 'Microsoft.App/containerApps@2024-03-01' = if (deployWeb) {
           identity: uami.id
         }
       ]
+      secrets: [
+        {name: 'typesense-admin-key', value: typesenseAdminKey}
+        {name: 'typesense-search-key', value: typesenseSearchKey}
+      ]
     }
     template: {
       containers: [
@@ -459,6 +521,15 @@ resource web 'Microsoft.App/containerApps@2024-03-01' = if (deployWeb) {
             {name: 'AUTH_COOKIE_SECURE', value: '1'}
             {name: 'NODE_ENV', value: 'production'}
             {name: 'PORT', value: '3000'}
+            // Typesense — search backend. Container App ingress fronts
+            // 443/HTTPS so we override the lib's default port. Keys are
+            // secrets; admin used by sync.mjs (out-of-band), search key
+            // used by /api/search for browser-initiated queries.
+            {name: 'TYPESENSE_HOST', value: typesenseFqdn}
+            {name: 'TYPESENSE_PORT', value: '443'}
+            {name: 'TYPESENSE_PROTOCOL', value: 'https'}
+            {name: 'TYPESENSE_ADMIN_KEY', secretRef: 'typesense-admin-key'}
+            {name: 'TYPESENSE_SEARCH_KEY', secretRef: 'typesense-search-key'}
           ]
         }
       ]
