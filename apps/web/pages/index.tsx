@@ -111,6 +111,9 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
             'product_focus',
             'is_official',
             'luma_url',
+            // Nebius-hosted webinars carry official_url instead of luma_url;
+            // ActiveEvents falls back to it via eventHref().
+            'official_url',
             'location',
           ],
           limit: -1,
@@ -182,6 +185,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     product_focus: e.product_focus ?? [],
     is_official: e.is_official,
     luma_url: e.luma_url ?? null,
+    official_url: e.official_url ?? null,
   }));
 
   // For the map hero: every event with coordinates, regardless of past/upcoming

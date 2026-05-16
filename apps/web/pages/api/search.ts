@@ -15,6 +15,7 @@ import {readItems} from '@directus/sdk';
 import type {NextApiRequest, NextApiResponse} from 'next';
 
 import {directusServer} from '@/lib/directus';
+import {eventHref} from '@/lib/event-url';
 import type {SearchHit, SearchResponse} from '@/lib/search-types';
 import {TYPESENSE_COLLECTION, typesenseConfigured, typesenseSearch} from '@/lib/typesense';
 
@@ -182,11 +183,13 @@ export default async function handler(
         blurb: String(e.description ?? '').slice(0, 200),
         // Events without a luma/official URL stay on the events page;
         // the /events index doesn't deep-link per id today, so this is
-        // the best fallback.
+        // the best fallback. eventHref() is the same chain used by every
+        // other event-link surface (see src/lib/event-url.ts).
         url:
-          (e.luma_url as string | undefined) ||
-          (e.official_url as string | undefined) ||
-          '/events',
+          eventHref({
+            luma_url: e.luma_url as string | null | undefined,
+            official_url: e.official_url as string | null | undefined,
+          }) ?? '/events',
         meta: [e.format ? String(e.format) : null, e.city ? String(e.city) : null]
           .filter(Boolean)
           .join(' · '),

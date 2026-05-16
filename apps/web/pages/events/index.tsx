@@ -9,6 +9,7 @@ import {useState} from 'react';
 
 import {PublicLayout} from '@/components/chrome/PublicLayout';
 import {directusServer} from '@/lib/directus';
+import {eventHref} from '@/lib/event-url';
 import {formatDateTime} from '@/lib/format';
 
 import page from '@/styles/page.module.scss';
@@ -35,6 +36,9 @@ interface EventRow {
   product_focus: string[];
   is_official: boolean;
   luma_url?: string | null;
+  // Webinars + Nebius.com-hosted events live on official_url instead of
+  // luma_url. Both feed the card's RSVP link via eventHref().
+  official_url?: string | null;
   builder_handle?: string | null;
   location?: {type: 'Point'; coordinates: [number, number]} | null;
 }
@@ -45,7 +49,7 @@ export const getStaticProps: GetStaticProps<{events: EventRow[]}> = async () => 
     readItems('events', {
       filter: {status: {_eq: 'PUBLISHED'}},
       sort: ['starts_at'],
-      fields: ['id', 'title', 'description', 'format', 'starts_at', 'ends_at', 'city', 'country', 'is_online', 'product_focus', 'is_official', 'luma_url', 'location'],
+      fields: ['id', 'title', 'description', 'format', 'starts_at', 'ends_at', 'city', 'country', 'is_online', 'product_focus', 'is_official', 'luma_url', 'official_url', 'location'],
       limit: -1,
     }),
   )) as EventRow[];
@@ -327,6 +331,9 @@ function RefreshButton() {
 // the card single-tap-friendly.
 function EventCard({event}: {event: EventRow}) {
   const state = eventState(event);
+  // Single fallback chain: Luma listing → Nebius webinar page → no link.
+  // See src/lib/event-url.ts for why both are checked.
+  const href = eventHref(event);
   const cardBody = (
     <article className={styles.card}>
       <EventCover event={event} state={state} />
@@ -356,7 +363,7 @@ function EventCard({event}: {event: EventRow}) {
         <Text variant="caption-2" color="secondary">
           {event.is_online ? 'Online' : `${event.city || '—'}${event.country ? `, ${event.country}` : ''}`}
         </Text>
-        {event.luma_url ? (
+        {href ? (
           <Text variant="caption-2" color="info">
             RSVP ↗
           </Text>
@@ -364,9 +371,9 @@ function EventCard({event}: {event: EventRow}) {
       </footer>
     </article>
   );
-  return event.luma_url ? (
+  return href ? (
     <a
-      href={event.luma_url}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       className={styles.cardLink}

@@ -11,6 +11,7 @@ import Link from 'next/link';
 
 import {Button, Label, Text} from '@gravity-ui/uikit';
 
+import {eventHref} from '@/lib/event-url';
 import {formatDateTime} from '@/lib/format';
 
 import styles from './ActiveEvents.module.scss';
@@ -26,6 +27,9 @@ export interface MarketingEvent {
   product_focus: string[];
   is_official: boolean;
   luma_url?: string | null;
+  // Nebius.com-hosted webinars (e.g. SemiAnalysis collab) come in on
+  // official_url, not luma_url; both feed the CTA via eventHref().
+  official_url?: string | null;
 }
 
 interface Props {
@@ -66,7 +70,10 @@ export function ActiveEvents({events}: Props) {
 
         <div className={styles.grid}>
           {next.map((e) => {
-            const href = e.luma_url ?? `/events#${e.id}`;
+            // Luma → Nebius webinar → internal /events anchor (always
+            // truthy). external check stays the same: only http(s) URLs
+            // get target="_blank".
+            const href = eventHref(e) ?? `/events#${e.id}`;
             const external = href.startsWith('http');
             return (
               <article key={e.id} className={styles.card}>
