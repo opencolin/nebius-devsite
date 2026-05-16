@@ -1,10 +1,9 @@
 // /ecosystem — full filterable directory of ecosystem partner integrations.
-// Same card shape as the homepage <EcosystemPartners /> section but with
-// two filter rows (product + category) and live counts beside each chip.
-//
-// Filters AND together — picking "Token Factory" + "Agents" shows
-// partners whose product list includes token-factory AND whose category
-// is agents. Toggle the active chip off to clear that filter row.
+// Same card shape as the homepage <EcosystemPartners /> section. Single
+// filter row: an "All" chip, then product chips, then category chips. The
+// chosen filter is a tagged union (kind: 'product' | 'category'), so
+// picking one chip auto-clears whatever was picked before — much simpler
+// state model than the two-row AND-filter we shipped first.
 
 import type {GetStaticProps, InferGetStaticPropsType} from 'next';
 import Head from 'next/head';
@@ -29,9 +28,20 @@ interface Props {
   partners: EcosystemPartner[];
 }
 
+// One filter, two kinds. `null` means "All".
+type ActiveFilter =
+  | {kind: 'product'; value: PartnerProduct}
+  | {kind: 'category'; value: PartnerCategory}
+  | null;
+
+function filterEq(a: ActiveFilter, b: ActiveFilter): boolean {
+  if (a === null && b === null) return true;
+  if (a === null || b === null) return false;
+  return a.kind === b.kind && a.value === b.value;
+}
+
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  // No external fetch — partners list is bundled at build time. revalidate
-  // dropped since the data is static. Kept getStaticProps so the page is
+  // No external fetch — partners list is bundled at build time. Page is
   // SSG and ships zero server work per request.
   return {props: {partners: ECOSYSTEM_PARTNERS}};
 };
@@ -39,14 +49,10 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 export default function EcosystemPage({
   partners,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const [activeProduct, setActiveProduct] = useState<PartnerProduct | null>(null);
-  const [activeCategory, setActiveCategory] = useState<PartnerCategory | null>(
-    null,
-  );
+  const [active, setActive] = useState<ActiveFilter>(null);
 
-  // Counts shown alongside each chip — always derived from the full list,
-  // not the currently-filtered subset, so the user can see how each
-  // toggle will affect the result before clicking.
+  // Counts always derive from the full partner list so each chip's
+  // number is a stable "if I pick this, here's what I'll get" preview.
   const productCounts = useMemo(() => {
     const counts: Record<PartnerProduct, number> = {
       'ai-cloud': 0,
@@ -71,12 +77,15 @@ export default function EcosystemPage({
   }, [partners]);
 
   const visible = useMemo(() => {
-    return partners.filter((p) => {
-      if (activeProduct && !p.products.includes(activeProduct)) return false;
-      if (activeCategory && p.category !== activeCategory) return false;
-      return true;
-    });
-  }, [partners, activeProduct, activeCategory]);
+    if (active === null) return partners;
+    if (active.kind === 'product') {
+      return partners.filter((p) => p.products.includes(active.value));
+    }
+    return partners.filter((p) => p.category === active.value);
+  }, [partners, active]);
+
+  const toggle = (f: ActiveFilter) =>
+    setActive((cur) => (filterEq(cur, f) ? null : f));
 
   return (
     <PublicLayout>
@@ -84,7 +93,7 @@ export default function EcosystemPage({
         <title>Ecosystem · Nebius Builders</title>
         <meta
           name="description"
-          content="Every Nebius ecosystem partner integration, filterable by product (AI Cloud, Token Factory, Tavily) and category (agents, gateway, orchestration, and more)."
+          content="Every Nebius ecosystem partner integration in one filterable directory — products (AI Cloud, Token Factory, Tavily) and categories (agents, gateway, orchestration, and more)."
         />
       </Head>
 
@@ -98,53 +107,53 @@ export default function EcosystemPage({
           </Text>
           <Text variant="body-2" color="secondary" className={styles.heroLede}>
             Frameworks, gateways, orchestrators, and observability tools that
-            integrate with Nebius products. Filter by product or by category to
-            find the doc page you need.
+            integrate with Nebius products. Pick a filter to narrow it down.
           </Text>
         </div>
       </section>
 
       <div className={styles.filters}>
         <div className={page.container}>
-          <FilterRow
-            label="Product"
-            allCount={partners.length}
-            onClearAll={() => setActiveProduct(null)}
-            isAllActive={activeProduct == null}
-          >
-            {(Object.keys(productCounts) as PartnerProduct[]).map((prod) => (
+          <div className={styles.filterRow}>
+            <Text variant="caption-2" color="secondary" className={styles.filterLabel}>
+              Filter
+            </Text>
+            <div className={styles.chips}>
               <Button
-                key={prod}
-                view={activeProduct === prod ? 'action' : 'outlined'}
+                view={active == null ? 'action' : 'outlined'}
                 size="m"
-                onClick={() =>
-                  setActiveProduct((cur) => (cur === prod ? null : prod))
-                }
+                onClick={() => setActive(null)}
               >
-                {PRODUCT_LABEL[prod]} ({productCounts[prod]})
+                All ({partners.length})
               </Button>
-            ))}
-          </FilterRow>
-
-          <FilterRow
-            label="Category"
-            allCount={partners.length}
-            onClearAll={() => setActiveCategory(null)}
-            isAllActive={activeCategory == null}
-          >
-            {categoryCounts.map(([cat, count]) => (
-              <Button
-                key={cat}
-                view={activeCategory === cat ? 'action' : 'outlined'}
-                size="m"
-                onClick={() =>
-                  setActiveCategory((cur) => (cur === cat ? null : cat))
-                }
-              >
-                {CATEGORY_LABEL[cat]} ({count})
-              </Button>
-            ))}
-          </FilterRow>
+              {(Object.keys(productCounts) as PartnerProduct[]).map((prod) => {
+                const f: ActiveFilter = {kind: 'product', value: prod};
+                return (
+                  <Button
+                    key={`p:${prod}`}
+                    view={filterEq(active, f) ? 'action' : 'outlined'}
+                    size="m"
+                    onClick={() => toggle(f)}
+                  >
+                    {PRODUCT_LABEL[prod]} ({productCounts[prod]})
+                  </Button>
+                );
+              })}
+              {categoryCounts.map(([cat, count]) => {
+                const f: ActiveFilter = {kind: 'category', value: cat};
+                return (
+                  <Button
+                    key={`c:${cat}`}
+                    view={filterEq(active, f) ? 'action' : 'outlined'}
+                    size="m"
+                    onClick={() => toggle(f)}
+                  >
+                    {CATEGORY_LABEL[cat]} ({count})
+                  </Button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -157,8 +166,7 @@ export default function EcosystemPage({
 
         {visible.length === 0 ? (
           <Text color="secondary" className={styles.empty}>
-            No partners match this combination. Clear a filter to widen the
-            results.
+            No partners match this filter. Pick a different one.
           </Text>
         ) : (
           <div className={styles.grid}>
@@ -193,39 +201,5 @@ export default function EcosystemPage({
         )}
       </main>
     </PublicLayout>
-  );
-}
-
-// FilterRow — small wrapper that renders "Label: [All (N)] [chip] [chip] …"
-// and forwards click of the All chip to the row-specific reset callback.
-function FilterRow({
-  label,
-  allCount,
-  isAllActive,
-  onClearAll,
-  children,
-}: {
-  label: string;
-  allCount: number;
-  isAllActive: boolean;
-  onClearAll: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className={styles.filterRow}>
-      <Text variant="caption-2" color="secondary" className={styles.filterLabel}>
-        {label}
-      </Text>
-      <div className={styles.chips}>
-        <Button
-          view={isAllActive ? 'action' : 'outlined'}
-          size="m"
-          onClick={onClearAll}
-        >
-          All ({allCount})
-        </Button>
-        {children}
-      </div>
-    </div>
   );
 }

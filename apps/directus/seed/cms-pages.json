@@ -305,23 +305,22 @@
       "blocks": [
         {
           "type": "header-block",
-          "title": "Nebius for AI Builders",
-          "description": "From training and fine-tuning to production inference at scale. Plus a community of builders shipping real work \u2014 workshops, demos, hackathons, office hours. Get started with $100 of Token Factory or AI Cloud credits.",
+          "title": "Built on Nebius. Run by builders.",
+          "description": "Every event, every workshop, every line of code in the showcase came from someone in the community. See what's coming up, and meet the team behind it.",
           "width": "l",
           "verticalOffset": "l",
           "buttons": [
             {
-              "text": "Start building",
+              "text": "Upcoming events",
               "theme": "action",
               "size": "xl",
-              "url": "/signup"
+              "url": "/events"
             },
             {
-              "text": "Read the docs",
+              "text": "Browse projects",
               "theme": "outlined",
               "size": "xl",
-              "url": "https://docs.nebius.com",
-              "target": "_blank"
+              "url": "/apps"
             }
           ]
         },
@@ -393,19 +392,23 @@
         },
         {
           "type": "header-block",
-          "title": "Built on Nebius. Run by builders.",
-          "description": "Every event, every workshop, every line of code in the showcase came from someone in the community. See what's coming up, and meet the team behind it.",
-          "width": "m",
+          "title": "Nebius for AI Builders",
+          "description": "From training and fine-tuning to production inference at scale. Plus a community of builders shipping real work \u2014 workshops, demos, hackathons, office hours. Get started with $100 of Token Factory or AI Cloud credits.",
+          "width": "l",
+          "verticalOffset": "l",
           "buttons": [
             {
-              "text": "Upcoming events",
+              "text": "Start building",
               "theme": "action",
-              "url": "/events"
+              "size": "xl",
+              "url": "/signup"
             },
             {
-              "text": "Browse projects",
+              "text": "Read the docs",
               "theme": "outlined",
-              "url": "/apps"
+              "size": "xl",
+              "url": "https://docs.nebius.com",
+              "target": "_blank"
             }
           ]
         }

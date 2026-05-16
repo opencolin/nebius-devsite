@@ -47,15 +47,9 @@
   gap: 8px;
   padding: 6px 0;
 
-  & + & {
-    border-top: 1px solid var(--g-color-line-generic);
-    margin-top: 6px;
-    padding-top: 14px;
-  }
-
   @media (min-width: 768px) {
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     gap: 16px;
   }
 }
