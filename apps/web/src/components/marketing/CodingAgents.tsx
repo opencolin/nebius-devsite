@@ -63,9 +63,10 @@ const ENTRIES: Entry[] = [
     url: 'https://docs.tavily.com/documentation/mcp#openai',
   },
   {
-    name: 'VS Code (Copilot Chat)',
-    blurb: 'Use Token Factory as the LLM backend for Copilot Chat in VS Code.',
-    url: 'https://docs.tokenfactory.nebius.com/integrations/coding/vscode',
+    name: 'VS Code (Github Copilot)',
+    blurb:
+      "Hugging Face's VS Code Chat extension — routes Github Copilot through Nebius Token Factory models.",
+    url: 'https://marketplace.visualstudio.com/items?itemName=HuggingFace.huggingface-vscode-chat',
   },
   {
     name: 'Zed',
