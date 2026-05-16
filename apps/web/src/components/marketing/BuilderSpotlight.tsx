@@ -1,14 +1,12 @@
 // BuilderSpotlight — one featured project per month, picked deterministically
 // by `(year*12 + month) % projects.length`. Half cover gradient, half copy
-// with tech-tag pills and an author byline. Click-through goes to
-// /projects/<slug> (route may not yet exist — kept as the original
-// intent).
+// with tech-tag pills and an author byline. Click-through goes to the
+// project's repo (typically GitHub) when present, otherwise the card is
+// non-interactive — `/projects/<slug>` isn't a real route here.
 //
 // Receives the pre-picked project from getStaticProps. If no projects
 // collection has any rows yet, the parent passes null and the section
 // silently renders nothing.
-
-import Link from 'next/link';
 
 import {Label, Text} from '@gravity-ui/uikit';
 
@@ -23,6 +21,9 @@ export interface SpotlightProject {
   builderName: string;
   tags: string[];
   productFocus: string[];
+  // Optional external URL — usually a GitHub repo. When present, the card
+  // wraps in an <a target="_blank">; otherwise the card renders unlinked.
+  repoUrl?: string | null;
 }
 
 interface Props {
@@ -55,7 +56,7 @@ export function BuilderSpotlight({project, monthLabel}: Props) {
           </Text>
         </header>
 
-        <Link href={`/projects/${project.slug}`} className={styles.cardLink}>
+        <CardLink href={project.repoUrl} className={styles.cardLink}>
           <article className={styles.card}>
             <div className={styles.cover}>
               <div className={styles.coverMonth}>
@@ -104,14 +105,37 @@ export function BuilderSpotlight({project, monthLabel}: Props) {
                     @{project.builderHandle}
                   </Text>
                 </div>
-                <span className={styles.readMore}>Read more &rarr;</span>
+                {project.repoUrl ? (
+                  <span className={styles.readMore}>View on GitHub &rarr;</span>
+                ) : null}
               </div>
             </div>
           </article>
-        </Link>
+        </CardLink>
       </div>
     </section>
   );
 }
 
 export default BuilderSpotlight;
+
+// External-or-nothing wrapper. When repoUrl is set we open the repo in
+// a new tab; without a URL the card just renders as-is (no Link, no
+// hover-click affordance). Keeping it inline avoids exporting another
+// component name.
+function CardLink({
+  href,
+  className,
+  children,
+}: {
+  href?: string | null;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  if (!href) return <div className={className}>{children}</div>;
+  return (
+    <a href={href} target="_blank" rel="noreferrer" className={className}>
+      {children}
+    </a>
+  );
+}

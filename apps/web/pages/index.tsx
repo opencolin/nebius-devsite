@@ -22,7 +22,6 @@ import {BuildInPublic} from '@/components/marketing/BuildInPublic';
 import {BuilderSpotlight, type SpotlightProject} from '@/components/marketing/BuilderSpotlight';
 import {Community} from '@/components/marketing/Community';
 import {Contact} from '@/components/marketing/Contact';
-import {DualPitch} from '@/components/marketing/DualPitch';
 import {Products} from '@/components/marketing/Products';
 import {Programs} from '@/components/marketing/Programs';
 import {UseCases} from '@/components/marketing/UseCases';
@@ -147,6 +146,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
             'builder_handle',
             'tags',
             'product_focus',
+            'repo_url',
           ],
           limit: -1,
         }),
@@ -230,6 +230,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
         builderName: project.builder_handle, // No name field on ProjectRow yet
         tags: project.tags ?? [],
         productFocus: project.product_focus ?? [],
+        repoUrl: project.repo_url ?? null,
       }
     : null;
   const monthLabel = `${MONTHS[monthDate.getUTCMonth()]} ${monthDate.getUTCFullYear()}`;
@@ -306,7 +307,6 @@ export default function HomePage({
       <BuilderSpotlight project={monthlyProject} monthLabel={monthLabel} />
       <Community />
       <Programs />
-      <DualPitch />
       <Contact />
       <BuildInPublic />
     </PublicLayout>

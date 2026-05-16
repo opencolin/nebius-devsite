@@ -42,6 +42,10 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
+  // Cards size to their content instead of stretching to the tallest in
+  // the row. Without this, short-blurb cards (Discord, GitHub) showed a
+  // big empty band between the blurb and the CTA.
+  align-items: start;
 
   @media (min-width: 640px) {
     grid-template-columns: repeat(2, 1fr);
@@ -62,7 +66,9 @@
   padding: 24px;
   text-decoration: none;
   color: var(--g-color-text-primary);
-  height: 100%;
+  // height: 100% removed — let each card pick its natural height. Paired
+  // with grid `align-items: start` above so the row no longer stretches
+  // shorter cards down to match the tallest.
   transition: border-color 150ms, box-shadow 150ms;
 
   &:hover {
@@ -91,7 +97,9 @@
 }
 
 .cardBlurb {
-  flex: 1;
+  // flex: 1 removed — that was pushing the CTA to the bottom of a
+  // stretched card. With natural-height cards, the CTA just follows
+  // the blurb directly.
   margin: 0;
 }
 
