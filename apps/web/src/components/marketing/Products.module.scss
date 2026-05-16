@@ -1,0 +1,122 @@
+// Products.module.scss — white-background section with a 4-up product card
+// grid. Highlighted card uses a navy border + lime ring to mark Token
+// Factory as the recommended entry point.
+
+.root {
+  background: var(--g-color-base-background);
+  padding: 80px 0;
+
+  @media (min-width: 1024px) {
+    padding: 112px 0;
+  }
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 640px;
+  margin-bottom: 40px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--g-color-text-hint);
+}
+
+.title {
+  margin: 0;
+}
+
+.body {
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--g-color-base-float);
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: 16px;
+  padding: 24px;
+  transition: border-color 150ms;
+  height: 100%;
+
+  &:hover {
+    border-color: var(--nb-color-private-navyblue-300);
+  }
+}
+
+.cardHighlight {
+  border-color: #052b42;
+  box-shadow: 0 0 0 2px rgba(224, 255, 79, 0.4);
+
+  :global(.g-root_theme_dark) & {
+    border-color: var(--nb-color-highlight);
+  }
+}
+
+.cardTitle {
+  margin: 0;
+}
+
+.cardBlurb {
+  flex: 1;
+  margin: 0;
+}
+
+.cardFooter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-top: 1px solid var(--g-color-line-generic);
+  padding-top: 16px;
+  font-size: 12px;
+}
+
+.linkPrimary {
+  font-weight: 600;
+  color: #052b42;
+  text-decoration: none;
+  text-underline-offset: 4px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  :global(.g-root_theme_dark) & {
+    color: var(--nb-color-highlight);
+  }
+}
+
+.linkSecondary {
+  color: var(--g-color-text-secondary);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--g-color-text-primary);
+  }
+}

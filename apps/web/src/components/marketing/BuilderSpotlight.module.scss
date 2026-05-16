@@ -1,0 +1,185 @@
+// BuilderSpotlight.module.scss — half-cover, half-copy layout for the
+// monthly featured build. Cover is a gradient (no project asset files
+// available in this repo).
+
+.root {
+  background: var(--g-color-base-background);
+  padding: 80px 0;
+
+  @media (min-width: 1024px) {
+    padding: 112px 0;
+  }
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 640px;
+  margin-bottom: 40px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--g-color-text-hint);
+}
+
+.title {
+  margin: 0;
+}
+
+.body {
+  margin: 0;
+}
+
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--g-color-base-float);
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: 16px;
+  transition: border-color 150ms, box-shadow 150ms;
+
+  &:hover {
+    border-color: var(--nb-color-private-navyblue-300);
+    box-shadow: 0 14px 36px -12px rgba(5, 43, 66, 0.18);
+
+    .bodyTitle {
+      color: #052b42;
+    }
+  }
+
+  :global(.g-root_theme_dark) & {
+    &:hover .bodyTitle {
+      color: var(--nb-color-highlight);
+    }
+  }
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+}
+
+.cover {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, #052b42 0%, #1a4566 60%, #e0ff4f 130%);
+  width: 100%;
+
+  @media (min-width: 768px) {
+    aspect-ratio: auto;
+    width: 50%;
+    min-height: 360px;
+  }
+}
+
+.coverMonth {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  display: none;
+
+  @media (min-width: 768px) {
+    display: block;
+  }
+}
+
+.coverFocus {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+}
+
+.body2 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 32px;
+}
+
+.bodyEyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--g-color-text-hint);
+}
+
+.bodyTitle {
+  margin: 0;
+  transition: color 150ms;
+}
+
+.bodyDescription {
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.author {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--g-color-line-generic);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #052b42;
+  color: var(--nb-color-highlight);
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.authorMeta {
+  flex: 1;
+  min-width: 0;
+}
+
+.authorName {
+  margin: 0;
+  font-weight: 600;
+}
+
+.readMore {
+  font-size: 13px;
+  font-weight: 600;
+  color: #052b42;
+  background: var(--nb-color-highlight);
+  padding: 8px 16px;
+  border-radius: 999px;
+
+  :global(.g-root_theme_dark) & {
+    color: #052b42;
+  }
+}

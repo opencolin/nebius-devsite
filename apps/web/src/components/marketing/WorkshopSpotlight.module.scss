@@ -1,0 +1,193 @@
+// WorkshopSpotlight.module.scss — featured workshop tile + 2-up related row.
+// Cover is a CSS gradient (no <Image> — the upstream uses asset files we
+// don't have in this repo).
+
+.root {
+  background: var(--g-color-base-background);
+  padding: 80px 0;
+
+  @media (min-width: 1024px) {
+    padding: 112px 0;
+  }
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 40px;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+
+.headLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 640px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--g-color-text-hint);
+}
+
+.title {
+  margin: 0;
+}
+
+.body {
+  margin: 0;
+}
+
+.featuredLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.featured {
+  display: flex;
+  flex-direction: column;
+  background: var(--g-color-base-float);
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 150ms, box-shadow 150ms;
+
+  &:hover {
+    border-color: var(--nb-color-private-navyblue-300);
+    box-shadow: 0 14px 36px -12px rgba(5, 43, 66, 0.18);
+  }
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+}
+
+.cover {
+  position: relative;
+  background: linear-gradient(135deg, #052b42 0%, #1a4566 50%, #e0ff4f 200%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coverFeatured {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    width: 60%;
+    min-height: 320px;
+    aspect-ratio: auto;
+  }
+}
+
+.coverChips {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  gap: 6px;
+}
+
+.playMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: #052b42;
+  font-size: 24px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+}
+
+.featuredBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 32px;
+}
+
+.featuredTitle {
+  margin: 0;
+}
+
+.featuredBlurb {
+  margin: 0;
+}
+
+.featuredMeta {
+  margin-top: auto;
+}
+
+.relatedGrid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.relatedLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.relatedCard {
+  display: flex;
+  flex-direction: column;
+  background: var(--g-color-base-float);
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: 16px;
+  overflow: hidden;
+  height: 100%;
+  transition: border-color 150ms, box-shadow 150ms;
+
+  &:hover {
+    border-color: var(--nb-color-private-navyblue-300);
+    box-shadow: 0 10px 30px -10px rgba(5, 43, 66, 0.12);
+  }
+}
+
+.coverRelated {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 12px;
+}
+
+.relatedBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+}
+
+.relatedTitle {
+  margin: 0;
+}
+
+.relatedBlurb {
+  margin: 0;
+}

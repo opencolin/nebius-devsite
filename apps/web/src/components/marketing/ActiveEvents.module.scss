@@ -1,0 +1,115 @@
+// ActiveEvents.module.scss — tinted (bg=tint) variant of a marketing section.
+// Card hover lifts the border and stages the meta row to top.
+
+.root {
+  background: var(--nb-color-private-navyblue-50-solid);
+  padding: 80px 0;
+
+  @media (min-width: 1024px) {
+    padding: 112px 0;
+  }
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 40px;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+
+.headLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 640px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--g-color-text-hint);
+}
+
+.title {
+  margin: 0;
+}
+
+.body {
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--g-color-base-float);
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: 16px;
+  padding: 24px;
+  transition: border-color 150ms;
+
+  &:hover {
+    border-color: var(--nb-color-private-navyblue-300);
+  }
+}
+
+.cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cardTitle {
+  margin: 0;
+}
+
+.cardWhere {
+  margin: 0;
+}
+
+.cardWhen {
+  margin: 0;
+}
+
+.cardLink {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--g-color-line-generic);
+  font-size: 13px;
+  font-weight: 600;
+  color: #052b42;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  :global(.g-root_theme_dark) & {
+    color: var(--nb-color-highlight);
+  }
+}

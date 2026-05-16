@@ -1,22 +1,237 @@
-// Placeholder home page — stays valid (avoids `/` 404'ing) while the new
-// homepage composition lands in follow-up commits. Once the marketing
-// sections (Hero, ActiveEvents, Products, UseCases, ...) are ported, this
-// file becomes their composition shell.
+// Marketing homepage — composes the 14 marketing sections ported from
+// opencolin/nebius-builders-3 into a single Pages Router page.
 //
-// In the interim it just renders the navigation chrome + a short note +
-// links to the routes that ARE finished. The CMS-driven landing page that
-// used to live here is now at /signup.
+// Data strategy:
+//   - Events, library entries, and the monthly builder project come from
+//     Directus via getStaticProps (revalidated every 60s).
+//   - Pure marketing metrics (active builders, events run, sign-ups
+//     attributed) are hard-coded here until a programs collection lands.
+//
+// The map-hero + CMS body that used to live at `/` is now at /signup.
 
+import {readItems} from '@directus/sdk';
+import type {GetStaticProps, InferGetStaticPropsType} from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
-
-import {Button, Text} from '@gravity-ui/uikit';
 
 import {PublicLayout} from '@/components/chrome/PublicLayout';
+import {ActiveEvents, type MarketingEvent} from '@/components/marketing/ActiveEvents';
+import {BuildInPublic} from '@/components/marketing/BuildInPublic';
+import {BuilderSpotlight, type SpotlightProject} from '@/components/marketing/BuilderSpotlight';
+import {Community} from '@/components/marketing/Community';
+import {Contact} from '@/components/marketing/Contact';
+import {DualPitch} from '@/components/marketing/DualPitch';
+import {Hero} from '@/components/marketing/Hero';
+import {PartnerWall} from '@/components/marketing/PartnerWall';
+import {Products} from '@/components/marketing/Products';
+import {Programs} from '@/components/marketing/Programs';
+import {UseCases} from '@/components/marketing/UseCases';
+import {WorkshopSpotlight, type LibrarySpotlightEntry} from '@/components/marketing/WorkshopSpotlight';
+import {directusServer} from '@/lib/directus';
+import type {BuildersEventRow, LibraryArticleRow, ProjectRow} from '@/lib/types';
 
-import page from '@/styles/page.module.scss';
+// TODO: replace these hard-codes with a programs/metrics collection in
+// Directus once one exists. Numbers mirror nb3 /lib/network for parity.
+const PROGRAM_METRICS = {
+  activeBuilders: 2_847,
+  eventsRun: 142,
+  signupsAttributed: 5_320,
+};
 
-export default function HomePage() {
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+interface Props {
+  events: MarketingEvent[];
+  liveEventCount: number;
+  libraryCount: number;
+  featuredWorkshop: LibrarySpotlightEntry | null;
+  relatedWorkshops: LibrarySpotlightEntry[];
+  monthlyProject: SpotlightProject | null;
+  monthLabel: string;
+}
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const directus = directusServer();
+
+  // Fetch Directus collections in parallel. Each is wrapped in a try/catch
+  // so a dev environment without all collections seeded still renders the
+  // page (showing the empty-state branches).
+  const safeRequest = async <T,>(p: Promise<T[]>): Promise<T[]> => {
+    try {
+      return await p;
+    } catch (err) {
+      console.warn('[homepage] directus fetch failed:', err);
+      return [];
+    }
+  };
+
+  const [eventsRaw, libraryRaw, projectsRaw] = await Promise.all([
+    safeRequest(
+      directus.request(
+        readItems('events', {
+          filter: {status: {_eq: 'PUBLISHED'}},
+          sort: ['starts_at'],
+          fields: [
+            'id',
+            'title',
+            'format',
+            'starts_at',
+            'ends_at',
+            'city',
+            'country',
+            'is_online',
+            'product_focus',
+            'is_official',
+            'luma_url',
+          ],
+          limit: -1,
+        }),
+      ) as Promise<BuildersEventRow[]>,
+    ),
+    safeRequest(
+      directus.request(
+        readItems('library_articles', {
+          filter: {status: {_eq: 'published'}},
+          sort: ['-is_official', 'title'],
+          fields: [
+            'slug',
+            'type',
+            'title',
+            'blurb',
+            'level',
+            'duration_min',
+            'product_focus',
+            'is_official',
+          ],
+          limit: -1,
+        }),
+      ) as Promise<LibraryArticleRow[]>,
+    ),
+    safeRequest(
+      directus.request(
+        readItems('projects', {
+          sort: ['-featured', 'title'],
+          fields: [
+            'slug',
+            'title',
+            'tagline',
+            'description',
+            'builder_handle',
+            'tags',
+            'product_focus',
+          ],
+          limit: -1,
+        }),
+      ) as Promise<ProjectRow[]>,
+    ),
+  ]);
+
+  // Live events: now() inside [starts_at, ends_at]. Sorted-by-start_at
+  // already; just count the live ones for the hero pill.
+  const now = Date.now();
+  const liveEventCount = eventsRaw.filter((e) => {
+    const start = +new Date(e.starts_at);
+    const end = +new Date(e.ends_at);
+    return now >= start && now <= end;
+  }).length;
+
+  // Future-ish events: starts in the future, or already started and not yet
+  // ended. ActiveEvents takes the first 3.
+  const upcoming = eventsRaw.filter((e) => {
+    const end = +new Date(e.ends_at);
+    return end >= now;
+  });
+  const events: MarketingEvent[] = upcoming.slice(0, 3).map((e) => ({
+    id: e.id,
+    title: e.title,
+    format: e.format,
+    starts_at: e.starts_at,
+    city: e.city,
+    country: e.country,
+    is_online: e.is_online,
+    product_focus: e.product_focus ?? [],
+    is_official: e.is_official,
+    luma_url: e.luma_url ?? null,
+  }));
+
+  // Workshop spotlight: prefer the canonical OpenClaw entry by slug, fall
+  // back to the first workshop. The "related" rail picks the next two
+  // WORKSHOP-type entries.
+  const toLibrary = (l: LibraryArticleRow): LibrarySpotlightEntry => ({
+    slug: l.slug,
+    type: l.type,
+    title: l.title,
+    blurb: l.blurb,
+    level: l.level,
+    duration_min: l.duration_min ?? null,
+    product_focus: l.product_focus ?? [],
+    is_official: l.is_official,
+  });
+
+  const featuredRaw =
+    libraryRaw.find((l) => l.slug === 'running-openclaw-on-nebius') ?? libraryRaw[0];
+  const featuredWorkshop = featuredRaw ? toLibrary(featuredRaw) : null;
+  const relatedWorkshops = libraryRaw
+    .filter((l) => l.slug !== featuredRaw?.slug && l.type === 'WORKSHOP')
+    .slice(0, 2)
+    .map(toLibrary);
+
+  // Monthly project: same picker as upstream, cycles on the 1st of each
+  // month UTC. If projects collection is empty, the BuilderSpotlight
+  // section renders nothing.
+  const monthDate = new Date();
+  const monthIndex = monthDate.getUTCFullYear() * 12 + monthDate.getUTCMonth();
+  const project =
+    projectsRaw.length > 0 ? projectsRaw[monthIndex % projectsRaw.length] : null;
+  const monthlyProject: SpotlightProject | null = project
+    ? {
+        slug: project.slug,
+        title: project.title,
+        tagline: project.tagline,
+        description: project.description,
+        builderHandle: project.builder_handle,
+        builderName: project.builder_handle, // No name field on ProjectRow yet
+        tags: project.tags ?? [],
+        productFocus: project.product_focus ?? [],
+      }
+    : null;
+  const monthLabel = `${MONTHS[monthDate.getUTCMonth()]} ${monthDate.getUTCFullYear()}`;
+
+  return {
+    props: {
+      events,
+      liveEventCount,
+      libraryCount: libraryRaw.length,
+      featuredWorkshop,
+      relatedWorkshops,
+      monthlyProject,
+      monthLabel,
+    },
+    revalidate: 60,
+  };
+};
+
+export default function HomePage({
+  events,
+  liveEventCount,
+  libraryCount,
+  featuredWorkshop,
+  relatedWorkshops,
+  monthlyProject,
+  monthLabel,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <PublicLayout>
       <Head>
@@ -26,33 +241,24 @@ export default function HomePage() {
           content="From training and fine-tuning to production inference at scale. Plus a community of builders shipping real work."
         />
       </Head>
-      <main className={page.container} style={{paddingTop: 80, paddingBottom: 80}}>
-        <Text variant="display-2" as="h1">
-          Nebius for AI Builders
-        </Text>
-        <Text variant="body-2" color="secondary" as="p" style={{maxWidth: 640, marginTop: 16}}>
-          New homepage composition lands in follow-up commits — Hero, events,
-          products, use-cases, builder spotlight, programs, partner wall, and
-          contact. Until then, head to one of the existing routes:
-        </Text>
-        <div style={{display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 24}}>
-          <Button view="action" size="l" href="/events">
-            Events
-          </Button>
-          <Button view="outlined" size="l" href="/library">
-            Library
-          </Button>
-          <Button view="outlined" size="l" href="/office-hours">
-            Office hours
-          </Button>
-          <Button view="outlined" size="l" href="/team">
-            Team
-          </Button>
-          <Button view="flat" size="l" href="/signup">
-            Sign up
-          </Button>
-        </div>
-      </main>
+      <Hero
+        liveEventCount={liveEventCount}
+        activeBuilders={PROGRAM_METRICS.activeBuilders}
+        eventsRun={PROGRAM_METRICS.eventsRun}
+        libraryCount={libraryCount}
+        signupsAttributed={PROGRAM_METRICS.signupsAttributed}
+      />
+      <ActiveEvents events={events} />
+      <Products />
+      <UseCases />
+      <WorkshopSpotlight featured={featuredWorkshop} related={relatedWorkshops} />
+      <BuilderSpotlight project={monthlyProject} monthLabel={monthLabel} />
+      <Community />
+      <Programs />
+      <DualPitch />
+      <PartnerWall />
+      <Contact />
+      <BuildInPublic />
     </PublicLayout>
   );
 }
