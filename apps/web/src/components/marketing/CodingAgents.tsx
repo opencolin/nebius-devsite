@@ -62,13 +62,20 @@ const ENTRIES: Entry[] = [
       {label: 'View docs', url: 'https://docs.tavily.com/documentation/agent-skills'},
     ],
   },
+  // OpenAI Codex — third combined card alongside Claude Code + Cursor.
+  // Points at the open-source codex-nebius config repo plus the Tavily
+  // MCP setup for the OpenAI Responses + Agents SDK.
   {
-    name: 'Tavily MCP for OpenAI',
+    name: 'OpenAI Codex',
     blurb:
-      'OpenAI Responses + Agents SDK setup. Hosted Tavily tools, ready to call.',
+      'Configure OpenAI Codex to use Nebius coding models, and add the Tavily MCP server for live web search inside your terminal.',
     links: [
       {
-        label: 'View docs',
+        label: 'codex-nebius',
+        url: 'https://github.com/opencolin/codex-nebius',
+      },
+      {
+        label: 'Tavily MCP',
         url: 'https://docs.tavily.com/documentation/mcp#openai',
       },
     ],
@@ -81,16 +88,6 @@ const ENTRIES: Entry[] = [
       {
         label: 'View extension',
         url: 'https://marketplace.visualstudio.com/items?itemName=HuggingFace.huggingface-vscode-chat',
-      },
-    ],
-  },
-  {
-    name: 'Zed',
-    blurb: "Configure Zed's inline assistant against Token Factory models.",
-    links: [
-      {
-        label: 'View docs',
-        url: 'https://docs.tokenfactory.nebius.com/integrations/coding/zed',
       },
     ],
   },
@@ -122,6 +119,17 @@ const ENTRIES: Entry[] = [
       {
         label: 'View docs',
         url: 'https://docs.tokenfactory.nebius.com/integrations/coding/kilo',
+      },
+    ],
+  },
+  // Zed — last per latest sort.
+  {
+    name: 'Zed',
+    blurb: "Configure Zed's inline assistant against Token Factory models.",
+    links: [
+      {
+        label: 'View docs',
+        url: 'https://docs.tokenfactory.nebius.com/integrations/coding/zed',
       },
     ],
   },
