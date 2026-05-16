@@ -63,7 +63,9 @@ const ENTRIES: Entry[] = [
     ],
   },
   // OpenAI Codex — third combined card alongside Claude Code + Cursor.
-  // Points at the open-source codex-nebius config repo plus the Tavily
+  // First link points at the open-source codex-nebius config repo
+  // (label reads "Nebius models" since that's what the link configures
+  // Codex to use; the repo name is incidental). Second is the Tavily
   // MCP setup for the OpenAI Responses + Agents SDK.
   {
     name: 'OpenAI Codex',
@@ -71,7 +73,7 @@ const ENTRIES: Entry[] = [
       'Configure OpenAI Codex to use Nebius coding models, and add the Tavily MCP server for live web search inside your terminal.',
     links: [
       {
-        label: 'codex-nebius',
+        label: 'Nebius models',
         url: 'https://github.com/opencolin/codex-nebius',
       },
       {
