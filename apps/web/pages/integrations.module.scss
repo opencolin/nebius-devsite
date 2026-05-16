@@ -1,35 +1,6 @@
-// /integrations page (route renamed from /integrations) — slim hero,
-// sticky filter bar with one chip row, then a 3-up card grid that
-// mirrors the homepage EcosystemPartners section so the visual rhythm
-// carries between surfaces.
-
-.hero {
-  background: var(--g-color-base-background);
-  padding: 64px 0 48px;
-  border-bottom: 1px solid var(--g-color-line-generic);
-
-  @media (min-width: 1024px) {
-    padding: 88px 0 64px;
-  }
-}
-
-.heroEyebrow {
-  display: block;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 600;
-  color: var(--g-color-text-hint);
-  margin-bottom: 12px;
-}
-
-.heroTitle {
-  margin: 0 0 16px;
-}
-
-.heroLede {
-  margin: 0;
-  max-width: 60ch;
-}
+// /integrations page — dark R3F membrane hero (see HeroSection.tsx) followed
+// by a sticky filter strip and a 3-up card grid that mirrors the homepage
+// EcosystemPartners section so the visual rhythm carries between surfaces.
 
 // Filter strip — sticks under the nav so the chips follow the user
 // while they scroll long result sets. Same pattern as /events.

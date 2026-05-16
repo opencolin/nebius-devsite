@@ -1,0 +1,90 @@
+// HeroSection — dark canvas hero on /integrations. The rest of the page
+// (sticky filters + grid) keeps its existing light styling; the contrast
+// is intentional: the hero is a self-contained "membrane" experience that
+// hands off to the standard light surfaces below.
+
+// `isolation: isolate` creates a fresh stacking context. Without it the
+// canvas's z-index: -10 would render behind the entire page, including the
+// PublicNav above. With it, the negative z-index stays scoped to this
+// section: under .mask and .copy but above .root's background fill.
+.root {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #06060c;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 96px 0 88px;
+  // Reserve enough height that the membrane has room to breathe on mobile
+  // too — without min-height the section collapses to whatever the copy
+  // measures, which can be tiny on a phone.
+  min-height: 480px;
+
+  @media (max-width: 768px) {
+    padding: 64px 0 56px;
+    min-height: 420px;
+  }
+}
+
+// Left-to-right legibility mask. Solid #06060c on the left (where the copy
+// sits) so the title pops; fully transparent through the middle where the
+// membrane's bright lobes breathe; then a softer right-edge wash to keep
+// the canvas from bleeding into the sticky filter strip below.
+//
+// Translated from the spec's Tailwind:
+//   bg-gradient-to-r  from-[#06060c]  via-transparent  to-[#06060c]/40
+.mask {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: linear-gradient(
+    to right,
+    #06060c 0%,
+    rgba(6, 6, 12, 0) 50%,
+    rgba(6, 6, 12, 0.4) 100%
+  );
+}
+
+.copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 720px;
+}
+
+// Hard-coded colors instead of Gravity tokens — the section forces a dark
+// surface regardless of the page theme, so theme-aware tokens would drift.
+.eyebrow {
+  margin: 0;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  font-size: 12px;
+  // Soft lavender — matches the halo's #c8b8ff so the eyebrow feels like
+  // a chip of the same atmospheric palette.
+  color: #c8b8ff;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(40px, 5.5vw, 64px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  // Drop shadow keeps the title legible even when a bright fresnel rim
+  // briefly lands behind it during a slow rotation.
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
+}
+
+.lede {
+  margin: 0;
+  max-width: 60ch;
+  font-size: 17px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.78);
+}

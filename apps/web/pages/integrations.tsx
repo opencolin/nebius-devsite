@@ -15,6 +15,7 @@ import {useMemo, useState} from 'react';
 import {Button, Label, Text} from '@gravity-ui/uikit';
 
 import {PublicLayout} from '@/components/chrome/PublicLayout';
+import {HeroSection} from '@/components/integrations/HeroSection';
 import {
   CATEGORY_LABEL,
   ECOSYSTEM_PARTNERS,
@@ -100,20 +101,14 @@ export default function IntegrationsPage({
         />
       </Head>
 
-      <section className={styles.hero}>
-        <div className={page.container}>
-          <Text variant="caption-2" className={styles.heroEyebrow}>
-            Integrations
-          </Text>
-          <Text variant="display-2" as="h1" className={styles.heroTitle}>
-            Every integration. One page.
-          </Text>
-          <Text variant="body-2" color="secondary" className={styles.heroLede}>
-            Frameworks, gateways, orchestrators, and observability tools that
-            integrate with Nebius products. Pick a filter to narrow it down.
-          </Text>
-        </div>
-      </section>
+      {/* Dark hero with the R3F membrane scene behind the copy. Dynamic-
+          imported under the hood so neither three nor R3F ships on SSR
+          or to any other page's bundle. */}
+      <HeroSection
+        eyebrow="Integrations"
+        title="Every integration. One page."
+        lede="Frameworks, gateways, orchestrators, and observability tools that integrate with Nebius products. Pick a filter to narrow it down."
+      />
 
       <div className={styles.filters}>
         <div className={page.container}>

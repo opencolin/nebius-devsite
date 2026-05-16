@@ -1,0 +1,16 @@
+// Hero3D — full-bleed canvas wrapper. The parent HeroSection establishes a
+// stacking context (`isolation: isolate`), so this z-index: -10 keeps the
+// canvas behind the mask + copy but scoped inside the hero section. Without
+// the isolation it'd fall behind the entire page.
+//
+// Translated from the spec's Tailwind utilities:
+//   absolute  inset-0     -z-10
+//   ↓        ↓           ↓
+//   position: absolute; inset: 0; z-index: -10;
+
+.canvasWrap {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  background: #06060c;
+}
