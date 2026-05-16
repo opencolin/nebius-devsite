@@ -87,9 +87,6 @@ export default function SignupPage({
           <Text variant="body-2" color="secondary" as="p" className={styles.heroLede}>
             $100 in Token Factory and AI Cloud credits when you sign up.
             Workshops, hackathons, and office hours run by the community.
-            Tier up from <strong>Builder</strong> &rarr;{' '}
-            <strong>Contributor</strong> &rarr; <strong>Ambassador</strong> as
-            you ship real work.
           </Text>
           <ul className={styles.proof}>
             <li>
