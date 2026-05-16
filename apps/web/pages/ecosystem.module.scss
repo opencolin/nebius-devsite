@@ -1,72 +1,94 @@
-// EcosystemPartners.module.scss — 3-up grid of partner docs cards.
-// Visual rhythm mirrors the Community section (white-ish cards on the
-// page background, lime CTA, hover lift) so consecutive sections feel
-// like a family.
+// /ecosystem page — slim hero, sticky filter bar with two chip rows,
+// then a 3-up card grid that mirrors the homepage EcosystemPartners
+// section so the visual rhythm carries between surfaces.
 
-.root {
+.hero {
   background: var(--g-color-base-background);
-  padding: 80px 0;
+  padding: 64px 0 48px;
+  border-bottom: 1px solid var(--g-color-line-generic);
 
   @media (min-width: 1024px) {
-    padding: 112px 0;
+    padding: 88px 0 64px;
   }
 }
 
-.inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.head {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-width: 640px;
-  margin-bottom: 40px;
-}
-
-.eyebrow {
+.heroEyebrow {
+  display: block;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-weight: 600;
   color: var(--g-color-text-hint);
+  margin-bottom: 12px;
 }
 
-.title {
+.heroTitle {
+  margin: 0 0 16px;
+}
+
+.heroLede {
   margin: 0;
+  max-width: 60ch;
 }
 
-.body {
-  margin: 0;
+// Filter strip — sticks under the nav so the chips follow the user
+// while they scroll long result sets. Same pattern as /events.
+.filters {
+  position: sticky;
+  top: 52px; // matches PublicNav height (12 + 28 + 12)
+  z-index: 10;
+  background: var(--g-color-base-background);
+  border-bottom: 1px solid var(--g-color-line-generic);
+  padding: 16px 0 12px;
 }
 
-// Inline "See all and filter →" link in the section lede so the deep
-// link to /ecosystem is one tap away from the marketing copy.
-.headLink {
-  color: var(--g-color-text-link);
-  text-decoration: none;
-  white-space: nowrap;
+.filterRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 6px 0;
 
-  &:hover {
-    text-decoration: underline;
+  & + & {
+    border-top: 1px solid var(--g-color-line-generic);
+    margin-top: 6px;
+    padding-top: 14px;
+  }
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
   }
 }
 
-// Product chips beneath the blurb — visually distinct from the category
-// pill at the top of the card.
-.productRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
+.filterLabel {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  min-width: 80px;
+  flex-shrink: 0;
 }
 
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.resultCount {
+  margin-bottom: 16px;
+}
+
+.empty {
+  display: block;
+  padding: 48px 0;
+  text-align: center;
+}
+
+// Card grid — identical shape to the homepage ecosystem section so the
+// transition from / → /ecosystem feels like the same component zoomed in.
 .grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
-  // Natural-height cards — same call as Community. Short blurbs shouldn't
-  // get padded out to match the tallest card in the row.
   align-items: start;
 
   @media (min-width: 640px) {
@@ -118,6 +140,12 @@
 
 .cardBlurb {
   margin: 0;
+}
+
+.productRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
 .cardCta {

@@ -1,200 +1,22 @@
-// EcosystemPartners — replaces the old PartnerWall. Cards link straight to
-// the Nebius docs page that shows how to use Nebius WITH each partner
-// (huggingface integrations, langchain Token Factory integration, etc).
-// Each URL was fetched + 200-confirmed during the research pass —
-// rather than fabricating logo assets we don't have rights to, this
-// section is name + one-liner + category + "View docs →".
+// EcosystemPartners — homepage marketing section. Shows the full partner
+// roster as a 3-up grid of cards. Data lives in `@/lib/ecosystem-partners`
+// so the /ecosystem filter page can share it.
 //
-// Partner list lives inline; once a `partners` collection lands in Directus
-// the array below moves there and the component takes a `partners` prop.
+// Each card is a docs link, opening in a new tab. Category pill above the
+// title; product pills below the blurb so visitors can see which Nebius
+// product(s) the integration targets at a glance.
+
+import Link from 'next/link';
 
 import {Label, Text} from '@gravity-ui/uikit';
 
+import {
+  CATEGORY_LABEL,
+  ECOSYSTEM_PARTNERS,
+  PRODUCT_LABEL,
+} from '@/lib/ecosystem-partners';
+
 import styles from './EcosystemPartners.module.scss';
-
-type Category =
-  | 'inference'
-  | 'router'
-  | 'agents'
-  | 'training'
-  | 'orchestration'
-  | 'mlops'
-  | 'observability'
-  | 'iac';
-
-interface Partner {
-  name: string;
-  blurb: string;
-  docsUrl: string;
-  category: Category;
-}
-
-// All 15 entries 200-verified against docs.nebius.com /
-// docs.tokenfactory.nebius.com / docs.anyscale.com / nebius.com/blog.
-// Sorted by category so the eyebrow pills cluster visually even though
-// the grid is one continuous flow.
-const PARTNERS: Partner[] = [
-  // Inference
-  {
-    name: 'Hugging Face',
-    blurb: 'Open-source models and datasets via inference API.',
-    docsUrl: 'https://docs.nebius.com/studio/inference/integrations/huggingface',
-    category: 'inference',
-  },
-  {
-    name: 'NVIDIA NIM',
-    blurb: 'Self-hosted GPU inference microservices, turnkey.',
-    docsUrl: 'https://docs.nebius.com/applications/standalone/nvidia-nim',
-    category: 'inference',
-  },
-  {
-    name: 'AISuite',
-    blurb: 'Multi-provider LLM router with a unified Python API.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api/aisuite',
-    category: 'inference',
-  },
-  // Routers / gateways
-  {
-    name: 'LiteLLM',
-    blurb: 'Unified LLM gateway routing to Nebius endpoints.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api/litellm',
-    category: 'router',
-  },
-  {
-    name: 'OpenRouter',
-    blurb: 'OpenRouter exposes Nebius models through its unified API.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api-routers/openrouter',
-    category: 'router',
-  },
-  {
-    name: 'Portkey',
-    blurb: 'LLM gateway with caching, retries, and budget guardrails.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api-routers/portkey',
-    category: 'router',
-  },
-  // Agents
-  {
-    name: 'LangChain',
-    blurb: 'Chat models, embeddings, retrievers via langchain-nebius.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/frameworks/langchain',
-    category: 'agents',
-  },
-  {
-    name: 'LlamaIndex',
-    blurb: 'RAG framework integration for Nebius inference.',
-    docsUrl: 'https://docs.nebius.com/studio/inference/integrations/llamaindex',
-    category: 'agents',
-  },
-  {
-    name: 'CrewAI',
-    blurb: 'Open-source agentic framework on Token Factory models.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/agents/crewai',
-    category: 'agents',
-  },
-  {
-    name: 'Agno',
-    blurb: 'Lightweight multi-modal agent framework.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/agents/agno',
-    category: 'agents',
-  },
-  {
-    name: 'Google ADK',
-    blurb: "Google's Agent Development Kit, wired to Nebius models.",
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/agents/google-adk',
-    category: 'agents',
-  },
-  {
-    name: 'Pydantic AI',
-    blurb: 'Type-safe agent framework with Pydantic validation.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/agents/pydantic',
-    category: 'agents',
-  },
-  {
-    name: 'AWS Strands',
-    blurb: "Amazon's agent SDK, model-agnostic and Nebius-ready.",
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/agents/strands',
-    category: 'agents',
-  },
-  // Orchestration
-  {
-    name: 'Anyscale',
-    blurb:
-      'Scale AI workloads with Anyscale deployed on Managed Kubernetes.',
-    docsUrl: 'https://docs.anyscale.com/clouds/kubernetes/nebius',
-    category: 'orchestration',
-  },
-  {
-    name: 'dstack',
-    blurb: 'Install dstack and orchestrate AI workloads end-to-end.',
-    docsUrl: 'https://docs.nebius.com/3p-integrations/dstack',
-    category: 'orchestration',
-  },
-  {
-    name: 'Run:ai',
-    blurb:
-      'Optimize GPU resources for ML/AI workloads on Managed Kubernetes.',
-    docsUrl: 'https://docs.nebius.com/3p-integrations/run-ai',
-    category: 'orchestration',
-  },
-  {
-    name: 'SkyPilot',
-    blurb: 'Run, manage and scale AI workloads with SkyPilot.',
-    docsUrl: 'https://docs.nebius.com/3p-integrations/skypilot',
-    category: 'orchestration',
-  },
-  {
-    name: 'Outerbounds (Metaflow)',
-    blurb: 'Production-grade ML pipelines via the Outerbounds partnership.',
-    docsUrl:
-      'https://nebius.com/blog/posts/nebius-outerbounds-strategic-technology-partnership-integration',
-    category: 'orchestration',
-  },
-  // Training
-  {
-    name: 'MPIrun',
-    blurb: 'Configure a Compute GPU cluster and run NCCL tests with MPIrun.',
-    docsUrl: 'https://docs.nebius.com/3p-integrations/mpirun',
-    category: 'training',
-  },
-  // MLOps
-  {
-    name: 'MLflow',
-    blurb: 'Managed experiment tracking and model registry.',
-    docsUrl: 'https://docs.nebius.com/mlflow',
-    category: 'mlops',
-  },
-  // Observability
-  {
-    name: 'Helicone',
-    blurb: 'LLM observability: traces, costs, prompts, and evals.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/observability/helicone',
-    category: 'observability',
-  },
-  // IaC
-  {
-    name: 'Terraform',
-    blurb: 'Official Nebius provider for IaC resource management.',
-    docsUrl: 'https://docs.nebius.com/terraform-provider',
-    category: 'iac',
-  },
-  {
-    name: 'Pulumi',
-    blurb: 'Manage Nebius resources from Pulumi via the Terraform bridge.',
-    docsUrl: 'https://docs.nebius.com/terraform-provider/pulumi',
-    category: 'iac',
-  },
-];
-
-const CATEGORY_LABEL: Record<Category, string> = {
-  inference: 'Inference',
-  router: 'Gateway',
-  agents: 'Agents',
-  training: 'Training',
-  orchestration: 'Orchestration',
-  mlops: 'MLOps',
-  observability: 'Observability',
-  iac: 'IaC',
-};
 
 export function EcosystemPartners() {
   return (
@@ -210,12 +32,15 @@ export function EcosystemPartners() {
           <Text variant="body-2" color="secondary" className={styles.body}>
             First-party integration docs for the frameworks, gateways, and
             orchestrators we&apos;ve tested end-to-end. Each card links to the
-            Nebius doc page for that partner.
+            Nebius doc page for that partner.{' '}
+            <Link href="/ecosystem" className={styles.headLink}>
+              See all and filter &rarr;
+            </Link>
           </Text>
         </header>
 
         <div className={styles.grid}>
-          {PARTNERS.map((p) => (
+          {ECOSYSTEM_PARTNERS.map((p) => (
             <a
               key={p.name}
               href={p.docsUrl}
@@ -232,6 +57,13 @@ export function EcosystemPartners() {
               <Text variant="body-2" color="secondary" className={styles.cardBlurb}>
                 {p.blurb}
               </Text>
+              <div className={styles.productRow}>
+                {p.products.map((prod) => (
+                  <Label key={prod} theme="info" size="xs">
+                    {PRODUCT_LABEL[prod]}
+                  </Label>
+                ))}
+              </div>
               <span className={styles.cardCta}>View docs &rarr;</span>
             </a>
           ))}

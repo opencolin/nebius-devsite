@@ -26,6 +26,7 @@ const NAV: Array<{href: string; label: string}> = [
   {href: '/library', label: 'Library'},
   {href: '/apps', label: 'Apps'},
   {href: '/office-hours', label: 'Office Hours'},
+  {href: '/ecosystem', label: 'Ecosystem'},
 ];
 
 export function PublicNav() {
