@@ -34,13 +34,6 @@ const CARDS: CommunityCard[] = [
     href: '/events',
   },
   {
-    title: 'Builder Hours',
-    blurb:
-      'Regular office hours with the Nebius Builders team — Dev Advocates and DevRel engineers. Debug, tune performance, and get unblocked fast.',
-    cta: 'View schedule',
-    href: '/office-hours',
-  },
-  {
     title: 'GitHub',
     blurb:
       'Examples, templates, and reference architectures to copy-paste into your stack.',
@@ -55,11 +48,18 @@ const CARDS: CommunityCard[] = [
     href: 'https://www.youtube.com/@nebiusofficial/videos',
   },
   {
-    title: 'The Library',
+    title: 'X / Twitter',
     blurb:
-      'Workshops, videos, and example repos curated by Nebius DevRel and the community. Hands-on, ready to run.',
-    cta: 'Browse library',
-    href: '/library',
+      'Daily updates, release threads, and the occasional GPU benchmark from @nebiusai.',
+    cta: 'Follow @nebiusai',
+    href: 'https://x.com/nebiusai',
+  },
+  {
+    title: 'LinkedIn',
+    blurb:
+      'Company announcements, partnerships, and team posts. Good follow if your stakeholders live here.',
+    cta: 'Follow on LinkedIn',
+    href: 'https://www.linkedin.com/company/nebius',
   },
 ];
 
