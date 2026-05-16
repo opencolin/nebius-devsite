@@ -13,6 +13,8 @@
 
 import {useEffect, useRef, useState} from 'react';
 
+import type * as L from 'leaflet';
+
 import styles from './EventsMap.module.scss';
 
 export interface MapEvent {
@@ -43,15 +45,11 @@ export interface EventsMapProps {
   variant?: 'light' | 'dark';
 }
 
-// Loose type — we only call .remove() on it from cleanup. Real Leaflet types
-// would mean shipping the @types/leaflet bundle, which is heavier than the
-// upside given how few methods we touch directly.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type LeafletNS = any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type LeafletMap = any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type LeafletLayerGroup = any;
+// Leaflet types come from `import type * as L from 'leaflet'` above; only used
+// for typing the refs that hold the dynamically-imported namespace + objects.
+type LeafletNS = typeof L;
+type LeafletMap = L.Map;
+type LeafletLayerGroup = L.LayerGroup;
 
 const DOT_HTML_DEFAULT =
   '<span style="display:block;width:14px;height:14px;border-radius:50%;background:#052b42;border:2px solid #e0ff4f;box-shadow:0 0 0 4px rgba(224,255,79,0.35);cursor:pointer;"></span>';
