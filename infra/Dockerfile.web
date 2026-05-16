@@ -21,20 +21,29 @@ ARG NEXT_PUBLIC_DIRECTUS_PUBLIC_URL
 ARG NEXT_PUBLIC_GTM_ID
 ARG NEXT_PUBLIC_GTM_PROXY
 
-# Server-side DIRECTUS_URL (+ admin token, if any) — needed by getStaticProps
-# / getStaticPaths to enumerate slugs and render content at build time. The
-# Container App's runtime DIRECTUS_URL env var still wins for live requests.
+# Server-side DIRECTUS_URL — needed by getStaticProps / getStaticPaths to
+# enumerate slugs and render content at build time. The Container App's
+# runtime DIRECTUS_URL env var still wins for live requests.
 ARG DIRECTUS_URL
-ARG DIRECTUS_ADMIN_TOKEN
 
 ENV NEXT_PUBLIC_DIRECTUS_PUBLIC_URL=$NEXT_PUBLIC_DIRECTUS_PUBLIC_URL \
     NEXT_PUBLIC_GTM_ID=$NEXT_PUBLIC_GTM_ID \
     NEXT_PUBLIC_GTM_PROXY=$NEXT_PUBLIC_GTM_PROXY \
-    DIRECTUS_URL=$DIRECTUS_URL \
-    DIRECTUS_ADMIN_TOKEN=$DIRECTUS_ADMIN_TOKEN
+    DIRECTUS_URL=$DIRECTUS_URL
 
 ENV BUILD_STANDALONE=1
-RUN cd apps/web && npm run build
+
+# DIRECTUS_ADMIN_TOKEN comes in as a BuildKit secret (not ARG/ENV — those bake
+# the token into image metadata, which Docker rightly flags as SecretsUsedInArgOrEnv).
+# The secret is mounted at /run/secrets/directus_admin_token for the duration
+# of this single RUN, exported into the env so Next's getStaticProps can use it,
+# then disappears with the layer. required=false lets local dev builds work
+# without the token (the build will succeed but skip pages that need Directus).
+RUN --mount=type=secret,id=directus_admin_token,required=false \
+    if [ -s /run/secrets/directus_admin_token ]; then \
+      export DIRECTUS_ADMIN_TOKEN="$(cat /run/secrets/directus_admin_token)"; \
+    fi && \
+    cd apps/web && npm run build
 
 # ---- runner -----------------------------------------------------------------
 FROM node:20-alpine AS runner

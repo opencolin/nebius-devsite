@@ -43,6 +43,10 @@ env:
   CONTAINER_APP_NAME: nbdevsite-web
   DIRECTUS_PUBLIC_URL: https://cms.buildspace.sh
   PUBLIC_HOSTNAME: demo.buildspace.sh
+  # Opt the JS-based actions (checkout, azure/login, buildx, build-push) into
+  # Node 24 ahead of GitHub's June 2026 default-flip, silencing the Node 20
+  # deprecation warning. Drop this once GitHub flips the default.
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 jobs:
   deploy:
@@ -82,7 +86,11 @@ jobs:
           build-args: |
             DIRECTUS_URL=${{ env.DIRECTUS_PUBLIC_URL }}
             NEXT_PUBLIC_DIRECTUS_PUBLIC_URL=${{ env.DIRECTUS_PUBLIC_URL }}
-            DIRECTUS_ADMIN_TOKEN=${{ secrets.DIRECTUS_ADMIN_TOKEN }}
+          # DIRECTUS_ADMIN_TOKEN comes in via BuildKit secret mount (not build-arg)
+          # so it never lands in image metadata. The Dockerfile reads it from
+          # /run/secrets/directus_admin_token during `next build`.
+          secrets: |
+            directus_admin_token=${{ secrets.DIRECTUS_ADMIN_TOKEN }}
           # Buildx cache via GitHub Actions cache backend — speeds up the
           # heavy `next build` step on repeated runs.
           cache-from: type=gha

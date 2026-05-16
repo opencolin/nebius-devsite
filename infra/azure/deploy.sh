@@ -294,29 +294,29 @@ fi
 echo ""
 echo "→ Phase 5: building $WEB_IMAGE_REPO:$WEB_IMAGE_TAG (mode: $BUILD_MODE, DIRECTUS_URL=$DIRECTUS_URL)..."
 
-if [[ "$BUILD_MODE" == "local" ]]; then
-  az acr login --name "$ACR_NAME" --output none
-  docker buildx build \
-    --platform linux/amd64 \
-    --file "$ROOT/infra/Dockerfile.web" \
-    --build-arg DIRECTUS_URL="$DIRECTUS_URL" \
-    --build-arg DIRECTUS_ADMIN_TOKEN="$TOKEN" \
-    --tag "$ACR_LOGIN_SERVER/$WEB_IMAGE_REPO:$WEB_IMAGE_TAG" \
-    --tag "$ACR_LOGIN_SERVER/$WEB_IMAGE_REPO:latest" \
-    --push \
-    "$ROOT"
-else
-  az acr build \
-    --registry "$ACR_NAME" \
-    --image "$WEB_IMAGE_REPO:$WEB_IMAGE_TAG" \
-    --image "$WEB_IMAGE_REPO:latest" \
-    --file "$ROOT/infra/Dockerfile.web" \
-    --platform linux/amd64 \
-    --build-arg DIRECTUS_URL="$DIRECTUS_URL" \
-    --build-arg DIRECTUS_ADMIN_TOKEN="$TOKEN" \
-    "$ROOT" \
-    --output table
+if [[ "$BUILD_MODE" != "local" ]]; then
+  # ACR Tasks fallback was removed: `az acr build` can't pass BuildKit secret
+  # mounts via CLI (only --build-arg), so it would bake DIRECTUS_ADMIN_TOKEN
+  # into image metadata. For "deploy from anywhere without Docker," push to
+  # main and let .github/workflows/deploy-web.yml do it instead.
+  echo "✗ BUILD_MODE=$BUILD_MODE not supported (only 'local')."
+  echo "  Install Docker locally, OR push to main and let GitHub Actions deploy."
+  exit 1
 fi
+
+az acr login --name "$ACR_NAME" --output none
+# DIRECTUS_ADMIN_TOKEN goes in as a BuildKit secret (--secret), not a
+# build-arg, so it never ends up in image metadata. The Dockerfile mounts
+# it at /run/secrets/directus_admin_token during `next build`.
+DIRECTUS_ADMIN_TOKEN="$TOKEN" docker buildx build \
+  --platform linux/amd64 \
+  --file "$ROOT/infra/Dockerfile.web" \
+  --build-arg DIRECTUS_URL="$DIRECTUS_URL" \
+  --secret id=directus_admin_token,env=DIRECTUS_ADMIN_TOKEN \
+  --tag "$ACR_LOGIN_SERVER/$WEB_IMAGE_REPO:$WEB_IMAGE_TAG" \
+  --tag "$ACR_LOGIN_SERVER/$WEB_IMAGE_REPO:latest" \
+  --push \
+  "$ROOT"
 
 # ============================================================================
 # Phase 6 — Bicep with deployWeb=true (adds web Container App + Front Door)
