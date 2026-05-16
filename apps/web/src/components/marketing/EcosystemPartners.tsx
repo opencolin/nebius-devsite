@@ -1,16 +1,16 @@
 // EcosystemPartners — homepage marketing section (eyebrow reads
-// "Integrations"; the component name keeps its legacy "Ecosystem" prefix
-// since it's not user-facing). Shows the full partner roster as a 3-up
-// grid of cards. Data lives in `@/lib/ecosystem-partners` so the
-// /integrations filter page can share it.
+// "Integrations"; the component name keeps its legacy "Ecosystem"
+// prefix since it's not user-facing). Shows the THREE most-recognized
+// integrations as a teaser; the full directory lives at /integrations.
 //
-// Each card is a docs link, opening in a new tab. Category pill above the
-// title; product pills below the blurb so visitors can see which Nebius
-// product(s) the integration targets at a glance.
+// Featured set is hand-picked here — easy to swap. We pick by docsUrl
+// (not by name) because some partner names are non-unique across the
+// Tavily + Nebius integration tables (Agno, LangChain, CrewAI exist
+// twice with different docs pages).
 
 import Link from 'next/link';
 
-import {Label, Text} from '@gravity-ui/uikit';
+import {Button, Label, Text} from '@gravity-ui/uikit';
 
 import {
   CATEGORY_LABEL,
@@ -20,7 +20,24 @@ import {
 
 import styles from './EcosystemPartners.module.scss';
 
+// docsUrls of the three integrations to feature on the homepage.
+// Picks the most universally-recognized AI dev tools — the visitor sees
+// names they trust before clicking through to the long list.
+const FEATURED_URLS: ReadonlyArray<string> = [
+  'https://docs.nebius.com/studio/inference/integrations/huggingface',          // Hugging Face
+  'https://docs.tokenfactory.nebius.com/integrations/frameworks/langchain',     // LangChain
+  'https://docs.nebius.com/applications/standalone/nvidia-nim',                 // NVIDIA NIM
+];
+
 export function EcosystemPartners() {
+  // Preserve the FEATURED_URLS order so the lineup matches our editorial
+  // intent, not the source array's order. Falls through silently if a
+  // featured URL is missing from the data — easier to refactor than to
+  // throw at build time.
+  const featured = FEATURED_URLS.map((url) =>
+    ECOSYSTEM_PARTNERS.find((p) => p.docsUrl === url),
+  ).filter((p): p is (typeof ECOSYSTEM_PARTNERS)[number] => p != null);
+
   return (
     <section className={styles.root}>
       <div className={styles.inner}>
@@ -33,16 +50,13 @@ export function EcosystemPartners() {
           </Text>
           <Text variant="body-2" color="secondary" className={styles.body}>
             First-party integration docs for the frameworks, gateways, and
-            orchestrators we&apos;ve tested end-to-end. Each card links to the
-            Nebius doc page for that partner.{' '}
-            <Link href="/integrations" className={styles.headLink}>
-              See all and filter &rarr;
-            </Link>
+            orchestrators we&apos;ve tested end-to-end. A few standouts below
+            &mdash; the rest are one click away.
           </Text>
         </header>
 
         <div className={styles.grid}>
-          {ECOSYSTEM_PARTNERS.map((p) => (
+          {featured.map((p) => (
             <a
               key={p.docsUrl}
               href={p.docsUrl}
@@ -69,6 +83,14 @@ export function EcosystemPartners() {
               <span className={styles.cardCta}>View docs &rarr;</span>
             </a>
           ))}
+        </div>
+
+        <div className={styles.footerCta}>
+          <Link href="/integrations" passHref legacyBehavior>
+            <Button view="action" size="l">
+              See all {ECOSYSTEM_PARTNERS.length} integrations &rarr;
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

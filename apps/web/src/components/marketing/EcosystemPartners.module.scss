@@ -41,18 +41,6 @@
   margin: 0;
 }
 
-// Inline "See all and filter →" link in the section lede so the deep
-// link to /ecosystem is one tap away from the marketing copy.
-.headLink {
-  color: var(--g-color-text-link);
-  text-decoration: none;
-  white-space: nowrap;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
 // Tag row beneath the blurb — product pills (info/blue) followed by the
 // category pill (utility/grey) so visitors can see both axes at a glance
 // without the category competing for the top-of-card position.
@@ -60,6 +48,14 @@
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
+}
+
+// CTA strip under the 3-card teaser — sends visitors to the full
+// /integrations directory. Centered + breathing room above the grid.
+.footerCta {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
 }
 
 .grid {
