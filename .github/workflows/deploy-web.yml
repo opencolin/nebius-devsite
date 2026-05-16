@@ -1,0 +1,133 @@
+# Auto-deploy the Next.js web app to Azure Container Apps on push to main.
+#
+# Trigger scope: only paths that affect the runtime image. Bicep / Directus /
+# docs changes don't trigger this — those still go through manual `deploy.sh`.
+#
+# Pipeline (~5 min end-to-end):
+#   1. Checkout
+#   2. OIDC-login to Azure (no client secret stored — federated cred binds
+#      to repo:opencolin/nebius-devsite:ref:refs/heads/main)
+#   3. ACR login
+#   4. Build + push web image, tagged with the short SHA + :latest
+#   5. az containerapp update → roll to the new image
+#   6. Smoke-test the homepage + a CSS asset
+#
+# Secrets (configured via `gh secret set`):
+#   AZURE_CLIENT_ID         — app reg client id (federated, no secret)
+#   AZURE_TENANT_ID
+#   AZURE_SUBSCRIPTION_ID
+#   DIRECTUS_ADMIN_TOKEN    — static token; needed at build time so
+#                             getStaticProps/getStaticPaths can enumerate slugs
+
+name: deploy-web
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/web/**'
+      - 'infra/Dockerfile.web'
+      - '.github/workflows/deploy-web.yml'
+  workflow_dispatch: {}
+
+# OIDC requires id-token: write. contents: read is the default but make it explicit.
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AZURE_RG: nebius-devsite-rg
+  ACR_NAME: nbdevsiteacrfdl2ex
+  ACR_LOGIN_SERVER: nbdevsiteacrfdl2ex.azurecr.io
+  IMAGE_REPO: web
+  CONTAINER_APP_NAME: nbdevsite-web
+  DIRECTUS_PUBLIC_URL: https://cms.buildspace.sh
+  PUBLIC_HOSTNAME: demo.buildspace.sh
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compute image tag
+        id: tag
+        run: echo "tag=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Azure login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: ACR login
+        run: az acr login --name "$ACR_NAME"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build + push web image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: infra/Dockerfile.web
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_REPO }}:${{ steps.tag.outputs.tag }}
+            ${{ env.ACR_LOGIN_SERVER }}/${{ env.IMAGE_REPO }}:latest
+          build-args: |
+            DIRECTUS_URL=${{ env.DIRECTUS_PUBLIC_URL }}
+            NEXT_PUBLIC_DIRECTUS_PUBLIC_URL=${{ env.DIRECTUS_PUBLIC_URL }}
+            DIRECTUS_ADMIN_TOKEN=${{ secrets.DIRECTUS_ADMIN_TOKEN }}
+          # Buildx cache via GitHub Actions cache backend — speeds up the
+          # heavy `next build` step on repeated runs.
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Roll Container App
+        run: |
+          az containerapp update \
+            --name "$CONTAINER_APP_NAME" \
+            --resource-group "$AZURE_RG" \
+            --image "$ACR_LOGIN_SERVER/$IMAGE_REPO:${{ steps.tag.outputs.tag }}" \
+            --query "{revision:properties.latestRevisionName, image:properties.template.containers[0].image}" \
+            --output table
+
+      - name: Wait for new revision to be Running
+        run: |
+          for i in $(seq 1 30); do
+            STATE=$(az containerapp revision list \
+              --name "$CONTAINER_APP_NAME" \
+              --resource-group "$AZURE_RG" \
+              --query "[?properties.active].properties.runningState | [0]" \
+              -o tsv 2>/dev/null || echo "Unknown")
+            echo "[$i/30] revision state: $STATE"
+            if [[ "$STATE" == "Running" ]]; then
+              echo "✓ revision live"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "✗ revision didn't reach Running in 5 min"
+          exit 1
+
+      - name: Smoke test
+        run: |
+          echo "--- HTML ---"
+          curl -fsS -o /dev/null -w "code=%{http_code} time=%{time_total}\n" \
+            "https://$PUBLIC_HOSTNAME/" --max-time 15
+          echo "--- pick a CSS file from the HTML and assert it loads ---"
+          CSS_PATH=$(curl -fsS "https://$PUBLIC_HOSTNAME/" --max-time 15 \
+            | grep -oE '/_next/static/css/[a-f0-9]+\.css' | head -1)
+          if [[ -z "$CSS_PATH" ]]; then
+            echo "✗ no CSS link in HTML — page is broken"
+            exit 1
+          fi
+          curl -fsS -o /dev/null -w "css code=%{http_code} size=%{size_download} time=%{time_total}\n" \
+            -H "Accept-Encoding: gzip, deflate, br" \
+            "https://$PUBLIC_HOSTNAME$CSS_PATH" --max-time 15
+          echo "✓ smoke test passed"
