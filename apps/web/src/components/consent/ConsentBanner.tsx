@@ -6,7 +6,6 @@
 // Mirrors the gating pattern Nebius uses for HubSpot/Demandbase/Hotjar/etc.
 
 import {Button, Text} from '@gravity-ui/uikit';
-import Link from 'next/link';
 import {useEffect, useState} from 'react';
 
 import styles from './ConsentBanner.module.scss';
@@ -40,7 +39,19 @@ export function ConsentBanner() {
     <div className={styles.root} role="dialog" aria-label="Cookie consent">
       <Text variant="body-2" className={styles.copy}>
         We use cookies to measure marketing performance and improve the site.{' '}
-        <Link href="/legal/privacy">Privacy</Link>.
+        {/* Plain <a>, not next/link: there's no internal /legal/privacy page
+            in the CMS, and Link was prefetching the data JSON on mount →
+            10-15 console 404s per page nav sitewide. External link to
+            Nebius's real privacy notice is the honest answer for a tech-
+            stack demo site that isn't running its own legal surface. */}
+        <a
+          href="https://nebius.com/legal/privacy-notice"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Privacy
+        </a>
+        .
       </Text>
       <div className={styles.actions}>
         <Button view="flat" onClick={() => decide('denied')}>

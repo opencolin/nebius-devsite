@@ -50,31 +50,49 @@ const FILTERS = [
 ] as const;
 type Filter = (typeof FILTERS)[number];
 
+// Directus product_focus enum is single-word lowercase (tokenfactory, aicloud,
+// etc.), NOT snake_case. The old token_factory / ai_cloud keys silently
+// returned zero matches for the two largest product chips on /apps. Verified
+// the actual enum values via Directus REST (apps + library both store
+// "tokenfactory" / "aicloud" — never the underscored forms).
 const PRODUCT_FILTER_KEY: Record<string, string> = {
-  'Token Factory': 'token_factory',
-  'AI Cloud': 'ai_cloud',
-  'OpenClaw': 'openclaw',
-  'Soperator': 'soperator',
-  'Tavily': 'tavily',
+  'Token Factory': 'tokenfactory',
+  'AI Cloud': 'aicloud',
+  OpenClaw: 'openclaw',
+  Soperator: 'soperator',
+  Tavily: 'tavily',
 };
 
 const PRODUCT_LABEL: Record<string, string> = {
-  token_factory: 'Token Factory',
-  ai_cloud: 'AI Cloud',
+  tokenfactory: 'Token Factory',
+  aicloud: 'AI Cloud',
   openclaw: 'OpenClaw',
   soperator: 'Soperator',
   tavily: 'Tavily',
 };
 
+// Placeholder submissions that slipped through the form (someone hit
+// "submit" with the title "Test" and the tagline "Test entry"). The live
+// Directus has delete actions disabled, so we filter them out at read
+// time. Pattern catches future "Test"/"test entry"-style garbage too.
+function isPlaceholderProject(p: Project): boolean {
+  const title = (p.title ?? '').trim().toLowerCase();
+  const tagline = (p.tagline ?? '').trim().toLowerCase();
+  if (title === 'test' || title === 'untitled') return true;
+  if (tagline.startsWith('test entry')) return true;
+  return false;
+}
+
 export const getStaticProps: GetStaticProps<{projects: Project[]}> = async () => {
   const directus = directusServer();
-  const projects = (await directus.request(
+  const raw = (await directus.request(
     readItems('projects', {
       sort: ['-featured', '-stars', 'title'],
       fields: ['slug', 'title', 'tagline', 'builder_handle', 'tags', 'product_focus', 'stars', 'featured', 'hackathon', 'award', 'category'],
       limit: -1,
     }),
   )) as Project[];
+  const projects = raw.filter((p) => !isPlaceholderProject(p));
   return {props: {projects}, revalidate: 60};
 };
 

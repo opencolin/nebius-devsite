@@ -87,12 +87,14 @@ export default function EventsPage({
   // The sentinel 'Online' isn't a real city — it maps to is_online=true so
   // virtual events (webinars, AMAs, livestreams) get their own bucket. No
   // real city in our data is named "Online" so the sentinel collision is
-  // safe.
+  // safe. City comparison uses normalizeCity so "München" rows match a
+  // "Munich" chip selection (same physical city, two spellings in the
+  // source feeds).
   const visibleEvents =
     activeCity === 'Online'
       ? events.filter((e) => e.is_online)
       : activeCity
-        ? events.filter((e) => e.city === activeCity)
+        ? events.filter((e) => normalizeCity(e.city) === activeCity)
         : events;
   const upcoming = visibleEvents.filter(isUpcoming);
   // Past events: reverse-chronological so the most recently-finished events
@@ -138,9 +140,14 @@ export default function EventsPage({
           dots above, so the filter answers "where can I go?", not
           "where has Nebius been?". A city with only past events won't
           show as a chip; if its past entries are wanted, expand the
-          collapsed Recent section below to see them. */}
+          collapsed Recent section below to see them.
+          allEvents is passed separately so the Online chip can derive its
+          count from the full set (past + upcoming), since past webinars
+          + AMAs deserve to remain filterable even when there's no upcoming
+          virtual event on the calendar. */}
       <CityFilter
         events={allUpcoming}
+        allEvents={events}
         activeCity={activeCity}
         onChange={setActiveCity}
       />
@@ -232,25 +239,33 @@ const PINNED_CITIES = ['San Francisco', 'New York', 'London', 'Berlin'];
 
 function CityFilter({
   events,
+  allEvents,
   activeCity,
   onChange,
 }: {
   events: EventRow[];
+  // Past + upcoming combined. Used only for the Online count so past
+  // webinars stay filterable from the chip row.
+  allEvents: EventRow[];
   activeCity: string | null;
   onChange: (city: string | null) => void;
 }) {
   // Count cities. Blanks + the "—" placeholder don't qualify as chips.
+  // München and Munich fold to a single Munich count so the chip row
+  // doesn't double up on the same physical city.
   const counts = new Map<string, number>();
   for (const e of events) {
-    const c = e.city?.trim();
+    const c = normalizeCity(e.city);
     if (!c || c === '—') continue;
     counts.set(c, (counts.get(c) ?? 0) + 1);
   }
 
   // Online lives outside the city map — it's a virtual-vs-physical axis,
-  // not a geography. Count from is_online so webinars + AMAs without a
-  // city stop getting hidden by the !c filter above.
-  const onlineCount = events.filter((e) => e.is_online).length;
+  // not a geography. Derived from the FULL events list (past + upcoming)
+  // so past webinars / AMAs without a future date still get a filter
+  // entry-point. visibleEvents already uses the full events prop for
+  // filtering, so clicking Online correctly surfaces past matches.
+  const onlineCount = allEvents.filter((e) => e.is_online).length;
 
   // Two-tier sort: pinned cities in their fixed order (skipping any with
   // zero events to match the "no chip for empty city" rule), then the
@@ -371,21 +386,34 @@ function EventCard({event}: {event: EventRow}) {
   // Single fallback chain: Luma listing → Nebius webinar page → no link.
   // See src/lib/event-url.ts for why both are checked.
   const href = eventHref(event);
+  // Hide the description block when it's just a duplicate of the title.
+  // Several scraped events have description === title because the source
+  // listing didn't include a separate blurb; rendering both produces the
+  // "Builders & Brews BerlinBuilders & Brews Berlin" effect.
+  const showDescription =
+    event.description &&
+    event.description.trim() !== event.title.trim();
   const cardBody = (
     <article className={styles.card}>
       <EventCover event={event} state={state} />
       <div className={styles.cardBody}>
         <Text variant="caption-2" color="secondary" className={styles.cardEyebrow}>
-          {event.format}
+          {formatLabel(event.format)}
           {' · '}
-          {formatDateTime(event.starts_at)}
+          {/* Venue-local timezone so Berlin events read as Berlin time
+              (CEST), not the visitor's browser TZ. cityTimezone returns
+              undefined for unmapped cities, in which case formatDateTime
+              falls back to browser-local without a TZ label. */}
+          {formatDateTime(event.starts_at, cityTimezone(event.city, event.is_online))}
         </Text>
         <Text variant="subheader-2" as="h3" className={styles.cardTitle}>
           {event.title}
         </Text>
-        <Text variant="body-2" color="secondary" className={styles.cardDesc}>
-          {event.description}
-        </Text>
+        {showDescription ? (
+          <Text variant="body-2" color="secondary" className={styles.cardDesc}>
+            {event.description}
+          </Text>
+        ) : null}
         {event.product_focus.length > 0 ? (
           <div className={styles.cardTagRow}>
             {event.product_focus.slice(0, 3).map((t) => (
@@ -497,4 +525,67 @@ function coverVariantForEvent(event: EventRow): string {
   if (f.includes('workshop')) return styles.coverWorkshop;
   if (f.includes('demo')) return styles.coverDemo;
   return styles.coverDefault;
+}
+
+// -----------------------------------------------------------------------------
+// City + format + timezone helpers
+// -----------------------------------------------------------------------------
+
+// München and Munich are the same physical city. Source feeds (Luma,
+// nebius.com listings) use both spellings, so without folding we get two
+// chips with count 1 each instead of one chip with count 2. Add aliases
+// here as new city collisions show up — keep keys as-stored, values as
+// canonical-display.
+const CITY_ALIASES: Record<string, string> = {
+  München: 'Munich',
+};
+
+export function normalizeCity(raw: string | null | undefined): string {
+  const trimmed = (raw ?? '').trim();
+  return CITY_ALIASES[trimmed] ?? trimmed;
+}
+
+// Format pill labels. The Directus enum is SCREAMING_SNAKE_CASE which
+// shows up raw in the card eyebrow ("·HACKATHON") and reads like a debug
+// string. Map to human labels. "OTHER" reads as a placeholder rather than
+// a category, so we relabel to "Meetup" — every OTHER event in the
+// current data is a community meetup, build night, or breakfast.
+const FORMAT_LABELS: Record<string, string> = {
+  WORKSHOP: 'Workshop',
+  DEMO_NIGHT: 'Demo night',
+  HACKATHON: 'Hackathon',
+  OFFICE_HOURS: 'Office hours',
+  OTHER: 'Meetup',
+};
+
+function formatLabel(format: string | null | undefined): string {
+  if (!format) return '';
+  return FORMAT_LABELS[format] ?? format;
+}
+
+// Map city → IANA timezone. Online events default to UTC (with a TZ
+// label), which is honest: a virtual event has no venue clock. Unmapped
+// cities return undefined and fall back to browser-local time, same as
+// the pre-fix behavior. Add cities here as the events tour expands.
+const CITY_TIMEZONES: Record<string, string> = {
+  'San Francisco': 'America/Los_Angeles',
+  Seattle: 'America/Los_Angeles',
+  'Santa Monica': 'America/Los_Angeles',
+  'New York': 'America/New_York',
+  'Ciudad de México': 'America/Mexico_City',
+  'Mexico City': 'America/Mexico_City',
+  London: 'Europe/London',
+  Paris: 'Europe/Paris',
+  Berlin: 'Europe/Berlin',
+  Munich: 'Europe/Berlin',
+  München: 'Europe/Berlin',
+  Amsterdam: 'Europe/Amsterdam',
+  Vienna: 'Europe/Vienna',
+  'Tel Aviv': 'Asia/Jerusalem',
+};
+
+function cityTimezone(city: string | null | undefined, isOnline: boolean): string | undefined {
+  if (isOnline) return 'UTC';
+  const c = (city ?? '').trim();
+  return CITY_TIMEZONES[c];
 }

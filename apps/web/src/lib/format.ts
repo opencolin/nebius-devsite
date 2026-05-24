@@ -19,12 +19,20 @@ export function formatDate(iso: string, opts?: Intl.DateTimeFormatOptions): stri
   });
 }
 
-export function formatDateTime(iso: string): string {
+// formatDateTime — date + time, optionally rendered in a specific IANA
+// timezone with a short TZ abbreviation appended. Without a timeZone arg
+// it behaves as before (browser local time, no TZ label). With one, the
+// caller controls which zone to render in — for events we pick the venue
+// timezone so a Berlin meetup shows in CEST, not the user's local TZ
+// (which made evening events appear at midnight US time).
+export function formatDateTime(iso: string, timeZone?: string): string {
   return new Date(iso).toLocaleString('en-US', {
     month: 'short',
     day: 'numeric',
     hour: 'numeric',
     minute: '2-digit',
+    timeZone,
+    timeZoneName: timeZone ? 'short' : undefined,
   });
 }
 

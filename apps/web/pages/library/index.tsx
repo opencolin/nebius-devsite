@@ -43,9 +43,13 @@ const TYPE_FILTER_KEY: Record<string, string> = {
   Repo: 'REPO',
 };
 
+// Directus product_focus enum is single-word lowercase (tokenfactory, aicloud).
+// Was previously token_factory / ai_cloud here, silently returning 0 for both
+// chips even though the data carries many matches. Verified against the live
+// product_focus arrays — the underscore form never appears.
 const PRODUCT_FILTER_KEY: Record<string, string> = {
-  'Token Factory': 'token_factory',
-  'AI Cloud': 'ai_cloud',
+  'Token Factory': 'tokenfactory',
+  'AI Cloud': 'aicloud',
   OpenClaw: 'openclaw',
   Soperator: 'soperator',
   Tavily: 'tavily',
