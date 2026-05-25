@@ -23,8 +23,11 @@ import styles from './EcosystemPartners.module.scss';
 // docsUrls of the three integrations to feature on the homepage.
 // Picks the most universally-recognized AI dev tools — the visitor sees
 // names they trust before clicking through to the long list.
+// Keep this list in lockstep with the docsUrl values in
+// src/lib/ecosystem-partners.ts — the lookup at render time is by
+// docsUrl equality so any drift here silently drops the featured card.
 const FEATURED_URLS: ReadonlyArray<string> = [
-  'https://docs.nebius.com/studio/inference/integrations/huggingface',          // Hugging Face
+  'https://docs.tokenfactory.nebius.com/integrations/api/hugging-face',         // Hugging Face
   'https://docs.tokenfactory.nebius.com/integrations/frameworks/langchain',     // LangChain
   'https://docs.nebius.com/applications/standalone/nvidia-nim',                 // NVIDIA NIM
 ];

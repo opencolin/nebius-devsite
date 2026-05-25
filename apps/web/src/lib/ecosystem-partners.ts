@@ -62,7 +62,11 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   {
     name: 'Hugging Face',
     blurb: 'Open-source models and datasets via inference API.',
-    docsUrl: 'https://docs.nebius.com/studio/inference/integrations/huggingface',
+    // Migrated from docs.nebius.com/studio/inference/integrations/huggingface
+    // (which now silently redirects to a generic /quickstart page). The
+    // "studio" namespace was the old AI Studio docs; everything inference-
+    // related now lives under docs.tokenfactory.nebius.com.
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api/hugging-face',
     category: 'inference',
     products: ['ai-cloud'],
   },
@@ -77,7 +81,10 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   {
     name: 'LlamaIndex',
     blurb: 'RAG framework integration for Nebius inference.',
-    docsUrl: 'https://docs.nebius.com/studio/inference/integrations/llamaindex',
+    // Same migration as Hugging Face above — was under the old /studio
+    // namespace, now lives at docs.tokenfactory.nebius.com under the
+    // frameworks tree.
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/frameworks/llama-index/overview',
     category: 'agents',
     products: ['ai-cloud'],
   },
