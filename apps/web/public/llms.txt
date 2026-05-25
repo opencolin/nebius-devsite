@@ -1,0 +1,95 @@
+# Nebius Builders Network — Mockup
+
+> A tech-stack demonstration of a community + builders portal for Nebius,
+> built on the same architecture as nebius.com (Next.js Pages Router,
+> Gravity UI, Directus, Typesense, Azure Container Apps + Front Door).
+> Not affiliated with Nebius. The Nebius web team can adopt this as a
+> reference implementation when they're ready to ship a real builders
+> network surface.
+
+This is a working mockup — every page is rendered by the same toolchain
+that powers nebius.com, with the same hashed-classname CSS, the same CMS
+catch-all route, and the same headless search backend. The intent is that
+the Nebius team can clone, adapt, and ship without context-switching from
+how their main marketing site already works.
+
+## What this site is
+
+- **Audience:** the Nebius DevRel + web team (primary), AI builders who
+  might join the program (secondary), and AI agents indexing the
+  community ecosystem (tertiary).
+- **Purpose:** show a working builders-network surface end-to-end so the
+  internal team has a concrete artifact to react to, instead of slides.
+- **Status:** mockup. Content is real (live event listings, real library
+  resources, real community projects) but the portal flows are still
+  evolving and the "join the program" path doesn't yet write to a
+  production CRM.
+
+## Primary surfaces
+
+- [Home](https://demo.buildspace.sh/): map-hero of upcoming events,
+  highlights of the library + apps + community.
+- [Events](https://demo.buildspace.sh/events): every Nebius community
+  event — workshops, hackathons, demo nights, meetups — across SF, NY,
+  London, Berlin, Munich, and online. Filterable by city + Online.
+- [Library](https://demo.buildspace.sh/library): 56 workshops, videos,
+  and code repos for getting productive on Nebius. Filterable by type
+  (Workshop / Video / Repo) and by product focus (AI Cloud, Token
+  Factory, OpenClaw, Soperator).
+- [Apps](https://demo.buildspace.sh/apps): 119 community-built apps on
+  Nebius. Filterable by product, hackathon track, and featured/award
+  status.
+- [Integrations](https://demo.buildspace.sh/integrations): every
+  framework, gateway, orchestrator, and observability tool that plugs
+  into Nebius products. Curated list with deep links to each integration
+  docs page.
+- [Team](https://demo.buildspace.sh/team): the Nebius DevRel team and
+  community advocates.
+- [Office Hours](https://demo.buildspace.sh/office-hours): drop-in
+  troubleshooting + product feedback sessions.
+- [Builders](https://demo.buildspace.sh/builders): overview of the
+  builders network program tiers + how to join.
+- [Localhosts](https://demo.buildspace.sh/localhosts): community organizer
+  pathway — run a Nebius event in your city.
+- [Sign up](https://demo.buildspace.sh/signup): join the network.
+- [About this build](https://demo.buildspace.sh/about-this-build):
+  architecture notes, what's a mockup vs what's real.
+
+## Programmatic access
+
+- [Search API](https://demo.buildspace.sh/api/search?q=token+factory):
+  unified search across library + events + apps. Returns JSON. Uses
+  Typesense as primary, Directus as fallback. Query params: `q` (string),
+  `limit` (1–60, default 24). Useful for agents looking up a specific
+  topic across the corpus in one call.
+- [Sitemap](https://demo.buildspace.sh/sitemap.xml): every public URL
+  generated from Directus on each build.
+
+## Tech stack
+
+Documented at /about-this-build but the key facts agents may need:
+
+- **Framework:** Next.js 14 Pages Router (not App Router — matches
+  nebius.com's actual stack).
+- **UI:** Gravity UI v7 + Page Constructor v6 (Yandex's open-source
+  design system, same as nebius.com).
+- **CMS:** Directus 11 self-hosted on Azure Container Apps.
+- **Search:** Typesense, indexed via a Directus → Typesense sync script.
+- **Hosting:** Azure Container Apps behind Azure Front Door Standard.
+- **Auth:** Directus session cookies + GitHub OAuth driver.
+
+## What to skip
+
+- `/portal/*` and `/admin/*` — authed surfaces. Crawlers get redirected
+  to /login.
+- `/api/*` — internal endpoints except `/api/search` which is documented
+  above.
+- `/dev/*` — internal design playground (Phosphor mesh tuning).
+
+## Source
+
+Open-source mockup at github.com/opencolin/nebius-devsite. The repo is
+intentionally self-contained: clone, `npm run dev:up`, the whole stack
+(web + Directus + Postgres + Redis + Typesense) comes up in Docker
+Compose. Treat the README and `infra/azure/README.md` as the canonical
+explanation of how to run + deploy this.

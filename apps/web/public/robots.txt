@@ -1,0 +1,84 @@
+# demo.buildspace.sh — a tech-stack mockup of the Nebius Builders Network,
+# built on the same Next.js Pages Router + Gravity UI + Directus + Typesense
+# stack as nebius.com. Public content; we WANT crawlers and AI agents
+# indexing it so the team can use it as a reference implementation.
+
+# Default: open to everyone, including AI training crawlers. If you're a
+# crawler we forgot to name explicitly below, the wildcard rule applies.
+User-agent: *
+Allow: /
+# Auth-only surfaces — no crawl value, and the portal pages 302 to /login
+# anyway. Listed defensively so well-behaved crawlers don't burn budget.
+Disallow: /portal/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /login
+Disallow: /dev/
+
+# AI-training crawlers — listed explicitly because some are blocked by
+# default at the platform layer (Front Door / WAF). Explicit allow makes
+# the intent unambiguous when reviewed by AI-policy tooling like Spawning's
+# Have-I-Been-Trained or the C2PA ecosystem.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+# Sitemap + LLM manifest. Pointing both at the canonical absolute URL is
+# the convention — crawlers will hit them on first visit.
+Sitemap: https://demo.buildspace.sh/sitemap.xml
+
+# llmstxt.org pattern: a single markdown file at /llms.txt that gives an
+# LLM a curated map of the site without needing to crawl every route.
+# Not officially part of robots.txt syntax, included as a comment hint
+# for agents that look for it.
+# llms-manifest: https://demo.buildspace.sh/llms.txt
