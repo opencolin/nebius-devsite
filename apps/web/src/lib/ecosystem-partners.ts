@@ -60,32 +60,10 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   // ============================== AI Cloud ===============================
   // Inference
   {
-    name: 'Hugging Face',
-    blurb: 'Open-source models and datasets via inference API.',
-    // Migrated from docs.nebius.com/studio/inference/integrations/huggingface
-    // (which now silently redirects to a generic /quickstart page). The
-    // "studio" namespace was the old AI Studio docs; everything inference-
-    // related now lives under docs.tokenfactory.nebius.com.
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api/hugging-face',
-    category: 'inference',
-    products: ['ai-cloud'],
-  },
-  {
     name: 'NVIDIA NIM',
     blurb: 'Self-hosted GPU inference microservices, turnkey.',
     docsUrl: 'https://docs.nebius.com/applications/standalone/nvidia-nim',
     category: 'inference',
-    products: ['ai-cloud'],
-  },
-  // Agents (AI Cloud)
-  {
-    name: 'LlamaIndex',
-    blurb: 'RAG framework integration for Nebius inference.',
-    // Same migration as Hugging Face above — was under the old /studio
-    // namespace, now lives at docs.tokenfactory.nebius.com under the
-    // frameworks tree.
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/frameworks/llama-index/overview',
-    category: 'agents',
     products: ['ai-cloud'],
   },
   // Orchestration
@@ -160,6 +138,16 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   // ============================== Token Factory ===============================
   // Inference / API
   {
+    name: 'Hugging Face',
+    blurb: 'Open-source models and datasets via inference API.',
+    // Was under the old /studio namespace until the AI Studio → Token
+    // Factory rename. Tagged token-factory (not ai-cloud) because the
+    // integration is the Token Factory inference API surface.
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api/hugging-face',
+    category: 'inference',
+    products: ['token-factory'],
+  },
+  {
     name: 'AISuite',
     blurb: 'Multi-provider LLM router with a unified Python API.',
     docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api/aisuite',
@@ -196,6 +184,16 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     blurb: 'Chat models, embeddings, retrievers via langchain-nebius.',
     docsUrl:
       'https://docs.tokenfactory.nebius.com/integrations/frameworks/langchain',
+    category: 'agents',
+    products: ['token-factory'],
+  },
+  {
+    name: 'LlamaIndex',
+    blurb: 'RAG framework integration for Nebius inference.',
+    // Same provenance as Hugging Face above — moved from the /studio
+    // namespace to docs.tokenfactory.nebius.com, retagged token-factory.
+    docsUrl:
+      'https://docs.tokenfactory.nebius.com/integrations/frameworks/llama-index/overview',
     category: 'agents',
     products: ['token-factory'],
   },
