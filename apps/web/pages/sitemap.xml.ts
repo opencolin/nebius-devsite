@@ -97,23 +97,28 @@ export const getServerSideProps: GetServerSideProps = async ({res}) => {
       ) as Promise<Array<{slug: string; date_updated?: string | null}>>,
       [],
     ),
+    // library_articles and projects don't expose a date_updated/date_created
+    // field on the prod schema (or the admin token lacks read perms on it).
+    // Querying it errored the whole request → safeRead returned [], and the
+    // sitemap shipped without the dynamic slugs. Drop the field; lastmod
+    // is optional in sitemap.xml and crawlers will still hit the URLs.
     safeRead(
       directus.request(
         readItems('library_articles', {
           filter: {status: {_eq: 'published'}},
-          fields: ['slug', 'date_updated'],
+          fields: ['slug'],
           limit: -1,
         }),
-      ) as Promise<Array<{slug: string; date_updated?: string | null}>>,
+      ) as Promise<Array<{slug: string}>>,
       [],
     ),
     safeRead(
       directus.request(
         readItems('projects', {
-          fields: ['slug', 'date_updated'],
+          fields: ['slug'],
           limit: -1,
         }),
-      ) as Promise<Array<{slug: string; date_updated?: string | null}>>,
+      ) as Promise<Array<{slug: string}>>,
       [],
     ),
     safeRead(
@@ -150,25 +155,23 @@ export const getServerSideProps: GetServerSideProps = async ({res}) => {
     });
   }
 
-  // Library articles.
+  // Library articles. No lastmod (collection doesn't expose date_updated).
   for (const a of libraryRows) {
     if (!a.slug) continue;
     urls.push({
       loc: `${SITE_ORIGIN}/library/${a.slug}`,
       changefreq: 'monthly',
       priority: 0.6,
-      lastmod: a.date_updated ? new Date(a.date_updated).toISOString() : undefined,
     });
   }
 
-  // Apps (projects).
+  // Apps (projects). Same — no lastmod available.
   for (const pr of projectRows) {
     if (!pr.slug) continue;
     urls.push({
       loc: `${SITE_ORIGIN}/apps/${pr.slug}`,
       changefreq: 'monthly',
       priority: 0.5,
-      lastmod: pr.date_updated ? new Date(pr.date_updated).toISOString() : undefined,
     });
   }
 
