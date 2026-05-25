@@ -19,6 +19,7 @@ import {Button, Card, Label, Text} from '@gravity-ui/uikit';
 import {PublicLayout} from '@/components/chrome/PublicLayout';
 import {directusServer} from '@/lib/directus';
 import {formatNumber} from '@/lib/format';
+import {isPlaceholderProject} from '@/lib/projects';
 
 import page from '@/styles/page.module.scss';
 import styles from './apps.module.scss';
@@ -53,9 +54,11 @@ interface Builder {
 }
 
 // Display label for a product_focus key. Mirrors the index page.
+// Keys are the single-word Directus enum values (tokenfactory / aicloud),
+// not the underscored form — same fix as /apps/index.tsx and /library.
 const PRODUCT_LABEL: Record<string, string> = {
-  token_factory: 'Token Factory',
-  ai_cloud: 'AI Cloud',
+  tokenfactory: 'Token Factory',
+  aicloud: 'AI Cloud',
   openclaw: 'OpenClaw',
   soperator: 'Soperator',
   tavily: 'Tavily',
@@ -81,11 +84,18 @@ const HACKATHON_META: Record<
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const directus = directusServer();
+  // Pull title + tagline so we can run the same placeholder filter the
+  // index page does. Without this, /apps/jetbrains-test would render a
+  // real "Test entry." detail page even though the listing hid it —
+  // the sitemap would link to it and crawlers would hit a live garbage
+  // page. Filter at the paths source so the slug never enters SSG at all.
   const rows = (await directus.request(
-    readItems('projects', {fields: ['slug'], limit: -1}),
-  )) as Array<{slug: string}>;
+    readItems('projects', {fields: ['slug', 'title', 'tagline'], limit: -1}),
+  )) as Array<{slug: string; title?: string | null; tagline?: string | null}>;
   return {
-    paths: rows.map((r) => ({params: {slug: r.slug}})),
+    paths: rows
+      .filter((r) => !isPlaceholderProject(r))
+      .map((r) => ({params: {slug: r.slug}})),
     fallback: 'blocking',
   };
 };
@@ -109,6 +119,10 @@ export const getStaticProps: GetStaticProps<{
   )) as unknown as Project[];
   if (!rows[0]) return {notFound: true, revalidate: 60};
   const project = rows[0];
+  // Fallback: 'blocking' means a slug missed at build time will still try
+  // to render. Guard so a placeholder slug typed manually (or one slipping
+  // past getStaticPaths) 404s instead of rendering live garbage.
+  if (isPlaceholderProject(project)) return {notFound: true, revalidate: 60};
 
   // Look up the builder by handle. Stored under either `handle` or
   // `attribution_slug` depending on import source — try both, take the

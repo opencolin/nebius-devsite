@@ -24,6 +24,7 @@ import {readItems} from '@directus/sdk';
 import type {GetServerSideProps} from 'next';
 
 import {directusServer} from '@/lib/directus';
+import {isPlaceholderProject} from '@/lib/projects';
 
 const SITE_ORIGIN = process.env.NEXT_PUBLIC_SITE_ORIGIN ?? 'https://demo.buildspace.sh';
 
@@ -115,10 +116,15 @@ export const getServerSideProps: GetServerSideProps = async ({res}) => {
     safeRead(
       directus.request(
         readItems('projects', {
-          fields: ['slug'],
+          // Pull title + tagline so isPlaceholderProject can drop garbage
+          // submissions (e.g. /apps/jetbrains-test) from the sitemap. Same
+          // filter the /apps index + /apps/[slug] use — without it, the
+          // sitemap would advertise URLs that 404 (since [slug] now also
+          // notFounds placeholders).
+          fields: ['slug', 'title', 'tagline'],
           limit: -1,
         }),
-      ) as Promise<Array<{slug: string}>>,
+      ) as Promise<Array<{slug: string; title?: string | null; tagline?: string | null}>>,
       [],
     ),
     safeRead(
@@ -165,9 +171,11 @@ export const getServerSideProps: GetServerSideProps = async ({res}) => {
     });
   }
 
-  // Apps (projects). Same — no lastmod available.
+  // Apps (projects). Same — no lastmod available. Placeholder rows
+  // (Test entry style) are filtered to match /apps + /apps/[slug].
   for (const pr of projectRows) {
     if (!pr.slug) continue;
+    if (isPlaceholderProject(pr)) continue;
     urls.push({
       loc: `${SITE_ORIGIN}/apps/${pr.slug}`,
       changefreq: 'monthly',

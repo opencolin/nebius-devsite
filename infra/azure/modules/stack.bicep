@@ -714,6 +714,44 @@ resource fdRuleHtml 'Microsoft.Cdn/profiles/ruleSets/rules@2024-02-01' = if (dep
   }
 }
 
+// Crawler / agent endpoints — /sitemap.xml, /llms.txt, /robots.txt — get
+// a longer 1h edge cache. Sitemap re-renders from Directus each origin
+// hit, so without this it'd re-query every minute (htmlSWR's default).
+// Order 4 means this runs LAST, and ModifyResponseHeader Overwrite at
+// the end wins over earlier overwrites — same mechanism that lets
+// staticImmutable (order 1) take precedence over htmlSWR for static
+// assets via path-specificity in Front Door's matcher.
+resource fdRuleCrawler 'Microsoft.Cdn/profiles/ruleSets/rules@2024-02-01' = if (deployWeb) {
+  parent: fdRuleSet
+  name: 'crawlerHourly'
+  properties: {
+    order: 4
+    matchProcessingBehavior: 'Stop'
+    conditions: [
+      {
+        name: 'UrlPath'
+        parameters: {
+          typeName: 'DeliveryRuleUrlPathMatchConditionParameters'
+          operator: 'Equal'
+          matchValues: ['/sitemap.xml', '/llms.txt', '/robots.txt']
+          negateCondition: false
+        }
+      }
+    ]
+    actions: [
+      {
+        name: 'ModifyResponseHeader'
+        parameters: {
+          typeName: 'DeliveryRuleHeaderActionParameters'
+          headerAction: 'Overwrite'
+          headerName: 'Cache-Control'
+          value: 'public, s-maxage=3600, stale-while-revalidate=86400, stale-if-error=604800'
+        }
+      }
+    ]
+  }
+}
+
 resource fdRoute 'Microsoft.Cdn/profiles/afdEndpoints/routes@2024-02-01' = if (deployWeb) {
   parent: fdEndpoint
   name: 'default'

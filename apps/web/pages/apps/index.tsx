@@ -18,6 +18,7 @@ import {PageHeader} from '@/components/chrome/PageHeader';
 import {PublicLayout} from '@/components/chrome/PublicLayout';
 import {directusServer} from '@/lib/directus';
 import {formatNumber} from '@/lib/format';
+import {isPlaceholderProject} from '@/lib/projects';
 
 import page from '@/styles/page.module.scss';
 import styles from './apps.module.scss';
@@ -70,18 +71,6 @@ const PRODUCT_LABEL: Record<string, string> = {
   soperator: 'Soperator',
   tavily: 'Tavily',
 };
-
-// Placeholder submissions that slipped through the form (someone hit
-// "submit" with the title "Test" and the tagline "Test entry"). The live
-// Directus has delete actions disabled, so we filter them out at read
-// time. Pattern catches future "Test"/"test entry"-style garbage too.
-function isPlaceholderProject(p: Project): boolean {
-  const title = (p.title ?? '').trim().toLowerCase();
-  const tagline = (p.tagline ?? '').trim().toLowerCase();
-  if (title === 'test' || title === 'untitled') return true;
-  if (tagline.startsWith('test entry')) return true;
-  return false;
-}
 
 export const getStaticProps: GetStaticProps<{projects: Project[]}> = async () => {
   const directus = directusServer();
