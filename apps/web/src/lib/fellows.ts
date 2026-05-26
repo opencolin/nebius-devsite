@@ -108,7 +108,7 @@ export const FELLOWS: Fellow[] = [
     name: 'Rapha Gutsche',
     region: 'EMEA',
     city: 'Berlin',
-    role: 'Fellow',
+    role: 'Founder / Engineer',
     company: 'AI Agents Berlin',
     linkedinUrl: 'https://www.linkedin.com/in/raphael-gutsche/',
     photo: '/fellows/rapha-gutsche.jpg',
@@ -122,7 +122,7 @@ export const FELLOWS: Fellow[] = [
     // Role + company backfilled when the tagline pull surfaced
     // "Anyscale DevRel" — split into structured fields so the card's
     // role/org slots aren't empty under a tagline that references them.
-    role: 'DevRel',
+    role: 'Founder / Dev Advocate',
     company: 'Anyscale',
     linkedinUrl: 'https://www.linkedin.com/in/lindahaviv/',
     photo: '/fellows/linda-haviv.png',
@@ -133,7 +133,7 @@ export const FELLOWS: Fellow[] = [
     name: 'Angel “Mel” Cordoba',
     region: 'LATAM',
     city: 'Mexico City',
-    role: 'Ambassador / DevRel',
+    role: 'Founder / Engineer',
     company: 'Frutero Club',
     linkedinUrl: 'https://www.linkedin.com/in/mel-mc/',
     photo: '/fellows/mel-cordoba.jpg',
@@ -166,7 +166,7 @@ export const FELLOWS: Fellow[] = [
     name: 'Boldrin Antony',
     region: 'APJ',
     city: 'Bangalore',
-    role: 'Hackathon Organizer',
+    role: 'Business Development',
     company: 'Zo House',
     linkedinUrl: 'https://www.linkedin.com/in/boldrin-antony/',
     photo: '/fellows/boldrin-antony.jpg',
@@ -177,7 +177,7 @@ export const FELLOWS: Fellow[] = [
     name: 'Rayyan Zahid',
     region: 'North America',
     city: 'San Francisco',
-    role: 'Developer / Leader',
+    role: 'Founder / Engineer',
     company: 'Immersive Commons',
     linkedinUrl: 'https://www.linkedin.com/in/rayyanzahid/',
     // From GitHub avatar — unavatar.io/linkedin returned the default
