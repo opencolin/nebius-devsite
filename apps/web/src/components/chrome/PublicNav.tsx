@@ -27,7 +27,10 @@ const NAV: Array<{href: string; label: string}> = [
   {href: '/apps', label: 'Apps'},
   {href: '/fellows', label: 'Fellows'},
   {href: '/office-hours', label: 'Office Hours'},
-  {href: '/integrations', label: 'Integrations'},
+  // /integrations hidden from the nav for now — the page itself still
+  // exists at https://demo.buildspace.sh/integrations and is in the
+  // sitemap; only the nav entry is suppressed. Restore by uncommenting.
+  // {href: '/integrations', label: 'Integrations'},
 ];
 
 export function PublicNav() {
