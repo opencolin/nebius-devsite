@@ -107,15 +107,31 @@ function FellowCard({fellow}: {fellow: Fellow}) {
           <Text variant="subheader-2" as="h3" className={styles.name}>
             {fellow.name}
           </Text>
-          {fellow.role || fellow.company ? (
+          {fellow.role ? (
             <Text variant="caption-2" color="secondary" className={styles.role}>
-              {[fellow.role, fellow.company].filter(Boolean).join(' · ')}
+              {fellow.role}
             </Text>
           ) : null}
-          <div className={styles.metaRow}>
+          {/* Organization gets its own line in primary text color so it
+              reads as a distinct field, not a tail of the role string. */}
+          {fellow.company ? (
+            <Text variant="body-2" className={styles.company}>
+              {fellow.company}
+            </Text>
+          ) : null}
+          {/* City + region as a single chip pair so a card always shows
+              both geography axes — region is also the section header but
+              repeating it on each card removes the need to scroll up to
+              answer "where is this fellow based?". */}
+          <div className={styles.geoRow}>
             <Label theme="utility" size="xs">
               {fellow.city}
             </Label>
+            <Label theme="normal" size="xs">
+              {fellow.region}
+            </Label>
+          </div>
+          <div className={styles.metaRow}>
             <span className={styles.linkedin}>LinkedIn ↗</span>
           </div>
         </div>

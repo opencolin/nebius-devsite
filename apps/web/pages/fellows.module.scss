@@ -93,13 +93,35 @@
 
 .role {
   // Two-line clamp — long roles like "Research Scientist & Architect,
-  // AI Infrastructure" wrap naturally without pushing the LinkedIn
-  // pill below the fold.
+  // AI Infrastructure" wrap naturally without pushing other fields
+  // below the fold.
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: 1.4;
+  margin: 0;
+}
+
+// Organization sits in primary text color (not secondary like the role)
+// so it stands out as the answer to "where do they work?". Single-line
+// ellipsis — long company names truncate rather than wrap.
+.company {
+  margin: 2px 0 0;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// City + region chip pair. Lives between body text and the LinkedIn
+// pill so the eye lands on "who → role → org → where" before the call
+// to action.
+.geoRow {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .metaRow {
@@ -107,7 +129,7 @@
   padding-top: 10px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 8px;
 }
 

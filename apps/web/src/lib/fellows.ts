@@ -8,10 +8,12 @@
 // referrer, internal notes, and any pricing references. Those live in
 // the source Confluence and aren't appropriate for a public surface.
 //
-// Photos were one-time downloaded from the Confluence CDN into
-// /public/fellows/<slug>.png — the Atlassian URLs have signed tokens
-// that expire, so re-hosting locally avoids silent breakage. Re-run the
-// download script if the photo set changes.
+// Photos: 7 downloaded from the source Confluence CDN (signed tokens that
+// would otherwise expire, so re-hosted locally), 9 fetched via unavatar.io
+// against the fellow's LinkedIn handle — except Rayyan whose LinkedIn
+// returned the unavatar default, sourced from GitHub instead. All photos
+// live in /public/fellows/<slug>.{png,jpg}; re-run scripts/refresh-fellow-
+// photos.sh if the roster changes.
 
 export type Region = 'EMEA' | 'North America' | 'LATAM' | 'APJ';
 
@@ -98,7 +100,7 @@ export const FELLOWS: Fellow[] = [
     role: 'Fellow',
     company: 'AI Agents Berlin',
     linkedinUrl: 'https://www.linkedin.com/in/raphael-gutsche/',
-    photo: null,
+    photo: '/fellows/rapha-gutsche.jpg',
   },
   {
     slug: 'linda-haviv',
@@ -118,7 +120,7 @@ export const FELLOWS: Fellow[] = [
     role: 'Ambassador / DevRel',
     company: 'Frutero Club',
     linkedinUrl: 'https://www.linkedin.com/in/mel-mc/',
-    photo: null,
+    photo: '/fellows/mel-cordoba.jpg',
   },
   {
     slug: 'alejandra-marin',
@@ -128,7 +130,7 @@ export const FELLOWS: Fellow[] = [
     role: 'Conference Organizer',
     company: 'NERDConf',
     linkedinUrl: 'https://www.linkedin.com/in/alejandra-marin-83b369113/?locale=en',
-    photo: null,
+    photo: '/fellows/alejandra-marin.jpg',
   },
   {
     slug: 'matheus-pagani',
@@ -138,7 +140,7 @@ export const FELLOWS: Fellow[] = [
     role: 'DevRel',
     company: 'Vibe Space',
     linkedinUrl: 'https://www.linkedin.com/in/mdpagani/',
-    photo: null,
+    photo: '/fellows/matheus-pagani.jpg',
   },
   {
     slug: 'boldrin-antony',
@@ -148,7 +150,7 @@ export const FELLOWS: Fellow[] = [
     role: 'Hackathon Organizer',
     company: 'Zo House',
     linkedinUrl: 'https://www.linkedin.com/in/boldrin-antony/',
-    photo: null,
+    photo: '/fellows/boldrin-antony.jpg',
   },
   {
     slug: 'rayyan-zahid',
@@ -158,7 +160,9 @@ export const FELLOWS: Fellow[] = [
     role: 'Developer / Leader',
     company: 'Immersive Commons',
     linkedinUrl: 'https://www.linkedin.com/in/rayyanzahid/',
-    photo: null,
+    // From GitHub avatar — unavatar.io/linkedin returned the default
+    // placeholder for this profile, so we sourced from his GitHub.
+    photo: '/fellows/rayyan-zahid.png',
   },
   {
     slug: 'dhruv-diddi',
@@ -168,7 +172,7 @@ export const FELLOWS: Fellow[] = [
     role: 'Founder / Engineer',
     company: 'Solo Tech',
     linkedinUrl: 'https://www.linkedin.com/in/dhruvdiddi/',
-    photo: null,
+    photo: '/fellows/dhruv-diddi.jpg',
   },
   {
     slug: 'sushmita-rashid',
@@ -178,7 +182,7 @@ export const FELLOWS: Fellow[] = [
     role: 'DevRel Engineer',
     company: '',
     linkedinUrl: 'https://www.linkedin.com/in/sushmitaaar/',
-    photo: null,
+    photo: '/fellows/sushmita-rashid.jpg',
   },
   {
     slug: 'michael-ejeh',
@@ -188,7 +192,7 @@ export const FELLOWS: Fellow[] = [
     role: 'Ambassador',
     company: '',
     linkedinUrl: 'https://www.linkedin.com/in/micheal-marvelous-ejeh-6735711b6/',
-    photo: null,
+    photo: '/fellows/michael-ejeh.jpg',
   },
 ];
 
