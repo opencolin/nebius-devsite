@@ -29,6 +29,13 @@ export interface Fellow {
   linkedinUrl: string;
   /** /public path to a local photo, or null to fall back to initials avatar. */
   photo: string | null;
+  /**
+   * Short promotional one-liner. Synthesized from the source directory's
+   * Notes + Previous Work columns with internal-only fragments removed
+   * (referrers, motivation level, pricing, attribution chains). Undefined
+   * when the source had no public-facing material to draw from.
+   */
+  tagline?: string;
 }
 
 export const FELLOWS: Fellow[] = [
@@ -41,6 +48,7 @@ export const FELLOWS: Fellow[] = [
     company: 'IBM',
     linkedinUrl: 'https://linkedin.com/in/v-maroon/',
     photo: '/fellows/maroon-ayoub.png',
+    tagline: 'Key vLLM contributor.',
   },
   {
     slug: 'kosseila-hd',
@@ -51,6 +59,7 @@ export const FELLOWS: Fellow[] = [
     company: 'Cloudthrill',
     linkedinUrl: 'https://www.linkedin.com/in/kousshd/',
     photo: '/fellows/kosseila-hd.png',
+    tagline: 'Writes hands-on Nebius deployment guides (vLLM, Terraform).',
   },
   {
     slug: 'mesut-oezdil',
@@ -71,6 +80,7 @@ export const FELLOWS: Fellow[] = [
     company: 'Holito',
     linkedinUrl: 'https://www.linkedin.com/in/danielcolaianni/',
     photo: '/fellows/daniel-colaianni.png',
+    tagline: 'Active community builder in London.',
   },
   {
     slug: 'tim-santos',
@@ -81,6 +91,7 @@ export const FELLOWS: Fellow[] = [
     company: 'Graphcore',
     linkedinUrl: 'https://www.linkedin.com/in/internetoftim/',
     photo: '/fellows/tim-santos.png',
+    tagline: 'Experienced DevRel and community builder.',
   },
   {
     slug: 'john-varghese',
@@ -101,6 +112,7 @@ export const FELLOWS: Fellow[] = [
     company: 'AI Agents Berlin',
     linkedinUrl: 'https://www.linkedin.com/in/raphael-gutsche/',
     photo: '/fellows/rapha-gutsche.jpg',
+    tagline: 'Organizing the AI Agents Summit Berlin; agent-builder community since 2024.',
   },
   {
     slug: 'linda-haviv',
@@ -121,6 +133,7 @@ export const FELLOWS: Fellow[] = [
     company: 'Frutero Club',
     linkedinUrl: 'https://www.linkedin.com/in/mel-mc/',
     photo: '/fellows/mel-cordoba.jpg',
+    tagline: 'Shipped a NemoClaw webinar and reported real bugs in Nebius models.',
   },
   {
     slug: 'alejandra-marin',
@@ -131,6 +144,7 @@ export const FELLOWS: Fellow[] = [
     company: 'NERDConf',
     linkedinUrl: 'https://www.linkedin.com/in/alejandra-marin-83b369113/?locale=en',
     photo: '/fellows/alejandra-marin.jpg',
+    tagline: 'Cohosts 100+ person AI events across South America.',
   },
   {
     slug: 'matheus-pagani',
@@ -141,6 +155,7 @@ export const FELLOWS: Fellow[] = [
     company: 'Vibe Space',
     linkedinUrl: 'https://www.linkedin.com/in/mdpagani/',
     photo: '/fellows/matheus-pagani.jpg',
+    tagline: 'Cohosted AI events for Groq, Windsurf, and others.',
   },
   {
     slug: 'boldrin-antony',
@@ -151,6 +166,7 @@ export const FELLOWS: Fellow[] = [
     company: 'Zo House',
     linkedinUrl: 'https://www.linkedin.com/in/boldrin-antony/',
     photo: '/fellows/boldrin-antony.jpg',
+    tagline: 'Runs Zo House, India’s flagship hacker community space.',
   },
   {
     slug: 'rayyan-zahid',
@@ -163,6 +179,7 @@ export const FELLOWS: Fellow[] = [
     // From GitHub avatar — unavatar.io/linkedin returned the default
     // placeholder for this profile, so we sourced from his GitHub.
     photo: '/fellows/rayyan-zahid.png',
+    tagline: 'Runs Frontier Tower SF; ran a Nebius workshop on fine-tuning Gemma 4.',
   },
   {
     slug: 'dhruv-diddi',
@@ -173,6 +190,7 @@ export const FELLOWS: Fellow[] = [
     company: 'Solo Tech',
     linkedinUrl: 'https://www.linkedin.com/in/dhruvdiddi/',
     photo: '/fellows/dhruv-diddi.jpg',
+    tagline: 'Solo Tech runs more robotic arms than any other company in the Bay Area.',
   },
   {
     slug: 'sushmita-rashid',
@@ -183,6 +201,7 @@ export const FELLOWS: Fellow[] = [
     company: '',
     linkedinUrl: 'https://www.linkedin.com/in/sushmitaaar/',
     photo: '/fellows/sushmita-rashid.jpg',
+    tagline: 'Top DevRel content creator from Consensys.',
   },
   {
     slug: 'michael-ejeh',
@@ -193,6 +212,7 @@ export const FELLOWS: Fellow[] = [
     company: '',
     linkedinUrl: 'https://www.linkedin.com/in/micheal-marvelous-ejeh-6735711b6/',
     photo: '/fellows/michael-ejeh.jpg',
+    tagline: 'Ambassador with deep ties to the UK builder scene.',
   },
 ];
 

@@ -119,6 +119,15 @@ function FellowCard({fellow}: {fellow: Fellow}) {
               {fellow.company}
             </Text>
           ) : null}
+          {/* Tagline — short promotional one-liner synthesized from the
+              source directory's Notes + Previous Work. Three fellows had
+              no public-facing source material; their cards render
+              without this line. */}
+          {fellow.tagline ? (
+            <Text variant="body-2" color="secondary" className={styles.tagline}>
+              {fellow.tagline}
+            </Text>
+          ) : null}
           {/* City + region as a single chip pair so a card always shows
               both geography axes — region is also the section header but
               repeating it on each card removes the need to scroll up to

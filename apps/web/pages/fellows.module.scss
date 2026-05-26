@@ -123,6 +123,24 @@
   white-space: nowrap;
 }
 
+// Promotional one-liner — italicized so it reads as a pull-quote
+// distinct from the factual role/company text above. Left-bordered in
+// the highlight color so it visually clusters with the rest of the
+// fellow's identity (not as a sibling chip to the city/region row).
+// Clamped to 3 lines; longer taglines get an ellipsis rather than
+// pushing the chips below the fold.
+.tagline {
+  margin: 6px 0 0;
+  padding-left: 10px;
+  border-left: 2px solid var(--nb-color-highlight, #e0ff4f);
+  font-style: italic;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 // City + region chip pair. Lives between body text and the LinkedIn
 // pill so the eye lands on "who → role → org → where" before the call
 // to action.
