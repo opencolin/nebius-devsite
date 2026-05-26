@@ -257,12 +257,9 @@ export const FELLOWS: Fellow[] = [
     slug: 'yong-quan-tan',
     name: 'Yong Quan Tan',
     region: 'APJ',
-    // Singapore per public GitHub profile. Role + company not on file
-    // — neither LinkedIn (blocked) nor GitHub bio surfaced a current
-    // title. Card renders without those fields rather than guessing.
     city: 'Singapore',
     role: '',
-    company: '',
+    company: 'AI Tinkerers',
     linkedinUrl: 'https://www.linkedin.com/in/yong-quan-tan/',
     photo: '/fellows/yong-quan-tan.jpg',
     tagline: 'Runs AI Tinkerers in Singapore.',
