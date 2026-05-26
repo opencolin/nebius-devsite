@@ -40,15 +40,20 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   // right top-to-bottom exactly as the team listed them.
   const featured = FEATURED_FELLOWS;
 
-  // Group by region in REGION_ORDER. Within each region, sort by city
-  // then name so the layout reads geographically. Empty regions are
-  // dropped so we don't render a header with zero cards under it.
+  // Region-grouped roster is HIDDEN for now — passing an empty array so
+  // the render loop below becomes a no-op without ripping out the
+  // grouping logic. Restore by replacing this with the previous
+  // REGION_ORDER.map(...) computation. Reference left in /* */ below.
+  /*
   const byRegion = REGION_ORDER.map((region) => ({
     region,
     fellows: FELLOWS
       .filter((f) => f.region === region)
       .sort((a, b) => a.city.localeCompare(b.city) || a.name.localeCompare(b.name)),
   })).filter((g) => g.fellows.length > 0);
+  */
+  const byRegion: Array<{region: Region; fellows: Fellow[]}> = [];
+
   return {props: {featured, byRegion, total: FELLOWS.length}};
 };
 
@@ -70,7 +75,10 @@ export default function FellowsPage({
         <PageHeader
           eyebrow="Fellows"
           title="The Nebius Builders Network"
-          description={`${total} independent community leaders shipping events, content, and open-source on Nebius — organized by region.`}
+          // Region-grouped roster is hidden for now; describe what's
+          // actually on screen (the Featured rail) rather than the
+          // full ${total}-count we'd otherwise advertise but not show.
+          description={`Featured independent community leaders shipping events, content, and open-source on Nebius.`}
         />
 
         {/* Featured rail — curated 4-wide grid above the region groups.
