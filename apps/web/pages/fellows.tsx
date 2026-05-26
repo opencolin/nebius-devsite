@@ -17,6 +17,7 @@ import {Label, Text} from '@gravity-ui/uikit';
 import {PageHeader} from '@/components/chrome/PageHeader';
 import {PublicLayout} from '@/components/chrome/PublicLayout';
 import {
+  FEATURED_FELLOWS,
   FELLOWS,
   REGION_ORDER,
   fellowInitials,
@@ -28,11 +29,17 @@ import page from '@/styles/page.module.scss';
 import styles from './fellows.module.scss';
 
 interface Props {
+  featured: Fellow[];
   byRegion: Array<{region: Region; fellows: Fellow[]}>;
   total: number;
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
+  // Featured curation — order in FEATURED_SLUGS is preserved (it's an
+  // editorial sequence, not alphabetical), so the grid reads left-to-
+  // right top-to-bottom exactly as the team listed them.
+  const featured = FEATURED_FELLOWS;
+
   // Group by region in REGION_ORDER. Within each region, sort by city
   // then name so the layout reads geographically. Empty regions are
   // dropped so we don't render a header with zero cards under it.
@@ -42,10 +49,11 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
       .filter((f) => f.region === region)
       .sort((a, b) => a.city.localeCompare(b.city) || a.name.localeCompare(b.name)),
   })).filter((g) => g.fellows.length > 0);
-  return {props: {byRegion, total: FELLOWS.length}};
+  return {props: {featured, byRegion, total: FELLOWS.length}};
 };
 
 export default function FellowsPage({
+  featured,
   byRegion,
   total,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -64,6 +72,27 @@ export default function FellowsPage({
           title="The Nebius Builders Network"
           description={`${total} independent community leaders shipping events, content, and open-source on Nebius — organized by region.`}
         />
+
+        {/* Featured rail — curated 4-wide grid above the region groups.
+            Wraps to additional rows past 8 cards; current curation is 9
+            so the third row holds 1 card. */}
+        {featured.length > 0 ? (
+          <section className={styles.featuredSection}>
+            <header className={styles.regionHeader}>
+              <Text variant="caption-2" color="secondary" className={styles.regionEyebrow}>
+                Featured
+              </Text>
+              <Text variant="caption-2" color="secondary">
+                {featured.length} {featured.length === 1 ? 'fellow' : 'fellows'}
+              </Text>
+            </header>
+            <div className={styles.featuredGrid}>
+              {featured.map((f) => (
+                <FellowCard key={f.slug} fellow={f} />
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         {byRegion.map(({region, fellows}) => (
           <section key={region} className={styles.regionSection}>

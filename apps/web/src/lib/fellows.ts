@@ -249,7 +249,47 @@ export const FELLOWS: Fellow[] = [
     photo: '/fellows/masaya-o.jpg',
     tagline: 'Built Akindo, a hackathon platform reaching millions of builders.',
   },
+  {
+    slug: 'yong-quan-tan',
+    name: 'Yong Quan Tan',
+    region: 'APJ',
+    // Singapore per public GitHub profile. Role + company not on file
+    // — neither LinkedIn (blocked) nor GitHub bio surfaced a current
+    // title. Card renders without those fields rather than guessing.
+    city: 'Singapore',
+    role: '',
+    company: '',
+    linkedinUrl: 'https://www.linkedin.com/in/yong-quan-tan/',
+    photo: '/fellows/yong-quan-tan.jpg',
+  },
 ];
+
+// Featured fellows — curated list rendered at the top of /fellows in a
+// 4-column grid above the region-grouped roster. Source of truth for
+// which slugs are featured lives here so the curation decision is in
+// one place, not scattered across 20 entries as a boolean field.
+export const FEATURED_SLUGS: ReadonlyArray<string> = [
+  'linda-haviv',
+  'maroon-ayoub',
+  'dhruv-diddi',
+  'rayyan-zahid',
+  'rapha-gutsche',
+  'boldrin-antony',
+  'mel-cordoba',
+  'kosseila-hd',
+  'yong-quan-tan',
+];
+
+// Resolve FEATURED_SLUGS → Fellow records, preserving order. Throws at
+// import time if a slug is missing so a typo here surfaces immediately
+// instead of producing a quietly-shorter Featured row.
+export const FEATURED_FELLOWS: Fellow[] = FEATURED_SLUGS.map((slug) => {
+  const fellow = FELLOWS.find((f) => f.slug === slug);
+  if (!fellow) {
+    throw new Error(`FEATURED_SLUGS references unknown slug: ${slug}`);
+  }
+  return fellow;
+});
 
 // Region display order — North America first since most fellows live
 // there, then EMEA, LATAM, APJ. Used by /fellows to group cards.
