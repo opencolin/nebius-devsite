@@ -262,7 +262,7 @@ export const FELLOWS: Fellow[] = [
     company: 'AI Tinkerers',
     linkedinUrl: 'https://www.linkedin.com/in/yong-quan-tan/',
     photo: '/fellows/yong-quan-tan.jpg',
-    tagline: 'Runs AI Tinkerers in Singapore.',
+    tagline: 'Designs UGC content factories for performance marketing; hosts a podcast on Singapore tech leaders.',
   },
 ];
 
