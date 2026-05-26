@@ -137,7 +137,7 @@ export const FELLOWS: Fellow[] = [
     company: 'Frutero Club',
     linkedinUrl: 'https://www.linkedin.com/in/mel-mc/',
     photo: '/fellows/mel-cordoba.jpg',
-    tagline: 'Shipped a NemoClaw webinar and reported real bugs in Nebius models.',
+    tagline: 'Shipped a NemoClaw workshop and reported real bugs in Nebius models.',
   },
   {
     slug: 'alejandra-marin',
