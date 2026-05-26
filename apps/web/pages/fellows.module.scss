@@ -160,9 +160,16 @@
   gap: 8px;
 }
 
-.linkedin {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--g-color-text-link);
-  white-space: nowrap;
+// LinkedIn brand icon — secondary text color at rest so it doesn't shout
+// against the city/region chips, fades to the LinkedIn brand blue (#0a66c2)
+// when the card is hovered. The whole card is the click target so the
+// icon's role is signal, not affordance.
+.linkedinIcon {
+  color: var(--g-color-text-secondary);
+  transition: color 120ms ease;
+  display: block;
+}
+
+.card:hover .linkedinIcon {
+  color: #0a66c2;
 }

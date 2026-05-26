@@ -214,6 +214,41 @@ export const FELLOWS: Fellow[] = [
     photo: '/fellows/michael-ejeh.jpg',
     tagline: 'Ambassador with deep ties to the UK builder scene.',
   },
+  {
+    slug: 'mike-lin',
+    name: 'Mike Lin',
+    region: 'APJ',
+    city: 'Taipei',
+    role: 'Community Founder',
+    company: 'Tempo House',
+    linkedinUrl: 'https://www.linkedin.com/in/mikelin9/',
+    photo: '/fellows/mike-lin.jpg',
+    tagline: 'Leads a popular builder community venue in Taipei.',
+  },
+  {
+    slug: 'michael-s',
+    name: 'Michael S',
+    region: 'APJ',
+    // Source had "Tapei" — normalized to Taipei to match Mike Lin above
+    // and avoid two chips for the same city if we ever add a city filter.
+    city: 'Taipei',
+    role: 'Founder',
+    company: 'ED3N',
+    linkedinUrl: 'https://www.linkedin.com/in/miketpe/',
+    photo: '/fellows/michael-s.jpg',
+    tagline: 'Cohosts hackathons and builder events in Taipei.',
+  },
+  {
+    slug: 'masaya-o',
+    name: 'Masaya O',
+    region: 'APJ',
+    city: 'Tokyo',
+    role: 'Community Leader',
+    company: 'Akindo.io',
+    linkedinUrl: 'https://www.linkedin.com/in/mozok/',
+    photo: '/fellows/masaya-o.jpg',
+    tagline: 'Built Akindo, a hackathon platform reaching millions of builders.',
+  },
 ];
 
 // Region display order — North America first since most fellows live
