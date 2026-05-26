@@ -119,10 +119,14 @@ export const FELLOWS: Fellow[] = [
     name: 'Linda Haviv',
     region: 'North America',
     city: 'New York',
-    role: '',
-    company: '',
+    // Role + company backfilled when the tagline pull surfaced
+    // "Anyscale DevRel" — split into structured fields so the card's
+    // role/org slots aren't empty under a tagline that references them.
+    role: 'DevRel',
+    company: 'Anyscale',
     linkedinUrl: 'https://www.linkedin.com/in/lindahaviv/',
     photo: '/fellows/linda-haviv.png',
+    tagline: '250k+ community. Ray OSS contributor. Formerly AWS.',
   },
   {
     slug: 'mel-cordoba',
@@ -179,7 +183,7 @@ export const FELLOWS: Fellow[] = [
     // From GitHub avatar — unavatar.io/linkedin returned the default
     // placeholder for this profile, so we sourced from his GitHub.
     photo: '/fellows/rayyan-zahid.png',
-    tagline: 'Runs Frontier Tower SF; ran a Nebius workshop on fine-tuning Gemma 4.',
+    tagline: 'Ran a Nebius workshop on fine-tuning Gemma 4.',
   },
   {
     slug: 'dhruv-diddi',
@@ -261,6 +265,7 @@ export const FELLOWS: Fellow[] = [
     company: '',
     linkedinUrl: 'https://www.linkedin.com/in/yong-quan-tan/',
     photo: '/fellows/yong-quan-tan.jpg',
+    tagline: 'Runs AI Tinkerers in Singapore.',
   },
 ];
 
