@@ -81,9 +81,9 @@ export default function FellowsPage({
           description={`Featured independent community leaders shipping events, content, and open-source on Nebius.`}
         />
 
-        {/* Featured rail — curated 4-wide grid above the region groups.
-            Wraps to additional rows past 8 cards; current curation is 9
-            so the third row holds 1 card. */}
+        {/* Featured rail — curated 3-wide grid above the region groups
+            (region grid currently hidden, restored via getStaticProps).
+            Current curation is 9 fellows → clean 3×3 on desktop. */}
         {featured.length > 0 ? (
           <section className={styles.featuredSection}>
             <header className={styles.regionHeader}>

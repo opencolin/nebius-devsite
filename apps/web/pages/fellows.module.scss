@@ -3,11 +3,10 @@
 // detail pages), so the affordance is an external-link arrow instead
 // of a "Book office hours" CTA.
 
-// Featured rail at the top of /fellows — curated 4-up grid. Renders
-// above the region-grouped roster. 1 / 2 / 4 columns at the same
-// breakpoints as page.grid3 (and below), with one extra step up to 4
-// since this section is specifically meant to be denser than the 3-col
-// regional grid below.
+// Featured rail at the top of /fellows — curated 3-up grid. Renders
+// above the region-grouped roster (when re-enabled). 1 / 2 / 3
+// columns at the same breakpoints as page.grid3. Current curation is
+// 9 fellows, so on desktop this lays out as a clean 3×3.
 .featuredSection {
   margin-top: 24px;
 }
@@ -18,7 +17,7 @@
   gap: 16px;
 
   @media (min-width: 640px) { grid-template-columns: 1fr 1fr; }
-  @media (min-width: 1024px) { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  @media (min-width: 1024px) { grid-template-columns: 1fr 1fr 1fr; }
 }
 
 .regionSection {
