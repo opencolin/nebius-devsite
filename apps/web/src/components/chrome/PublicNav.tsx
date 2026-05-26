@@ -25,6 +25,7 @@ const NAV: Array<{href: string; label: string}> = [
   {href: '/events', label: 'Events'},
   {href: '/library', label: 'Library'},
   {href: '/apps', label: 'Apps'},
+  {href: '/fellows', label: 'Fellows'},
   {href: '/office-hours', label: 'Office Hours'},
   {href: '/integrations', label: 'Integrations'},
 ];

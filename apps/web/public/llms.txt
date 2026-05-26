@@ -45,6 +45,10 @@ how their main marketing site already works.
   docs page.
 - [Team](https://demo.buildspace.sh/team): the Nebius DevRel team and
   community advocates.
+- [Fellows](https://demo.buildspace.sh/fellows): independent community
+  leaders in the Builders Network — event organizers, OSS contributors,
+  and developer advocates grouped by region (EMEA / North America /
+  LATAM / APJ). Each card links out to LinkedIn.
 - [Office Hours](https://demo.buildspace.sh/office-hours): drop-in
   troubleshooting + product feedback sessions.
 - [Builders](https://demo.buildspace.sh/builders): overview of the

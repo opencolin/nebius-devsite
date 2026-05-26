@@ -1,0 +1,119 @@
+// /fellows — region-grouped card grid. Visual rhythm matches /team but
+// every card opens to LinkedIn (whereas /team cards open to internal
+// detail pages), so the affordance is an external-link arrow instead
+// of a "Book office hours" CTA.
+
+.regionSection {
+  margin-top: 40px;
+
+  &:first-of-type {
+    margin-top: 24px;
+  }
+}
+
+.regionHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--g-color-line-generic);
+}
+
+.regionEyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+}
+
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.card {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  height: 100%;
+  background: var(--g-color-base-float);
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: var(--g-border-radius-l);
+  transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+
+  &:hover {
+    border-color: var(--nb-color-private-navyblue-300, rgba(5, 43, 66, 0.3));
+    box-shadow: var(--g-shadow-soft);
+    transform: translateY(-1px);
+  }
+}
+
+.photo {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  object-fit: cover;
+  background: var(--nb-color-private-navyblue-50, rgba(5, 43, 66, 0.05));
+}
+
+// Initials fallback when a fellow has no photo on file. Same shape +
+// size as .photo so the grid layout doesn't shift between cards that
+// do and don't have an image.
+.initials {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  background: var(--nb-color-private-navyblue-100, rgba(5, 43, 66, 0.1));
+  color: var(--nb-color-private-navyblue-1000, #052b42);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  user-select: none;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0; // lets long roles ellipsis correctly inside flex
+  flex: 1;
+}
+
+.name {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.role {
+  // Two-line clamp — long roles like "Research Scientist & Architect,
+  // AI Infrastructure" wrap naturally without pushing the LinkedIn
+  // pill below the fold.
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+}
+
+.metaRow {
+  margin-top: auto;
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.linkedin {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--g-color-text-link);
+  white-space: nowrap;
+}
