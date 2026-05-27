@@ -34,6 +34,34 @@
   flex: 1;
 }
 
+// IntegrationCard variant — same .card chassis as community projects, but
+// no cover area at the top (integrations don't have hackathon/award
+// gradients to differentiate them). The "INTEGRATION" label up top is
+// the visual cue distinguishing these cards in the mixed Ecosystem grid.
+.integrationCard {
+  // Inherits .card defaults (border, hover, etc.). No additional rules
+  // needed beyond hosting .integrationBody — the body padding handles
+  // the "no cover" layout difference.
+}
+
+.integrationBody {
+  padding: 16px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.integrationKind {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  // Soft lime accent — same color the highlight-text role uses on
+  // dark surfaces. On the integration card it reads as "this is a
+  // different kind of thing" without shouting.
+  color: var(--g-color-text-misc);
+}
+
 .cardHead {
   display: flex;
   flex-direction: column;

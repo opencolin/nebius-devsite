@@ -36,7 +36,10 @@ const STATIC_ROUTES: Array<{path: string; changefreq: string; priority: number}>
   {path: '/events', changefreq: 'daily', priority: 0.9},
   {path: '/library', changefreq: 'daily', priority: 0.9},
   {path: '/apps', changefreq: 'daily', priority: 0.9},
-  {path: '/integrations', changefreq: 'weekly', priority: 0.8},
+  // /integrations decommissioned — folded into /apps as the unified
+  // Ecosystem directory. URL 301-redirects via next.config.js so old
+  // inbound links still resolve, but the sitemap should advertise the
+  // canonical /apps route only.
   {path: '/team', changefreq: 'weekly', priority: 0.7},
   // /fellows intentionally NOT in the sitemap — the page is hidden from
   // the public site (no nav link, noindex meta). Direct-URL access still

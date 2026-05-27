@@ -24,17 +24,18 @@ import styles from './PublicNav.module.scss';
 const NAV: Array<{href: string; label: string}> = [
   {href: '/events', label: 'Events'},
   {href: '/library', label: 'Library'},
-  {href: '/apps', label: 'Apps'},
+  // "Ecosystem" used to be "Apps" — renamed when /integrations folded
+  // into the /apps page as a unified directory. URL stays /apps so all
+  // existing deep links (/apps/<slug>) and sitemap entries keep working.
+  {href: '/apps', label: 'Ecosystem'},
   // /fellows hidden — the page itself still resolves at /fellows for
   // direct-URL access (and emits noindex,nofollow), but is intentionally
   // not linked from anywhere on the site, sitemap, or llms.txt while
   // the Featured roll-call is being curated. Restore by uncommenting.
   // {href: '/fellows', label: 'Fellows'},
   {href: '/office-hours', label: 'Office Hours'},
-  // /integrations hidden from the nav for now — the page itself still
-  // exists at https://demo.buildspace.sh/integrations and is in the
-  // sitemap; only the nav entry is suppressed. Restore by uncommenting.
-  // {href: '/integrations', label: 'Integrations'},
+  // /integrations decommissioned — folded into /apps as the unified
+  // Ecosystem directory. URL 301-redirects to /apps via next.config.js.
 ];
 
 export function PublicNav() {

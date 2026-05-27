@@ -87,6 +87,19 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      // /integrations folded into /apps as the unified Ecosystem directory.
+      // Permanent 301 so search engines + any external inbound links land
+      // on the canonical page without a 404. Triggers a single redirect
+      // at the Next.js edge; users see /apps in the address bar.
+      {
+        source: '/integrations',
+        destination: '/apps',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
