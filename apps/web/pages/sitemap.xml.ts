@@ -38,7 +38,10 @@ const STATIC_ROUTES: Array<{path: string; changefreq: string; priority: number}>
   {path: '/apps', changefreq: 'daily', priority: 0.9},
   {path: '/integrations', changefreq: 'weekly', priority: 0.8},
   {path: '/team', changefreq: 'weekly', priority: 0.7},
-  {path: '/fellows', changefreq: 'weekly', priority: 0.7},
+  // /fellows intentionally NOT in the sitemap — the page is hidden from
+  // the public site (no nav link, noindex meta). Direct-URL access still
+  // works but we don't want crawlers indexing or AI agents linking to it
+  // until the Featured curation is final.
   {path: '/builders/all', changefreq: 'weekly', priority: 0.6},
   {path: '/search', changefreq: 'monthly', priority: 0.4},
   // /signup and /office-hours are ALSO served by the CMS catch-all, but

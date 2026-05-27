@@ -25,7 +25,11 @@ const NAV: Array<{href: string; label: string}> = [
   {href: '/events', label: 'Events'},
   {href: '/library', label: 'Library'},
   {href: '/apps', label: 'Apps'},
-  {href: '/fellows', label: 'Fellows'},
+  // /fellows hidden — the page itself still resolves at /fellows for
+  // direct-URL access (and emits noindex,nofollow), but is intentionally
+  // not linked from anywhere on the site, sitemap, or llms.txt while
+  // the Featured roll-call is being curated. Restore by uncommenting.
+  // {href: '/fellows', label: 'Fellows'},
   {href: '/office-hours', label: 'Office Hours'},
   // /integrations hidden from the nav for now — the page itself still
   // exists at https://demo.buildspace.sh/integrations and is in the

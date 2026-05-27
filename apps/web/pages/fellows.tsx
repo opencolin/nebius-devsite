@@ -70,6 +70,14 @@ export default function FellowsPage({
           name="description"
           content="Independent community leaders in the Nebius Builders Network — event organizers, open-source contributors, and developer advocates across EMEA, North America, LATAM, and APJ."
         />
+        {/* Page is intentionally hidden from the public site (no nav link,
+            not in sitemap, not in llms.txt). noindex + nofollow keeps
+            search engines and AI crawlers from indexing it even if they
+            discover the URL through a referer, social share, or a stray
+            inbound link. Remove these two lines to make it discoverable
+            again. */}
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="googlebot" content="noindex, nofollow" />
       </Head>
       <div className={page.container}>
         <PageHeader
