@@ -319,6 +319,83 @@
 }
 
 // -----------------------------------------------------------------------------
+// Host-an-event CTA. Horizontal card placed between the sticky city filter
+// and the Upcoming list. Whole card is the click target via a wrapping
+// <Link>; .hostBannerLink resets default anchor styling so the inner
+// .hostBanner controls all the visual treatment. On hover the card lifts
+// + the right-side button picks up the standard action color via Gravity
+// UI defaults — no extra hover state is wired here because the button
+// handles its own.
+// -----------------------------------------------------------------------------
+
+.hostBannerLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  margin-top: 8px;
+  margin-bottom: 24px;
+
+  &:hover .hostBanner {
+    border-color: var(--g-color-line-brand);
+    transform: translateY(-1px);
+  }
+}
+
+.hostBanner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 24px;
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: 12px;
+  background: var(--g-color-base-float);
+  transition: transform 120ms ease, border-color 120ms ease;
+}
+
+.hostBannerCopy {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hostBannerEyebrow {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.hostBannerTitle {
+  margin: 0;
+}
+
+.hostBannerLede {
+  display: block;
+  margin: 0;
+  max-width: 64ch;
+}
+
+.hostBannerCta {
+  flex-shrink: 0;
+}
+
+// On phones the right-side button drops below the copy block so neither
+// gets squeezed. Same flex pattern as the event cards' footer area.
+@media (max-width: 720px) {
+  .hostBanner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .hostBannerCta {
+    align-self: flex-start;
+  }
+}
+
+// -----------------------------------------------------------------------------
 // Full-bleed dark map hero. The map (EventsMap variant="dark") sits as the
 // background; a small left-side gradient keeps the title readable; the rest
 // of the hero stays clickable so users can hit any city pin.

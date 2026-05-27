@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
 import {Button, Label, Text} from '@gravity-ui/uikit';
+import Link from 'next/link';
 import {useRouter} from 'next/router';
 import {useState} from 'react';
 
@@ -153,6 +154,15 @@ export default function EventsPage({
       />
 
       <div className={page.container} style={{paddingTop: 24}}>
+        {/* Host-an-event CTA. Sits above the Upcoming list so visitors who
+            scrolled past the map + filter see the offer first — most
+            people on /events came to attend, but anyone considering
+            running one in their city is exactly the audience we want.
+            Destination is the /localhosts CMS page ("Run a Nebius event
+            in your city"), which owns the program details and the
+            actual application form. */}
+        <HostEventBanner />
+
         <Section
           title="Upcoming"
           events={upcoming}
@@ -318,6 +328,41 @@ function CityFilter({
         </div>
       </div>
     </div>
+  );
+}
+
+// Horizontal CTA card pointing to /localhosts. Shown on every /events
+// pageload between the sticky city filter and the Upcoming list — the
+// natural "I see what's happening, now what if I want to bring it
+// here?" beat. Wrapped in a single <Link> so the whole card is the
+// click target (same affordance as the event cards above it). Copy
+// promises the destination concretely: not just "host an event" but
+// "Token Factory credits, swag, and amplification from us" so the
+// click is informed rather than a leap of faith.
+function HostEventBanner() {
+  return (
+    <Link href="/localhosts" className={styles.hostBannerLink}>
+      <div className={styles.hostBanner}>
+        <div className={styles.hostBannerCopy}>
+          <Text variant="caption-2" color="info" className={styles.hostBannerEyebrow}>
+            Local Hosts program
+          </Text>
+          <Text variant="subheader-2" as="h2" className={styles.hostBannerTitle}>
+            Run a Nebius event in your city.
+          </Text>
+          <Text variant="body-2" color="secondary" className={styles.hostBannerLede}>
+            Bring builders together, claim Token Factory credits for the room,
+            and get amplification from the Nebius DevRel team. We back
+            organizers with sponsorship, swag, and a starter playbook.
+          </Text>
+        </div>
+        <div className={styles.hostBannerCta}>
+          <Button view="action" size="l" pin="circle-circle">
+            Become a Local Host →
+          </Button>
+        </div>
+      </div>
+    </Link>
   );
 }
 
