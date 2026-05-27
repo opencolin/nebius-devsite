@@ -5,61 +5,50 @@
 
 // ---- Hero ----
 //
-// PhosphorMesh (variant-B1a Soft Haze) is positioned absolute behind the
-// content. The hero is dark-mode regardless of the global theme — the
-// ribbon's deep-forest scene background dominates and the lime peak draws
-// the eye. Text reads in white with a faint navy overlay for legibility
-// over the bright peak band when it sweeps under the headline.
+// Permanently dark hero — uses the brand navy (--nb-color-primary =
+// #061a26, the same color the rest of the page uses in dark mode) so it
+// reads as on-brand instead of a flat near-black. Previously this was
+// #04060a to match PhosphorMesh's WebGL scene background; the mesh was
+// removed in the prior commit and the lingering near-black looked
+// off-key next to the dark-mode page chrome.
+//
+// A subtle radial highlight in .heroOverlay lifts the top-left so the
+// title + lede sit on a slightly brighter patch — gives the hero some
+// depth without reintroducing a heavy animation.
 .hero {
   position: relative;
   width: 100%;
   padding: 88px 24px 80px;
-  background: #04060a; // matches PhosphorMesh's scene background; pre-paint
+  // Hardcoded #061a26 (not var(--g-color-base-background)) because the
+  // hero is intentionally dark in BOTH light + dark themes — the white
+  // page chrome around it provides contrast in light mode, and in dark
+  // mode it blends seamlessly with the rest of the page.
+  background: #061a26;
   overflow: hidden;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  // Tall enough that the ribbon visibly arcs across the hero on most
-  // viewports without forcing the headline below the fold.
   min-height: 460px;
   display: flex;
   align-items: center;
 }
 
-.heroBg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-
-  // PhosphorMesh ships with aspect-ratio: 21/9 — but the hero may be wider
-  // or taller than that ratio. Stretch the inner div so the canvas fills
-  // the hero edge-to-edge regardless.
-  > div {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    aspect-ratio: auto !important;
-  }
-
-  > div > canvas {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover;
-  }
-}
-
-// Soft top-left fade so the headline + lede sit on a darker patch and read
-// cleanly even when the lime peak sweeps underneath.
+// Subtle top-left aurora so the hero has visual interest without a heavy
+// animation. Two stacked radials in lifted-navy + lime (matches the brand
+// highlight color used elsewhere on the site) — kept low-opacity so they
+// read as a soft glow rather than a competing element.
 .heroOverlay {
   position: absolute;
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(
-      105deg,
-      rgba(4, 6, 10, 0.78) 0%,
-      rgba(4, 6, 10, 0.52) 38%,
-      rgba(4, 6, 10, 0.18) 70%,
-      rgba(4, 6, 10, 0) 100%
+    radial-gradient(
+      circle at 18% 22%,
+      rgba(224, 255, 79, 0.08) 0%,
+      rgba(224, 255, 79, 0) 38%
+    ),
+    radial-gradient(
+      ellipse at 12% 0%,
+      rgba(20, 60, 90, 0.55) 0%,
+      rgba(20, 60, 90, 0) 55%
     );
   pointer-events: none;
 }
