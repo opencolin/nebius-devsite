@@ -119,11 +119,8 @@ export const FELLOWS: Fellow[] = [
     name: 'Linda Haviv',
     region: 'North America',
     city: 'New York',
-    // Role + company backfilled when the tagline pull surfaced
-    // "Anyscale DevRel" — split into structured fields so the card's
-    // role/org slots aren't empty under a tagline that references them.
-    role: 'Founder / Dev Advocate',
-    company: 'Anyscale',
+    role: 'Founder',
+    company: 'LindaV Media Labs',
     linkedinUrl: 'https://www.linkedin.com/in/lindahaviv/',
     photo: '/fellows/linda-haviv.png',
     tagline: '250k+ community. Ray OSS contributor. Formerly AWS.',
