@@ -179,6 +179,14 @@
   }
 }
 
+// Primary CTA spacer — wraps the ExternalSourceButton on detail pages
+// without a video embed (repos, docs, recordings). Gives the action
+// button breathing room above and below so it reads as a deliberate
+// pause between the header and the body markdown, not just a paragraph.
+.externalCta {
+  margin: 24px 0 8px;
+}
+
 // YouTube iframe wrapper — responsive 16:9 container that holds the player
 // edge-to-edge inside the narrow content column.
 .videoEmbed {
