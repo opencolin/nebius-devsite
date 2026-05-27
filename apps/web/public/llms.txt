@@ -36,11 +36,18 @@ how their main marketing site already works.
   and code repos for getting productive on Nebius. Filterable by type
   (Workshop / Video / Repo) and by product focus (AI Cloud, Token
   Factory, OpenClaw, Soperator).
-- [Ecosystem](https://demo.buildspace.sh/apps): unified directory of
-  community-built apps on Nebius PLUS partner integrations that plug
-  into our products. Filterable by Kind (Community / Integration) and
-  by product (AI Cloud, Token Factory, OpenClaw, Soperator, Tavily).
-  /integrations 301-redirects here.
+- [Ecosystem](https://demo.buildspace.sh/ecosystem): unified directory
+  of community-built apps PLUS partner integrations. Filterable by Kind
+  (Community / Integration) and by product (AI Cloud, Token Factory,
+  OpenClaw, Soperator, Tavily). The two sub-views below show each
+  source on its own.
+- [Apps](https://demo.buildspace.sh/apps): community-built apps on
+  Nebius. Filterable by product, hackathon track, and featured/award
+  status. Each entry deep-links to /apps/<slug> for the project detail.
+- [Integrations](https://demo.buildspace.sh/integrations): partner
+  integrations — frameworks, gateways, orchestrators, observability
+  tools that plug into Nebius products. Curated list with deep links
+  to each integration's docs page.
 - [Team](https://demo.buildspace.sh/team): the Nebius DevRel team and
   community advocates.
 - [Office Hours](https://demo.buildspace.sh/office-hours): drop-in

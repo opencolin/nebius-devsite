@@ -56,7 +56,11 @@ param githubClientId string = ''
 param githubClientSecret string = ''
 
 @description('Comma-separated list of post-OAuth redirect URLs. Each one must exactly match what the LoginForm sends in the `redirect` query param.')
-param githubRedirectAllowList string = 'https://demo.buildspace.sh/portal,https://demo.buildspace.sh/portal/checklist,https://demo.buildspace.sh'
+// Both demo.buildspace.sh and demo.buildspace.tv resolve to this stack;
+// Directus's OAuth redirect rejects any URL not on this allow-list with
+// "URL X can't be used to redirect after login" so both apex + /portal +
+// /portal/checklist variants of each domain must be listed explicitly.
+param githubRedirectAllowList string = 'https://demo.buildspace.sh/portal,https://demo.buildspace.sh/portal/checklist,https://demo.buildspace.sh,https://demo.buildspace.tv/portal,https://demo.buildspace.tv/portal/checklist,https://demo.buildspace.tv'
 
 @description('UUID of the Directus role that GitHub-authed users land in by default (created out-of-band via /roles).')
 param defaultBuilderRoleId string = '8ad54e0b-0e9f-414c-8558-8134c30f79d9'

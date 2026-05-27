@@ -12,7 +12,7 @@
 import type {GetStaticProps, InferGetStaticPropsType} from 'next';
 import Head from 'next/head';
 
-import {Label, Text} from '@gravity-ui/uikit';
+import {Button, Label, Text} from '@gravity-ui/uikit';
 
 import {PageHeader} from '@/components/chrome/PageHeader';
 import {PublicLayout} from '@/components/chrome/PublicLayout';
@@ -82,11 +82,42 @@ export default function FellowsPage({
       <div className={page.container}>
         <PageHeader
           eyebrow="Fellows"
-          title="The Nebius Builders Network"
-          // Region-grouped roster is hidden for now; describe what's
-          // actually on screen (the Featured rail) rather than the
-          // full ${total}-count we'd otherwise advertise but not show.
-          description={`Featured independent community leaders shipping events, content, and open-source on Nebius.`}
+          title="Nebius Fellows"
+          description="A global cohort of independent community leaders helping shape the Nebius ecosystem. Fellows organize events, ship open source, create tutorials, and connect Nebius products to the builders using them. Know someone who fits the program? Nominate them."
+          actions={
+            <Button
+              view="action"
+              size="l"
+              // GitHub new-issue intent URL with prefilled title + body.
+              // Lower-friction than mailto (no email client juggling) and
+              // gives the team a reviewable queue in one place. Template
+              // asks for the fields we'd want on a fellow card: name,
+              // where they're based, LinkedIn, what they're building.
+              href={
+                'https://github.com/opencolin/nebius-devsite/issues/new' +
+                '?title=' +
+                encodeURIComponent('Fellow nomination: <name>') +
+                '&body=' +
+                encodeURIComponent(
+                  [
+                    '**Name:**',
+                    '**City / region:**',
+                    '**Role / company:**',
+                    '**LinkedIn:**',
+                    '**What they’re building / known for:**',
+                    '',
+                    '**Why they’d be a great fellow:**',
+                    '',
+                    '_(Your name + relationship to them is helpful too.)_',
+                  ].join('\n'),
+                )
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Nominate a fellow
+            </Button>
+          }
         />
 
         {/* Featured rail — curated 3-wide grid above the region groups

@@ -1,26 +1,10 @@
-// /apps — the Nebius Ecosystem directory.
+// /apps — index of community + hackathon projects.
 //
-// Combines two data sources into a single grid:
-//
-//   1. Community projects from the Directus `projects` collection (cards
-//      with a colored cover, builder byline, stars footer — the original
-//      /apps card shape, unchanged).
-//   2. Partner integrations from src/lib/ecosystem-partners.ts (cards
-//      with a simpler text-only shape — what used to live at the now-
-//      decommissioned /integrations route).
-//
-// Filter row: All + Community / Integration (kind), then product chips
-// (Token Factory, AI Cloud, OpenClaw, Soperator, Tavily) that apply to
-// both kinds. The old apps-only chips (Featured / Robotics / JetBrains /
-// Other) were dropped to keep the chip row manageable — they'd only
-// make sense when Kind=Community anyway. Easy to re-add as a second
-// chip row if curation needs it.
-//
-// URL stays /apps (label says "Ecosystem"). Renaming the URL would
-// break every /apps/<slug> deep link, the sitemap entries, and the
-// project detail page (OpenClaw, etc.) — all of which now serve as
-// canonical URLs for community projects. /integrations 301-redirects
-// to /apps via next.config.js.
+// Cards mirror the upstream nebius-builders-3 design: each project has a
+// gradient cover area at the top (different look per hackathon / award),
+// then title + tagline + tag chips below, with a builder footer. Award
+// and product-focus pills are positioned over the cover so they read
+// against the colored backdrop instead of competing with the title.
 
 import {readItems} from '@directus/sdk';
 import type {GetStaticProps, InferGetStaticPropsType} from 'next';
@@ -33,12 +17,6 @@ import {Label, SegmentedRadioGroup, Text} from '@gravity-ui/uikit';
 import {PageHeader} from '@/components/chrome/PageHeader';
 import {PublicLayout} from '@/components/chrome/PublicLayout';
 import {directusServer} from '@/lib/directus';
-import {
-  CATEGORY_LABEL,
-  ECOSYSTEM_PARTNERS,
-  PRODUCT_LABEL as PARTNER_PRODUCT_LABEL,
-  type EcosystemPartner,
-} from '@/lib/ecosystem-partners';
 import {formatNumber} from '@/lib/format';
 import {isPlaceholderProject} from '@/lib/projects';
 
@@ -61,34 +39,32 @@ interface Project {
 
 const FILTERS = [
   'All',
-  'Community',
-  'Integration',
+  'Featured',
   'Token Factory',
   'AI Cloud',
   'OpenClaw',
   'Soperator',
   'Tavily',
+  'Robotics',
+  'JetBrains',
+  'Other',
 ] as const;
 type Filter = (typeof FILTERS)[number];
 
-// Two product vocabularies need bridging:
-//   - Directus `product_focus` enum: tokenfactory / aicloud / openclaw / soperator / tavily
-//   - Partner data:                  token-factory / ai-cloud / tavily (hyphenated)
-// Filter rows above use a single display label; PRODUCT_KEYS holds the
-// matching value in each vocabulary so a single chip can filter both
-// data sources without duplication.
-const PRODUCT_KEYS: Record<string, {apps: string; integrations: string | null}> = {
-  'Token Factory': {apps: 'tokenfactory', integrations: 'token-factory'},
-  'AI Cloud': {apps: 'aicloud', integrations: 'ai-cloud'},
-  OpenClaw: {apps: 'openclaw', integrations: null}, // no integration partner uses openclaw
-  Soperator: {apps: 'soperator', integrations: null},
-  Tavily: {apps: 'tavily', integrations: 'tavily'},
+// Directus product_focus enum is single-word lowercase (tokenfactory, aicloud,
+// etc.), NOT snake_case. The old token_factory / ai_cloud keys silently
+// returned zero matches for the two largest product chips on /apps. Verified
+// the actual enum values via Directus REST (apps + library both store
+// "tokenfactory" / "aicloud" — never the underscored forms).
+const PRODUCT_FILTER_KEY: Record<string, string> = {
+  'Token Factory': 'tokenfactory',
+  'AI Cloud': 'aicloud',
+  OpenClaw: 'openclaw',
+  Soperator: 'soperator',
+  Tavily: 'tavily',
 };
 
-// Label for the small product chips that appear ON each card. Apps store
-// the apps-vocabulary value (tokenfactory) but we want to render
-// "Token Factory" — same mapping the old PRODUCT_LABEL did.
-const APPS_PRODUCT_LABEL: Record<string, string> = {
+const PRODUCT_LABEL: Record<string, string> = {
   tokenfactory: 'Token Factory',
   aicloud: 'AI Cloud',
   openclaw: 'OpenClaw',
@@ -96,10 +72,7 @@ const APPS_PRODUCT_LABEL: Record<string, string> = {
   tavily: 'Tavily',
 };
 
-export const getStaticProps: GetStaticProps<{
-  projects: Project[];
-  partners: EcosystemPartner[];
-}> = async () => {
+export const getStaticProps: GetStaticProps<{projects: Project[]}> = async () => {
   const directus = directusServer();
   const raw = (await directus.request(
     readItems('projects', {
@@ -109,69 +82,52 @@ export const getStaticProps: GetStaticProps<{
     }),
   )) as Project[];
   const projects = raw.filter((p) => !isPlaceholderProject(p));
-  return {props: {projects, partners: ECOSYSTEM_PARTNERS}, revalidate: 60};
+  return {props: {projects}, revalidate: 60};
 };
 
-export default function EcosystemPage({
+export default function ProjectsPage({
   projects,
-  partners,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [filter, setFilter] = useState<Filter>('All');
 
-  // Apply the active filter to each data source independently. Kind
-  // filters (Community / Integration) zero out the other source entirely.
-  // Product filters narrow each source by its own vocabulary.
-  const filteredProjects = useMemo(() => {
-    if (filter === 'All' || filter === 'Community') return projects;
-    if (filter === 'Integration') return [];
-    const key = PRODUCT_KEYS[filter]?.apps;
-    if (!key) return projects;
-    return projects.filter((p) => (p.product_focus ?? []).includes(key));
+  const filtered = useMemo(() => {
+    if (filter === 'All') return projects;
+    if (filter === 'Featured') return projects.filter((p) => p.featured || p.award);
+    if (filter === 'Robotics') return projects.filter((p) => p.hackathon === 'robotics');
+    if (filter === 'JetBrains') return projects.filter((p) => p.hackathon === 'jetbrains');
+    if (filter === 'Other') return projects.filter((p) => p.category === 'Other');
+    const key = PRODUCT_FILTER_KEY[filter];
+    if (key) return projects.filter((p) => (p.product_focus ?? []).includes(key));
+    return projects;
   }, [projects, filter]);
 
-  const filteredPartners = useMemo(() => {
-    if (filter === 'All' || filter === 'Integration') return partners;
-    if (filter === 'Community') return [];
-    const key = PRODUCT_KEYS[filter]?.integrations;
-    if (!key) return [];
-    return partners.filter((p) => p.products.includes(key as EcosystemPartner['products'][number]));
-  }, [partners, filter]);
-
-  // Per-chip counts use the full datasets (not the currently-filtered
-  // ones) so each chip's number is a stable "if I pick this, here's
-  // what I'll get" preview, not a post-filter total.
   const counts = useMemo(() => {
     const c: Record<Filter, number> = {} as Record<Filter, number>;
-    c.All = projects.length + partners.length;
-    c.Community = projects.length;
-    c.Integration = partners.length;
-    for (const [label, keys] of Object.entries(PRODUCT_KEYS)) {
-      const appsCount = projects.filter((p) => (p.product_focus ?? []).includes(keys.apps)).length;
-      const intCount = keys.integrations
-        ? partners.filter((p) => p.products.includes(keys.integrations as EcosystemPartner['products'][number])).length
-        : 0;
-      c[label as Filter] = appsCount + intCount;
+    c.All = projects.length;
+    c.Featured = projects.filter((p) => p.featured || p.award).length;
+    c.Robotics = projects.filter((p) => p.hackathon === 'robotics').length;
+    c.JetBrains = projects.filter((p) => p.hackathon === 'jetbrains').length;
+    c.Other = projects.filter((p) => p.category === 'Other').length;
+    for (const [label, key] of Object.entries(PRODUCT_FILTER_KEY)) {
+      c[label as Filter] = projects.filter((p) => (p.product_focus ?? []).includes(key)).length;
     }
     return c;
-  }, [projects, partners]);
-
-  const totalVisible = filteredProjects.length + filteredPartners.length;
-  const totalAll = projects.length + partners.length;
+  }, [projects]);
 
   return (
     <PublicLayout>
       <Head>
-        <title>{`Ecosystem · Nebius Builders`}</title>
+        <title>{`Apps · Nebius Builders`}</title>
         <meta
           name="description"
-          content="The Nebius ecosystem — community apps built on Nebius plus partner integrations that plug into our products."
+          content="Open-source apps built on Nebius by the community."
         />
       </Head>
       <div className={page.container}>
         <PageHeader
-          eyebrow="Ecosystem"
+          eyebrow="Apps"
           title="Built on Nebius"
-          description={`${totalAll} entries — ${projects.length} community apps and ${partners.length} partner integrations. Filter by product or by kind.`}
+          description={`${projects.length} community apps. Featured + award-winning entries surface first.`}
         />
       </div>
 
@@ -197,129 +153,54 @@ export default function EcosystemPage({
       </div>
 
       <div className={page.container}>
-        {/* Single grid hosting both kinds. Projects render as the rich
-            ProjectCard with a cover gradient; integrations render as the
-            simpler IntegrationCard with a "View docs" CTA. CSS grid's
-            align-items: stretch keeps cards in the same row at the same
-            height, so the visual difference signals kind without
-            breaking the rhythm. */}
-        {totalVisible === 0 ? (
-          <Text color="secondary" style={{display: 'block', padding: '48px 0', textAlign: 'center'}}>
-            No entries match this filter. Pick a different one.
-          </Text>
-        ) : (
-          <div className={page.grid3}>
-            {filteredProjects.map((p) => (
-              <ProjectCard key={`p-${p.slug}`} project={p} />
-            ))}
-            {filteredPartners.map((p) => (
-              <IntegrationCard key={`i-${p.docsUrl}`} partner={p} />
-            ))}
-          </div>
-        )}
+        <div className={page.grid3}>
+          {filtered.map((p) => (
+            <Link key={p.slug} href={`/apps/${p.slug}`} className={styles.cardLink}>
+              <article className={styles.card}>
+                <ProjectCover project={p} />
+                <div className={styles.cardBody}>
+                  <header className={styles.cardHead}>
+                    <Text variant="caption-2" color="secondary" className={styles.byline}>
+                      by @{p.builder_handle}
+                      {p.hackathon !== 'none'
+                        ? ` · ${p.hackathon === 'robotics' ? 'Robotics hack' : 'JetBrains hack'}`
+                        : ''}
+                    </Text>
+                    <Text variant="subheader-2" as="h3" className={styles.cardTitle}>
+                      {p.title}
+                    </Text>
+                  </header>
+                  <Text variant="body-2" color="secondary" className={styles.cardTagline}>
+                    {p.tagline}
+                  </Text>
+                  {(p.product_focus?.length ?? 0) > 0 || (p.tags?.length ?? 0) > 0 ? (
+                    <div className={styles.tagRow}>
+                      {(p.product_focus ?? []).map((pf) => (
+                        <Label key={`pf-${pf}`} theme="info" size="xs">
+                          {PRODUCT_LABEL[pf] ?? pf}
+                        </Label>
+                      ))}
+                      {(p.tags ?? []).slice(0, Math.max(0, 4 - (p.product_focus?.length ?? 0))).map((t) => (
+                        <Label key={`tag-${t}`} theme="normal" size="xs">
+                          {t}
+                        </Label>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+                {p.stars > 0 ? (
+                  <footer className={styles.cardFooter}>
+                    <Text variant="caption-2" color="secondary">
+                      ★ {formatNumber(p.stars)} stars
+                    </Text>
+                  </footer>
+                ) : null}
+              </article>
+            </Link>
+          ))}
+        </div>
       </div>
     </PublicLayout>
-  );
-}
-
-// -----------------------------------------------------------------------------
-// ProjectCard — community app card with cover gradient + builder byline.
-// Existing visual treatment, just extracted into its own component so the
-// grid loop above stays readable when paired with IntegrationCard.
-// -----------------------------------------------------------------------------
-
-function ProjectCard({project: p}: {project: Project}) {
-  return (
-    <Link href={`/apps/${p.slug}`} className={styles.cardLink}>
-      <article className={styles.card}>
-        <ProjectCover project={p} />
-        <div className={styles.cardBody}>
-          <header className={styles.cardHead}>
-            <Text variant="caption-2" color="secondary" className={styles.byline}>
-              by @{p.builder_handle}
-              {p.hackathon !== 'none'
-                ? ` · ${p.hackathon === 'robotics' ? 'Robotics hack' : 'JetBrains hack'}`
-                : ''}
-            </Text>
-            <Text variant="subheader-2" as="h3" className={styles.cardTitle}>
-              {p.title}
-            </Text>
-          </header>
-          <Text variant="body-2" color="secondary" className={styles.cardTagline}>
-            {p.tagline}
-          </Text>
-          {(p.product_focus?.length ?? 0) > 0 || (p.tags?.length ?? 0) > 0 ? (
-            <div className={styles.tagRow}>
-              {(p.product_focus ?? []).map((pf) => (
-                <Label key={`pf-${pf}`} theme="info" size="xs">
-                  {APPS_PRODUCT_LABEL[pf] ?? pf}
-                </Label>
-              ))}
-              {(p.tags ?? []).slice(0, Math.max(0, 4 - (p.product_focus?.length ?? 0))).map((t) => (
-                <Label key={`tag-${t}`} theme="normal" size="xs">
-                  {t}
-                </Label>
-              ))}
-            </div>
-          ) : null}
-        </div>
-        {p.stars > 0 ? (
-          <footer className={styles.cardFooter}>
-            <Text variant="caption-2" color="secondary">
-              ★ {formatNumber(p.stars)} stars
-            </Text>
-          </footer>
-        ) : null}
-      </article>
-    </Link>
-  );
-}
-
-// -----------------------------------------------------------------------------
-// IntegrationCard — partner integration card. Shorter than ProjectCard
-// (no cover area, no builder byline). Always opens external docs in a
-// new tab. The "Integration" label at the top distinguishes it from
-// community-built apps in the mixed grid.
-// -----------------------------------------------------------------------------
-
-function IntegrationCard({partner: p}: {partner: EcosystemPartner}) {
-  return (
-    <a
-      href={p.docsUrl}
-      target="_blank"
-      rel="noreferrer"
-      className={styles.cardLink}
-      aria-label={`${p.name} — view integration docs`}
-    >
-      <article className={`${styles.card} ${styles.integrationCard}`}>
-        <div className={styles.integrationBody}>
-          <Text variant="caption-2" color="secondary" className={styles.integrationKind}>
-            INTEGRATION
-          </Text>
-          <Text variant="subheader-2" as="h3" className={styles.cardTitle}>
-            {p.name}
-          </Text>
-          <Text variant="body-2" color="secondary" className={styles.cardTagline}>
-            {p.blurb}
-          </Text>
-          <div className={styles.tagRow}>
-            {p.products.map((prod) => (
-              <Label key={prod} theme="info" size="xs">
-                {PARTNER_PRODUCT_LABEL[prod]}
-              </Label>
-            ))}
-            <Label theme="utility" size="xs">
-              {CATEGORY_LABEL[p.category]}
-            </Label>
-          </div>
-        </div>
-        <footer className={styles.cardFooter}>
-          <Text variant="caption-2" color="info">
-            View docs ↗
-          </Text>
-        </footer>
-      </article>
-    </a>
   );
 }
 
@@ -346,7 +227,7 @@ function ProjectCover({project}: {project: Project}) {
       {project.product_focus?.[0] ? (
         <div className={styles.coverTopRight}>
           <span className={styles.coverPill}>
-            {APPS_PRODUCT_LABEL[project.product_focus[0]] ?? project.product_focus[0]}
+            {PRODUCT_LABEL[project.product_focus[0]] ?? project.product_focus[0]}
           </span>
         </div>
       ) : null}

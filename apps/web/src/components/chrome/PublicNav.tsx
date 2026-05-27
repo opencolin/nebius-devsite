@@ -21,21 +21,26 @@ import styles from './PublicNav.module.scss';
 //     in the PortalSidebar instead of the public nav, since the row links
 //     and tier breakdown are most useful to active builders comparing
 //     themselves to the field
+// Three sibling pages share the ecosystem story:
+//   /ecosystem  = unified mixed grid (Apps + Integrations + Kind filter)
+//   /apps       = community-built projects only
+//   /integrations = partner integrations only
+// All three are linked from the nav so each surface is bookmarkable.
+// "Office Hours" uses a non-breaking space between the two words so
+// the label doesn't wrap awkwardly when the nav gets tight at small
+// viewports — same NBSP trick as the /integrations hero title.
 const NAV: Array<{href: string; label: string}> = [
   {href: '/events', label: 'Events'},
   {href: '/library', label: 'Library'},
-  // "Ecosystem" used to be "Apps" — renamed when /integrations folded
-  // into the /apps page as a unified directory. URL stays /apps so all
-  // existing deep links (/apps/<slug>) and sitemap entries keep working.
-  {href: '/apps', label: 'Ecosystem'},
+  {href: '/ecosystem', label: 'Ecosystem'},
+  {href: '/apps', label: 'Apps'},
+  {href: '/integrations', label: 'Integrations'},
   // /fellows hidden — the page itself still resolves at /fellows for
   // direct-URL access (and emits noindex,nofollow), but is intentionally
   // not linked from anywhere on the site, sitemap, or llms.txt while
   // the Featured roll-call is being curated. Restore by uncommenting.
   // {href: '/fellows', label: 'Fellows'},
-  {href: '/office-hours', label: 'Office Hours'},
-  // /integrations decommissioned — folded into /apps as the unified
-  // Ecosystem directory. URL 301-redirects to /apps via next.config.js.
+  {href: '/office-hours', label: 'Office Hours'},
 ];
 
 export function PublicNav() {
