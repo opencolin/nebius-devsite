@@ -23,7 +23,6 @@ import Link from 'next/link';
 import {Button, Card, Label, Text} from '@gravity-ui/uikit';
 
 import {PublicLayout} from '@/components/chrome/PublicLayout';
-import {PhosphorMesh} from '@/components/hero/PhosphorMesh';
 import {getServerSession} from '@/lib/auth';
 import {directusServer} from '@/lib/directus';
 
@@ -145,15 +144,12 @@ export default function OfficeHoursPage({
       </Head>
 
       {/* ---- Hero ----
-          PhosphorMesh (variant-B1a Soft Haze) sits behind the content as a
-          full-bleed visual. The mesh component owns its own dark scene
-          background (#04060a) so we don't need a fallback bg on the hero
-          itself — but we still set one so SSR + the brief moment before the
-          three.js chunk lands isn't a flash of light theme. */}
+          Static dark hero (was a full-bleed PhosphorMesh canvas, dropped
+          because the animation felt loud against the actually-quiet copy
+          this page is selling — drop in, get unstuck). .hero owns the
+          #04060a background; .heroOverlay keeps a subtle top-left
+          gradient for depth. */}
       <section className={styles.hero}>
-        <div className={styles.heroBg}>
-          <PhosphorMesh aspectRatio={21 / 9} />
-        </div>
         <div className={styles.heroOverlay} aria-hidden />
         <div className={styles.heroInner}>
           <span className={styles.eyebrow}>Office Hours</span>

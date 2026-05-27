@@ -180,7 +180,7 @@ export default function EcosystemPage({
       <HeroSection
         eyebrow="Ecosystem"
         title={'The Nebius ecosystem. One place.'}
-        lede={`${projects.length} community apps and ${partners.length} partner integrations that build on or plug into Nebius. Pick a filter to narrow.`}
+        lede={`A library of ${projects.length + partners.length} open-source projects you can fork, drop into your own stack, or learn from. Community apps built on Nebius alongside partner integrations that plug into our products.`}
       />
 
 
