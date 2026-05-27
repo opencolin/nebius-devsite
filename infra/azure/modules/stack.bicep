@@ -70,6 +70,11 @@ param typesenseAdminKey string = ''
 @description('Typesense search-only API key (read documents:search, scoped to all collections).')
 param typesenseSearchKey string = ''
 
+// ---- Tavily (web extract — used by /api/events/refresh to scrape Luma + nebius.com) ----
+@secure()
+@description('Tavily API key (web extract). Leave empty to disable the refresh endpoint; the events page still renders from the CMS without it.')
+param tavilyApiKey string = ''
+
 // Random suffix to keep globally-unique names (Storage, Postgres, ACR) stable
 // across redeploys while still avoiding collisions if the resource group
 // is recreated. uniqueString() is deterministic per RG name.
@@ -502,6 +507,13 @@ resource web 'Microsoft.App/containerApps@2024-03-01' = if (deployWeb) {
       secrets: [
         {name: 'typesense-admin-key', value: typesenseAdminKey}
         {name: 'typesense-search-key', value: typesenseSearchKey}
+        // Only emit the tavily secret when a key was passed in — empty
+        // secret values are valid in Bicep but make the env block below
+        // reference a meaningless empty string, which the events refresh
+        // endpoint catches and 500s on. Skipping the env var entirely
+        // when no key lets the runtime check (`if (!TAVILY_KEY)`) return
+        // a clean 'not configured' error instead.
+        {name: 'tavily-api-key', value: tavilyApiKey}
       ]
     }
     template: {
@@ -530,6 +542,12 @@ resource web 'Microsoft.App/containerApps@2024-03-01' = if (deployWeb) {
             {name: 'TYPESENSE_PROTOCOL', value: 'https'}
             {name: 'TYPESENSE_ADMIN_KEY', secretRef: 'typesense-admin-key'}
             {name: 'TYPESENSE_SEARCH_KEY', secretRef: 'typesense-search-key'}
+            // Tavily web-extract — consumed by /api/events/refresh.ts to
+            // pull the Luma calendar + nebius.com/events listings. Refresh
+            // endpoint 500s with a clear message if this is empty, so
+            // omitting tavilyApiKey from deploys disables the feature
+            // gracefully (events still render from the CMS).
+            {name: 'TAVILY_API_KEY', secretRef: 'tavily-api-key'}
           ]
         }
       ]
