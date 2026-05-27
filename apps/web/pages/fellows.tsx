@@ -165,19 +165,21 @@ function FellowCard({fellow}: {fellow: Fellow}) {
               {fellow.tagline}
             </Text>
           ) : null}
-          {/* City + region as a single chip pair so a card always shows
-              both geography axes — region is also the section header but
-              repeating it on each card removes the need to scroll up to
-              answer "where is this fellow based?". */}
-          <div className={styles.geoRow}>
-            <Label theme="utility" size="xs">
-              {fellow.city}
-            </Label>
-            <Label theme="normal" size="xs">
-              {fellow.region}
-            </Label>
-          </div>
+          {/* Bottom row — geo chips on the left, LinkedIn icon on the
+              right. Previously these were two separate rows with their
+              own vertical spacing; combined here so the card doesn't
+              leave a gap of empty space between the chips and the icon.
+              `margin-top: auto` keeps the row pinned to the bottom
+              regardless of how tall the tagline above runs. */}
           <div className={styles.metaRow}>
+            <div className={styles.geoChips}>
+              <Label theme="utility" size="xs">
+                {fellow.city}
+              </Label>
+              <Label theme="normal" size="xs">
+                {fellow.region}
+              </Label>
+            </div>
             <LinkedInIcon />
           </div>
         </div>

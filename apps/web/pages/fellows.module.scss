@@ -158,23 +158,24 @@
   overflow: hidden;
 }
 
-// City + region chip pair. Lives between body text and the LinkedIn
-// pill so the eye lands on "who → role → org → where" before the call
-// to action.
-.geoRow {
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
+// Bottom row — geo chips on the left, LinkedIn icon on the right.
+// Single row keeps the card compact (vs. the previous two-row layout
+// that left a visible gap of empty space between the chip cluster and
+// the icon). `margin-top: auto` pins this row to the bottom of the
+// flex column so cards with short taglines don't collapse it upward.
 .metaRow {
   margin-top: auto;
   padding-top: 10px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 8px;
+}
+
+.geoChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 // LinkedIn brand icon — secondary text color at rest so it doesn't shout
