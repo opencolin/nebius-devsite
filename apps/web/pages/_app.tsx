@@ -5,6 +5,7 @@ import {useEffect, useState} from 'react';
 
 import {ThemeProvider as GravityThemeProvider} from '@gravity-ui/uikit';
 
+import {FirstVisitRedirect} from '@/components/chrome/FirstVisitRedirect';
 import {MockupBanner} from '@/components/chrome/MockupBanner';
 import {ThemeProvider, useThemeToggle} from '@/components/chrome/ThemeToggle';
 import {ConsentBanner} from '@/components/consent/ConsentBanner';
@@ -58,6 +59,11 @@ function ThemedShell({Component, pageProps}: {Component: AppProps['Component']; 
       </Head>
 
       <MockupBanner />
+      {/* First-arrival redirect to /about-this-build. Null-rendering
+          side-effect — only fires on '/' and only once per browser
+          (localStorage flag). Mounted before <Component> so the
+          redirect kicks before the homepage's heavy data hydrates. */}
+      <FirstVisitRedirect />
       <Component {...pageProps} />
 
       <ConsentBanner />
