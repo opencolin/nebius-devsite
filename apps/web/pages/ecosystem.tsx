@@ -28,8 +28,8 @@ import {useMemo, useState} from 'react';
 
 import {Label, SegmentedRadioGroup, Text} from '@gravity-ui/uikit';
 
-import {PageHeader} from '@/components/chrome/PageHeader';
 import {PublicLayout} from '@/components/chrome/PublicLayout';
+import {HeroSection} from '@/components/integrations/HeroSection';
 import {directusServer} from '@/lib/directus';
 import {
   CATEGORY_LABEL,
@@ -157,7 +157,6 @@ export default function EcosystemPage({
   }, [projects, partners]);
 
   const totalVisible = filteredProjects.length + filteredPartners.length;
-  const totalAll = projects.length + partners.length;
 
   return (
     <PublicLayout>
@@ -168,13 +167,22 @@ export default function EcosystemPage({
           content="The Nebius ecosystem — community apps built on Nebius plus partner integrations that plug into our products."
         />
       </Head>
-      <div className={page.container}>
-        <PageHeader
-          eyebrow="Ecosystem"
-          title="The Nebius ecosystem"
-          description={`${totalAll} entries — ${projects.length} community apps and ${partners.length} partner integrations. For community apps only, see /apps. For integrations only, see /integrations.`}
-        />
-      </div>
+      {/* Dark R3F hero with the membrane scene behind the copy. Hero3D
+          dynamic-imports under the hood so neither three nor R3F ships
+          on SSR or to any other page's bundle. Same component used to
+          live on /integrations; promoted to /ecosystem now that
+          /ecosystem is the canonical umbrella entry point and the
+          other two pages are hidden from the nav.
+
+          "One place." uses a non-breaking space so the last sentence
+          stays atomic — when the line would otherwise wrap between
+          "One" and "place." it wraps before "One" instead. */}
+      <HeroSection
+        eyebrow="Ecosystem"
+        title={'The Nebius ecosystem. One place.'}
+        lede={`${projects.length} community apps and ${partners.length} partner integrations that build on or plug into Nebius. Pick a filter to narrow.`}
+      />
+
 
       <div className={styles.filterBar}>
         <div className={page.container}>

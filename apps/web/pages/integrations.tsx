@@ -14,8 +14,8 @@ import {useMemo, useState} from 'react';
 
 import {Button, Label, Text} from '@gravity-ui/uikit';
 
+import {PageHeader} from '@/components/chrome/PageHeader';
 import {PublicLayout} from '@/components/chrome/PublicLayout';
-import {HeroSection} from '@/components/integrations/HeroSection';
 import {
   CATEGORY_LABEL,
   ECOSYSTEM_PARTNERS,
@@ -106,19 +106,17 @@ export default function IntegrationsPage({
         />
       </Head>
 
-      {/* Dark hero with the R3F membrane scene behind the copy. Dynamic-
-          imported under the hood so neither three nor R3F ships on SSR
-          or to any other page's bundle.
-
-          `One page.` uses a non-breaking space so the last sentence
-          stays atomic — when the line would otherwise wrap between "One"
-          and "page." it wraps before "One" instead, keeping the second
-          sentence intact. */}
-      <HeroSection
-        eyebrow="Integrations"
-        title={'Every integration. One page.'}
-        lede="Frameworks, gateways, orchestrators, and observability tools that integrate with Nebius products. Pick a filter to narrow it down."
-      />
+      {/* Plain PageHeader (used to be the dark R3F HeroSection — that
+          moved to /ecosystem, which is now the canonical umbrella entry
+          point in the nav). /integrations stays standalone for direct
+          links but no longer carries the marquee animation. */}
+      <div className={page.container}>
+        <PageHeader
+          eyebrow="Integrations"
+          title="Every integration. One page."
+          description="Frameworks, gateways, orchestrators, and observability tools that integrate with Nebius products. Pick a filter to narrow it down."
+        />
+      </div>
 
       <div className={styles.filters}>
         <div className={page.container}>
