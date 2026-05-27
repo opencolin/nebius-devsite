@@ -1,9 +1,14 @@
 // /library — index of workshops, videos, and repos.
 //
-// Cards mirror the upstream nebius-builders-3 design: each entry shows a
-// type-colored cover area at the top (with a play-button or repo-icon
-// overlay), then the title + blurb + tags below. Type and "Official"
-// pills sit on top of the cover so they're visible against the gradient.
+// Cards are typography-first: a small pill row (TYPE + Official) at the
+// top, then title + blurb in the middle, then a footer with product
+// tags + a type icon next to level/duration. Earlier versions led with
+// a heavy aspect-video gradient cover ("coverWorkshop / coverVideo /
+// coverRepo") that doubled the card height and let one card dominate
+// a row — dropped in favor of letting the title do the work. The
+// content-type signal moves into the footer as a leading SVG icon
+// (Play for video/workshop, brackets for repo) so the card still
+// telegraphs what it is at a glance.
 
 import {readItems} from '@directus/sdk';
 import type {GetStaticProps, InferGetStaticPropsType} from 'next';
@@ -153,7 +158,6 @@ export default function LibraryPage({
           {filtered.map((e) => (
             <Link key={e.slug} href={`/library/${e.slug}`} className={styles.cardLink}>
               <article className={styles.card}>
-                <LibraryCover type={e.type} />
                 <header className={styles.cardHead}>
                   <div className={styles.metaRow}>
                     <Label theme={typePillTheme(e.type)} size="xs">
@@ -175,17 +179,27 @@ export default function LibraryPage({
                   </Text>
                 </div>
                 <footer className={styles.cardFooter}>
-                  <div className={styles.tagRow}>
-                    {e.product_focus.slice(0, 3).map((t) => (
-                      <Label key={t} theme="normal" size="xs">
-                        {t}
-                      </Label>
-                    ))}
+                  {e.product_focus.length > 0 ? (
+                    <div className={styles.tagRow}>
+                      {e.product_focus.slice(0, 3).map((t) => (
+                        <Label key={t} theme="normal" size="xs">
+                          {t}
+                        </Label>
+                      ))}
+                    </div>
+                  ) : null}
+                  {/* Type icon + meta on one row. Icon sits on the left as
+                      a visual indicator of content kind, meta text on the
+                      right with level + duration. */}
+                  <div className={styles.cardMetaRow}>
+                    <span className={styles.cardTypeIcon} aria-hidden>
+                      <TypeIcon type={e.type} />
+                    </span>
+                    <Text variant="caption-2" color="secondary" className={styles.cardMeta}>
+                      {e.level}
+                      {e.duration_min ? ` · ${e.duration_min} min` : ''}
+                    </Text>
                   </div>
-                  <Text variant="caption-2" color="secondary" className={styles.cardMeta}>
-                    {e.level}
-                    {e.duration_min ? ` · ${e.duration_min} min` : ''}
-                  </Text>
                 </footer>
               </article>
             </Link>
@@ -197,49 +211,29 @@ export default function LibraryPage({
 }
 
 // -----------------------------------------------------------------------------
-// Type-colored cover with overlaid icon. Mirrors upstream's gradient choices:
-//   - WORKSHOP → navy → lime (the most "branded" gradient — these are the
-//     hands-on Nebius DevRel sessions worth highlighting)
-//   - VIDEO    → deep navy fade (YouTube tutorials, lighter touch)
-//   - REPO     → cool gray with lime corner (code, treated as quieter)
-// Icon overlay: triangular play for video/workshop, brackets for repo,
-// document-fold for everything else.
+// Footer type icon. Replaces the prior top-of-card gradient cover. Same SVG
+// shapes as before (triangular play for workshops + videos, code-brackets
+// for repos) — the cover wrapper just got stripped. Rendered at footer
+// size (14px) inside .cardTypeIcon so it reads as a small visual indicator
+// next to the level/duration meta line, not a hero element.
 // -----------------------------------------------------------------------------
 
-function LibraryCover({type}: {type: string}) {
+function TypeIcon({type}: {type: string}) {
   const isPlayable = type === 'WORKSHOP' || type === 'VIDEO';
-  return (
-    <div
-      className={`${styles.cover} ${
-        type === 'WORKSHOP'
-          ? styles.coverWorkshop
-          : type === 'VIDEO'
-            ? styles.coverVideo
-            : styles.coverRepo
-      }`}
-      aria-hidden
-    >
-      <span className={styles.coverIcon}>
-        {isPlayable ? <PlayIcon /> : <RepoIcon />}
-      </span>
-    </div>
-  );
+  return isPlayable ? <PlayIcon /> : <RepoIcon />;
 }
 
 function PlayIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-      <path
-        d="M7 4.5v13l11-6.5z"
-        fill="currentColor"
-      />
+    <svg width="14" height="14" viewBox="0 0 22 22" fill="none">
+      <path d="M7 4.5v13l11-6.5z" fill="currentColor" />
     </svg>
   );
 }
 
 function RepoIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
       <path
         d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"
         stroke="currentColor"

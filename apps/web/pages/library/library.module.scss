@@ -55,54 +55,11 @@
   }
 }
 
-// Cover area — aspect-video block at the top of every card, with a
-// type-specific gradient and a centered icon overlay.
-.cover {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.92);
-}
-
-.coverWorkshop {
-  background: linear-gradient(135deg, #122638 0%, #1f4a3a 55%, #84cc16 100%);
-}
-
-.coverVideo {
-  background: linear-gradient(135deg, #122638 0%, #1d3a55 50%, #28527a 100%);
-}
-
-.coverRepo {
-  background:
-    radial-gradient(circle at 90% 90%, rgba(224, 255, 79, 0.4) 0%, transparent 55%),
-    linear-gradient(135deg, #2c3a44 0%, #1f2a32 100%);
-}
-
-.coverIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(4px);
-  color: #ffffff;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
-
-  // Nudge the play icon's optical center right since the triangle has
-  // more visual mass on the right edge.
-  > svg path[d^='M7'] {
-    transform: translateX(1.5px);
-  }
-}
-
-// Card header (pills row) — sits below the cover.
+// Card header (pills row) — TYPE + Official badges. Lives at the top of
+// the card now that the colored cover gradient is gone; padding-top is
+// generous so the pills don't crowd against the card border.
 .cardHead {
-  padding: 14px 16px 0;
+  padding: 16px 16px 0;
 }
 
 .metaRow {
@@ -148,6 +105,32 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+}
+
+// Footer meta line — type icon on the left, level/duration text on the
+// right of it. Inline-flex so they share a baseline.
+.cardMetaRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cardTypeIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--nb-color-private-navyblue-70, rgba(5, 43, 66, 0.09));
+  color: var(--g-color-text-secondary);
+  flex-shrink: 0;
+
+  // Optical-center nudge: the triangular play glyph sits slightly left
+  // of geometric center, so push it right by ~1px to look centered.
+  > svg path[d^='M7'] {
+    transform: translateX(1px);
+  }
 }
 
 .cardMeta {
