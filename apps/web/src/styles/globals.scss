@@ -133,6 +133,9 @@ body {
   color: var(--g-color-text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  // Reserve space for the fixed bottom MockupBanner so it can't visually
+  // overlay the page footer's last row. ~32px = bar height; +1px buffer.
+  padding-bottom: 33px;
 }
 
 // The Nebius "joy moment" — text selection draws in the lime.

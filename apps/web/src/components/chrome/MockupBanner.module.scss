@@ -9,6 +9,22 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 
+// Bottom-of-viewport variant. position: fixed so it stays put regardless
+// of scroll; z-index sits below the consent banner (100) so the consent
+// floats above it if both are visible at once. The consent banner's own
+// `bottom` value is bumped to clear the bar's height — see consent
+// component SCSS.
+.rootBottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  background: #6244ff;
+  color: #ffffff;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
 .inner {
   display: flex;
   flex-wrap: wrap;

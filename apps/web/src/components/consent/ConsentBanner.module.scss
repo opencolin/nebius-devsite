@@ -1,6 +1,9 @@
 .root {
   position: fixed;
-  bottom: 16px;
+  // 16px gap above the fixed mockup banner at the bottom of the viewport.
+  // Bar is ~32px tall (8px padding + 12px text + 8px padding + 1px border)
+  // → bottom: 16 + 32 = 48px so the consent card floats above it cleanly.
+  bottom: 48px;
   left: 16px;
   right: 16px;
   z-index: 100;

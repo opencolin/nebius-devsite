@@ -66,6 +66,10 @@ function ThemedShell({Component, pageProps}: {Component: AppProps['Component']; 
       <FirstVisitRedirect />
       <Component {...pageProps} />
 
+      {/* Second mockup banner pinned to the bottom of the viewport.
+          Stays visible regardless of scroll — reviewers who skim past
+          the top strip never lose the "this is a mockup" context. */}
+      <MockupBanner placement="bottom" />
       <ConsentBanner />
 
       {consentGranted && gtmSrc ? (
