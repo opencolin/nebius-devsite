@@ -27,6 +27,11 @@ import {
 
 import page from '@/styles/page.module.scss';
 import styles from './integrations.module.scss';
+// /apps card classes (cover, body, gradients) reused so /integrations
+// renders the same card shape as /apps and /ecosystem. Aliased to `card`
+// to avoid colliding with the local .card / .cardTitle from
+// integrations.module.scss (which still owns the page chrome).
+import card from './apps/apps.module.scss';
 
 interface Props {
   partners: EcosystemPartner[];
@@ -174,30 +179,57 @@ export default function IntegrationsPage({
         ) : (
           <div className={styles.grid}>
             {visible.map((p) => (
+              // Card shape mirrors /apps + /ecosystem so visitors see
+              // identical visual treatment across all three pages. Cover
+              // gradient is the integration-specific .coverIntegration;
+              // top-left pill says "Integration"; top-right shows the
+              // primary product; center renders the partner name big.
               <a
                 key={p.docsUrl}
                 href={p.docsUrl}
                 target="_blank"
                 rel="noreferrer"
-                className={styles.card}
+                className={card.cardLink}
+                aria-label={`${p.name} — view integration docs`}
               >
-                <Text variant="subheader-2" as="h3" className={styles.cardTitle}>
-                  {p.name}
-                </Text>
-                <Text variant="body-2" color="secondary" className={styles.cardBlurb}>
-                  {p.blurb}
-                </Text>
-                <div className={styles.tagRow}>
-                  {p.products.map((prod) => (
-                    <Label key={prod} theme="info" size="xs">
-                      {PRODUCT_LABEL[prod]}
-                    </Label>
-                  ))}
-                  <Label theme="utility" size="xs">
-                    {CATEGORY_LABEL[p.category]}
-                  </Label>
-                </div>
-                <span className={styles.cardCta}>View docs &rarr;</span>
+                <article className={card.card}>
+                  <div className={`${card.cover} ${card.coverIntegration}`} aria-hidden>
+                    <div className={card.coverTopLeft}>
+                      <span className={card.coverPill}>Integration</span>
+                    </div>
+                    {p.products[0] ? (
+                      <div className={card.coverTopRight}>
+                        <span className={card.coverPill}>{PRODUCT_LABEL[p.products[0]]}</span>
+                      </div>
+                    ) : null}
+                    <span className={card.coverGlyph}>{p.name}</span>
+                  </div>
+                  <div className={card.cardBody}>
+                    <header className={card.cardHead}>
+                      <Text variant="subheader-2" as="h3" className={card.cardTitle}>
+                        {p.name}
+                      </Text>
+                    </header>
+                    <Text variant="body-2" color="secondary" className={card.cardTagline}>
+                      {p.blurb}
+                    </Text>
+                    <div className={card.tagRow}>
+                      {p.products.map((prod) => (
+                        <Label key={prod} theme="info" size="xs">
+                          {PRODUCT_LABEL[prod]}
+                        </Label>
+                      ))}
+                      <Label theme="utility" size="xs">
+                        {CATEGORY_LABEL[p.category]}
+                      </Label>
+                    </div>
+                  </div>
+                  <footer className={card.cardFooter}>
+                    <Text variant="caption-2" color="info">
+                      View docs ↗
+                    </Text>
+                  </footer>
+                </article>
               </a>
             ))}
           </div>

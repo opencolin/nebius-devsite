@@ -34,31 +34,12 @@
   flex: 1;
 }
 
-// IntegrationCard variant — same .card chassis as community projects,
-// but no cover area (integrations don't have hackathon/award gradients
-// to differentiate them). Used on /ecosystem (the mixed Apps + Integrations
-// grid) where the "INTEGRATION" eyebrow distinguishes these from
-// project cards at a glance. Not used on /apps (community-only) since
-// no integrations render there.
-.integrationCard {
-  // Inherits all .card defaults (border, hover, radius). The body
-  // padding below handles the "no cover" layout difference.
-}
-
-.integrationBody {
-  padding: 16px 16px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-}
-
-.integrationKind {
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 600;
-  color: var(--g-color-text-misc);
-}
+// IntegrationCard now shares the full .card + .cover + .cardBody shape
+// with community projects, distinguished only by the .coverIntegration
+// gradient + an "INTEGRATION" pill in the cover's top-left slot. The
+// previous variant-specific classes (.integrationCard, .integrationBody,
+// .integrationKind) were removed when we unified the card layout — all
+// three pages (/apps, /integrations, /ecosystem) render the same shape.
 
 .cardHead {
   display: flex;
@@ -160,18 +141,36 @@
   background: linear-gradient(135deg, #2c1d4a 0%, #6e2c8c 50%, #d62b6f 100%);
 }
 
-// Big watermark glyph at the center of the cover — the project's first
-// initial, very translucent. Adds visual weight without needing per-project
-// art. Slightly transformed so it reads as background, not foreground.
+// Project / integration name displayed prominently in the cover. Replaces
+// the previous big-single-letter watermark — the full name reads as the
+// card's identity at a glance even before the visitor scans down to the
+// body title. Clamped to 3 lines so a long title doesn't overflow the
+// 16:9 cover; font-size uses clamp() so short names get bigger treatment
+// while long names stay legible at smaller sizes.
 .coverGlyph {
   font-family: ui-sans-serif, -apple-system, system-ui, sans-serif;
-  font-size: 96px;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: rgba(255, 255, 255, 0.16);
+  font-size: clamp(18px, 2.4vw, 26px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.95);
+  text-align: center;
+  padding: 0 28px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   pointer-events: none;
   user-select: none;
-  text-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+// Cover gradient for integration cards. Cool blue-grey, distinct from
+// the warmer/branded project gradients (Award lime, Featured blue,
+// Robotics teal, JetBrains purple) so visitors can read kind at a
+// glance even before noticing the corner pills.
+.coverIntegration {
+  background: linear-gradient(135deg, #1c2638 0%, #2b3a52 60%, #3d5478 100%);
 }
 
 // Pill positioning over the cover.

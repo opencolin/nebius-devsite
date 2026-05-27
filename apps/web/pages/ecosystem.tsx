@@ -279,6 +279,13 @@ function ProjectCard({project: p}: {project: Project}) {
 // -----------------------------------------------------------------------------
 
 function IntegrationCard({partner: p}: {partner: EcosystemPartner}) {
+  // Same card chassis as ProjectCard above — cover gradient at top,
+  // body in the middle, footer at the bottom. The only differences:
+  // .coverIntegration gradient (instead of award/featured/etc.), an
+  // "INTEGRATION" pill in the top-left slot where projects show their
+  // award badge, and a "View docs ↗" footer (instead of a stars
+  // counter). Visitor sees identical shape; reads kind from gradient
+  // + pill.
   return (
     <a
       href={p.docsUrl}
@@ -287,14 +294,26 @@ function IntegrationCard({partner: p}: {partner: EcosystemPartner}) {
       className={styles.cardLink}
       aria-label={`${p.name} — view integration docs`}
     >
-      <article className={`${styles.card} ${styles.integrationCard}`}>
-        <div className={styles.integrationBody}>
-          <Text variant="caption-2" color="secondary" className={styles.integrationKind}>
-            INTEGRATION
-          </Text>
-          <Text variant="subheader-2" as="h3" className={styles.cardTitle}>
-            {p.name}
-          </Text>
+      <article className={styles.card}>
+        <div className={`${styles.cover} ${styles.coverIntegration}`} aria-hidden>
+          <div className={styles.coverTopLeft}>
+            <span className={styles.coverPill}>Integration</span>
+          </div>
+          {p.products[0] ? (
+            <div className={styles.coverTopRight}>
+              <span className={styles.coverPill}>
+                {PARTNER_PRODUCT_LABEL[p.products[0]]}
+              </span>
+            </div>
+          ) : null}
+          <span className={styles.coverGlyph}>{p.name}</span>
+        </div>
+        <div className={styles.cardBody}>
+          <header className={styles.cardHead}>
+            <Text variant="subheader-2" as="h3" className={styles.cardTitle}>
+              {p.name}
+            </Text>
+          </header>
           <Text variant="body-2" color="secondary" className={styles.cardTagline}>
             {p.blurb}
           </Text>
@@ -343,9 +362,8 @@ function ProjectCover({project}: {project: Project}) {
           </span>
         </div>
       ) : null}
-      <span className={styles.coverGlyph}>
-        {project.title.charAt(0).toUpperCase()}
-      </span>
+      {/* Full project name. .coverGlyph clamps to 3 lines + scales font. */}
+      <span className={styles.coverGlyph}>{project.title}</span>
     </div>
   );
 }

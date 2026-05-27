@@ -231,8 +231,10 @@ function ProjectCover({project}: {project: Project}) {
           </span>
         </div>
       ) : null}
-      {/* Watermark — first letter of the title in a translucent oversize glyph */}
-      <span className={styles.coverGlyph}>{project.title.charAt(0).toUpperCase()}</span>
+      {/* Full project name displayed in the cover. Replaces the previous
+          single-letter watermark — the .coverGlyph styles clamp it to
+          3 lines and scale font-size to fit. */}
+      <span className={styles.coverGlyph}>{project.title}</span>
     </div>
   );
 }
