@@ -23,9 +23,12 @@ import styles from './PublicNav.module.scss';
 //     themselves to the field
 // Three sibling pages share the ecosystem story:
 //   /ecosystem  = unified mixed grid (Apps + Integrations + Kind filter)
-//   /apps       = community-built projects only
-//   /integrations = partner integrations only
-// All three are linked from the nav so each surface is bookmarkable.
+//   /apps       = community-built projects only (hidden from nav)
+//   /integrations = partner integrations only (hidden from nav)
+// Only the umbrella /ecosystem page is linked from the nav now; the
+// other two stay reachable via direct URL, the /ecosystem footer copy
+// ("For community apps only, see /apps. For integrations only, see
+// /integrations."), and the sitemap. Tighter nav, same surface area.
 // "Office Hours" uses a non-breaking space between the two words so
 // the label doesn't wrap awkwardly when the nav gets tight at small
 // viewports — same NBSP trick as the /integrations hero title.
@@ -33,8 +36,11 @@ const NAV: Array<{href: string; label: string}> = [
   {href: '/events', label: 'Events'},
   {href: '/library', label: 'Library'},
   {href: '/ecosystem', label: 'Ecosystem'},
-  {href: '/apps', label: 'Apps'},
-  {href: '/integrations', label: 'Integrations'},
+  // /apps and /integrations hidden — both still resolve at their URLs
+  // for direct access + bookmarkability, but the umbrella /ecosystem
+  // page is the canonical entry point. Restore by uncommenting.
+  // {href: '/apps', label: 'Apps'},
+  // {href: '/integrations', label: 'Integrations'},
   // /fellows hidden — the page itself still resolves at /fellows for
   // direct-URL access (and emits noindex,nofollow), but is intentionally
   // not linked from anywhere on the site, sitemap, or llms.txt while
