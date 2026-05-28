@@ -134,6 +134,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
             'duration_min',
             'product_focus',
             'is_official',
+            'pinned',
           ],
           limit: -1,
         }),
@@ -197,9 +198,12 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     location: e.location ?? null,
   }));
 
-  // Workshop spotlight: prefer the canonical OpenClaw entry by slug, fall
-  // back to the first workshop. The "related" rail picks the next two
-  // WORKSHOP-type entries.
+  // Workshop spotlight: prefer the canonical OpenClaw entry by slug for the
+  // big featured slot, fall back to the first library entry. The "related"
+  // rail picks two WORKSHOP-type entries, with `pinned` workshops floated
+  // to the front — that's how the team curates which workshop rides on the
+  // homepage (set `pinned: true` in Directus and it surfaces here without
+  // a code change).
   const toLibrary = (l: LibraryArticleRow): LibrarySpotlightEntry => ({
     slug: l.slug,
     type: l.type,
@@ -216,6 +220,9 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   const featuredWorkshop = featuredRaw ? toLibrary(featuredRaw) : null;
   const relatedWorkshops = libraryRaw
     .filter((l) => l.slug !== featuredRaw?.slug && l.type === 'WORKSHOP')
+    // Pinned first; stable within each group so the existing
+    // -is_official/title order from the query is preserved as the tiebreak.
+    .sort((a, b) => Number(Boolean(b.pinned)) - Number(Boolean(a.pinned)))
     .slice(0, 2)
     .map(toLibrary);
 

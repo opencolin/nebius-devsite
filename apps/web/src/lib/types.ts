@@ -55,7 +55,18 @@ export type EventFormat =
 
 export type EventStatus = 'DRAFT' | 'PUBLISHED' | 'COMPLETED' | 'CANCELLED';
 
-export type LibraryEntryType = 'WORKSHOP' | 'VIDEO' | 'REPO';
+export type LibraryEntryType =
+  | 'WORKSHOP'
+  | 'VIDEO'
+  | 'REPO'
+  | 'BLOG'
+  | 'DOCS'
+  | 'PLAYLIST';
+
+// Which product landing surface(s) a library entry appears on. `library`
+// is the default umbrella; the others map to the dev.nebius.com-style
+// product pages. Added in the dev.nebius.com content migration.
+export type LibrarySurface = 'ai-cloud' | 'token-factory' | 'serverless' | 'library';
 export type LibraryLevel = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
 
 export interface BuilderRow {
@@ -112,6 +123,12 @@ export interface LibraryArticleRow {
   external_url?: string | null;
   is_official: boolean;
   submitter?: string | null;
+  // Editorial curation fields (added in the dev.nebius.com content
+  // migration). `surface` controls which product landing page(s) the
+  // entry appears on; `pinned` floats it to the top of its surface's
+  // rail — including the homepage WorkshopSpotlight.
+  surface?: LibrarySurface[] | null;
+  pinned?: boolean | null;
 }
 
 export interface TeamMemberRow {
