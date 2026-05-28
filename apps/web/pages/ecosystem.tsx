@@ -26,7 +26,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import {useMemo, useState} from 'react';
 
-import {Label, SegmentedRadioGroup, Text} from '@gravity-ui/uikit';
+import {Button, Label, SegmentedRadioGroup, Text} from '@gravity-ui/uikit';
 
 import {PublicLayout} from '@/components/chrome/PublicLayout';
 import {HeroSection} from '@/components/integrations/HeroSection';
@@ -183,6 +183,16 @@ export default function EcosystemPage({
         lede={`A library of ${projects.length + partners.length} open-source projects you can fork, drop into your own stack, or learn from. Community apps built on Nebius alongside partner integrations that plug into our products.`}
       />
 
+      {/* Submit-your-project CTA. Sits between the hero and the filter bar
+          so anyone scanning the grid for inspiration sees the "you can be
+          on this list too" affordance first. Destination is a prefilled
+          GitHub Issue on the devsite repo — same low-friction pattern as
+          the /fellows nominate button — so submissions queue up in a
+          reviewable place without needing a bespoke API + spam pipeline.
+          Form copy lives in submitProjectIssueUrl() below. */}
+      <div className={page.container}>
+        <SubmitProjectBanner />
+      </div>
 
       <div className={styles.filterBar}>
         <div className={page.container}>
@@ -414,4 +424,130 @@ function AwardPill({
     return <span className={`${styles.coverPill}`}>Other</span>;
   }
   return null;
+}
+
+// -----------------------------------------------------------------------------
+// SubmitProjectBanner — CTA card pointing at a prefilled GitHub Issue.
+//
+// Same shape as the Local Hosts banner on /events (.submitBanner /
+// .submitBannerLink classes live in apps/apps.module.scss because the
+// /ecosystem page already imports that stylesheet as `styles`). Whole
+// card is the click target via a wrapping <a>; the inner Button is
+// non-interactive (pointer-events: none in the SCSS) so the click bubbles
+// up to the outer anchor rather than competing for focus.
+//
+// The issue URL hits opencolin/nebius-devsite — same destination as
+// /fellows nominations — so submissions land in one reviewable queue.
+// -----------------------------------------------------------------------------
+
+function SubmitProjectBanner() {
+  return (
+    <a
+      href={submitProjectIssueUrl()}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={styles.submitBannerLink}
+      aria-label="Submit your project to the Nebius ecosystem directory"
+    >
+      <div className={styles.submitBanner}>
+        <div className={styles.submitBannerCopy}>
+          <Text variant="caption-2" color="info" className={styles.submitBannerEyebrow}>
+            Submit your project
+          </Text>
+          <Text variant="subheader-2" as="h2" className={styles.submitBannerTitle}>
+            Built something on Nebius? Add it to the directory.
+          </Text>
+          <Text variant="body-2" color="secondary" className={styles.submitBannerLede}>
+            Community apps and integrations are both welcome. The form takes
+            about two minutes — repo, demo, who built it, which Nebius
+            products it uses, and a couple of optional bits. We review every
+            submission and reach out if we need anything else.
+          </Text>
+        </div>
+        <div className={styles.submitBannerCta}>
+          <Button view="action" size="l" pin="circle-circle">
+            Submit a project →
+          </Button>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+// Builds the GitHub new-issue URL with a structured markdown body. Using a
+// prefill rather than a real form keeps infra small (no API route, no
+// captcha, no DB collection) while still capturing every field cleanly —
+// GitHub renders the checkboxes as actual tickable items and the headers
+// as bold sections, so the submission reads well in the issue list.
+//
+// Fields collected:
+//   Project: name, tagline, description, type (community vs integration)
+//   Links:   repo, live demo, YouTube demo, logo
+//   Tech:    Nebius products used, tags, license
+//   Creator: name, GitHub handle, contact, company
+//   Consent: social-amplification permission
+//   Free:    anything else
+function submitProjectIssueUrl(): string {
+  const title = 'Ecosystem submission: <project name>';
+  const body = [
+    '## Project',
+    '**Project name:**',
+    '',
+    '**Tagline (one short sentence):**',
+    '',
+    '**Description (2-3 sentences):**',
+    '',
+    '**Type (pick one):**',
+    '- [ ] Community app — built on Nebius',
+    '- [ ] Integration — connects a third-party tool or framework to Nebius',
+    '',
+    '## Links',
+    '**Repo URL (GitHub):**',
+    '',
+    '**Live demo / deployed URL (optional):**',
+    '',
+    '**YouTube demo video (optional):**',
+    '',
+    '**Logo URL (square image, optional):**',
+    '',
+    '## Tech',
+    '**Nebius product(s) used (check all that apply):**',
+    '- [ ] Token Factory',
+    '- [ ] AI Cloud',
+    '- [ ] OpenClaw',
+    '- [ ] Soperator',
+    '- [ ] Tavily',
+    '',
+    '**Tags / keywords (comma-separated, optional):**',
+    '',
+    '**License (MIT, Apache 2.0, etc., optional):**',
+    '',
+    '## Creator',
+    '**Name(s):**',
+    '',
+    "**Creator's GitHub handle:**",
+    '',
+    '**Contact (email or LinkedIn):**',
+    '',
+    '**Company / org (optional):**',
+    '',
+    '## Permissions',
+    '**Can we amplify this on Nebius social channels?**',
+    '- [ ] Yes, please share on Twitter / LinkedIn / Discord',
+    '- [ ] Not yet — keep it internal until I say so',
+    '',
+    '## Anything else',
+    '<!-- Anything we should know? Open-source license details, future',
+    'roadmap, related projects, etc. -->',
+    '',
+  ].join('\n');
+  return (
+    'https://github.com/opencolin/nebius-devsite/issues/new' +
+    '?title=' +
+    encodeURIComponent(title) +
+    '&body=' +
+    encodeURIComponent(body) +
+    '&labels=' +
+    encodeURIComponent('ecosystem-submission')
+  );
 }

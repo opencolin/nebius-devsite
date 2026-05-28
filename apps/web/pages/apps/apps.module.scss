@@ -548,3 +548,76 @@
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.78);
 }
+
+// -----------------------------------------------------------------------------
+// Submit-your-project banner (rendered on /ecosystem between hero + filter).
+// Same horizontal card pattern as /events' Local Hosts banner so visitors
+// recognize the affordance ("here's something you can do") consistently
+// across the site.
+// -----------------------------------------------------------------------------
+
+.submitBannerLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  margin-top: 16px;
+  margin-bottom: 24px;
+
+  &:hover .submitBanner {
+    border-color: var(--g-color-line-brand);
+    transform: translateY(-1px);
+  }
+}
+
+.submitBanner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 24px;
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: 12px;
+  background: var(--g-color-base-float);
+  transition: transform 120ms ease, border-color 120ms ease;
+}
+
+.submitBannerCopy {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.submitBannerEyebrow {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.submitBannerTitle {
+  margin: 0;
+}
+
+.submitBannerLede {
+  display: block;
+  margin: 0;
+  max-width: 64ch;
+}
+
+.submitBannerCta {
+  flex-shrink: 0;
+}
+
+// Stack the button under the copy on phones so neither gets crowded.
+@media (max-width: 720px) {
+  .submitBanner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .submitBannerCta {
+    align-self: flex-start;
+  }
+}
