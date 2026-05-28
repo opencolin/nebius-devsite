@@ -33,7 +33,10 @@ const FILTERS = [
   'All',
   'Workshop',
   'Video',
+  'Playlist',
   'Repo',
+  'Blog',
+  'Docs',
   'Token Factory',
   'AI Cloud',
   'OpenClaw',
@@ -42,10 +45,18 @@ const FILTERS = [
 ] as const;
 type Filter = (typeof FILTERS)[number];
 
+// Maps human filter labels to the Directus type enum values (added BLOG /
+// DOCS / PLAYLIST in the dev.nebius.com content migration so we could
+// categorize nebius.com/blog posts, docs.nebius.com docs pages, and
+// YouTube playlists distinctly from the original WORKSHOP / VIDEO / REPO
+// triad).
 const TYPE_FILTER_KEY: Record<string, string> = {
   Workshop: 'WORKSHOP',
   Video: 'VIDEO',
+  Playlist: 'PLAYLIST',
   Repo: 'REPO',
+  Blog: 'BLOG',
+  Docs: 'DOCS',
 };
 
 // Directus product_focus enum is single-word lowercase (tokenfactory, aicloud).
@@ -211,16 +222,19 @@ export default function LibraryPage({
 }
 
 // -----------------------------------------------------------------------------
-// Footer type icon. Replaces the prior top-of-card gradient cover. Same SVG
-// shapes as before (triangular play for workshops + videos, code-brackets
-// for repos) — the cover wrapper just got stripped. Rendered at footer
-// size (14px) inside .cardTypeIcon so it reads as a small visual indicator
-// next to the level/duration meta line, not a hero element.
+// Footer type icon. Six distinct shapes — Play for video/workshop/playlist,
+// brackets for repo, page-fold for blog, square-bracket "book" for docs.
+// Each rendered at footer size (14px) inside .cardTypeIcon so it reads as
+// a small visual indicator next to the level/duration meta line.
 // -----------------------------------------------------------------------------
 
 function TypeIcon({type}: {type: string}) {
-  const isPlayable = type === 'WORKSHOP' || type === 'VIDEO';
-  return isPlayable ? <PlayIcon /> : <RepoIcon />;
+  if (type === 'WORKSHOP' || type === 'VIDEO' || type === 'PLAYLIST') {
+    return <PlayIcon />;
+  }
+  if (type === 'BLOG') return <BlogIcon />;
+  if (type === 'DOCS') return <DocsIcon />;
+  return <RepoIcon />;
 }
 
 function PlayIcon() {
@@ -245,8 +259,40 @@ function RepoIcon() {
   );
 }
 
-function typePillTheme(type: string): 'info' | 'success' | 'normal' {
+// Page with a folded corner — telegraphs "this is an article/blog post"
+// without competing with the play triangle for video content.
+function BlogIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM15 3v5h5"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+// Open-book shape — telegraphs reference documentation distinct from a
+// blog post (single page) and a repo (code brackets).
+function DocsIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M4 5a2 2 0 0 1 2-2h5v18H6a2 2 0 0 1-2-2V5zM13 3h5a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-5V3z"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function typePillTheme(type: string): 'info' | 'success' | 'warning' | 'normal' {
   if (type === 'WORKSHOP') return 'success';
-  if (type === 'VIDEO') return 'info';
+  if (type === 'VIDEO' || type === 'PLAYLIST') return 'info';
+  if (type === 'DOCS') return 'warning';
+  // BLOG + REPO + anything new → neutral
   return 'normal';
 }

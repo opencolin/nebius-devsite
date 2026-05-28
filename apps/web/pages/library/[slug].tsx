@@ -183,9 +183,11 @@ export default function LibraryArticle({
 // Helpers
 // -----------------------------------------------------------------------------
 
-function typePillTheme(type: string): 'info' | 'success' | 'normal' {
+function typePillTheme(type: string): 'info' | 'success' | 'warning' | 'normal' {
   if (type === 'WORKSHOP') return 'success';
-  if (type === 'VIDEO') return 'info';
+  if (type === 'VIDEO' || type === 'PLAYLIST') return 'info';
+  if (type === 'DOCS') return 'warning';
+  // BLOG + REPO + anything new → neutral
   return 'normal';
 }
 
