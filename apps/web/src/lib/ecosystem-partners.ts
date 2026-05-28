@@ -244,6 +244,17 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     category: 'agents',
     products: ['token-factory'],
   },
+  {
+    // Docs live on Mastra's own site (mastra.ai), not on
+    // docs.tokenfactory.nebius.com — Mastra is the framework and they own
+    // the provider integration page. Verified 200 on the canonical URL
+    // the Mastra team uses for the Nebius provider.
+    name: 'Mastra',
+    blurb: 'TypeScript agent framework with Nebius as a first-class provider.',
+    docsUrl: 'https://mastra.ai/models/providers/nebius',
+    category: 'agents',
+    products: ['token-factory'],
+  },
   // Coding assistants — Token Factory models inside your editor
   {
     name: 'Cursor (Token Factory)',
