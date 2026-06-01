@@ -619,4 +619,56 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     category: 'agents',
     products: ['tavily'],
   },
+
+  // ================ Content-expansion additions (wave 2) =================
+  // Discovered + curl-200 verified in the wave-2 sweep (docs/content-expansion).
+  {
+    name: 'Requesty',
+    blurb: 'LLM routing gateway; its Nebius provider exposes Token Factory open models behind a unified API.',
+    docsUrl: 'https://www.requesty.ai/models/nebius',
+    category: 'router',
+    products: ['token-factory'],
+  },
+  {
+    name: 'Dask Cloud Provider',
+    blurb: 'Spin up Dask clusters on Nebius AI Cloud VMs for distributed Python + data workloads.',
+    docsUrl: 'https://cloudprovider.dask.org/en/latest/nebius.html',
+    category: 'orchestration',
+    products: ['ai-cloud'],
+  },
+  {
+    name: 'Retool',
+    blurb: 'Build internal tools with a Tavily action for live web search inside Retool apps + workflows.',
+    docsUrl: 'https://docs.retool.com/changelog/tavily',
+    category: 'tooling',
+    products: ['tavily'],
+  },
+  {
+    name: 'Pipedream',
+    blurb: 'Connect Tavily search + extract into thousands of Pipedream automation workflows.',
+    docsUrl: 'https://pipedream.com/apps/tavily',
+    category: 'tooling',
+    products: ['tavily'],
+  },
+  {
+    name: 'BuildShip',
+    blurb: 'Low-code visual backend builder with a Tavily node for web search + extraction.',
+    docsUrl: 'https://buildship.com/integrations/tavily',
+    category: 'nocode',
+    products: ['tavily'],
+  },
+  {
+    name: 'Sim',
+    blurb: 'Visual agent builder; drop in the Tavily tool to give agents live web retrieval.',
+    docsUrl: 'https://docs.sim.ai/tools/tavily',
+    category: 'nocode',
+    products: ['tavily'],
+  },
+  {
+    name: 'Activepieces',
+    blurb: 'Open-source automation platform with a Tavily MCP piece for web search in flows.',
+    docsUrl: 'https://www.activepieces.com/mcp/tavily',
+    category: 'nocode',
+    products: ['tavily'],
+  },
 ];
