@@ -1,0 +1,14 @@
+{
+  "note": "Executor fan-out plan satisfying v0.2-v0.4 of releases/roadmap.json (the council-ratified roadmap). Each stream's research agent WRITES a JSON array to candidates/<id>.json using the Write tool (file-write pattern — schema-mode subagents are unreliable in this environment, confirmed by 2 failed council synthesis runs). The main loop then reads each file, dedups + verifies via state/ingest.mjs, and ingests.",
+  "executorDecisions": {
+    "publishVsDraft": "Risk PM invariant says draft-first. Deviation: ingest as status=published (the goal is content visibly ON the site) BUT capture every created ID into state/rollback-manifest.json so a bad batch can be deleted. Net: live content + reversibility.",
+    "urlCheck": "Honor the invariant — re-verify each URL is 200 at INGEST time (ingest.mjs + a curl pass), not only at discovery."
+  },
+  "streams": [
+    {"id": "library-yt", "release": "0.2", "target": "library_articles", "find": "Nebius/Token Factory workshop + tutorial videos and YouTube playlists not already in the library", "sources": ["youtube.com Nebius channel", "youtube.com Token Factory playlists"], "productFocus": ["aicloud", "tokenfactory", "tavily"], "max": 15},
+    {"id": "library-blog", "release": "0.2", "target": "library_articles", "find": "Builder tutorials, deep-dive blog posts, academy courses, and docs guides", "sources": ["nebius.com/blog?tags=builder-updates", "academy.nebius.com", "docs.tokenfactory.nebius.com", "docs.tavily.com"], "productFocus": ["aicloud", "tokenfactory", "tavily"], "max": 15},
+    {"id": "integrations-tf", "release": "0.3", "target": "ecosystem-partners", "find": "Token Factory framework/agent/API integrations NOT already among the 64 existing partners", "sources": ["docs.tokenfactory.nebius.com/integrations/overview", "partner docs sites"], "productFocus": ["token-factory"], "max": 12},
+    {"id": "integrations-tavily", "release": "0.3", "target": "ecosystem-partners", "find": "Tavily integrations / partner tools (real integration pages, not just docs sections)", "sources": ["docs.tavily.com", "tavily.com/integrations", "partner sites"], "productFocus": ["tavily"], "max": 12},
+    {"id": "apps-gh", "release": "0.4", "target": "projects", "find": "Community OSS apps + hackathon projects on GitHub that use Nebius AI Cloud / Token Factory / Tavily", "sources": ["GitHub search: nebius, token-factory, tavily (topics + README)", "Devpost galleries", "Luma event recaps"], "productFocus": ["aicloud", "tokenfactory", "tavily", "openclaw"], "max": 20}
+  ]
+}

@@ -1,0 +1,126 @@
+[
+  {
+    "slug": "yt-finetune-open-llms-token-factory",
+    "title": "How to Fine-Tune Open Source LLMs with Nebius Token Factory | Full Tutorial",
+    "blurb": "End-to-end walkthrough of fine-tuning an open-source LLM with LoRA on Nebius Token Factory and deploying it as a production-ready API endpoint, including dataset prep and job configuration.",
+    "type": "VIDEO",
+    "level": "intermediate",
+    "duration_min": 17,
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://www.youtube.com/watch?v=gqCZ_sFha7E"
+  },
+  {
+    "slug": "yt-finetune-gpt-oss-20b-token-factory",
+    "title": "How to Fine-Tune GPT-OSS 20B using Nebius Token Factory",
+    "blurb": "Hands-on tutorial fine-tuning the GPT-OSS 20B model on Nebius Token Factory: environment setup, JSONL dataset upload, creating a fine-tuning job, monitoring training, and downloading artifacts.",
+    "type": "VIDEO",
+    "level": "intermediate",
+    "duration_min": 8,
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://www.youtube.com/watch?v=ms8fhA29H_0"
+  },
+  {
+    "slug": "yt-exploring-token-factory-walkthrough",
+    "title": "Exploring Nebius Token Factory | Open LLMs, AI Agents, Batch Inference & Fine-Tuning",
+    "blurb": "A tour of Nebius Token Factory covering its OpenAI-compatible API, batch inference, fine-tuning, and how open models like Qwen Coder plug into agent frameworks and tools like Hugging Face and OpenRouter.",
+    "type": "VIDEO",
+    "level": "beginner",
+    "duration_min": 16,
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://www.youtube.com/watch?v=Qfh4SdaLhNY"
+  },
+  {
+    "slug": "yt-rag-chatbot-production-webinar",
+    "title": "Deploying a Knowledge-Based Chatbot with RAG in Production",
+    "blurb": "Nebius webinar with CSA Boris Popov on shipping a production RAG chatbot on Nebius AI Cloud, powered by NVIDIA H100 GPUs with Kubernetes, Triton, TensorRT, Milvus, and PyTorch.",
+    "type": "WORKSHOP",
+    "level": "advanced",
+    "duration_min": 42,
+    "product_focus": [
+      "aicloud"
+    ],
+    "surface": [
+      "library",
+      "ai-cloud"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://www.youtube.com/watch?v=q_4yksKZK74"
+  },
+  {
+    "slug": "yt-rag-chatbot-code-llamaindex-nebius",
+    "title": "Build a RAG Chatbot to Chat with Your Code with LlamaIndex, DeepSeek v3 & Nebius",
+    "blurb": "Step-by-step build of a Retrieval-Augmented Generation chatbot that indexes and queries your codebase using LlamaIndex and the DeepSeek v3 model served on Nebius.",
+    "type": "VIDEO",
+    "level": "intermediate",
+    "duration_min": 5,
+    "product_focus": [
+      "aicloud"
+    ],
+    "surface": [
+      "library",
+      "ai-cloud"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://www.youtube.com/watch?v=IJKLAc4e14I"
+  },
+  {
+    "slug": "yt-agentic-search-with-tavily",
+    "title": "Agentic Search with Tavily — AI Build & Learn",
+    "blurb": "A 50-minute hands-on live build using Tavily, the search API built for AI agents and LLMs, to retrieve real-time grounded web results, with a demo and practical community examples.",
+    "type": "WORKSHOP",
+    "level": "intermediate",
+    "duration_min": 52,
+    "product_focus": [
+      "tavily"
+    ],
+    "surface": [
+      "library"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://www.youtube.com/watch?v=WqdhxthHL04"
+  },
+  {
+    "slug": "yt-tavily-mcp-langgraph-agent",
+    "title": "Web Search MCP Server | Tavily & LangGraph | Full Tutorial With Code",
+    "blurb": "Deploy the Tavily MCP server with NPX, expose it over streamable HTTP via Supergateway, wire up a LangChain MCP client, and connect a LangGraph agent for live web search.",
+    "type": "VIDEO",
+    "level": "intermediate",
+    "duration_min": 9,
+    "product_focus": [
+      "tavily"
+    ],
+    "surface": [
+      "library"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://www.youtube.com/watch?v=Gyg7OTsO8Zk"
+  }
+]

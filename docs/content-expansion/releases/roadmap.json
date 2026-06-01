@@ -1,0 +1,25 @@
+{
+  "ratifiedBy": "release-planning council — Risk PM lens",
+  "ratifiedOn": "2026-05-31",
+  "supersedes": "PLAN.md §Release roadmap (SEED)",
+  "dedupBaseline": "state/existing-baseline.json (94 projects / 112 library / 64 integrations)",
+  "invariants": [
+    "Discovery releases (read-only) precede every ingestion release; a candidate is never written before it is deduped + verified.",
+    "Directus writes are low-reversibility (prod CMS, no worktree) — default new rows to status=draft, is_official per-source, pinned=false; capture created IDs to a rollback manifest before flipping anything live.",
+    "Every code edit (ecosystem-partners.ts, page wiring) runs in its own per-release worktree, then merges to main. Never two code releases in one worktree.",
+    "Directus product_focus (tokenfactory/aicloud) and code products (token-factory/ai-cloud) are different vocabularies — ingest scripts assert the right enum per target or fail loud.",
+    "Forks credit the original creator in the tagline (precedent: OpenClaw -> @steipete) or are cut.",
+    "No candidate ships without a curl-200 live-URL check at ingest time, not just at discovery time."
+  ],
+  "releases": [
+    {"version": "0.1", "title": "Scaffold", "status": "done"},
+    {"version": "0.2", "title": "Library discovery (read-only)", "status": "planned"},
+    {"version": "0.3", "title": "Integrations discovery (read-only)", "status": "planned"},
+    {"version": "0.4", "title": "Apps + hackathon discovery (read-only)", "status": "planned"},
+    {"version": "0.5", "title": "Dedup + placement gate", "status": "planned"},
+    {"version": "0.6", "title": "Library + projects ingestion (Directus, drafts)", "status": "planned"},
+    {"version": "0.7", "title": "Integrations ingestion (worktree code edit)", "status": "planned"},
+    {"version": "1.0", "title": "Tagging, pinning + homepage/landing wiring", "status": "planned"},
+    {"version": "2.0", "title": "Verify, publish + handoff", "status": "planned"}
+  ]
+}

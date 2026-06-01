@@ -1,0 +1,30 @@
+[
+  {
+    "name": "OpenCode",
+    "blurb": "Open-source terminal coding agent with a built-in Nebius Token Factory provider: run /connect, pick Nebius Token Factory, paste your API key, and drive open models like Kimi K2 and Qwen3-Coder straight from the CLI over Token Factory's OpenAI-compatible endpoint.",
+    "docsUrl": "https://opencode.ai/docs/providers/",
+    "category": "coding",
+    "products": ["token-factory"]
+  },
+  {
+    "name": "Hugging Face smolagents",
+    "blurb": "Hugging Face's minimalist code-agent framework runs on Token Factory by setting provider=\"nebius\" in InferenceClientModel, so smolagents CodeAgents execute tool calls against Nebius-hosted open models (Qwen, Llama, DeepSeek) through the Inference Providers routing layer.",
+    "docsUrl": "https://huggingface.co/docs/smolagents/en/reference/models",
+    "category": "agents",
+    "products": ["token-factory"]
+  },
+  {
+    "name": "LLM Gateway",
+    "blurb": "Open-source unified LLM gateway (theopenco) that routes, manages, and tracks requests across providers; its Nebius provider exposes Token Factory open models (Qwen3, DeepSeek V3, Kimi K2, Llama Nemotron) with streaming, tool calling, vision, and JSON output behind one OpenAI-compatible API.",
+    "docsUrl": "https://llmgateway.io/providers/nebius",
+    "category": "router",
+    "products": ["token-factory"]
+  },
+  {
+    "name": "Pipecat",
+    "blurb": "Open-source framework for real-time voice and multimodal agents ships a NebiusLLMService that extends its OpenAI service to hit Token Factory at api.tokenfactory.nebius.com/v1; install pipecat-ai[nebius], set NEBIUS_API_KEY, and stream low-latency conversational responses from Nebius-hosted open models.",
+    "docsUrl": "https://docs.pipecat.ai/api-reference/server/services/llm/nebius",
+    "category": "agents",
+    "products": ["token-factory"]
+  }
+]

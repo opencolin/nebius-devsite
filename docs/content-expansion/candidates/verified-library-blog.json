@@ -1,0 +1,228 @@
+[
+  {
+    "slug": "blog-agent-101-production-scale",
+    "title": "Agent 101: Launching production-grade agents at scale",
+    "blurb": "Nebius walks through the four pillars of production AI agents (LLMs, agent frameworks, evaluation, memory) with hands-on integration examples for CrewAI, Google ADK, LangChain and Agno on Token Factory.",
+    "type": "BLOG",
+    "level": "intermediate",
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://nebius.com/blog/posts/launch-production-agents-at-scale"
+  },
+  {
+    "slug": "blog-model-distillation-intro",
+    "title": "Introduction to model distillation: efficient knowledge transfer",
+    "blurb": "An end-to-end tutorial that distills a Qwen3-235B teacher into a Qwen3-4B LoRA student on Nebius Token Factory, covering batch-inference data generation, fine-tuning, deployment and evaluation with a downloadable notebook.",
+    "type": "BLOG",
+    "level": "advanced",
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://nebius.com/blog/posts/model-distillation-intro"
+  },
+  {
+    "slug": "blog-multi-agent-customer-support-adk-a2a",
+    "title": "Build a multi-agent customer support system with Google ADK, A2A and Nebius",
+    "blurb": "Step-by-step guide to building an orchestrated support system where specialized agents handle sentiment, retrieval and escalation, powered by Nebius AI Studio (Token Factory) models, Google ADK and the A2A protocol.",
+    "type": "BLOG",
+    "level": "advanced",
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://nebius.com/blog/posts/build-multi-agent-ai-customer-support-system"
+  },
+  {
+    "slug": "blog-rag-content-platform-qdrant",
+    "title": "Build a RAG-powered content generation platform with Nebius and Qdrant",
+    "blurb": "Builds a full RAG pipeline: chunking, Qwen3-Embedding-8B vectors stored in Qdrant Cloud, semantic retrieval, and personalized generation with Llama-3.3-70B served on Nebius AI (Token Factory).",
+    "type": "BLOG",
+    "level": "intermediate",
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://nebius.com/blog/posts/building-a-rag-powered-content-generation-platform"
+  },
+  {
+    "slug": "blog-post-training-token-factory",
+    "title": "Post-training in Token Factory: the missing layer between MVP and production",
+    "blurb": "Explains how Nebius Token Factory turns base models into production systems via data ingestion, multi-node supervised fine-tuning, reinforcement fine-tuning, speculative decoding and deployment.",
+    "type": "BLOG",
+    "level": "intermediate",
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://nebius.com/blog/posts/post-training-in-token-factory"
+  },
+  {
+    "slug": "blog-fine-tuning-llms-ai-studio",
+    "title": "Beyond prompting: fine-tuning LLMs with Nebius",
+    "blurb": "A practical fine-tuning walkthrough covering dataset prep, LoRA adapter training on Llama-3.1-8B, deployment and evaluation against the Berkeley Function Calling Leaderboard on Nebius AI Studio (Token Factory).",
+    "type": "BLOG",
+    "level": "intermediate",
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://nebius.com/blog/posts/fine-tuning-llms-with-nebius-ai-studio"
+  },
+  {
+    "slug": "blog-lora-low-rank-fine-tuning-fundamentals",
+    "title": "Fundamentals of LoRA and low-rank fine-tuning",
+    "blurb": "A Nebius deep dive into how LoRA updates a low-rank decomposition of weight matrices (W' = BA) to match full fine-tuning at a fraction of the cost, plus newer variants like PiSSA and DoRA.",
+    "type": "BLOG",
+    "level": "advanced",
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://medium.com/nebius/fundamentals-of-lora-and-low-rank-fine-tuning-e748f2f1255d"
+  },
+  {
+    "slug": "docs-tf-function-calling-tools",
+    "title": "Function calling and tools with Token Factory",
+    "blurb": "Official Token Factory guide on defining tools, letting models pick functions from context (or forcing a specific call), with Python and JavaScript examples for building tool-using agents.",
+    "type": "DOCS",
+    "level": "intermediate",
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://docs.tokenfactory.nebius.com/ai-models-inference/function-calling"
+  },
+  {
+    "slug": "docs-tf-structured-output-json",
+    "title": "Structured output and JSON mode with Token Factory",
+    "blurb": "Official Token Factory docs showing how to force JSON responses via json_object mode or a strict JSON schema (e.g. a Pydantic BaseModel), with Python, cURL and JavaScript samples.",
+    "type": "DOCS",
+    "level": "beginner",
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://docs.tokenfactory.nebius.com/ai-models-inference/json"
+  },
+  {
+    "slug": "blog-tavily-rag-eval-langgraph",
+    "title": "Effortless web-based RAG evaluation with Tavily and LangGraph",
+    "blurb": "Tavily tutorial that combines its Search API with LangGraph to build an agent generating dynamic, subject-specific RAG evaluation datasets straight from live web data.",
+    "type": "BLOG",
+    "level": "intermediate",
+    "product_focus": [
+      "tavily"
+    ],
+    "surface": [
+      "library"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://www.tavily.com/blog/effortless-web-based-rag-evaluation-using-tavily-and-langgraph"
+  },
+  {
+    "slug": "blog-tavily-101-search-for-developers",
+    "title": "Tavily 101: AI-powered search for developers",
+    "blurb": "Tavily's primer on composing the /search, /extract and /crawl endpoints into real agent workflows, giving LLMs reliable real-time web access for RAG and research.",
+    "type": "BLOG",
+    "level": "beginner",
+    "product_focus": [
+      "tavily"
+    ],
+    "surface": [
+      "library"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://www.tavily.com/blog/tavily-101-ai-powered-search-for-developers"
+  },
+  {
+    "slug": "blog-tavily-search-api-certification",
+    "title": "Announcing the Tavily Web Search API certification",
+    "blurb": "Tavily's free certification program teaching developers to build agents that search, validate and explore the web, covering search fundamentals plus the Extract and Crawl tools.",
+    "type": "BLOG",
+    "level": "beginner",
+    "product_focus": [
+      "tavily"
+    ],
+    "surface": [
+      "library"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://www.tavily.com/blog/announcing-the-tavily-certification"
+  },
+  {
+    "slug": "docs-tavily-crawl-to-rag",
+    "title": "Crawl to RAG: turn any website into a searchable knowledge base",
+    "blurb": "Official Tavily docs example that crawls and vectorizes a website with Tavily Crawl and MongoDB, then queries it through a conversational RAG agent.",
+    "type": "DOCS",
+    "level": "intermediate",
+    "product_focus": [
+      "tavily"
+    ],
+    "surface": [
+      "library"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://docs.tavily.com/examples/use-cases/crawl-to-rag"
+  },
+  {
+    "slug": "docs-tavily-research-endpoint",
+    "title": "Tavily Research API endpoint reference",
+    "blurb": "Official Tavily API reference for the Research endpoint, which runs multiple iterative searches, reasons over sources, and returns a detailed research report in a single agentic call.",
+    "type": "DOCS",
+    "level": "intermediate",
+    "product_focus": [
+      "tavily"
+    ],
+    "surface": [
+      "library"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://docs.tavily.com/documentation/api-reference/endpoint/research"
+  }
+]

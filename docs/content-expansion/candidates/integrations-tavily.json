@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Devin",
+    "blurb": "Cognition's autonomous AI coding agent uses Tavily as a research-before-coding layer: installed via Devin's MCP Marketplace, the Tavily connector lets Devin run live web search and extract docs to compare libraries and ground implementation decisions in current context while it writes code.",
+    "docsUrl": "https://docs.tavily.com/documentation/integrations/devin",
+    "category": "coding",
+    "products": ["tavily"]
+  },
+  {
+    "name": "ElevenLabs",
+    "blurb": "ElevenLabs conversational/voice agents plug into Tavily's Search API to add live web retrieval without building a custom RAG layer — developers connect a Tavily API key as a tool in the ElevenAgents platform so voice agents can answer with up-to-date information mid-conversation.",
+    "docsUrl": "https://docs.tavily.com/documentation/integrations/elevenlabs",
+    "category": "agents",
+    "products": ["tavily"]
+  },
+  {
+    "name": "Gradium",
+    "blurb": "Gradium is a voice-AI platform for live speech agents that uses Tavily as its web-context layer: spoken requests are converted to structured queries, sent to Tavily's search endpoint (with search depth and max-results controls), and the retrieved web results are spoken back to the user.",
+    "docsUrl": "https://docs.tavily.com/documentation/integrations/gradium",
+    "category": "agents",
+    "products": ["tavily"]
+  }
+]

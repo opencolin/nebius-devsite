@@ -1,0 +1,359 @@
+{
+  "library-yt": {
+    "total": 7,
+    "ok": 7,
+    "dead": 0,
+    "results": [
+      {
+        "label": "yt-finetune-open-llms-token-factory",
+        "url": "https://www.youtube.com/watch?v=gqCZ_sFha7E",
+        "ok": true,
+        "status": 200,
+        "realTitle": "How to Fine-Tune Open Source LLMs with Nebius Token Factory | Full Tutorial",
+        "candidateTitle": "How to Fine-Tune Open Source LLMs with Nebius Token Factory | Full Tutorial"
+      },
+      {
+        "label": "yt-finetune-gpt-oss-20b-token-factory",
+        "url": "https://www.youtube.com/watch?v=ms8fhA29H_0",
+        "ok": true,
+        "status": 200,
+        "realTitle": "How to Fine-Tune GPT-OSS 20B Model using Nebius Token Factory",
+        "candidateTitle": "How to Fine-Tune GPT-OSS 20B using Nebius Token Factory"
+      },
+      {
+        "label": "yt-exploring-token-factory-walkthrough",
+        "url": "https://www.youtube.com/watch?v=Qfh4SdaLhNY",
+        "ok": true,
+        "status": 200,
+        "realTitle": "Exploring Nebius Token Factory | Open LLMs, AI Agents, Batch Inference, Fine-Tuning and more...",
+        "candidateTitle": "Exploring Nebius Token Factory | Open LLMs, AI Agents, Batch Inference & Fine-Tuning"
+      },
+      {
+        "label": "yt-rag-chatbot-production-webinar",
+        "url": "https://www.youtube.com/watch?v=q_4yksKZK74",
+        "ok": true,
+        "status": 200,
+        "realTitle": "Deploying a knowledge-based chatbot with RAG in production",
+        "candidateTitle": "Deploying a Knowledge-Based Chatbot with RAG in Production"
+      },
+      {
+        "label": "yt-rag-chatbot-code-llamaindex-nebius",
+        "url": "https://www.youtube.com/watch?v=IJKLAc4e14I",
+        "ok": true,
+        "status": 200,
+        "realTitle": "Build a RAG Chatbot to Chat with Your Code with Llamaindex, DeepSeek v3 & Nebius AI | Tutorial 🔥",
+        "candidateTitle": "Build a RAG Chatbot to Chat with Your Code with LlamaIndex, DeepSeek v3 & Nebius"
+      },
+      {
+        "label": "yt-agentic-search-with-tavily",
+        "url": "https://www.youtube.com/watch?v=WqdhxthHL04",
+        "ok": true,
+        "status": 200,
+        "realTitle": "Agentic Search with Tavily - AI Build & Learn #2",
+        "candidateTitle": "Agentic Search with Tavily — AI Build & Learn"
+      },
+      {
+        "label": "yt-tavily-mcp-langgraph-agent",
+        "url": "https://www.youtube.com/watch?v=Gyg7OTsO8Zk",
+        "ok": true,
+        "status": 200,
+        "realTitle": "Web Search MCP Server | Tavily & LangGraph | Full Tutorial With Code",
+        "candidateTitle": "Web Search MCP Server | Tavily & LangGraph | Full Tutorial With Code"
+      }
+    ]
+  },
+  "library-blog": {
+    "total": 14,
+    "ok": 14,
+    "dead": 0,
+    "results": [
+      {
+        "label": "blog-agent-101-production-scale",
+        "url": "https://nebius.com/blog/posts/launch-production-agents-at-scale",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Agent 101: Launching production-grade agents at scale"
+      },
+      {
+        "label": "blog-model-distillation-intro",
+        "url": "https://nebius.com/blog/posts/model-distillation-intro",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Introduction to model distillation: efficient knowledge transfer"
+      },
+      {
+        "label": "blog-multi-agent-customer-support-adk-a2a",
+        "url": "https://nebius.com/blog/posts/build-multi-agent-ai-customer-support-system",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Build a multi-agent customer support system with Google ADK, A2A and Nebius"
+      },
+      {
+        "label": "blog-rag-content-platform-qdrant",
+        "url": "https://nebius.com/blog/posts/building-a-rag-powered-content-generation-platform",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Build a RAG-powered content generation platform with Nebius and Qdrant"
+      },
+      {
+        "label": "blog-post-training-token-factory",
+        "url": "https://nebius.com/blog/posts/post-training-in-token-factory",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Post-training in Token Factory: the missing layer between MVP and production"
+      },
+      {
+        "label": "blog-fine-tuning-llms-ai-studio",
+        "url": "https://nebius.com/blog/posts/fine-tuning-llms-with-nebius-ai-studio",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Beyond prompting: fine-tuning LLMs with Nebius"
+      },
+      {
+        "label": "blog-lora-low-rank-fine-tuning-fundamentals",
+        "url": "https://medium.com/nebius/fundamentals-of-lora-and-low-rank-fine-tuning-e748f2f1255d",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Fundamentals of LoRA and low-rank fine-tuning"
+      },
+      {
+        "label": "docs-tf-function-calling-tools",
+        "url": "https://docs.tokenfactory.nebius.com/ai-models-inference/function-calling",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Function calling and tools with Token Factory"
+      },
+      {
+        "label": "docs-tf-structured-output-json",
+        "url": "https://docs.tokenfactory.nebius.com/ai-models-inference/json",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Structured output and JSON mode with Token Factory"
+      },
+      {
+        "label": "blog-tavily-rag-eval-langgraph",
+        "url": "https://www.tavily.com/blog/effortless-web-based-rag-evaluation-using-tavily-and-langgraph",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Effortless web-based RAG evaluation with Tavily and LangGraph"
+      },
+      {
+        "label": "blog-tavily-101-search-for-developers",
+        "url": "https://www.tavily.com/blog/tavily-101-ai-powered-search-for-developers",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Tavily 101: AI-powered search for developers"
+      },
+      {
+        "label": "blog-tavily-search-api-certification",
+        "url": "https://www.tavily.com/blog/announcing-the-tavily-certification",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Announcing the Tavily Web Search API certification"
+      },
+      {
+        "label": "docs-tavily-crawl-to-rag",
+        "url": "https://docs.tavily.com/examples/use-cases/crawl-to-rag",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Crawl to RAG: turn any website into a searchable knowledge base"
+      },
+      {
+        "label": "docs-tavily-research-endpoint",
+        "url": "https://docs.tavily.com/documentation/api-reference/endpoint/research",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Tavily Research API endpoint reference"
+      }
+    ]
+  },
+  "integrations-tf": {
+    "total": 4,
+    "ok": 4,
+    "dead": 0,
+    "results": [
+      {
+        "label": "OpenCode",
+        "url": "https://opencode.ai/docs/providers/",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "OpenCode"
+      },
+      {
+        "label": "Hugging Face smolagents",
+        "url": "https://huggingface.co/docs/smolagents/en/reference/models",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Hugging Face smolagents"
+      },
+      {
+        "label": "LLM Gateway",
+        "url": "https://llmgateway.io/providers/nebius",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "LLM Gateway"
+      },
+      {
+        "label": "Pipecat",
+        "url": "https://docs.pipecat.ai/api-reference/server/services/llm/nebius",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Pipecat"
+      }
+    ]
+  },
+  "integrations-tavily": {
+    "total": 3,
+    "ok": 3,
+    "dead": 0,
+    "results": [
+      {
+        "label": "Devin",
+        "url": "https://docs.tavily.com/documentation/integrations/devin",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Devin"
+      },
+      {
+        "label": "ElevenLabs",
+        "url": "https://docs.tavily.com/documentation/integrations/elevenlabs",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "ElevenLabs"
+      },
+      {
+        "label": "Gradium",
+        "url": "https://docs.tavily.com/documentation/integrations/gradium",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Gradium"
+      }
+    ]
+  },
+  "apps-gh": {
+    "total": 17,
+    "ok": 17,
+    "dead": 0,
+    "results": [
+      {
+        "label": "logo-ai",
+        "url": "https://github.com/Arindam200/logo-ai",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "LogoAI"
+      },
+      {
+        "label": "adk-agent-examples",
+        "url": "https://github.com/Astrodevil/ADK-Agent-Examples",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "ADK Agent Examples"
+      },
+      {
+        "label": "real-estate-extraction-agent",
+        "url": "https://github.com/brightdata/real-estate-ai-agent",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Real Estate AI Agent"
+      },
+      {
+        "label": "review-intelligence-agent",
+        "url": "https://github.com/brightdata/review-intelligence-agent",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Review Intelligence Agent"
+      },
+      {
+        "label": "pothole-detection-yolo",
+        "url": "https://github.com/PeterHdd/pothole-detection-yolo",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Pothole Detection (YOLO)"
+      },
+      {
+        "label": "rag-nebius-postgres",
+        "url": "https://github.com/fsndzomga/rag_nebius_postgresql",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "RAG with Nebius + Postgres"
+      },
+      {
+        "label": "devscribe-ai",
+        "url": "https://github.com/dev-rashedin/devScribe-ai",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "DevScribe AI"
+      },
+      {
+        "label": "wabot-nebius-whatsapp",
+        "url": "https://github.com/nataondev/wabot-nebius",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "WhatsApp Bot on Nebius"
+      },
+      {
+        "label": "nebius-hono-chat",
+        "url": "https://github.com/Arindam200/nebius-hono",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Nebius AI on Hono + Cloudflare"
+      },
+      {
+        "label": "llm-chess-tournament-nebius",
+        "url": "https://github.com/fsndzomga/chess_tournament_nebius_dspy",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "LLM Chess Tournament"
+      },
+      {
+        "label": "rag-cookbook-2026",
+        "url": "https://github.com/FareedKhan-dev/rag-cookbook-2026",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "RAG Cookbook 2026"
+      },
+      {
+        "label": "universal-deep-research-nebius",
+        "url": "https://github.com/demianarc/nebiusaistudiodeepresearch",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Universal Deep Research"
+      },
+      {
+        "label": "morphix-image-gen-nebius",
+        "url": "https://github.com/Rohit-1717/Text---Image-Generator----Nebius-AI-Studio",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Morphix AI Image Generator"
+      },
+      {
+        "label": "newsletter-agent-nebius",
+        "url": "https://github.com/atulranjan45/Newsletter-agent",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Newsletter Agent"
+      },
+      {
+        "label": "tavi-news-scout",
+        "url": "https://github.com/abrl91/tavi-li-et-ze",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "AI News Scout (Tavily + Nebius)"
+      },
+      {
+        "label": "inferomics-model-economics",
+        "url": "https://github.com/timjtrainor/Inferomics",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Inferomics"
+      },
+      {
+        "label": "clawbench-agent-eval",
+        "url": "https://github.com/Hank-Moogy/Clawbench-Agent-Eval-Pane",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "ClawBench"
+      }
+    ]
+  }
+}
