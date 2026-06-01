@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Qdrant",
+    "blurb": "Open-source vector database and similarity-search engine, available as a one-click standalone application on Nebius AI Cloud (eu-north1 and us-central1). Pairs with Nebius embedding models to power semantic search, recommendations and retrieval-augmented generation (RAG) pipelines.",
+    "docsUrl": "https://docs.nebius.com/applications/standalone/qdrant",
+    "category": "tooling",
+    "products": [
+      "ai-cloud"
+    ]
+  },
+  {
+    "name": "Open WebUI",
+    "blurb": "Feature-rich, self-hosted chat interface for LLMs, offered as a standalone application on Nebius AI Cloud. Connects to Nebius OpenAI-compatible endpoints (and Ollama) to give teams a private ChatGPT-style UI with built-in RAG over open models.",
+    "docsUrl": "https://docs.nebius.com/applications/standalone/open-webui",
+    "category": "tooling",
+    "products": [
+      "ai-cloud"
+    ]
+  },
+  {
+    "name": "Flowise (Nebius AI Cloud)",
+    "blurb": "Low-code, drag-and-drop builder for LLM apps and agents, deployable as a one-click standalone application on Nebius AI Cloud. Wire visual nodes to Nebius-hosted models and vector stores to ship chatbots and RAG flows without writing code.",
+    "docsUrl": "https://docs.nebius.com/applications/standalone/flowise",
+    "category": "nocode",
+    "products": [
+      "ai-cloud"
+    ]
+  },
+  {
+    "name": "ComfyUI",
+    "blurb": "Node-based visual interface for building and running AI image-generation pipelines (Stable Diffusion and friends), available as a GPU-backed one-click standalone application on Nebius AI Cloud. Craft and customize generative-media workflows on Nebius GPUs without managing infrastructure.",
+    "docsUrl": "https://docs.nebius.com/applications/standalone/comfyui",
+    "category": "tooling",
+    "products": [
+      "ai-cloud"
+    ]
+  },
+  {
+    "name": "JupyterLab (Nebius AI Cloud)",
+    "blurb": "One-click managed JupyterLab environment on Nebius AI Cloud, bundled with PyTorch and CUDA GPU acceleration across all regions. Gives data scientists and ML engineers an instant notebook workspace for experimentation, training and scientific computing on Nebius GPUs.",
+    "docsUrl": "https://docs.nebius.com/applications/standalone/jupyterlab",
+    "category": "tooling",
+    "products": [
+      "ai-cloud"
+    ]
+  },
+  {
+    "name": "dlt (dltHub)",
+    "blurb": "Open-source Python library for building data pipelines, with a dedicated Nebius AI Studio source. Extract models, usage and chat/completions data from the Nebius OpenAI-compatible REST API and load it into warehouses like DuckDB, Postgres, BigQuery or Snowflake.",
+    "docsUrl": "https://dlthub.com/context/source/nebius-ai-studio",
+    "category": "tooling",
+    "products": [
+      "ai-cloud"
+    ]
+  }
+]

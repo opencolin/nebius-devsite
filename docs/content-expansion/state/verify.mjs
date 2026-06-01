@@ -13,12 +13,11 @@
 import {readFileSync, writeFileSync} from 'node:fs';
 
 const DIR = '/Users/colin/Code/nebius-homepage/docs/content-expansion/candidates';
+// Wave 3 file set (edit this map per wave; earlier verified-*.json already written).
 const FILES = {
-  'library-yt': 'external_url',
-  'library-blog': 'external_url',
-  'integrations-tf': 'docsUrl',
-  'integrations-tavily': 'docsUrl',
-  'apps-gh': 'repo_url',
+  'aicloud-soperator-lib': 'external_url',
+  'more-apps': 'repo_url',
+  'more-integrations': 'docsUrl',
 };
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

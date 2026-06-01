@@ -1,358 +1,267 @@
 {
-  "library-yt": {
-    "total": 7,
-    "ok": 7,
+  "aicloud-soperator-lib": {
+    "total": 11,
+    "ok": 11,
     "dead": 0,
     "results": [
       {
-        "label": "yt-finetune-open-llms-token-factory",
-        "url": "https://www.youtube.com/watch?v=gqCZ_sFha7E",
+        "label": "blog-introducing-managed-soperator",
+        "url": "https://nebius.com/blog/posts/introducing-managed-soperator",
         "ok": true,
         "status": 200,
-        "realTitle": "How to Fine-Tune Open Source LLMs with Nebius Token Factory | Full Tutorial",
-        "candidateTitle": "How to Fine-Tune Open Source LLMs with Nebius Token Factory | Full Tutorial"
+        "candidateTitle": "Introducing Managed Soperator: your quick access to Slurm training"
       },
       {
-        "label": "yt-finetune-gpt-oss-20b-token-factory",
-        "url": "https://www.youtube.com/watch?v=ms8fhA29H_0",
+        "label": "blog-what-are-gpu-clusters-how-to-choose",
+        "url": "https://nebius.com/blog/posts/what-are-compute-clusters-and-how-to-choose-yours",
         "ok": true,
         "status": 200,
-        "realTitle": "How to Fine-Tune GPT-OSS 20B Model using Nebius Token Factory",
-        "candidateTitle": "How to Fine-Tune GPT-OSS 20B using Nebius Token Factory"
+        "candidateTitle": "What are GPU clusters and how to choose yours?"
       },
       {
-        "label": "yt-exploring-token-factory-walkthrough",
-        "url": "https://www.youtube.com/watch?v=Qfh4SdaLhNY",
+        "label": "blog-single-vs-multi-node-clusters",
+        "url": "https://nebius.com/blog/posts/single-vs-multi-node-clusters-for-training-inference",
         "ok": true,
         "status": 200,
-        "realTitle": "Exploring Nebius Token Factory | Open LLMs, AI Agents, Batch Inference, Fine-Tuning and more...",
-        "candidateTitle": "Exploring Nebius Token Factory | Open LLMs, AI Agents, Batch Inference & Fine-Tuning"
+        "candidateTitle": "Clusters vs single nodes: which to use for training and inference"
       },
       {
-        "label": "yt-rag-chatbot-production-webinar",
-        "url": "https://www.youtube.com/watch?v=q_4yksKZK74",
+        "label": "blog-cluster-networking-training-inference",
+        "url": "https://nebius.com/blog/posts/cluster-networking-for-ai-training-inference",
         "ok": true,
         "status": 200,
-        "realTitle": "Deploying a knowledge-based chatbot with RAG in production",
-        "candidateTitle": "Deploying a Knowledge-Based Chatbot with RAG in Production"
+        "candidateTitle": "The role of compute cluster networking for AI training and inference"
       },
       {
-        "label": "yt-rag-chatbot-code-llamaindex-nebius",
-        "url": "https://www.youtube.com/watch?v=IJKLAc4e14I",
+        "label": "blog-fault-tolerant-reliable-clusters",
+        "url": "https://nebius.com/blog/posts/how-we-build-reliable-clusters",
         "ok": true,
         "status": 200,
-        "realTitle": "Build a RAG Chatbot to Chat with Your Code with Llamaindex, DeepSeek v3 & Nebius AI | Tutorial 🔥",
-        "candidateTitle": "Build a RAG Chatbot to Chat with Your Code with LlamaIndex, DeepSeek v3 & Nebius"
+        "candidateTitle": "Fault-tolerant training: how we build reliable clusters for distributed AI"
       },
       {
-        "label": "yt-agentic-search-with-tavily",
-        "url": "https://www.youtube.com/watch?v=WqdhxthHL04",
+        "label": "blog-mlperf-training-v5-1-blackwell",
+        "url": "https://nebius.com/blog/posts/mlperf-training-v5-1-results",
         "ok": true,
         "status": 200,
-        "realTitle": "Agentic Search with Tavily - AI Build & Learn #2",
-        "candidateTitle": "Agentic Search with Tavily — AI Build & Learn"
+        "candidateTitle": "MLPerf Training v5.1: leading results on NVIDIA Blackwell and Blackwell Ultra"
       },
       {
-        "label": "yt-tavily-mcp-langgraph-agent",
-        "url": "https://www.youtube.com/watch?v=Gyg7OTsO8Zk",
+        "label": "blog-mlperf-inference-v5-1-bare-metal",
+        "url": "https://nebius.com/blog/posts/bare-metal-class-performance-mlperf-inference",
         "ok": true,
         "status": 200,
-        "realTitle": "Web Search MCP Server | Tavily & LangGraph | Full Tutorial With Code",
-        "candidateTitle": "Web Search MCP Server | Tavily & LangGraph | Full Tutorial With Code"
+        "candidateTitle": "Bare-metal-class performance for AI inference in MLPerf Inference v5.1"
+      },
+      {
+        "label": "repo-nebius-k8s-applications",
+        "url": "https://github.com/nebius/nebius-k8s-applications",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Nebius Kubernetes Applications: Helm charts for GPU & AI workloads"
+      },
+      {
+        "label": "repo-kvax-flash-attention-jax",
+        "url": "https://github.com/nebius/kvax",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Kvax: fast Flash Attention for JAX with context parallelism"
+      },
+      {
+        "label": "repo-ml-cookbook-dsv3-mxfp8",
+        "url": "https://github.com/nebius/ml-cookbook/tree/main/pytorch-dsv3-mxfp8",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "ML Cookbook: pre-training DeepSeek-V3 with MXFP8 on a B200 cluster"
+      },
+      {
+        "label": "repo-nebius-slurm-train-infer-demo",
+        "url": "https://github.com/kreuzhofer/nebius-slurm-ml-training-and-inference-demo",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "End-to-end Slurm training + vLLM inference demo on Nebius"
       }
     ]
   },
-  "library-blog": {
-    "total": 14,
-    "ok": 14,
+  "more-apps": {
+    "total": 18,
+    "ok": 18,
     "dead": 0,
     "results": [
       {
-        "label": "blog-agent-101-production-scale",
-        "url": "https://nebius.com/blog/posts/launch-production-agents-at-scale",
+        "label": "more-apps-awesome-ai-apps",
+        "url": "https://github.com/Arindam200/awesome-ai-apps",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Agent 101: Launching production-grade agents at scale"
+        "candidateTitle": "Awesome AI Apps"
       },
       {
-        "label": "blog-model-distillation-intro",
-        "url": "https://nebius.com/blog/posts/model-distillation-intro",
+        "label": "all-agentic-architectures-nebius",
+        "url": "https://github.com/FareedKhan-dev/all-agentic-architectures",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Introduction to model distillation: efficient knowledge transfer"
+        "candidateTitle": "All Agentic Architectures"
       },
       {
-        "label": "blog-multi-agent-customer-support-adk-a2a",
-        "url": "https://nebius.com/blog/posts/build-multi-agent-ai-customer-support-system",
+        "label": "marktechpost-ai-agents-tutorials",
+        "url": "https://github.com/Marktechpost/AI-Agents-Projects-Tutorials",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Build a multi-agent customer support system with Google ADK, A2A and Nebius"
+        "candidateTitle": "Nebius Llama-3 Multi-Tool Agent (Marktechpost)"
       },
       {
-        "label": "blog-rag-content-platform-qdrant",
-        "url": "https://nebius.com/blog/posts/building-a-rag-powered-content-generation-platform",
+        "label": "temporal-ai-agent-pipeline-nebius",
+        "url": "https://github.com/FareedKhan-dev/temporal-ai-agent-pipeline",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Build a RAG-powered content generation platform with Nebius and Qdrant"
+        "candidateTitle": "Temporal AI Agent Pipeline"
       },
       {
-        "label": "blog-post-training-token-factory",
-        "url": "https://nebius.com/blog/posts/post-training-in-token-factory",
+        "label": "gen-ai-experiments-buildfast",
+        "url": "https://github.com/buildfastwithai/gen-ai-experiments",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Post-training in Token Factory: the missing layer between MVP and production"
+        "candidateTitle": "Gen-AI Experiments"
       },
       {
-        "label": "blog-fine-tuning-llms-ai-studio",
-        "url": "https://nebius.com/blog/posts/fine-tuning-llms-with-nebius-ai-studio",
+        "label": "nebius-soperator-slurm-demo",
+        "url": "https://github.com/kreuzhofer/nebius-slurm-ml-training-and-inference-demo",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Beyond prompting: fine-tuning LLMs with Nebius"
+        "candidateTitle": "Nebius Slurm ML Training and Inference Demo"
       },
       {
-        "label": "blog-lora-low-rank-fine-tuning-fundamentals",
-        "url": "https://medium.com/nebius/fundamentals-of-lora-and-low-rank-fine-tuning-e748f2f1255d",
+        "label": "mcp-serverless-nebius",
+        "url": "https://github.com/mesutoezdil/mcp-serverless",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Fundamentals of LoRA and low-rank fine-tuning"
+        "candidateTitle": "MCP Server on Nebius Serverless"
       },
       {
-        "label": "docs-tf-function-calling-tools",
-        "url": "https://docs.tokenfactory.nebius.com/ai-models-inference/function-calling",
+        "label": "clinical-rag-nebius",
+        "url": "https://github.com/SchadenKai/Clinical-RAG",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Function calling and tools with Token Factory"
+        "candidateTitle": "Clinical-RAG"
       },
       {
-        "label": "docs-tf-structured-output-json",
-        "url": "https://docs.tokenfactory.nebius.com/ai-models-inference/json",
+        "label": "lattice-physics-research-agent",
+        "url": "https://github.com/Roudranil/lattice",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Structured output and JSON mode with Token Factory"
+        "candidateTitle": "Lattice"
       },
       {
-        "label": "blog-tavily-rag-eval-langgraph",
-        "url": "https://www.tavily.com/blog/effortless-web-based-rag-evaluation-using-tavily-and-langgraph",
+        "label": "cheki-bot-server",
+        "url": "https://github.com/Cheki-bot/cheki-bot-server",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Effortless web-based RAG evaluation with Tavily and LangGraph"
+        "candidateTitle": "Cheki-Bot Server"
       },
       {
-        "label": "blog-tavily-101-search-for-developers",
-        "url": "https://www.tavily.com/blog/tavily-101-ai-powered-search-for-developers",
+        "label": "botcachino-news-agent",
+        "url": "https://github.com/willypaz243/botcachino_monorepo",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Tavily 101: AI-powered search for developers"
+        "candidateTitle": "Botcachino"
       },
       {
-        "label": "blog-tavily-search-api-certification",
-        "url": "https://www.tavily.com/blog/announcing-the-tavily-certification",
+        "label": "langgraph-customer-service-nebius",
+        "url": "https://github.com/Danibara/langgraph-customer-service-agent-daniel-barak",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Announcing the Tavily Web Search API certification"
+        "candidateTitle": "LangGraph Customer-Service Data Analyst"
       },
       {
-        "label": "docs-tavily-crawl-to-rag",
-        "url": "https://docs.tavily.com/examples/use-cases/crawl-to-rag",
+        "label": "nebius-specimen-ai",
+        "url": "https://github.com/WeichengLite/Nebius-SpecimenAI",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Crawl to RAG: turn any website into a searchable knowledge base"
+        "candidateTitle": "Nebius SpecimenAI"
       },
       {
-        "label": "docs-tavily-research-endpoint",
-        "url": "https://docs.tavily.com/documentation/api-reference/endpoint/research",
+        "label": "job-finder-agent-nebius",
+        "url": "https://github.com/RamakrishnaTanam/Job-finder-Agent--MCP-Server",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Tavily Research API endpoint reference"
+        "candidateTitle": "Job Finder Agent (MCP Server)"
+      },
+      {
+        "label": "github-repo-analyzer-nebius",
+        "url": "https://github.com/emanuelam00/github-repo-analyzer",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "GitHub Repo Analyzer"
+      },
+      {
+        "label": "talk-to-db-nebius",
+        "url": "https://github.com/maniiii07/Talk-to-DB",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "Talk-to-DB"
+      },
+      {
+        "label": "preggo-maternal-health",
+        "url": "https://github.com/Hitha-Shree04/Preggo",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "PregGo"
+      },
+      {
+        "label": "ichatclient-nebius-dotnet",
+        "url": "https://github.com/EdCharbeneau/IChatClient-with-Nebius-Token-Factory",
+        "ok": true,
+        "status": 200,
+        "candidateTitle": "IChatClient with Nebius Token Factory"
       }
     ]
   },
-  "integrations-tf": {
-    "total": 4,
-    "ok": 4,
+  "more-integrations": {
+    "total": 6,
+    "ok": 6,
     "dead": 0,
     "results": [
       {
-        "label": "OpenCode",
-        "url": "https://opencode.ai/docs/providers/",
+        "label": "Qdrant",
+        "url": "https://docs.nebius.com/applications/standalone/qdrant",
         "ok": true,
         "status": 200,
-        "candidateTitle": "OpenCode"
+        "candidateTitle": "Qdrant"
       },
       {
-        "label": "Hugging Face smolagents",
-        "url": "https://huggingface.co/docs/smolagents/en/reference/models",
+        "label": "Open WebUI",
+        "url": "https://docs.nebius.com/applications/standalone/open-webui",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Hugging Face smolagents"
+        "candidateTitle": "Open WebUI"
       },
       {
-        "label": "LLM Gateway",
-        "url": "https://llmgateway.io/providers/nebius",
+        "label": "Flowise (Nebius AI Cloud)",
+        "url": "https://docs.nebius.com/applications/standalone/flowise",
         "ok": true,
         "status": 200,
-        "candidateTitle": "LLM Gateway"
+        "candidateTitle": "Flowise (Nebius AI Cloud)"
       },
       {
-        "label": "Pipecat",
-        "url": "https://docs.pipecat.ai/api-reference/server/services/llm/nebius",
+        "label": "ComfyUI",
+        "url": "https://docs.nebius.com/applications/standalone/comfyui",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Pipecat"
-      }
-    ]
-  },
-  "integrations-tavily": {
-    "total": 3,
-    "ok": 3,
-    "dead": 0,
-    "results": [
-      {
-        "label": "Devin",
-        "url": "https://docs.tavily.com/documentation/integrations/devin",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "Devin"
+        "candidateTitle": "ComfyUI"
       },
       {
-        "label": "ElevenLabs",
-        "url": "https://docs.tavily.com/documentation/integrations/elevenlabs",
+        "label": "JupyterLab (Nebius AI Cloud)",
+        "url": "https://docs.nebius.com/applications/standalone/jupyterlab",
         "ok": true,
         "status": 200,
-        "candidateTitle": "ElevenLabs"
+        "candidateTitle": "JupyterLab (Nebius AI Cloud)"
       },
       {
-        "label": "Gradium",
-        "url": "https://docs.tavily.com/documentation/integrations/gradium",
+        "label": "dlt (dltHub)",
+        "url": "https://dlthub.com/context/source/nebius-ai-studio",
         "ok": true,
         "status": 200,
-        "candidateTitle": "Gradium"
-      }
-    ]
-  },
-  "apps-gh": {
-    "total": 17,
-    "ok": 17,
-    "dead": 0,
-    "results": [
-      {
-        "label": "logo-ai",
-        "url": "https://github.com/Arindam200/logo-ai",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "LogoAI"
-      },
-      {
-        "label": "adk-agent-examples",
-        "url": "https://github.com/Astrodevil/ADK-Agent-Examples",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "ADK Agent Examples"
-      },
-      {
-        "label": "real-estate-extraction-agent",
-        "url": "https://github.com/brightdata/real-estate-ai-agent",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "Real Estate AI Agent"
-      },
-      {
-        "label": "review-intelligence-agent",
-        "url": "https://github.com/brightdata/review-intelligence-agent",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "Review Intelligence Agent"
-      },
-      {
-        "label": "pothole-detection-yolo",
-        "url": "https://github.com/PeterHdd/pothole-detection-yolo",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "Pothole Detection (YOLO)"
-      },
-      {
-        "label": "rag-nebius-postgres",
-        "url": "https://github.com/fsndzomga/rag_nebius_postgresql",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "RAG with Nebius + Postgres"
-      },
-      {
-        "label": "devscribe-ai",
-        "url": "https://github.com/dev-rashedin/devScribe-ai",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "DevScribe AI"
-      },
-      {
-        "label": "wabot-nebius-whatsapp",
-        "url": "https://github.com/nataondev/wabot-nebius",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "WhatsApp Bot on Nebius"
-      },
-      {
-        "label": "nebius-hono-chat",
-        "url": "https://github.com/Arindam200/nebius-hono",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "Nebius AI on Hono + Cloudflare"
-      },
-      {
-        "label": "llm-chess-tournament-nebius",
-        "url": "https://github.com/fsndzomga/chess_tournament_nebius_dspy",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "LLM Chess Tournament"
-      },
-      {
-        "label": "rag-cookbook-2026",
-        "url": "https://github.com/FareedKhan-dev/rag-cookbook-2026",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "RAG Cookbook 2026"
-      },
-      {
-        "label": "universal-deep-research-nebius",
-        "url": "https://github.com/demianarc/nebiusaistudiodeepresearch",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "Universal Deep Research"
-      },
-      {
-        "label": "morphix-image-gen-nebius",
-        "url": "https://github.com/Rohit-1717/Text---Image-Generator----Nebius-AI-Studio",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "Morphix AI Image Generator"
-      },
-      {
-        "label": "newsletter-agent-nebius",
-        "url": "https://github.com/atulranjan45/Newsletter-agent",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "Newsletter Agent"
-      },
-      {
-        "label": "tavi-news-scout",
-        "url": "https://github.com/abrl91/tavi-li-et-ze",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "AI News Scout (Tavily + Nebius)"
-      },
-      {
-        "label": "inferomics-model-economics",
-        "url": "https://github.com/timjtrainor/Inferomics",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "Inferomics"
-      },
-      {
-        "label": "clawbench-agent-eval",
-        "url": "https://github.com/Hank-Moogy/Clawbench-Agent-Eval-Pane",
-        "ok": true,
-        "status": 200,
-        "candidateTitle": "ClawBench"
+        "candidateTitle": "dlt (dltHub)"
       }
     ]
   }

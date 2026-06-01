@@ -1,8 +1,29 @@
 # Content Expansion — Live State (read me first)
 
-**Updated:** 2026-06-01 (complete)
-**Phase:** v2.0 verified live
-**Status:** 🟢 COMPLETE — 45 new items live (21 library + 17 apps + 7 integrations)
+**Updated:** 2026-06-01 (3 waves complete)
+**Phase:** v2.0 verified live — comprehensive sweep done
+**Status:** 🟢 COMPLETE — **118 new items** live across 3 discovery waves
+
+## FINAL TALLY (live on demo.buildspace.tv)
+| Surface | Start | +W1 | +W2 | +W3 | **Live** |
+|---|---|---|---|---|---|
+| Library | 112 | 21 | 14 | 11 | **158** |
+| Apps/Projects | 94 | 17 | 17 | 18 | **146** |
+| Integrations | 64 | 7 | 7 | 6 | **84** |
+| **/ecosystem** | 158 | | | | **230** |
+
+Wave yields: 45 → 38 → 35 (declining). Deploys: 7b01886 (W1), acaf936 (W2), 98fe4c0 (W3) — all verified live (ComfyUI/Qdrant/AirReserve/Activepieces confirmed rendering; container revision nbdevsite-web--0000104).
+
+## How to run another wave (long tail continues — community content keeps growing)
+1. `node` rebuild baseline = live Directus ∪ `candidates/verified-*.json` (lag-proof; see git log for the one-liner).
+2. `Workflow` the discovery fan-out (copy `…/scripts/content-discovery-wave3-*.js`, swap the STREAMS for new angles).
+3. `node state/verify.mjs` (edit FILES map to the new wave's ids) → URL-check.
+4. `node state/ingest.mjs library|projects <verified.json> --apply` for Directus; **worktree** for `ecosystem-partners.ts`.
+5. push → deploy → `az afd endpoint purge` → verify.
+- Caveat: baseline `integrationNames` line-regex under-reads by ~7 (cosmetic); integration dedup relies on `integrationDocsUrls` (URL match) + a live `grep` before each worktree edit, both reliable.
+
+## Worktrees used (all merged FF + removed)
+content/integrations-expansion (W1), content/integrations-wave2 (W2), content/integrations-wave3 (W3).
 
 ## Verified live on demo.buildspace.tv (deploy 7b01886)
 - /library: **133** cards (was 112). New YT entry renders with "Watch on YouTube ↗".
@@ -27,6 +48,16 @@
 - [x] **v0.4 Projects** — 17 community OSS apps. Projects 94 → **111**. Rollback: `state/rollback-projects.json`.
 - [x] **v0.3 Integrations** — 7 partners (OpenCode, smolagents, LLM Gateway, Pipecat, Devin, ElevenLabs, Gradium). 64 → **71**. Built in worktree `content/integrations-expansion`, fast-forward merged → main `7b01886`, pushed. Worktree removed.
 - Discovery: `wf_c25835a1-8ad` (5 streams, 45 candidates, all curl/oEmbed-verified live). Bug found+fixed in `state/ingest.mjs` norm() — was collapsing all youtube watch?v= URLs to one key; now canonicalizes to `yt:<id>`.
+
+## Loop-until-dry (find ALL) — running total: 83 added, surfaces at 147 lib / 128 apps / 78 integrations (ecosystem 206)
+- Wave 1 (`wf_c25835a1-8ad`): **45** → ingested + live. Gap: 0 hackathon projects.
+- Wave 2 (`wf_f40a4573-085`): **38** (17 hackathon projects, 14 tutorials, 7 integrations `acaf936`) → ingested + live.
+- Wave 3 (`wf_0bdec313-cf7`, IN FLIGHT): AI Cloud/Soperator/OpenClaw library, more apps, remaining integrations. Baseline rebuilt lag-proof (live ∪ verified-*).
+- Stop rule: when a wave nets < ~3 new after dedup, declare dry + finalize.
+- Replica-lag note: Directus `limit=-1` reads can lag behind `aggregate count`. Baseline builder now unions live ∪ ingested `verified-*.json` to stay correct.
+
+## Uncommitted (commit at finalize)
+- docs/content-expansion updates: STATE, verify.mjs (wave-2 map), baseline, rollback-*-w2.json, all wave-2/3 candidate + verified files.
 
 ## Remaining
 - [ ] **v1.0** — pin the best new workshop(s) to homepage; spot-check tags/surface on /library + /apps + /integrations.

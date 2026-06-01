@@ -1,0 +1,256 @@
+[
+  {
+    "slug": "blog-agent-skills-finetune-token-factory",
+    "title": "I Used Agent Skills to Fine-Tune an Open-Source LLM on Nebius Token Factory",
+    "blurb": "A teacher-student distillation walkthrough for an insurance-claims chatbot, using Token Factory Data Lab batch inference, LoRA fine-tuning, serverless adapter deployment, and a Gradio comparison app. Ships with a companion Jupyter notebook.",
+    "type": "BLOG",
+    "level": "intermediate",
+    "duration_min": 12,
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://astrodevil.medium.com/i-used-agent-skills-to-fine-tune-an-open-source-llm-on-nebius-token-factory-ae3ecef25d42"
+  },
+  {
+    "slug": "blog-multi-agent-rag-couchbase-crewai-nebius",
+    "title": "Building a Multi-Agent RAG System with Couchbase, CrewAI, and Nebius AI Studio",
+    "blurb": "Build a semantic search engine that pairs Couchbase as the vector store with CrewAI multi-agent RAG, using Nebius AI Studio for both the Llama LLM and the e5-mistral embeddings.",
+    "type": "BLOG",
+    "level": "intermediate",
+    "duration_min": 15,
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://dev.to/couchbase/building-a-multi-agent-rag-system-with-couchbase-crewai-and-nebius-ai-studio-a8b"
+  },
+  {
+    "slug": "blog-finetune-llm-in-minutes-nebius",
+    "title": "Fine-Tune Your LLM in Minutes with Nebius",
+    "blurb": "A practical guide to fine-tuning open-source LLMs on Nebius three ways: the no-code Web Console, the Python SDK, and raw cURL API requests, with .jsonl dataset prep.",
+    "type": "BLOG",
+    "level": "beginner",
+    "duration_min": 10,
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://dev.to/arindam_1729/fine-tune-your-llm-in-minutes-with-nebius-4e5h"
+  },
+  {
+    "slug": "blog-text-to-sql-embeddings-nebius-part1",
+    "title": "Text-to-SQL: Creating Embeddings with Nebius AI Studio (Part 1)",
+    "blurb": "Part 1 of a text-to-SQL RAG series: turn SQL schema into annotated markdown and generate vector embeddings with Nebius AI Studio (BAAI/bge-en-icl), stored in Postgres with pgvector.",
+    "type": "BLOG",
+    "level": "intermediate",
+    "duration_min": 11,
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://dev.to/spara_50/text-to-sql-creating-embeddings-with-nebius-ai-studio-4b13"
+  },
+  {
+    "slug": "blog-text-to-sql-generating-sql-nebius-part2",
+    "title": "Text-to-SQL: Generating SQL with Nebius AI Studio (Part 2)",
+    "blurb": "Part 2 of the text-to-SQL RAG series: use the embeddings from Part 1 to retrieve relevant schema and generate correct SQL queries with Nebius AI Studio models.",
+    "type": "BLOG",
+    "level": "intermediate",
+    "duration_min": 11,
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://dev.to/spara_50/text-to-sql-generating-sql-with-nebius-ai-studio-part-2-2159"
+  },
+  {
+    "slug": "blog-text-to-sql-agents-nebius-part3",
+    "title": "Text-to-SQL: Querying Databases with Nebius AI Studio and Agents (Part 3)",
+    "blurb": "Part 3 of the text-to-SQL RAG series: wrap the pipeline in an agent that queries a live database end to end, powered by Nebius AI Studio models.",
+    "type": "BLOG",
+    "level": "intermediate",
+    "duration_min": 12,
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://dev.to/spara_50/txt-to-sql-querying-databases-with-nebius-ai-studio-and-agents-44pl"
+  },
+  {
+    "slug": "blog-nebius-langchain-langgraph-litellm",
+    "title": "Using Nebius AI Models with LangChain/LangGraph via LiteLLM",
+    "blurb": "Wire Nebius-hosted Qwen models into LangChain/LangGraph through LiteLLM, then build a ReAct agent that talks to databases over the Model Context Protocol.",
+    "type": "BLOG",
+    "level": "intermediate",
+    "duration_min": 12,
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://dev.to/shivaylamba/using-nebius-ai-models-with-langchainlanggraph-via-litellm-5c78"
+  },
+  {
+    "slug": "blog-agentic-rag-conference-talk-nebius-tavily",
+    "title": "How I Built an Agentic RAG App to Brainstorm Conference Talk Ideas",
+    "blurb": "Combine Tavily live web research, Couchbase vector search over past KubeCon talks, and Nebius AI Studio (e5-mistral embeddings + Qwen3) to synthesize unique conference talk abstracts.",
+    "type": "BLOG",
+    "level": "intermediate",
+    "duration_min": 14,
+    "product_focus": [
+      "tokenfactory",
+      "tavily"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://dev.to/couchbase/how-i-built-an-agentic-rag-application-to-brainstorm-conference-talk-ideas-42oo"
+  },
+  {
+    "slug": "blog-ai-code-generator-reviewer-nextjs",
+    "title": "Create Your Own AI-Powered Code Generator and Reviewer",
+    "blurb": "Build a full-stack Next.js code assistant that generates snippets across languages and returns automated reviews, powered by DeepSeek Coder on Nebius Token Factory.",
+    "type": "BLOG",
+    "level": "intermediate",
+    "duration_min": 45,
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://nebius.com/blog/posts/building-ai-powered-code-generator"
+  },
+  {
+    "slug": "blog-ai-finance-planner-nextjs",
+    "title": "Building an AI-Powered Finance Planner with Full-Stack Next.js and Nebius",
+    "blurb": "Step-by-step build of Money-Guard, a Next.js dashboard that analyzes spending and answers questions about transactions using Meta Llama 3.1 70B served by Nebius AI Studio.",
+    "type": "BLOG",
+    "level": "intermediate",
+    "duration_min": 40,
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://nebius.com/blog/posts/building-ai-powered-finance-planner"
+  },
+  {
+    "slug": "blog-run-meta-llama-405b-nebius-api",
+    "title": "How to Run Meta Llama 3.1 405B with the Nebius AI Studio API",
+    "blurb": "A hands-on how-to for calling Meta Llama 3.1 405B through the Nebius OpenAI-compatible API, with working Python, JavaScript, and cURL examples.",
+    "type": "BLOG",
+    "level": "intermediate",
+    "duration_min": 10,
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": true,
+    "external_url": "https://nebius.com/blog/posts/run-meta-llama-405b-in-ai-studio"
+  },
+  {
+    "slug": "blog-job-finding-agent-adk-nebius-linkup",
+    "title": "Build a Job-Finding Agent with Google ADK, Nebius AI, Mistral OCR & Linkup",
+    "blurb": "A multi-agent pipeline that reads resume PDFs with Mistral OCR, searches live job boards via Linkup, and uses Qwen3-14B on Nebius AI Studio to generate and filter matches, orchestrated with Google ADK.",
+    "type": "BLOG",
+    "level": "intermediate",
+    "duration_min": 15,
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://dev.to/astrodevil/i-tested-deepseek-r1-0528-built-a-job-finding-agent-with-adk-nebius-ai-mistralocr-linkup-jgc"
+  },
+  {
+    "slug": "blog-five-agents-adk-llama-nemotron-nebius",
+    "title": "I Built a Team of 5 Agents Using Google ADK, Meta Llama and Nemotron-Ultra-253B",
+    "blurb": "Build an AI Trend Analyzer with five sequential ADK agents (Exa, Tavily, Firecrawl + summary/analysis) running Meta Llama 3.1 and Nemotron-Ultra-253B served through Nebius AI Studio.",
+    "type": "BLOG",
+    "level": "intermediate",
+    "duration_min": 16,
+    "product_focus": [
+      "tokenfactory",
+      "tavily"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://dev.to/astrodevil/i-built-a-team-of-5-agents-using-google-adk-meta-llama-and-nemotron-ultra-253b-ec3"
+  },
+  {
+    "slug": "blog-deepseek-r1-v3-nebius-boltdiy-cursor",
+    "title": "Use DeepSeek R1 & V3 with Bolt.DIY & Cursor in 3 Steps",
+    "blurb": "Get free Nebius AI Studio API keys, route DeepSeek R1/V3 through OpenRouter, and plug the EU-hosted models into Bolt.DIY and Cursor for coding.",
+    "type": "BLOG",
+    "level": "beginner",
+    "duration_min": 9,
+    "product_focus": [
+      "tokenfactory"
+    ],
+    "surface": [
+      "library",
+      "token-factory"
+    ],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://dev.to/astrodevil/use-free-deepseek-r1-v3-api-with-boltdiy-cursor-in-just-3-steps-eu-hosted-model-for-coding-3olg"
+  }
+]

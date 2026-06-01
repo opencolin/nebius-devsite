@@ -1,0 +1,17 @@
+{
+  "inserted": 11,
+  "slugs": [
+    "blog-fault-tolerant-reliable-clusters",
+    "blog-single-vs-multi-node-clusters",
+    "repo-nebius-k8s-applications",
+    "blog-mlperf-inference-v5-1-bare-metal",
+    "blog-mlperf-training-v5-1-blackwell",
+    "repo-nebius-slurm-train-infer-demo",
+    "blog-cluster-networking-training-inference",
+    "blog-what-are-gpu-clusters-how-to-choose",
+    "repo-kvax-flash-attention-jax",
+    "blog-introducing-managed-soperator",
+    "repo-ml-cookbook-dsv3-mxfp8"
+  ],
+  "skipped": 0
+}

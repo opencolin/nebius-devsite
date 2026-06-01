@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Requesty",
+    "blurb": "Unified LLM gateway with smart routing, caching and analytics across 400+ models. Requesty exposes a dedicated Nebius provider, routing requests to Nebius Token Factory open models through one OpenAI-compatible endpoint at pass-through pricing.",
+    "docsUrl": "https://www.requesty.ai/models/nebius",
+    "category": "router",
+    "products": [
+      "token-factory"
+    ]
+  },
+  {
+    "name": "Dask Cloud Provider",
+    "blurb": "Spins up distributed Dask clusters on cloud infrastructure straight from Python. Its NebiusCluster class provisions schedulers and workers on Nebius AI Cloud VMs, so data-science and ML workloads scale out across Nebius GPU/CPU instances.",
+    "docsUrl": "https://cloudprovider.dask.org/en/latest/nebius.html",
+    "category": "orchestration",
+    "products": [
+      "ai-cloud"
+    ]
+  },
+  {
+    "name": "Retool",
+    "blurb": "Low-code platform for building internal apps and AI workflows. Retool ships a native Tavily Search integration, letting builders run general or news-specific web searches against the Tavily API directly inside Retool apps and workflows.",
+    "docsUrl": "https://docs.retool.com/changelog/tavily",
+    "category": "tooling",
+    "products": [
+      "tavily"
+    ]
+  },
+  {
+    "name": "Pipedream",
+    "blurb": "Workflow automation platform with thousands of app integrations and code-level control. Its Tavily app provides a Send Query action for real-time web search plus content extraction, usable in both no-code and code steps of any Pipedream workflow.",
+    "docsUrl": "https://pipedream.com/apps/tavily",
+    "category": "tooling",
+    "products": [
+      "tavily"
+    ]
+  },
+  {
+    "name": "BuildShip",
+    "blurb": "Low-code visual backend and workflow builder for AI apps and agents. BuildShip offers a prebuilt Tavily Search node that drops real-time, LLM-optimized web search and content retrieval into automation flows alongside hundreds of other app nodes.",
+    "docsUrl": "https://buildship.com/integrations/tavily",
+    "category": "nocode",
+    "products": [
+      "tavily"
+    ]
+  },
+  {
+    "name": "Sim",
+    "blurb": "Open-source workflow builder for deploying and orchestrating AI agents. Sim exposes Tavily as a first-class tool block with search, extract, crawl and map operations, giving agents real-time web access and content extraction inside visual flows.",
+    "docsUrl": "https://docs.sim.ai/tools/tavily",
+    "category": "nocode",
+    "products": [
+      "tavily"
+    ]
+  },
+  {
+    "name": "Activepieces",
+    "blurb": "Open-source, self-hostable workflow automation platform with a visual flow builder. Activepieces provides a Tavily MCP integration so AI agents and automation flows can call Tavily web search and extraction as a tool over the Model Context Protocol.",
+    "docsUrl": "https://www.activepieces.com/mcp/tavily",
+    "category": "nocode",
+    "products": [
+      "tavily"
+    ]
+  }
+]
