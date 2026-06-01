@@ -565,4 +565,58 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     category: 'nocode',
     products: ['tavily'],
   },
+
+  // ===================== Content-expansion additions =====================
+  // Discovered + verified (curl-200) in the content-expansion sweep
+  // (docs/content-expansion). Token Factory: terminal/agent/gateway tools
+  // that expose Nebius open models. Tavily: agents that use Tavily search.
+  {
+    name: 'OpenCode',
+    blurb: 'Terminal coding agent with a built-in Token Factory provider — drive open models like Kimi K2 and Qwen3-Coder from the CLI.',
+    docsUrl: 'https://opencode.ai/docs/providers/',
+    category: 'coding',
+    products: ['token-factory'],
+  },
+  {
+    name: 'Hugging Face smolagents',
+    blurb: 'Minimalist code-agent framework; set provider="nebius" to run CodeAgents on Token Factory open models.',
+    docsUrl: 'https://huggingface.co/docs/smolagents/en/reference/models',
+    category: 'agents',
+    products: ['token-factory'],
+  },
+  {
+    name: 'LLM Gateway',
+    blurb: 'Open-source unified LLM gateway; its Nebius provider exposes Token Factory models behind one OpenAI-compatible API.',
+    docsUrl: 'https://llmgateway.io/providers/nebius',
+    category: 'router',
+    products: ['token-factory'],
+  },
+  {
+    name: 'Pipecat',
+    blurb: 'Real-time voice + multimodal agent framework with a NebiusLLMService for low-latency Token Factory inference.',
+    docsUrl: 'https://docs.pipecat.ai/api-reference/server/services/llm/nebius',
+    category: 'agents',
+    products: ['token-factory'],
+  },
+  {
+    name: 'Devin',
+    blurb: "Cognition's autonomous coding agent uses Tavily for research-before-coding via the MCP marketplace connector.",
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/devin',
+    category: 'coding',
+    products: ['tavily'],
+  },
+  {
+    name: 'ElevenLabs',
+    blurb: 'ElevenLabs voice agents add live web retrieval by wiring in a Tavily Search API key as a tool.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/elevenlabs',
+    category: 'agents',
+    products: ['tavily'],
+  },
+  {
+    name: 'Gradium',
+    blurb: 'Voice-AI platform for live speech agents; uses Tavily as its real-time web-context layer.',
+    docsUrl: 'https://docs.tavily.com/documentation/integrations/gradium',
+    category: 'agents',
+    products: ['tavily'],
+  },
 ];
