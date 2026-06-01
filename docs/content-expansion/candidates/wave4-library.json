@@ -1,0 +1,14 @@
+[
+  {
+    "slug": "blog-adding-nebius-to-rig-rust",
+    "title": "Adding Nebius Token Factory to a Rust Agent Without a Custom Provider",
+    "blurb": "Tutorial showing how to use Rig's OpenAI-compatible base_url override to wire Nebius Token Factory into a Rust LLM agent — no custom provider code needed.",
+    "type": "BLOG",
+    "level": "advanced",
+    "product_focus": ["tokenfactory"],
+    "surface": ["library", "token-factory"],
+    "pinned": false,
+    "is_official": false,
+    "external_url": "https://rup12.net/posts/adding-support-for-nebius-token-factory-to-rig/"
+  }
+]

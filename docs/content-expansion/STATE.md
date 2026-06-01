@@ -14,6 +14,12 @@
 
 Wave yields: 45 → 38 → 35 (declining). Deploys: 7b01886 (W1), acaf936 (W2), 98fe4c0 (W3) — all verified live (ComfyUI/Qdrant/AirReserve/Activepieces confirmed rendering; container revision nbdevsite-web--0000104).
 
+**Wave 4 COMPLETE** (`fb433a0`, manual — subagent quota hit Jun 1, resets Jun 2):
+- 1 new integration: Zed IDE (coding, token-factory). Integrations 84 → **85**.
+- 1 new library entry: Rig/Rust blog (blog-adding-nebius-to-rig-rust). Library 158 → **159**.
+- 3 upgraded docsUrls: LiteLLM (→ litellm.ai/providers/nebius), Cline (→ docs.cline.bot), Continue (→ docs.continue.dev/…/nebius). All point to richer upstream provider pages.
+- Research done manually via WebFetch/WebSearch (quota workaround). Deployed `fb433a0`, verified "All (85)" + "Zed IDE: true" on /integrations.
+
 ## How to run another wave (long tail continues — community content keeps growing)
 1. `node` rebuild baseline = live Directus ∪ `candidates/verified-*.json` (lag-proof; see git log for the one-liner).
 2. `Workflow` the discovery fan-out (copy `…/scripts/content-discovery-wave3-*.js`, swap the STREAMS for new angles).

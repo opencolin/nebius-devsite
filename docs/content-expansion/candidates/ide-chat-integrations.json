@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Cline",
+    "blurb": "Open-source autonomous coding agent for VS Code (+ JetBrains, Cursor, Zed, CLI) with Nebius Token Factory as a first-class provider — pick Nebius, paste your API key, and drive Qwen3-Coder or GLM-4.5 from the sidebar.",
+    "docsUrl": "https://docs.tokenfactory.nebius.com/integrations/coding/cline",
+    "category": "coding",
+    "products": ["token-factory"]
+  },
+  {
+    "name": "Zed IDE",
+    "blurb": "GPU-accelerated, collaborative code editor with a dedicated Nebius Token Factory provider guide for connecting open models to the built-in AI assistant.",
+    "docsUrl": "https://docs.tokenfactory.nebius.com/integrations/coding/zed",
+    "category": "coding",
+    "products": ["token-factory"]
+  },
+  {
+    "name": "Continue",
+    "blurb": "Open-source AI coding assistant for VS Code and JetBrains with a native Nebius provider — configure chat (DeepSeek R1) and embeddings (BAAI) directly in config.yaml.",
+    "docsUrl": "https://docs.continue.dev/customize/model-providers/more/nebius",
+    "category": "coding",
+    "products": ["token-factory"]
+  },
+  {
+    "name": "LiteLLM",
+    "blurb": "Unified LLM proxy with a Nebius AI provider (30+ models across DeepSeek, Qwen, Llama, Mistral, NVIDIA, BAAI); use model=nebius/<model-name> for zero-config switching across agent frameworks.",
+    "docsUrl": "https://docs.litellm.ai/docs/providers/nebius",
+    "category": "router",
+    "products": ["token-factory"]
+  }
+]
