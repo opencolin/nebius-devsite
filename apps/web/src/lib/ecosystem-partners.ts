@@ -157,8 +157,8 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   // Routers / Gateways
   {
     name: 'LiteLLM',
-    blurb: 'Unified LLM gateway routing to Nebius endpoints.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api/litellm',
+    blurb: 'Unified LLM gateway with a Nebius AI provider — use model=nebius/<model-name> to route 30+ Token Factory models across any agent framework.',
+    docsUrl: 'https://docs.litellm.ai/docs/providers/nebius',
     category: 'router',
     products: ['token-factory'],
   },
@@ -280,17 +280,15 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   },
   {
     name: 'Cline',
-    blurb:
-      'Open-source AI coding agent for VSCode + JetBrains, powered by Nebius.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/coding/cline',
+    blurb: 'Open-source autonomous coding agent for VS Code + JetBrains with Nebius Token Factory as a native provider — pick Nebius, paste your key, drive Qwen3-Coder or GLM-4.5.',
+    docsUrl: 'https://docs.cline.bot/provider-config/other-30-plus-providers',
     category: 'coding',
     products: ['token-factory'],
   },
   {
     name: 'Continue',
-    blurb: 'Open-source autopilot for VS Code & JetBrains, pointed at Nebius.',
-    docsUrl:
-      'https://docs.tokenfactory.nebius.com/integrations/coding/continue',
+    blurb: 'Open-source AI coding assistant for VS Code & JetBrains with a native Nebius provider — configure chat (DeepSeek R1) and embeddings (BAAI) in config.yaml.',
+    docsUrl: 'https://docs.continue.dev/customize/model-providers/more/nebius',
     category: 'coding',
     products: ['token-factory'],
   },
@@ -718,5 +716,15 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     docsUrl: 'https://dlthub.com/context/source/nebius-ai-studio',
     category: 'tooling',
     products: ['ai-cloud'],
+  },
+
+  // ================ Content-expansion additions (wave 4) =================
+  // Discovered manually (subagent quota hit); curl-200 verified.
+  {
+    name: 'Zed IDE',
+    blurb: 'GPU-accelerated, collaborative code editor with a Token Factory integration guide for connecting open models to its built-in AI assistant.',
+    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/coding/zed',
+    category: 'coding',
+    products: ['token-factory'],
   },
 ];
