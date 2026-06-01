@@ -671,4 +671,52 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     category: 'nocode',
     products: ['tavily'],
   },
+
+  // ================ Content-expansion additions (wave 3) =================
+  // AI Cloud standalone apps (one-click deploys on Nebius GPU infra),
+  // curl-200 verified. ("Flowise (Nebius AI Cloud)" = deploy Flowise ON
+  // Nebius; distinct from the existing "FlowiseAI" = Tavily tool inside
+  // Flowise.)
+  {
+    name: 'Qdrant',
+    blurb: 'Deploy the Qdrant vector database on Nebius AI Cloud for RAG + similarity search.',
+    docsUrl: 'https://docs.nebius.com/applications/standalone/qdrant',
+    category: 'tooling',
+    products: ['ai-cloud'],
+  },
+  {
+    name: 'Open WebUI',
+    blurb: 'Self-host the Open WebUI chat front-end on Nebius AI Cloud over your own models.',
+    docsUrl: 'https://docs.nebius.com/applications/standalone/open-webui',
+    category: 'tooling',
+    products: ['ai-cloud'],
+  },
+  {
+    name: 'Flowise (Nebius AI Cloud)',
+    blurb: 'Deploy the Flowise low-code agent builder on Nebius AI Cloud GPU infrastructure.',
+    docsUrl: 'https://docs.nebius.com/applications/standalone/flowise',
+    category: 'nocode',
+    products: ['ai-cloud'],
+  },
+  {
+    name: 'ComfyUI',
+    blurb: 'Run the ComfyUI node-based diffusion workflow tool on Nebius AI Cloud GPUs.',
+    docsUrl: 'https://docs.nebius.com/applications/standalone/comfyui',
+    category: 'tooling',
+    products: ['ai-cloud'],
+  },
+  {
+    name: 'JupyterLab (Nebius AI Cloud)',
+    blurb: 'Launch a GPU-backed JupyterLab environment on Nebius AI Cloud for notebooks + experiments.',
+    docsUrl: 'https://docs.nebius.com/applications/standalone/jupyterlab',
+    category: 'tooling',
+    products: ['ai-cloud'],
+  },
+  {
+    name: 'dlt (dltHub)',
+    blurb: 'Open-source Python ELT library with a Nebius source/destination for data pipelines.',
+    docsUrl: 'https://dlthub.com/context/source/nebius-ai-studio',
+    category: 'tooling',
+    products: ['ai-cloud'],
+  },
 ];
