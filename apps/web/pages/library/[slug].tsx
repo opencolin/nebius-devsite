@@ -224,10 +224,19 @@ function ExternalSourceButton({url}: {url: string}) {
 // becomes "Newthing" rather than the lazy "original site".
 export function externalLinkLabel(url: string): string {
   let host = '';
+  let pathname = '';
   try {
-    host = new URL(url).hostname.replace(/^www\./, '').toLowerCase();
+    const parsed = new URL(url);
+    host = parsed.hostname.replace(/^www\./, '').toLowerCase();
+    pathname = parsed.pathname.toLowerCase();
   } catch {
     return 'Read on the original site';
+  }
+
+  // nebius.com/events/* and /webinar/* are video recordings — "Watch",
+  // not "Read". Check path before falling through to the host table.
+  if (host === 'nebius.com' && /^\/(events|webinar)\//.test(pathname)) {
+    return 'Watch on Nebius.com';
   }
 
   // Most-specific first so subdomains override the base-domain match
