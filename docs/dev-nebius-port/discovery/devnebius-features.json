@@ -1,0 +1,238 @@
+{
+  "purpose_today": "dev.nebius.com is Nebius's developer/builder marketing hub — a thin top-of-funnel landing layer that routes AI builders into one of three products (AI Cloud, Token Factory, Serverless AI) plus the partner Tavily. It is NOT a docs site and NOT an interactive portal: it is a curated set of marketing + 'how-to' jump pages whose job is to (a) pitch each product in one hero line, (b) hand off to the real docs at docs.nebius.com / docs.tokenfactory.nebius.com, the console (console.nebius.com / tokenfactory.nebius.com), GitHub cookbooks, YouTube playlists, and the Discord community, and (c) capture newsletter signups. Every real surface (full documentation, pricing, console/login, code, video) lives on other Nebius subdomains; dev.nebius.com mostly aggregates and links out to them. Think 'developer relations landing site / link hub', not 'product app'.",
+  "pages": [
+    {
+      "url": "https://dev.nebius.com",
+      "hero": "Nebius for AI Builders — 'From training and fine-tuning to production inference at scale. Choose a starting point for your workload.' CTAs: Start building (auth.nebius.com) / Docs (nebius.com/docs).",
+      "sections": [
+        "Hero + primary CTAs (Start building, Docs)",
+        "Choose a starting point — 4 product cards: AI Cloud, Token Factory, Serverless, Tavily (each with How-tos + Start building links)",
+        "What can you build — 3 use-case cards: Inference, Training & Fine-tuning, Industries AI Applications (each links to a guide)",
+        "Join our Community — Discord, Hackathons & Events, Builder Hours, GitHub, YouTube, Build in public (X/LinkedIn)",
+        "Few playlists by workflow — YouTube playlist cards: Build & Scale with Nebius, Robotics Events, Build with Token Factory",
+        "More Programs for builders — Startup Program, AI for Tech Academy (Nebius Academy)",
+        "Subscribe to our newsletter (HubSpot form)"
+      ],
+      "content_types": [
+        "marketing copy / value-prop blurbs",
+        "product router cards (link out to docs + console)",
+        "use-case cards",
+        "community/event link cards (Discord, events, office hours)",
+        "external resource links (GitHub repos, YouTube playlists/channel, X, LinkedIn)",
+        "program promos (Startup Program, Academy)",
+        "newsletter signup form",
+        "no code samples, no pricing tables, no model cards on this page"
+      ],
+      "ctas": [
+        "Start building (auth.nebius.com login)",
+        "Docs (nebius.com/docs)",
+        "Log in to Token Factory / Log in to AI Cloud (header)",
+        "How-tos + Start building per product card",
+        "Join Discord",
+        "See upcoming events / View schedule (nebius.com/events)",
+        "Go to repos (github.com/nebius)",
+        "See videos (YouTube)",
+        "Subscribe to newsletter"
+      ]
+    },
+    {
+      "url": "https://dev.nebius.com/ai-cloud",
+      "hero": "AI Cloud: build on GPUs your way — 'VMs, Kubernetes, and Slurm for AI training and inference on high-performance GPU infrastructure.' CTAs: Quick start (auth.nebius.com/ui/login) / Docs (docs.nebius.com).",
+      "sections": [
+        "Hero + CTAs (Quick start, Docs)",
+        "Quickstarts — Get started with AI Cloud, Understand the AI Cloud architecture, Console overview (with video)",
+        "Resources and guides — Data preparation techniques, Inference guide with vLLM (blog + GitHub)",
+        "K8s on Nebius — GPU Kubernetes clusters (GitHub + Doc)",
+        "Soperator — managed Slurm clusters for distributed training (GitHub + Doc)",
+        "SkyPilot — Finetuning & Orchestrating (GitHub + Doc)",
+        "More guides for SkyPilot — fine-tuning on K8s w/ MLflow, multi-node Llama 3.1 (blog links)",
+        "Reference Implementations Example: Healthcare — NVIDIA NIM/Blueprint, Boltz-2 inference, Boltz-2 on K8s (blog + video)",
+        "Explore more ways to learn and get support — Docs, Blog, Solutions library, Discord",
+        "Subscribe to our newsletter (HubSpot form)"
+      ],
+      "content_types": [
+        "marketing copy",
+        "quickstart / how-to link cards",
+        "deep-dive tutorial + reference-architecture links (blog posts)",
+        "GitHub solutions-library repo links",
+        "embedded/linked YouTube videos",
+        "tool-integration cards (Kubernetes, Soperator/Slurm, SkyPilot)",
+        "vertical reference implementation cards (healthcare/life-sciences)",
+        "newsletter form",
+        "no on-page code blocks, no pricing, no model cards"
+      ],
+      "ctas": [
+        "Quick start (auth.nebius.com/ui/login)",
+        "Docs (docs.nebius.com)",
+        "GitHub repo links (k8s-training, soperator, skypilot, solutions-library)",
+        "Watch video (YouTube)",
+        "Read/Learn/Guide (blog posts)",
+        "Discord community",
+        "Subscribe to newsletter"
+      ]
+    },
+    {
+      "url": "https://dev.nebius.com/token-factory",
+      "hero": "Token Factory: inference API for open models — 'OpenAI-compatible API to start fast. Dedicated GPUs, post-training, and workload optimization when you scale. Start in minutes. Engineer it for production when it matters.' CTAs: Quick start / Docs (docs.tokenfactory.nebius.com).",
+      "sections": [
+        "Hero + CTAs (Quick start, Docs)",
+        "Build. Customize. Optimize. Deploy — 4 link columns: Start building (Quickstart, API reference, Playground, Switch to Token Factory); Optimize for real workloads (Dedicated endpoints, Autoscaling & cache-aware routing, Batch inference); Customize the model (Post-training guide, Deploy custom models, Post-training examples); Integrate with your stack (APIs: LiteLLM/Aisuite; Frameworks: LlamaIndex/LangChain; Agents: Agno/CrewAI/Pydantic)",
+        "Architecture and build walkthroughs — Official Token Factory YouTube playlist, Build with Token Factory playlist",
+        "In-depth Technical Resources — 3 engineering blog posts (MoE + speculative decoding, invisible architecture behind chat apps, routing for scaling)",
+        "Ship faster with the community — Docs, Blog, Cookbook (GitHub), Discord",
+        "Subscribe to our newsletter (HubSpot form)"
+      ],
+      "content_types": [
+        "marketing copy",
+        "dense documentation link directory (quickstart, API reference, dedicated endpoints, batch inference)",
+        "integration matrix (APIs / frameworks / agent frameworks)",
+        "Playground link (interactive model playground lives on tokenfactory.nebius.com, not here)",
+        "cookbook / post-training example GitHub links",
+        "engineering deep-dive blog links",
+        "YouTube playlist cards",
+        "newsletter form",
+        "no on-page model cards, no pricing table, no live code execution — though it implies an OpenAI-compatible API and external Playground"
+      ],
+      "ctas": [
+        "Quick start (docs.tokenfactory.nebius.com/quickstart)",
+        "Docs (docs.tokenfactory.nebius.com)",
+        "Log in to Token Factory (tokenfactory.nebius.com)",
+        "Playground (tokenfactory.nebius.com/playground)",
+        "API reference / Dedicated endpoints / Batch inference doc links",
+        "Cookbook (github.com/nebius/token-factory-cookbook)",
+        "Read the blog (engineering posts)",
+        "Discord community",
+        "Subscribe to newsletter"
+      ]
+    },
+    {
+      "url": "https://dev.nebius.com/serverless",
+      "hero": "Serverless AI — 'Run containerized AI workloads on GPUs without managing infrastructure.' Two execution models: Jobs (run workloads to completion) and Endpoints (serve real-time requests). 'Provision compute on demand, execute workloads, and release resources automatically.'",
+      "sections": [
+        "Hero + concept intro (Jobs vs Endpoints)",
+        "Get to know Serverless — conceptual overview image/section",
+        "Start building — Jobs (Launch your first job: Docs/Video/Examples) and Endpoints (Deploy your first endpoint: Docs/Video/Examples)",
+        "Core patterns — LLM inference (vLLM endpoint), Training and fine-tuning (GitHub + Guides)",
+        "Advanced workflows — RAG pipelines, Agentic workflows (OpenClaw), Batch and data processing ('coming soon')",
+        "Verticals and domain workflows — Life sciences (OpenMM), Voice and Media, Robotics and Physical AI ('coming soon')",
+        "Get started and explore more — Try Serverless in console, Join the community (Discord), Serverless cookbook (GitHub), Jobs and Endpoints docs, Video walkthroughs",
+        "Subscribe to our newsletter (HubSpot form)"
+      ],
+      "content_types": [
+        "marketing copy + conceptual explanation (Jobs/Endpoints execution models)",
+        "quickstart link triplets (Docs + Video + GitHub Examples)",
+        "pattern cards (LLM inference, training, RAG, agents, batch)",
+        "vertical workflow cards (life sciences, voice/media, robotics)",
+        "cookbook GitHub links",
+        "linked YouTube videos",
+        "'coming soon' placeholders (signals an in-progress / evolving page)",
+        "newsletter form",
+        "no on-page code, no pricing, no model cards"
+      ],
+      "ctas": [
+        "Docs (docs.nebius.com/serverless/quickstart/jobs and /endpoints)",
+        "Video (YouTube walkthroughs)",
+        "Examples (github.com/nebius/serverless-ai-cookbook)",
+        "Go to console (console.nebius.com/serverless)",
+        "Guides (docs.nebius.com tutorials)",
+        "Discord community",
+        "Subscribe to newsletter"
+      ]
+    },
+    {
+      "url": "https://docs.nebius.com/ (docs landing, linked as 'Docs')",
+      "hero": "Nebius AI Cloud Documentation — 'Explore what Nebius AI Cloud has to offer, and learn how to make the most out of its resources and address any potential issues.'",
+      "sections": [
+        "Getting Started cards — Sign up, Host a model, Deploy a Kubernetes cluster, Launch a container over VM",
+        "Platform Services — Compute (VMs, GPU clusters, Soperator, Kubernetes, disks/filesystems), Storage (Object Storage, PostgreSQL, Container Registry), AI Services (Serverless AI, MLflow, Applications, 3p integrations), Observability (Metrics/alerts, Logs, Traces), Network",
+        "Overview & Management — Signup, Billing, IAM, Quotas, Support, Regions, Digital rights, Changelog",
+        "Security — Audit Logs, MysteryBox",
+        "Tutorials — step-by-step guides",
+        "Developer Tools — CLI, Terraform Provider, gRPC API"
+      ],
+      "content_types": [
+        "icon-based doc navigation cards",
+        "categorized documentation index",
+        "developer tooling references (CLI, Terraform, gRPC API)",
+        "changelog link",
+        "no on-page code samples and no visible search box on the landing card view (search exists elsewhere in docs chrome)"
+      ],
+      "ctas": [
+        "Create your account (sign up)",
+        "Per-service 'Learn more' card links into deep documentation"
+      ]
+    },
+    {
+      "url": "https://nebius.com/prices (pricing, separate domain)",
+      "hero": "Nebius AI Cloud pricing — GPU/CPU instance, storage, and platform-service rates. 'Save up to 35% on on-demand rates' via commitment discounts.",
+      "sections": [
+        "NVIDIA GPU Instances — table: vCPUs, RAM, preemptible vs on-demand GPU-hour rates (e.g. HGX H100 $2.15 preemptible / $3.85 on-demand; L40S from $0.74; GB300/GB200 = contact sales)",
+        "CPU-only Instances — AMD EPYC, Intel Ice Lake",
+        "Storage — filesystem and volume options, monthly pricing",
+        "Other Services — Kubernetes, networking, Slurm operator (mostly free)",
+        "Payment / commitment info — min first payment $25, credit card + bank transfer, commitment discounts"
+      ],
+      "content_types": [
+        "pricing tables (GPU-hour and monthly storage rates)",
+        "commitment/discount marketing copy",
+        "contact-sales gating for premium SKUs",
+        "this is INFRASTRUCTURE (GPU/VM/storage) pricing only — no Token Factory per-token / per-model price table surfaced here"
+      ],
+      "ctas": [
+        "Get started (console access)",
+        "Contact us (large-scale clusters / premium GPUs)"
+      ]
+    }
+  ],
+  "present_features": [
+    "Product router / segmentation hub (AI Cloud vs Token Factory vs Serverless vs Tavily partner)",
+    "Per-product 'how-to' landing pages with hero + value prop",
+    "Marketing copy and value-proposition blurbs throughout",
+    "Curated documentation link directories (especially dense on Token Factory page)",
+    "Quickstart link bundles (Docs + Video + GitHub Examples triplets)",
+    "Use-case / pattern cards (inference, training/fine-tuning, RAG, agents, batch)",
+    "Vertical / industry showcase cards (healthcare/life sciences, robotics/physical AI, voice & media)",
+    "Reference architecture + engineering deep-dive blog links (MoE speculative decoding, routing, chat-app architecture)",
+    "Integration matrix (LiteLLM, Aisuite, LlamaIndex, LangChain, Agno, CrewAI, Pydantic)",
+    "Community section — Discord, GitHub org/cookbooks, YouTube channel + curated playlists, X, LinkedIn",
+    "Events surface (Hackathons & Events, Builder Hours / office hours) — but as links out to nebius.com/events, not an on-site calendar",
+    "Programs (Startup Program with credits, AI for Tech / Nebius Academy courses)",
+    "Newsletter subscription (HubSpot form) on every page",
+    "Header login links to two consoles (Token Factory, AI Cloud)",
+    "Search box (custom 'SearchProposal' input component, Gravity UI g-text-input) in the site header",
+    "Footer utility links — Docs, Token Factory Docs, Status page, GitHub, Discord, Blog, Security/Trust Center",
+    "External Playground reference (Token Factory playground link)",
+    "Pricing exists but on a SEPARATE domain (nebius.com/prices), infra-only"
+  ],
+  "absent_features": [
+    "No interactive in-site model library / model catalog with browsable model cards (no per-model pages, specs, or 'try' buttons hosted on dev.nebius.com — model interaction lives on the external Token Factory console/playground)",
+    "No leaderboard / benchmark ranking surface",
+    "No on-site community forum, profiles, or user accounts (community is offloaded entirely to Discord)",
+    "No on-site events calendar / event detail pages / RSVP (links out to nebius.com/events)",
+    "No builder/developer portal with auth, dashboards, API-key management, or usage views (all handled in the external consoles)",
+    "No on-page interactive code playground, runnable snippets, or copyable code blocks (code lives in GitHub cookbooks; even quickstarts only link out)",
+    "No pricing tables or token-pricing on the dev site itself (infra pricing is on nebius.com/prices; no per-token Token Factory price table found on-site)",
+    "No project showcase / gallery / 'built with Nebius' directory of community projects",
+    "No search results page that indexes the builder content (header has a search input, but it is a 'SearchProposal' widget, not a full library/portal search)",
+    "No blog hosted on the dev subdomain (blog is nebius.com/blog)",
+    "No documentation hosted on the dev subdomain (docs are docs.nebius.com / docs.tokenfactory.nebius.com)",
+    "No changelog / release-notes feed on the dev site (changelog lives in docs)",
+    "No newsletter/blog archive, RSS, or content feed",
+    "No grants/credits self-serve application flow on-page (Startup Program card has no direct apply CTA in extracted content)",
+    "No status/health widget inline (only a footer link to status.nebius.com)"
+  ],
+  "tech_signals": [
+    "Next.js — confirmed: __NEXT_DATA__ inline JSON, _next/static assets, buildId 'SkoKBJko_u-0iQTcO4LG1', _buildManifest, hashed chunk bundles",
+    "Gravity UI (Yandex) — confirmed: 70+ g-* utility/component classes (g-button, g-text-input, g-icon, g-text-input_view_normal, grid classes g-4/g-6, g-button_view_action/violet)",
+    "Page Constructor (Gravity 'pc-*' page-builder) — confirmed: pc-page-constructor, pc-constructor-block(s), pc-card-layout-block, pc-basic-card, pc-background-card, pc-header-block, pc-form-block, pc-hubspot-form, pc-addons-navigation/footer/logo/mobile-navigation — i.e. pages are assembled from a config-driven block constructor",
+    "Directus CMS — confirmed: 72 distinct directus_files:<uuid> asset references embedded in the page payload (images/content sourced from a Directus headless CMS); assets also served from assets.nebius.com CDN",
+    "HubSpot — newsletter forms are HubSpot (pc-hubspot-form class; 'hubspot' references in markup; UTM hidden fields)",
+    "Search box — custom 'SearchProposal' React component (SearchProposal_root/_input/_button) built on Gravity g-text-input; present in header but lightweight",
+    "OneTrust — cookie consent / 'Do not sell my data' banner",
+    "Analytics/ads pixels — Bing (bat.bing.com), Twitter/X (analytics.twitter.com / t.co adsct), RLCDN (id.rlcdn.com) tracking pixels present",
+    "CDN — assets.nebius.com for images with cache-buster query params",
+    "Multi-subdomain architecture — dev.nebius.com (this hub) federates to nebius.com, docs.nebius.com, docs.tokenfactory.nebius.com, console.nebius.com, tokenfactory.nebius.com, auth.nebius.com, academy.nebius.com, status.nebius.com",
+    "Page weight ~219 KB of HTML for the homepage (server-rendered Next.js with large inline data payload)"
+  ],
+  "notes": "Holistic read: dev.nebius.com is the same Gravity-UI + Page-Constructor + Directus + Next.js stack Nebius uses for its main marketing site, scoped to a 'for developers/builders' funnel. Its real job is segmentation and hand-off, not hosting product surfaces. Four entry products: AI Cloud (raw GPU VMs/K8s/Slurm-Soperator/SkyPilot, full-control), Token Factory (OpenAI-compatible inference API for open models + dedicated endpoints + post-training), Serverless AI (containerized Jobs + Endpoints, no infra mgmt), and Tavily (partner web-search API). Token Factory page is the most 'product-doc-like' (dense link directory + integration matrix + Playground). Serverless page shows several 'coming soon' blocks, indicating it is the newest/most-in-progress section. Compared to a richer 'builders' site, dev.nebius.com is deliberately thin: no native model library/catalog, no leaderboard, no on-site community/forum, no events calendar, no project gallery, no developer portal/dashboard, and no on-page interactive code or pricing — every one of those is either absent or delegated to an external subdomain (console, docs, GitHub, Discord, nebius.com/events, nebius.com/prices, nebius.com/blog). If the goal is to PORT/replace this with a fuller builders experience, the gaps to add are: an in-site model library with model cards, a leaderboard/benchmarks surface, an events/community hub, a project/showcase gallery, indexed library search, and possibly on-page pricing + interactive code — while the existing strengths to preserve are the clean product-router IA, the integration matrix, the quickstart (Docs+Video+Examples) triplets, and the community/programs link hub. Stack to match if porting: Next.js + Gravity UI + Page Constructor blocks + Directus CMS (the repo this discovery lives in, nebius-homepage, already appears to use Directus + Gravity pc-*/g-* conventions per the existing product landing pages)."
+}

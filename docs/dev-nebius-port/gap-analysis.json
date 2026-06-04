@@ -1,0 +1,504 @@
+{
+  "summary": "dev.nebius.com is a deliberately thin 4-page builder-marketing microsite (home + /ai-cloud + /token-factory + /serverless) on the exact same stack our site targets: Next.js Pages Router + Gravity UI + Page Constructor blocks + Directus CMS + HubSpot forms. Its only first-party surfaces are product-router landing pages that aggregate outbound links to docs, consoles, GitHub cookbooks, YouTube, and Discord; every dynamic builder surface is either absent or offloaded to another subdomain (events to nebius.com/events, community to Discord, portal/dashboards to console + tokenfactory, ideas to ideas.nebius.com, academy to academy.nebius.com). Our Builders site adds an entire data-backed community + program operating system on top of that marketing shell: an on-site events directory with live map and scrape-refresh, a typed content library with product/type filters, community apps + ecosystem + integrations directories, a DevRel team/office-hours surface, unified search (Typesense + Directus fallback), Directus-JWT auth, a full builder Portal (credits claims, event hosting, library submission, ambassador apply, activity log, leaderboard), and a mirror Admin review-queue console — all reading and writing Directus collections that do not yet exist on dev.nebius.com. The gap is therefore less about marketing polish (their product-router IA is strong and worth preserving) and more about adding stateful, authenticated, CMS-and-search-backed surfaces; the heaviest lifts are the auth foundation and the portal/admin write-flows that depend on it, while the cheapest wins are static or CMS-fed directories (events, library, ecosystem, team, product-page rails) that slot directly into their existing Page Constructor + Directus pipeline.",
+  "gaps": [
+    {
+      "id": "auth-sessions",
+      "feature": "Builder authentication + session/role gating (Directus-JWT cookies)",
+      "category": "platform",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/login.tsx",
+        "apps/web/src/components/auth/LoginForm.tsx",
+        "apps/web/pages/api/auth/login.ts",
+        "apps/web/pages/api/auth/me.ts",
+        "apps/web/pages/api/auth/logout.ts",
+        "apps/web/src/lib/auth.ts"
+      ],
+      "impact": 5,
+      "effort": 4,
+      "risk": "high",
+      "dependencies": [],
+      "reasoning": "dev.nebius.com has zero first-party auth — every 'Log in' button bounces to auth.nebius.com / the external consoles. Nothing stateful or personalized can exist on-site without a session layer. Our implementation forwards to Directus /auth/login, stores access+refresh tokens in httpOnly cookies, transparently rotates expired tokens, supports ?next= redirects, and exposes requireRole/enforceRole gates. This is the keystone dependency for the entire Portal and Admin surface; high risk because it introduces an auth/identity surface, token storage, and CSRF/session-fixation considerations onto a previously static microsite, and may need reconciliation with the existing Nebius SSO at auth.nebius.com rather than a parallel Directus identity."
+    },
+    {
+      "id": "directus-data-model",
+      "feature": "Builder/program Directus collections + typed SDK access layer",
+      "category": "platform",
+      "dev_nebius_status": "partial",
+      "our_reference_files": [
+        "apps/web/src/lib/directus.ts",
+        "apps/web/src/lib/types.ts"
+      ],
+      "impact": 5,
+      "effort": 3,
+      "risk": "med",
+      "dependencies": [],
+      "reasoning": "dev.nebius.com already runs Directus, but only as a headless image/content store for Page Constructor (72 directus_files asset refs observed) — it has none of the program data model. Our site defines and reads/writes events, library_articles, projects, builders, team_members, pages, activities, credit_requests, ambassador_applications, feedback_items, office_hours_sessions, plus a typed SDK layer with three access modes: directusServer() (admin token for SSG/SSR/API), directusAsUser() (per-user token through role permissions), and directusPublic() (anon), with assetUrl() for transformed assets. Almost every other gap depends on these collections existing and the role-permission matrix being set up. Medium risk: schema design + Directus role/permission config is the data-model foundation, and getting per-user permission scoping wrong is a data-exposure vector."
+    },
+    {
+      "id": "events-directory",
+      "feature": "On-site events directory with live map + city filter",
+      "category": "content",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/events/index.tsx",
+        "apps/web/src/components/events/EventsMap.tsx",
+        "apps/web/src/lib/event-url.ts",
+        "apps/web/src/lib/format.ts"
+      ],
+      "impact": 5,
+      "effort": 3,
+      "risk": "med",
+      "dependencies": ["directus-data-model"],
+      "reasoning": "dev.nebius.com has no on-site events surface at all — 'Hackathons & Events' and 'Builder Hours' are just outbound links to nebius.com/events. An on-site directory keeps builders in the funnel and gives the dev hub its own reason to exist. Our version is a dark full-bleed Leaflet map with click-to-filter city pins/chips, upcoming-vs-past split, city-alias folding, venue-local times, and Luma/Nebius RSVP deep-links. Medium risk only because Leaflet is client-only (touches window) and needs SSR-safe dynamic import; data is read-only from the events collection."
+    },
+    {
+      "id": "events-refresh-scrape",
+      "feature": "Admin events refresh (Luma + nebius.com Tavily scrape)",
+      "category": "platform",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/api/events/refresh.ts",
+        "apps/web/pages/api/scrape-events.ts",
+        "apps/web/pages/events/index.tsx"
+      ],
+      "impact": 3,
+      "effort": 3,
+      "risk": "med",
+      "dependencies": ["events-directory", "auth-sessions"],
+      "reasoning": "Keeps the events directory current without manual data entry: an admin-only Refresh button hits /api/events/refresh, which uses Tavily Extract to scrape lu.ma/nebiusAI and nebius.com/events, parses titles/dates/cities, dedupes by normalized title, and upserts into events. Valuable for ops once the directory exists, but not user-facing. Medium risk: it writes to the events collection, calls an external scraping API (Tavily) with its own key + rate limits, and must be admin-gated; parser brittleness against upstream HTML changes is an ongoing maintenance cost."
+    },
+    {
+      "id": "content-library",
+      "feature": "Typed content library index + detail (workshops, videos, repos, blogs, docs)",
+      "category": "content",
+      "dev_nebius_status": "partial",
+      "our_reference_files": [
+        "apps/web/pages/library/index.tsx",
+        "apps/web/pages/library/[slug].tsx"
+      ],
+      "impact": 5,
+      "effort": 3,
+      "risk": "low",
+      "dependencies": ["directus-data-model"],
+      "reasoning": "dev.nebius.com scatters learning content as ad-hoc link cards across the product pages (YouTube playlists, blog deep-dives, GitHub cookbooks) with no unified, filterable, searchable index — and the canonical library lives off-site on GitHub (solutions-library). Our library is a typography-first grid of workshops/videos/playlists/repos/blogs/docs with a sticky segmented filter (type + product chips with live counts) backed by published library_articles, plus per-slug detail pages that embed YouTube players for VIDEO/WORKSHOP entries and render optional markdown bodies. This is the content backbone that several other surfaces (product-page rails, search, workshop spotlight) read from. Low risk: read-only CMS content rendered through filters."
+    },
+    {
+      "id": "apps-showcase",
+      "feature": "Community apps / 'built with Nebius' project gallery (index + detail)",
+      "category": "community",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/apps/index.tsx",
+        "apps/web/pages/apps/[slug].tsx",
+        "apps/web/src/lib/projects.ts"
+      ],
+      "impact": 4,
+      "effort": 2,
+      "risk": "low",
+      "dependencies": ["directus-data-model"],
+      "reasoning": "dev.nebius.com has no project showcase / 'built with Nebius' gallery anywhere — social proof of what builders ship is entirely missing. Our /apps surface is a grid of community + hackathon projects with gradient cover cards, award/featured pills, and a segmented filter (Featured, product focus, Robotics/JetBrains hackathon, Other), plus per-slug detail pages with repo/demo links, tags, product focus, and builder byline. Low effort/risk: read-only Directus projects collection rendered as cards; no auth, no writes."
+    },
+    {
+      "id": "ecosystem-integrations-directories",
+      "feature": "Ecosystem unified directory + standalone integrations directory",
+      "category": "product",
+      "dev_nebius_status": "partial",
+      "our_reference_files": [
+        "apps/web/pages/ecosystem.tsx",
+        "apps/web/pages/integrations.tsx",
+        "apps/web/src/lib/ecosystem-partners.ts",
+        "apps/web/src/components/integrations/HeroSection.tsx",
+        "apps/web/src/components/integrations/Hero3D.tsx"
+      ],
+      "impact": 4,
+      "effort": 2,
+      "risk": "low",
+      "dependencies": ["apps-showcase"],
+      "reasoning": "dev.nebius.com expresses integrations only as a static text matrix (LiteLLM, LlamaIndex, LangChain, Agno, CrewAI, Pydantic) on the Token Factory page and as a docs section under docs.tokenfactory.nebius.com — there is no browsable, filterable on-site directory. Our /ecosystem is a canonical umbrella mixing community apps (Directus projects) and ~85 partner integrations (bundled list) in one grid with a Kind + product filter and a 'Submit your project' CTA that opens a prefilled GitHub issue; /integrations is the standalone ~85-partner directory (product + category chips with live counts, pure SSG). Group both as one gap — same data source and filter pattern. Low risk: mostly bundled static data + read-only projects; the R3F/Hero3D membrane is the only heavy client piece and is optional polish."
+    },
+    {
+      "id": "team-directory",
+      "feature": "DevRel team people directory + member detail",
+      "category": "content",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/team/index.tsx",
+        "apps/web/pages/team/[slug].tsx"
+      ],
+      "impact": 3,
+      "effort": 2,
+      "risk": "low",
+      "dependencies": ["directus-data-model"],
+      "reasoning": "dev.nebius.com has no people/team page — builders can't see or reach the DevRel advocates behind the program, and there's no human face to the 'Builder Hours' link. Our /team is a grid of active DevRel members (bio, region, expertise) with a 'Book office hours' CTA when calendly_url is set, plus per-slug profiles with full bio, languages, and social links. Low risk: read-only team_members collection. Natural prerequisite for the office-hours booking surface."
+    },
+    {
+      "id": "office-hours",
+      "feature": "Office Hours booking (auth-gated Calendly reveal)",
+      "category": "community",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/office-hours.tsx"
+      ],
+      "impact": 3,
+      "effort": 2,
+      "risk": "med",
+      "dependencies": ["team-directory", "auth-sessions"],
+      "reasoning": "dev.nebius.com lists 'Builder Hours' as a concept but only as a marketing card; there is no actual booking surface. Our /office-hours page combines hand-authored recurring drop-in slots with weekly 1:1 slots per advocate (team_members with calendly_url), and gates booking server-side: signed-out visitors see 'Sign in to book', signed-in users get the live Calendly link. Medium risk: the booking reveal is auth-conditional, so it depends on the session layer; the page itself is otherwise light. Converts the existing 'Builder Hours' marketing promise into a real funnel."
+    },
+    {
+      "id": "fellows-directory",
+      "feature": "Fellows / recognized community leaders roll-call",
+      "category": "community",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/fellows.tsx",
+        "apps/web/src/lib/fellows.ts"
+      ],
+      "impact": 2,
+      "effort": 1,
+      "risk": "low",
+      "dependencies": [],
+      "reasoning": "No recognition surface for top community members exists on dev.nebius.com. Our /fellows is a curated public roll-call driven by a static fellows.ts array, emitting noindex,nofollow and hidden from nav/sitemap while being curated. Lowest effort (static data array, single page, no CMS or auth) and lowest impact (hidden, curated, niche) — a cheap recognition lever to layer in once the broader community surface lands. No dependencies since it's fully static."
+    },
+    {
+      "id": "search",
+      "feature": "Unified search results page + header autocomplete (Typesense + Directus fallback)",
+      "category": "search",
+      "dev_nebius_status": "partial",
+      "our_reference_files": [
+        "apps/web/pages/search.tsx",
+        "apps/web/pages/api/search.ts",
+        "apps/web/src/lib/typesense.ts",
+        "apps/web/src/components/search/SearchProposal.tsx",
+        "apps/web/src/lib/search-types.ts"
+      ],
+      "impact": 4,
+      "effort": 3,
+      "risk": "med",
+      "dependencies": ["content-library", "events-directory", "apps-showcase"],
+      "reasoning": "dev.nebius.com ships a header SearchProposal input (same Gravity component name we use) but it is a lightweight widget with no real index and no results page — there is nothing on-site to actually search. Our implementation makes that widget real: GET /api/search backs both the debounced top-6 header dropdown and a full /search?q= grid (server-fetched at getServerSideProps so hits are in the HTML, with client-side Kind filter chips). Primary path queries Typesense (nebius_builders collection); falls back to Directus _icontains across events + library_articles + projects when Typesense is unconfigured. Medium risk + effort: introduces an optional Typesense dependency to provision/index and keep in sync, though the Directus fallback de-risks launch. Only worth building once there is indexed content (library/events/apps) to search."
+    },
+    {
+      "id": "product-page-resource-rails",
+      "feature": "CMS-driven resource rails on product landing pages (surface-tagged library)",
+      "category": "product",
+      "dev_nebius_status": "partial",
+      "our_reference_files": [
+        "apps/web/pages/ai-cloud.tsx",
+        "apps/web/pages/token-factory.tsx",
+        "apps/web/pages/serverless.tsx",
+        "apps/web/src/components/product/ResourceCard.tsx"
+      ],
+      "impact": 4,
+      "effort": 2,
+      "risk": "low",
+      "dependencies": ["content-library"],
+      "reasoning": "dev.nebius.com already has /ai-cloud, /token-factory, /serverless pages, but their resource sections are hand-curated static link cards edited in code/Page Constructor — adding or reordering a quickstart/video/guide means a content deploy. Our equivalents render the same hero + quickstarts/videos/guides/repos/docs rails dynamically from library_articles tagged surface=['ai-cloud'|'token-factory'|'serverless'] (fetch-all + JS filter, since Directus JSON-array has no _contains; pinned floats to quickstarts). This turns their three highest-traffic pages into CMS-managed surfaces editable by DevRel without a deploy. Low risk: read-only, and it enhances pages that already exist rather than adding new routes. Depends on the library collection being the source of truth."
+    },
+    {
+      "id": "homepage-events-map-hero",
+      "feature": "Homepage live events-map hero",
+      "category": "marketing",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/index.tsx",
+        "apps/web/src/components/hero/HeroEventsMap.tsx",
+        "apps/web/src/components/hero/PhosphorMesh.tsx"
+      ],
+      "impact": 3,
+      "effort": 2,
+      "risk": "med",
+      "dependencies": ["events-directory"],
+      "reasoning": "dev.nebius.com's homepage hero is a static 'choose a starting point' marketing block. Our hero is a full-bleed Leaflet globe plotting every event with coordinates, a 'Start building' CTA, and a footnote counting event locations across the network — a dynamic, distinctive proof-of-activity above the fold that reinforces the events directory. Medium risk because Leaflet/the mesh are client-only and add above-the-fold JS weight that must be SSR-guarded and perf-budgeted; depends on the events data being available to plot."
+    },
+    {
+      "id": "homepage-dynamic-content-sections",
+      "feature": "Homepage dynamic content sections (active events, workshop + builder spotlight)",
+      "category": "marketing",
+      "dev_nebius_status": "partial",
+      "our_reference_files": [
+        "apps/web/src/components/marketing/ActiveEvents.tsx",
+        "apps/web/src/components/marketing/WorkshopSpotlight.tsx",
+        "apps/web/src/components/marketing/BuilderSpotlight.tsx",
+        "apps/web/src/lib/event-url.ts"
+      ],
+      "impact": 3,
+      "effort": 2,
+      "risk": "low",
+      "dependencies": ["events-directory", "content-library", "apps-showcase"],
+      "reasoning": "dev.nebius.com's homepage is entirely static marketing/link cards. Our homepage threads live data through it: ActiveEvents surfaces the next 3 upcoming/live events as RSVP cards (and drives a live-event hero pill), WorkshopSpotlight features one curated library workshop plus a related rail (pinned flag floats entries forward), and BuilderSpotlight cycles one community project per month deterministically on the 1st (UTC). These keep the landing page fresh without manual edits. Low risk (read-only reads from events/library/projects), but each section depends on its source collection existing."
+    },
+    {
+      "id": "homepage-static-marketing-sections",
+      "feature": "Homepage static marketing sections (products, coding-agents, use-cases, community, programs, ecosystem marquee, contact, build-in-public)",
+      "category": "marketing",
+      "dev_nebius_status": "partial",
+      "our_reference_files": [
+        "apps/web/src/components/marketing/Products.tsx",
+        "apps/web/src/components/marketing/CodingAgents.tsx",
+        "apps/web/src/components/marketing/UseCases.tsx",
+        "apps/web/src/components/marketing/Community.tsx",
+        "apps/web/src/components/marketing/Programs.tsx",
+        "apps/web/src/components/marketing/EcosystemPartners.tsx",
+        "apps/web/src/components/marketing/Contact.tsx",
+        "apps/web/src/components/marketing/BuildInPublic.tsx"
+      ],
+      "impact": 2,
+      "effort": 2,
+      "risk": "low",
+      "dependencies": [],
+      "reasoning": "Mostly at parity in spirit — dev.nebius.com already has product-router cards, use-case cards, a Community section, a Programs section (Startup Program, Nebius Academy), and build-in-public links. The deltas are our additions: a CodingAgents/IDE-integration section (Cursor, Cline, OpenClaw) that they lack, an EcosystemPartners marquee (~85 entries) on the homepage, and hard-coded program metrics (active builders, events run, signups attributed). Low impact because the spine already exists on their side; included for completeness so a port preserves these blocks. No hard data dependency (program metrics are currently hard-coded pending a metrics collection)."
+    },
+    {
+      "id": "signup-builder-program-landing",
+      "feature": "Signup / Builder Program join landing",
+      "category": "marketing",
+      "dev_nebius_status": "partial",
+      "our_reference_files": [
+        "apps/web/pages/signup.tsx",
+        "apps/web/src/components/CmsRenderer.tsx"
+      ],
+      "impact": 3,
+      "effort": 2,
+      "risk": "low",
+      "dependencies": ["cms-page-constructor"],
+      "reasoning": "dev.nebius.com promotes a Startup Program but (per discovery) has no direct on-page apply/credits CTA — the program card just links out. Our /signup is a dedicated Builder Program join page with a custom persuasion hero ($100 credits, social proof) and a single CTA to console.nebius.com/signup, followed by supporting Page Constructor blocks reused from the Directus 'home' page (header-blocks stripped). Low risk: a marketing page assembled from existing CMS blocks plus a hard CTA; gives the program a real conversion landing. Depends on the CMS Page Constructor renderer being available to reuse the home blocks."
+    },
+    {
+      "id": "cms-page-constructor",
+      "feature": "CMS catch-all pages via Page Constructor ([...slug])",
+      "category": "content",
+      "dev_nebius_status": "partial",
+      "our_reference_files": [
+        "apps/web/pages/[...slug].tsx",
+        "apps/web/src/components/CmsRenderer.tsx",
+        "apps/web/src/lib/pageConstructor.ts"
+      ],
+      "impact": 3,
+      "effort": 2,
+      "risk": "low",
+      "dependencies": ["directus-data-model"],
+      "reasoning": "dev.nebius.com clearly already uses Page Constructor + Directus for its 4 fixed pages, but the discovery shows no evidence of a generic CMS-driven catch-all that lets DevRel spin up arbitrary marketing pages by slug. Our [...slug] route looks up a published Directus pages row and renders its blocks JSON through Gravity UI Page Constructor (with SEO/OG meta), skipping reserved slugs that have dedicated files — powering pages like /localhosts and /about-this-build without a code deploy. Low risk: it's the same rendering stack they run, generalized to data-driven routes. Depends on a pages collection in Directus."
+    },
+    {
+      "id": "portal-shell",
+      "feature": "Builder Portal shell + dashboard + onboarding checklist + profile editor",
+      "category": "portal",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/portal/index.tsx",
+        "apps/web/src/components/chrome/PortalLayout.tsx",
+        "apps/web/src/components/chrome/PortalSidebar.tsx",
+        "apps/web/pages/portal/checklist.tsx",
+        "apps/web/pages/portal/profile.tsx",
+        "apps/web/pages/api/portal/profile.ts"
+      ],
+      "impact": 5,
+      "effort": 4,
+      "risk": "high",
+      "dependencies": ["auth-sessions", "directus-data-model"],
+      "reasoning": "There is no signed-in builder portal on dev.nebius.com at all — personalized dashboards, usage, and account actions all live in the external consoles. Our /portal is the authenticated home of the program: stat cards (points, credits claimed, events hosted), a Quick Actions panel, a recent-activity feed, a points-bearing onboarding checklist, and a profile editor that PATCHes the directus_users row via an admin token pinned to the session user id (email read-only). This is the container every other portal write-flow lives inside. High risk + effort: it's a builder-gated area with server-side mutations to user records, and the dashboard stats are currently sample data pending wired collections, so shipping it for real means standing up the points/credits/events aggregation too."
+    },
+    {
+      "id": "portal-credit-claims",
+      "feature": "Portal intro-credit claim flows (Token Factory + AI Cloud, $100)",
+      "category": "portal",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/portal/credits/claim-tf.tsx",
+        "apps/web/pages/portal/credits/claim-ai.tsx",
+        "apps/web/pages/portal/credits/index.tsx",
+        "apps/web/pages/api/portal/credits/claim.ts"
+      ],
+      "impact": 5,
+      "effort": 3,
+      "risk": "high",
+      "dependencies": ["portal-shell", "auth-sessions", "directus-data-model"],
+      "reasoning": "dev.nebius.com has no self-serve credits/grants application flow on-page (the Startup Program card just links out) — this is one of the strongest acquisition levers a builder hub can own. Our flow gives builders two claim forms (claim-tf, claim-ai) that POST to /api/portal/credits/claim, creating a credit_requests row (amount_usd=100, status=PENDING); AI Cloud requires a justification, TF needs only the account email. Highest-value addition for converting builders, but high risk because it touches money/credits, must be tightly auth-gated and rate-limited, and pairs with the admin approval queue and (eventually) real credit fulfillment. Depends on the portal shell, auth, and the credit_requests collection."
+    },
+    {
+      "id": "portal-event-hosting",
+      "feature": "Portal host-an-event flow + my-events (event + linked credit request)",
+      "category": "portal",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/portal/events/index.tsx",
+        "apps/web/pages/portal/events/new.tsx",
+        "apps/web/pages/portal/events/[id].tsx",
+        "apps/web/pages/api/portal/events/index.ts"
+      ],
+      "impact": 4,
+      "effort": 3,
+      "risk": "high",
+      "dependencies": ["portal-shell", "auth-sessions", "directus-data-model", "events-directory"],
+      "reasoning": "No way exists on dev.nebius.com for a builder to propose/host a community event or request event credits — events are something Nebius runs centrally, not something the community self-serves. Our flow lets builders list hosted events and submit new ones: /portal/events/new POSTs to /api/portal/events, doing a two-step write (create an events row status=DRAFT, builder=session user, then a linked credit_requests row kind=EVENT, rolling back the event if the credit request fails). High risk: multi-collection transactional write tied to credits, builder-gated, and it injects user-generated DRAFT rows into the same events collection that powers the public directory (needs status filtering so drafts don't leak). Depends on portal, auth, and the events model."
+    },
+    {
+      "id": "portal-library-submission",
+      "feature": "Portal library submission (community-contributed content for review)",
+      "category": "portal",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/portal/library/submit.tsx",
+        "apps/web/pages/portal/library/index.tsx",
+        "apps/web/src/components/chrome/StubCallout.tsx"
+      ],
+      "impact": 3,
+      "effort": 2,
+      "risk": "med",
+      "dependencies": ["portal-shell", "auth-sessions", "content-library"],
+      "reasoning": "dev.nebius.com has no path for builders to contribute content — all library/cookbook material is first-party and lives on GitHub. Our flow lets builders submit a library entry (title, type, level, external URL, blurb, optional markdown body) for review; accepted entries earn +50 pts and publish on /library (the write to library_articles is currently a stub). Turns the library into a two-sided contribution surface and feeds the points economy. Medium risk: user-generated content entering a published collection needs moderation (the admin library queue) and input sanitization, but the blast radius is smaller than the credits/events flows. Depends on portal, auth, and the library collection."
+    },
+    {
+      "id": "portal-ambassador-apply",
+      "feature": "Portal Ambassador application",
+      "category": "portal",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/portal/ambassador/apply.tsx",
+        "apps/web/pages/api/portal/ambassador/apply.ts"
+      ],
+      "impact": 3,
+      "effort": 2,
+      "risk": "med",
+      "dependencies": ["portal-shell", "auth-sessions", "directus-data-model"],
+      "reasoning": "dev.nebius.com mentions programs but has no ambassador/advocate application funnel. Our form (handle, email, city/country, what they've built, meetups to host, communities) POSTs to /api/portal/ambassador/apply, creating an ambassador_applications row (status=PENDING) for monthly admin review. A clean, contained lead-gen flow for the community-leader pipeline. Medium risk: authenticated write of a new application record plus PII (location), needing the admin review queue and basic anti-spam. Depends on portal, auth, and the ambassador_applications collection."
+    },
+    {
+      "id": "portal-activity-log",
+      "feature": "Portal activity log + self-report a win",
+      "category": "portal",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/portal/activity/index.tsx",
+        "apps/web/pages/portal/activity/new.tsx",
+        "apps/web/src/components/chrome/StubCallout.tsx"
+      ],
+      "impact": 3,
+      "effort": 3,
+      "risk": "med",
+      "dependencies": ["portal-shell", "auth-sessions", "directus-data-model"],
+      "reasoning": "No points/activity tracking exists on dev.nebius.com. Our activity log lists points-bearing actions (events, library, self-reported) with status pills, plus a /portal/activity/new form to self-report a win (type, proof URL, details); the submission write to the activities collection is currently a stub. This is the ledger that underpins the entire gamified points economy (and the leaderboard). Medium risk: user-submitted claims feed points, so it needs the admin activity-approval queue, proof validation, and abuse controls; it's also the trickiest to make 'real' because points aggregation across events/library/self-reports is non-trivial. Depends on portal, auth, and the activities collection."
+    },
+    {
+      "id": "leaderboard",
+      "feature": "Builder leaderboard (public top-10 widget + full gated leaderboard)",
+      "category": "community",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/builders.tsx",
+        "apps/web/pages/builders/all.tsx",
+        "apps/web/pages/portal/leaderboard.tsx",
+        "apps/web/src/components/builders/LeaderboardTable.tsx"
+      ],
+      "impact": 4,
+      "effort": 3,
+      "risk": "med",
+      "dependencies": ["directus-data-model", "auth-sessions", "portal-activity-log"],
+      "reasoning": "dev.nebius.com has no leaderboard or ranking surface — there's no competitive/recognition loop for builders. Our leaderboard spans a public /builders landing with a code-owned top-10 widget over CMS program-pitch content, a /builders/all full roster, and an auth-gated /portal/leaderboard ranked by points_total from the builders collection (shared LeaderboardTable). Strong engagement/retention driver. Medium risk: the public top-10 reads a builders collection (low risk on its own), but a meaningful ranking depends on the activities/points ledger actually being populated and accurate — a hollow leaderboard with sample data undercuts trust. The public landing piece can ship early; the 'real' ranking depends on the activity log."
+    },
+    {
+      "id": "builders-program-landing",
+      "feature": "Builders Network program landing (CMS-authored program pitch)",
+      "category": "community",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/builders.tsx",
+        "apps/web/src/components/CmsRenderer.tsx"
+      ],
+      "impact": 4,
+      "effort": 2,
+      "risk": "low",
+      "dependencies": ["cms-page-constructor"],
+      "reasoning": "dev.nebius.com's only 'community' surface is a Discord invite — there is no on-site home that explains the builders program, its tiers, and its perks. Our /builders page pairs the leaderboard widget with CMS-authored program-pitch content (Directus pages row slug='builders') rendered through Page Constructor, acting as the front door to the whole program. Called out separately from the leaderboard because the marketing/explainer half is low-risk and shippable immediately (CMS content on the existing stack), independent of whether the live points ranking is ready. Depends on the CMS Page Constructor route."
+    },
+    {
+      "id": "admin-console",
+      "feature": "Admin operations console (exec dashboard + builders/team management)",
+      "category": "admin",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/admin/index.tsx",
+        "apps/web/pages/admin/builders.tsx",
+        "apps/web/pages/admin/team.tsx",
+        "apps/web/src/components/chrome/AdminLayout.tsx",
+        "apps/web/src/components/chrome/AdminSidebar.tsx",
+        "apps/web/src/components/chrome/QueueTable.tsx"
+      ],
+      "impact": 4,
+      "effort": 4,
+      "risk": "high",
+      "dependencies": ["auth-sessions", "directus-data-model"],
+      "reasoning": "dev.nebius.com has no admin/program-ops surface (Directus itself is the only back office today). Our /admin is a dedicated console: an exec dashboard with program metric stat cards and an 'open queues' list with pending counts, plus live management tables for builders (handle, name, location, tier, points) and team_members (add/deactivate/update). This is what makes the program operable by DevRel without handing everyone raw Directus access. High risk + effort: admin-gated surface with elevated privileges over user and program data; it's also the shell every review queue plugs into. Could arguably be deferred in favor of using Directus Studio directly, which is why effort is high but the build is somewhat optional."
+    },
+    {
+      "id": "admin-review-queues",
+      "feature": "Admin review queues (library, credit claims, per-event credits, ambassador, activities)",
+      "category": "admin",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/admin/library.tsx",
+        "apps/web/pages/admin/credit-claims.tsx",
+        "apps/web/pages/admin/credit-requests.tsx",
+        "apps/web/pages/admin/ambassador-applications.tsx",
+        "apps/web/pages/admin/activities.tsx",
+        "apps/web/src/components/chrome/QueueTable.tsx"
+      ],
+      "impact": 4,
+      "effort": 4,
+      "risk": "high",
+      "dependencies": ["admin-console", "auth-sessions", "directus-data-model", "portal-credit-claims", "portal-event-hosting", "portal-library-submission", "portal-ambassador-apply", "portal-activity-log"],
+      "reasoning": "Every portal write-flow on our side produces a PENDING record that needs human review, and dev.nebius.com has none of the corresponding approval surfaces. Grouped here as one gap: review queues for library submissions, intro credit claims (TF auto-approvable, AI Cloud needs use-case review), per-event Token Factory credit requests ($50-500/attendee), ambassador applications, and self-reported activities — each rendered through the shared QueueTable with approve/reject handlers (currently no-ops, which is the single biggest 'make it real' task since the whole portal economy is non-functional until these write back). High risk + effort: these are the privileged mutations that approve credits/money, publish user content, and grant points; correctness, audit trail, and access control matter most here. Depends on the admin console plus every portal flow that feeds a queue."
+    },
+    {
+      "id": "feedback-capture",
+      "feature": "Feedback / mockup-review capture API",
+      "category": "platform",
+      "dev_nebius_status": "absent",
+      "our_reference_files": [
+        "apps/web/pages/api/feedback.ts"
+      ],
+      "impact": 2,
+      "effort": 1,
+      "risk": "low",
+      "dependencies": ["directus-data-model"],
+      "reasoning": "dev.nebius.com captures only newsletter signups (HubSpot) and offloads feature requests to ideas.nebius.com — there's no lightweight on-site feedback channel. Our POST /api/feedback persists inbound feedback (kind, message, page, email, user-agent) to a Directus feedback_items collection, falling back to console.log so it never drops feedback if the collection is missing. Very low effort/risk (one unauthenticated endpoint + a collection) and useful for a porting/beta phase, though arguably redundant with their existing ideas portal — hence low impact."
+    },
+    {
+      "id": "sitemap-seo-isr",
+      "feature": "First-party dynamic sitemap + per-page SEO/OG + ISR",
+      "category": "platform",
+      "dev_nebius_status": "partial",
+      "our_reference_files": [
+        "apps/web/pages/sitemap.xml.ts",
+        "apps/web/pages/_document.tsx"
+      ],
+      "impact": 3,
+      "effort": 2,
+      "risk": "low",
+      "dependencies": ["directus-data-model"],
+      "reasoning": "dev.nebius.com's sitemap is a sitemapindex that only delegates to nebius.com and docs.nebius.com — it does NOT enumerate its own pages, so the dev hub's first-party content is effectively invisible to crawlers as its own surface. Our dynamic sitemap.xml enumerates public + CMS pages, with per-page Head/OG meta, noindex handling for hidden pages (fellows), and ISR revalidation (60s) to keep CMS-backed pages fresh. As the dev hub grows from 4 pages to dozens of data-backed surfaces (events, library, apps, team, builders), self-enumerating SEO becomes important for discoverability. Low risk: build-time/ISR generation, no user data. Depends on knowing which CMS pages exist."
+    },
+    {
+      "id": "chrome-portal-admin-nav",
+      "feature": "Expanded site chrome (mega-menus, portal/admin sidebars, theme toggle, footer)",
+      "category": "nav",
+      "dev_nebius_status": "partial",
+      "our_reference_files": [
+        "apps/web/src/components/chrome/PublicNav.tsx",
+        "apps/web/src/components/chrome/ProductsMenu.tsx",
+        "apps/web/src/components/chrome/DocsMenu.tsx",
+        "apps/web/src/components/chrome/Footer.tsx",
+        "apps/web/src/components/chrome/ThemeToggle.tsx",
+        "apps/web/src/components/chrome/PortalLayout.tsx",
+        "apps/web/src/components/chrome/AdminLayout.tsx"
+      ],
+      "impact": 2,
+      "effort": 2,
+      "risk": "low",
+      "dependencies": ["portal-shell", "admin-console"],
+      "reasoning": "dev.nebius.com's chrome is a single thin public nav + footer with a few outbound links and a search box. A full builders site needs more: our public nav adds Products/Docs mega-menus and Log in / Get started buttons, plus an entirely separate set of authenticated layouts (PortalLayout + PortalSidebar, AdminLayout + AdminSidebar) that don't exist on their side at all, a light/dark theme toggle, and a richer footer linking the otherwise-hidden pages. Mostly parity on the public side (they already have nav/footer/search/Gravity theming), so the real delta is the portal/admin navigation shells — which is why this depends on those areas existing. Low risk: presentational."
+    }
+  ]
+}

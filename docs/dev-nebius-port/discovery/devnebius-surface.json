@@ -1,0 +1,79 @@
+{
+  "base_url": "https://dev.nebius.com",
+  "site_identity": "Nebius for Developers / Nebius for AI Builders — a thin builder-focused marketing microsite. It owns only 4 real pages; all nav, footer, and CTA links point OUT to the broader Nebius ecosystem on other subdomains.",
+  "nav_items": [
+    { "label": "For developers", "url": "https://dev.nebius.com/" },
+    { "label": "AI Cloud", "url": "https://dev.nebius.com/ai-cloud" },
+    { "label": "Token Factory", "url": "https://dev.nebius.com/token-factory" },
+    { "label": "Serverless AI", "url": "https://dev.nebius.com/serverless" },
+    { "label": "Docs", "url": "https://nebius.com/docs" },
+    { "label": "Blog", "url": "https://nebius.com/blog?tags=builder-updates" }
+  ],
+  "header_ctas": [
+    { "label": "Log in to Token Factory", "url": "https://tokenfactory.nebius.com/" },
+    { "label": "Log in to AI Cloud", "url": "https://console.nebius.com/" },
+    { "label": "Start building / Quick start", "url": "https://auth.nebius.com/ui/login" }
+  ],
+  "footer_items": [
+    { "label": "Nebius AI Cloud Docs", "url": "https://docs.nebius.com/" },
+    { "label": "Token Factory Docs", "url": "https://docs.tokenfactory.nebius.com/" },
+    { "label": "Status", "url": "https://status.nebius.com/" },
+    { "label": "GitHub", "url": "https://github.com/nebius/" },
+    { "label": "Discord", "url": "https://discord.com/invite/nN58zxSTFR" },
+    { "label": "Blog", "url": "https://nebius.com/blog" },
+    { "label": "Security", "url": "https://nebius.com/trust-center" }
+  ],
+  "pages": [
+    { "url": "https://dev.nebius.com/", "title": "Nebius for Developers — Nebius for AI Builders", "section": "marketing" },
+    { "url": "https://dev.nebius.com/ai-cloud", "title": "AI Cloud: build on GPUs your way", "section": "products" },
+    { "url": "https://dev.nebius.com/token-factory", "title": "Token Factory — inference API for open models", "section": "products" },
+    { "url": "https://dev.nebius.com/serverless", "title": "Serverless AI", "section": "products" }
+  ],
+  "outbound_ecosystem_destinations": [
+    { "url": "https://nebius.com", "title": "Nebius corporate / main site (blog, solutions, events, pricing, careers, trust-center, newsroom)", "section": "other" },
+    { "url": "https://docs.nebius.com", "title": "Nebius AI Cloud documentation", "section": "docs" },
+    { "url": "https://docs.tokenfactory.nebius.com", "title": "Token Factory documentation (quickstart, API reference, cookbook, integrations)", "section": "docs" },
+    { "url": "https://console.nebius.com", "title": "AI Cloud Console (signed-in app — lives off-site)", "section": "other" },
+    { "url": "https://tokenfactory.nebius.com", "title": "Token Factory app + Playground (signed-in app — lives off-site)", "section": "other" },
+    { "url": "https://auth.nebius.com/ui/login", "title": "Sign-in / sign-up auth flow", "section": "other" },
+    { "url": "https://status.nebius.com", "title": "Status page", "section": "other" },
+    { "url": "https://academy.nebius.com", "title": "Nebius Academy (courses / learning — separate subdomain)", "section": "other" },
+    { "url": "https://ideas.nebius.com", "title": "Ideas / feature request portal (Directus-style)", "section": "other" },
+    { "url": "https://github.com/nebius/", "title": "GitHub org (solutions-library, cookbooks)", "section": "other" },
+    { "url": "https://discord.com/invite/nN58zxSTFR", "title": "Discord community (the only 'community' surface)", "section": "other" },
+    { "url": "https://nebius.com/blog?tags=builder-updates", "title": "Builder Updates blog feed", "section": "blog" },
+    { "url": "https://nebius.com/events", "title": "Events listing (lives on nebius.com, NOT on dev.nebius.com)", "section": "other" }
+  ],
+  "observed_absent": [
+    "events-map",
+    "content-library",
+    "tutorials-hub",
+    "builders-program",
+    "community-program-page",
+    "leaderboard",
+    "user-portal",
+    "user-dashboard",
+    "integrations-directory",
+    "ecosystem-directory",
+    "office-hours-booking",
+    "team-people-page",
+    "pricing-page",
+    "about-page",
+    "search-results-page"
+  ],
+  "observed_present_but_offsite": [
+    "community = Discord link only (no on-site community/builders hub)",
+    "events = nebius.com/events (e.g. /events/mlcon-munich-2026, /events/vivatech-2026, /events/iclr-2026) — many event detail pages exist but on nebius.com, not dev.nebius.com",
+    "blog = nebius.com/blog (builder-updates tag) — off-site",
+    "docs/tutorials = docs.nebius.com/tutorials and docs.tokenfactory.nebius.com — off-site",
+    "integrations = documented under docs.tokenfactory.nebius.com/integrations (LiteLLM, LlamaIndex, LangChain, Agno, CrewAI, etc.) — a docs section, not a dev.nebius.com directory page",
+    "signed-in portal/dashboard = console.nebius.com (AI Cloud) and tokenfactory.nebius.com (Token Factory) — separate apps behind auth.nebius.com",
+    "ideas/feedback portal = ideas.nebius.com — off-site",
+    "academy/learning = academy.nebius.com — off-site",
+    "cookbooks/examples = GitHub repos (token-factory-cookbook, serverless-ai-cookbook, nebius-solutions-library) — off-site",
+    "newsletter signup = inline HubSpot-style form embedded on each dev.nebius.com page ('Get builder updates')"
+  ],
+  "notes": "dev.nebius.com is a small builder-marketing microsite, NOT a full developer portal. It hosts exactly 4 first-party pages: / (home: 'Nebius for AI Builders'), /ai-cloud, /token-factory, /serverless. All three product pages are content hubs that aggregate links (quickstarts, docs, YouTube playlists, blog deep-dives, GitHub cookbooks, Discord) and embed a newsletter signup form; they do not host docs or app functionality themselves. The sitemap at https://dev.nebius.com/sitemap.xml is a sitemapindex that only delegates to https://nebius.com/server-sitemap.xml and https://docs.nebius.com/sitemap.xml (it does not enumerate dev.nebius.com's own pages). Tavily's map of dev.nebius.com pulled in ~180 URLs, but the vast majority are cross-domain ecosystem pages (nebius.com, docs.nebius.com, academy.nebius.com, tokenfactory.nebius.com, console.nebius.com, status.nebius.com) reached via outbound links, plus a handful of crawler artifacts like https://dev.nebius.com/nebius.com/ai-cloud which return 404 (confirmed) — these are bad relative-link resolutions, not real pages. The logo links to https://nebius.com/ (Home), reinforcing that dev.nebius.com is positioned as a satellite of the main site. No on-site community/builders program, events map, content library, leaderboard, integrations directory, office-hours booking, team page, pricing, or about page exists on dev.nebius.com; where those concepts exist at all, they live on other subdomains (community is just a Discord invite; events live at nebius.com/events). page_count reflects only the 4 first-party dev.nebius.com pages.",
+  "page_count": 4,
+  "method": "Tavily tavily_map (depth 2) + tavily_extract on the product pages + WebFetch of homepage and /sitemap.xml. 404 of dev.nebius.com/nebius.com/ai-cloud confirmed via tavily_extract failed_results."
+}

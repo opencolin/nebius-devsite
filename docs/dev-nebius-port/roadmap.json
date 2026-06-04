@@ -1,0 +1,444 @@
+{
+  "meta": {
+    "title": "dev.nebius.com Port Roadmap",
+    "subtitle": "Porting the Nebius Builders site feature set into dev.nebius.com, release by release to v2.0",
+    "synthesized_from": ["gap-analysis.json (30 gaps)", "council/pm-devrel.md", "council/pm-growth.md", "council/pm-platform.md", "council/pm-content-seo.md", "council/pm-design-ux.md"],
+    "principle": "Two independent foundations (data-model, auth) gate everything. Ship crawlable read-only surfaces first (high ROI, zero auth), then search + chrome, then the auth keystone on the lightest gate, then the portal write-flows, then the admin console + queues that make the economy real. Never surface a half-built or un-processable feature in nav.",
+    "key_tension_resolved": "Growth PM wants the $100 credits funnel in v0.x as the revenue spine; Platform PM wants all money/points mutations deferred to v2.0 on proven rails. Resolution: credit CLAIMS ship in v1.2 (builders can apply — high acquisition value) processed via Directus Studio interim; the automated approve/reject admin queue ships in v2.0. Acquisition value lands early, the privileged money-mutation surface lands last after the flow is battle-tested.",
+    "columns": ["Backlog", "Ready", "In Progress", "Review", "Done"]
+  },
+  "epics": [
+    {"id": "platform-foundation", "name": "Platform foundation", "goal": "The data + identity + SEO rails every surface depends on: Directus program collections + typed SDK, Directus-JWT auth, self-enumerating sitemap/SEO/ISR, feedback capture."},
+    {"id": "content-hub", "name": "Content hub", "goal": "Turn the dev hub into a crawlable content destination: typed library, CMS-driven product-page rails, the CMS catch-all renderer, and the program + signup landings."},
+    {"id": "community-directories", "name": "Community directories", "goal": "Social-proof and people surfaces: community apps gallery, ecosystem/integrations directory, DevRel team, fellows roll-call, office-hours booking."},
+    {"id": "events-liveness", "name": "Events & homepage liveness", "goal": "The signature on-site events directory (live map) plus a homepage that threads live event/library/project data instead of static cards."},
+    {"id": "search-discovery", "name": "Search & discovery", "goal": "Make the existing header search widget real: a backed index + results page across library, events, and apps."},
+    {"id": "site-chrome", "name": "Site chrome", "goal": "Expanded navigation: public mega-menus + theme + footer early; the authenticated portal/admin layout shells once those areas exist."},
+    {"id": "builder-portal", "name": "Builder portal", "goal": "The authenticated builder home and its write-flows: dashboard/checklist/profile, activity log, library submission, ambassador apply, credit claims, event hosting."},
+    {"id": "admin-economy", "name": "Admin & program economy", "goal": "The first-party admin console + review queues that close every portal loop, the live leaderboard, and automated events refresh — what makes the program economy real."}
+  ],
+  "releases": [
+    {
+      "id": "v0.1",
+      "theme": "Data & SEO rails",
+      "rationale": "Stand up the invisible foundation: the program data model + typed SDK, the CMS catch-all renderer, self-enumerating sitemap/SEO/ISR, and the feedback endpoint. Ships nothing user-visible but unblocks all of v0.x. The data-model foundation here and the auth foundation in v1.1 are independent and can be built in parallel by two people.",
+      "card_ids": ["directus-data-model", "cms-page-constructor", "sitemap-seo-isr", "feedback-capture"]
+    },
+    {
+      "id": "v0.2",
+      "theme": "Content magnet",
+      "rationale": "Highest organic-traffic ROI, zero auth, reads only from the v0.1 data model. The typed library is the content backbone several later surfaces read from; the product-page rails upgrade dev.nebius.com's three highest-traffic pages into DevRel-editable CMS surfaces; the program + signup landings give the Startup/Builder program a real conversion home.",
+      "card_ids": ["content-library", "product-page-resource-rails", "builders-program-landing", "signup-builder-program-landing"]
+    },
+    {
+      "id": "v0.3",
+      "theme": "Community directories",
+      "rationale": "Read-only social-proof and people surfaces that give builders reasons to stay on-site instead of bouncing to Discord/GitHub. Low effort, low risk, all reading the v0.1 collections. Team directory is the prerequisite for the office-hours booking gate later.",
+      "card_ids": ["apps-showcase", "ecosystem-integrations-directories", "team-directory", "fellows-directory"]
+    },
+    {
+      "id": "v0.4",
+      "theme": "Events & a living homepage",
+      "rationale": "The signature on-site events directory (live Leaflet map) keeps builders in the funnel and gives the hub its own reason to exist; the homepage then threads live event/library/project data through hero + spotlight sections. Grouped because the homepage dynamics depend on the events/library/apps collections now being populated. Client-only map work is isolated to this release for focused perf budgeting.",
+      "card_ids": ["events-directory", "homepage-events-map-hero", "homepage-dynamic-content-sections", "homepage-static-marketing-sections"]
+    },
+    {
+      "id": "v1.0",
+      "theme": "Search & public chrome — public hub complete",
+      "rationale": "Milestone: the entire unauthenticated builder hub is done and discoverable. Search becomes real now that there is indexed content (library/events/apps) to search, with a Directus fallback that de-risks the optional Typesense dependency. Public mega-menus + theme + footer finish the navigation. Zero auth surface exposed yet.",
+      "card_ids": ["search", "chrome-public-nav"]
+    },
+    {
+      "id": "v1.1",
+      "theme": "Identity foundation",
+      "rationale": "Introduce the Directus-JWT cookie/session/role layer — the keystone for everything stateful — on the lightest possible gate: the office-hours booking reveal (signed-out sees 'Sign in to book', signed-in gets the live Calendly link). Validates the auth surface in production before any high-stakes flow depends on it. Must reconcile with the existing Nebius SSO (auth.nebius.com) vs a parallel Directus identity — that decision blocks the release.",
+      "card_ids": ["auth-sessions", "office-hours"]
+    },
+    {
+      "id": "v1.2",
+      "theme": "Builder Portal",
+      "rationale": "Stand up the authenticated portal shell and all its write-flows. Submissions (library, ambassador, activity) and applications (credit claims, hosted events) enter PENDING/DRAFT and are processed via Directus Studio in the interim — the dedicated on-site admin queues come in v2.0. Credit claims ship here (not v2.0) for acquisition value, with manual interim processing, resolving the Growth-vs-Platform tension. Hard requirement: DRAFT user events must be status-filtered out of the public directory.",
+      "card_ids": ["portal-shell", "portal-activity-log", "portal-library-submission", "portal-ambassador-apply", "portal-credit-claims", "portal-event-hosting"]
+    },
+    {
+      "id": "v2.0",
+      "theme": "Admin & economy — full parity",
+      "rationale": "The release that makes the program economy real and reaches parity with the Builders site. The first-party admin console + review queues close every portal loop (approve/reject credits, publish submissions, grant points), the portal/admin layout shells land, the live leaderboard goes up now that the activity ledger has real data, and automated events refresh keeps the directory current. These are the privileged money/points/publish mutations — they ship last, with the most review and an audit trail.",
+      "card_ids": ["admin-console", "admin-review-queues", "chrome-portal-admin-shells", "leaderboard", "events-refresh-scrape"]
+    }
+  ],
+  "cards": [
+    {
+      "id": "directus-data-model",
+      "title": "Builder/program Directus collections + typed SDK access layer",
+      "epic": "platform-foundation",
+      "release": "v0.1",
+      "column": "Backlog",
+      "impact": 5, "effort": 3, "risk": "med",
+      "dependencies": [],
+      "reasoning": "dev.nebius.com already runs Directus but only as a headless asset store — none of the program data model exists. Define events, library_articles, projects, builders, team_members, pages, activities, credit_requests, ambassador_applications, feedback_items + the role-permission matrix, plus the three-mode typed SDK (server/admin, per-user, public). Ships first in v0.1 because almost every other card depends on these collections existing; it is one of the two independent foundations (with auth) so it can be built in parallel.",
+      "acceptance": ["All program collections exist with the role-permission matrix applied (builder can read/write only own rows via $CURRENT_USER; public read-only on published surfaces)", "Typed SDK exposes directusServer(), directusAsUser(), directusPublic(), assetUrl() and is imported by at least one read-only page", "A schema snapshot is versioned so the team can re-apply with directus schema apply"],
+      "reference_files": ["apps/web/src/lib/directus.ts", "apps/web/src/lib/types.ts"]
+    },
+    {
+      "id": "cms-page-constructor",
+      "title": "CMS catch-all pages via Page Constructor ([...slug])",
+      "epic": "content-hub",
+      "release": "v0.1",
+      "column": "Backlog",
+      "impact": 3, "effort": 2, "risk": "low",
+      "dependencies": ["directus-data-model"],
+      "reasoning": "dev.nebius.com runs Page Constructor for its 4 fixed pages but has no generic CMS-driven catch-all to let DevRel spin up arbitrary marketing pages by slug. The [...slug] route looks up a published Directus pages row and renders its blocks JSON through Gravity Page Constructor with SEO/OG meta, skipping reserved slugs. Lands in v0.1 because the signup + program landings (v0.2) and any ad-hoc page reuse this renderer.",
+      "acceptance": ["Visiting /<slug> for a published pages row renders its blocks through Page Constructor with correct SEO/OG tags", "Reserved slugs with dedicated .tsx files are not shadowed by the catch-all", "An unpublished/missing slug returns 404 (with ISR revalidate)"],
+      "reference_files": ["apps/web/pages/[...slug].tsx", "apps/web/src/components/CmsRenderer.tsx", "apps/web/src/lib/pageConstructor.ts"]
+    },
+    {
+      "id": "sitemap-seo-isr",
+      "title": "First-party dynamic sitemap + per-page SEO/OG + ISR",
+      "epic": "platform-foundation",
+      "release": "v0.1",
+      "column": "Backlog",
+      "impact": 3, "effort": 2, "risk": "low",
+      "dependencies": ["directus-data-model"],
+      "reasoning": "dev.nebius.com's sitemap is a sitemapindex that only delegates to nebius.com and docs.nebius.com — it does not enumerate its own pages, so first-party content is invisible to crawlers as its own surface. A dynamic sitemap.xml that enumerates public + CMS pages with per-page Head/OG meta, noindex for hidden pages, and ISR (60s) is foundational SEO. Ships in v0.1 so every read-only surface added afterward is crawlable from day one.",
+      "acceptance": ["/sitemap.xml self-enumerates all public + published CMS routes (not just an index delegating off-site)", "Each public page emits title/description/OG tags; hidden pages emit noindex,nofollow", "CMS-backed pages revalidate within 60s of a Directus edit"],
+      "reference_files": ["apps/web/pages/sitemap.xml.ts", "apps/web/pages/_document.tsx"]
+    },
+    {
+      "id": "feedback-capture",
+      "title": "Feedback / mockup-review capture API",
+      "epic": "platform-foundation",
+      "release": "v0.1",
+      "column": "Backlog",
+      "impact": 2, "effort": 1, "risk": "low",
+      "dependencies": ["directus-data-model"],
+      "reasoning": "No lightweight on-site feedback channel exists (newsletter → HubSpot, feature requests → ideas.nebius.com). A POST /api/feedback that persists kind/message/page/email/user-agent to a feedback_items collection (with console.log fallback so it never drops feedback) is a one-endpoint, very-low-risk win useful during the porting/beta phase. Cheapest card; bundled into the v0.1 foundation.",
+      "acceptance": ["POST /api/feedback persists a row to feedback_items and returns 200", "If the collection is missing, the endpoint logs and still returns success (never drops feedback)", "Endpoint is rate-limited / not abusable as an open relay"],
+      "reference_files": ["apps/web/pages/api/feedback.ts"]
+    },
+    {
+      "id": "content-library",
+      "title": "Typed content library index + detail",
+      "epic": "content-hub",
+      "release": "v0.2",
+      "column": "Backlog",
+      "impact": 5, "effort": 3, "risk": "low",
+      "dependencies": ["directus-data-model"],
+      "reasoning": "dev.nebius.com scatters learning content as ad-hoc link cards across product pages with no unified, filterable, searchable index (the canonical library lives off-site on GitHub). A typography-first grid of workshops/videos/playlists/repos/blogs/docs with a sticky type+product filter, plus per-slug detail pages that embed YouTube players and render optional markdown. Leads v0.2 because it is the content backbone the product-page rails, search, and homepage spotlight all read from.",
+      "acceptance": ["/library renders published library_articles with working type + product filter chips showing live counts", "/library/<slug> renders detail, embedding a YouTube player for VIDEO/WORKSHOP entries and markdown body when present", "Each entry's external-source button is labeled by host (e.g. 'Watch on Nebius.com', 'View on GitHub')"],
+      "reference_files": ["apps/web/pages/library/index.tsx", "apps/web/pages/library/[slug].tsx"]
+    },
+    {
+      "id": "product-page-resource-rails",
+      "title": "CMS-driven resource rails on product landing pages",
+      "epic": "content-hub",
+      "release": "v0.2",
+      "column": "Backlog",
+      "impact": 4, "effort": 2, "risk": "low",
+      "dependencies": ["content-library"],
+      "reasoning": "dev.nebius.com's /ai-cloud, /token-factory, /serverless resource sections are hand-curated static cards — adding a quickstart/video/guide means a content deploy. Rendering those rails dynamically from library_articles tagged surface=['ai-cloud'|...] (fetch-all + JS filter, since Directus JSON-array has no _contains; pinned floats to quickstarts) turns their three highest-traffic pages into DevRel-editable surfaces. v0.2 because it enhances pages that already exist and depends only on the library being the source of truth.",
+      "acceptance": ["Each product page's quickstarts/videos/guides/repos/docs rails render from surface-tagged library_articles, no hardcoded cards", "Pinned entries float into the quickstarts rail", "Adding a tagged library entry in Directus makes it appear on the matching product page within the ISR window, no deploy"],
+      "reference_files": ["apps/web/pages/ai-cloud.tsx", "apps/web/pages/token-factory.tsx", "apps/web/pages/serverless.tsx", "apps/web/src/components/product/ResourceCard.tsx"]
+    },
+    {
+      "id": "builders-program-landing",
+      "title": "Builders Network program landing (CMS-authored pitch)",
+      "epic": "content-hub",
+      "release": "v0.2",
+      "column": "Backlog",
+      "impact": 4, "effort": 2, "risk": "low",
+      "dependencies": ["cms-page-constructor"],
+      "reasoning": "dev.nebius.com's only 'community' surface is a Discord invite — no on-site home explains the builders program, tiers, and perks. /builders pairs (later) the leaderboard widget with CMS-authored program-pitch content rendered through Page Constructor, acting as the front door to the program. The marketing/explainer half is low-risk and shippable in v0.2 on the existing stack, independent of the live points ranking (which comes in v2.0).",
+      "acceptance": ["/builders renders program-pitch content from a Directus pages row (slug='builders') via Page Constructor", "Page is in the sitemap and links to signup", "Page renders fully without the leaderboard widget present (graceful when ranking data is not yet live)"],
+      "reference_files": ["apps/web/pages/builders.tsx", "apps/web/src/components/CmsRenderer.tsx"]
+    },
+    {
+      "id": "signup-builder-program-landing",
+      "title": "Signup / Builder Program join landing",
+      "epic": "content-hub",
+      "release": "v0.2",
+      "column": "Backlog",
+      "impact": 3, "effort": 2, "risk": "low",
+      "dependencies": ["cms-page-constructor"],
+      "reasoning": "dev.nebius.com promotes a Startup Program but has no direct on-page apply/credits CTA — the card links out. A dedicated /signup join page with a $100-credits persuasion hero + a single CTA to console.nebius.com/signup, followed by reused home Page Constructor blocks, gives the program a real conversion landing. v0.2 because it is a marketing page assembled from existing CMS blocks; reuses the catch-all renderer.",
+      "acceptance": ["/signup renders the persuasion hero + a single primary CTA to console signup", "Supporting Page Constructor blocks are reused from the home pages row with header blocks stripped", "Page is crawlable and in the sitemap"],
+      "reference_files": ["apps/web/pages/signup.tsx", "apps/web/src/components/CmsRenderer.tsx"]
+    },
+    {
+      "id": "apps-showcase",
+      "title": "Community apps / 'built with Nebius' gallery (index + detail)",
+      "epic": "community-directories",
+      "release": "v0.3",
+      "column": "Backlog",
+      "impact": 4, "effort": 2, "risk": "low",
+      "dependencies": ["directus-data-model"],
+      "reasoning": "dev.nebius.com has no project showcase anywhere — social proof of what builders ship is entirely missing. /apps is a grid of community + hackathon projects with cover cards, award/featured pills, and a segmented filter, plus per-slug detail pages with repo/demo links and builder byline. Low effort/risk read-only projects collection; leads v0.3 as the anchor of the community surface.",
+      "acceptance": ["/apps renders the projects collection as filterable cards (Featured / product / hackathon / other) with placeholder rows excluded", "/apps/<slug> shows repo + demo links, tags, product focus, builder byline", "Broken/private repo links are validated out (no dead 'View on GitHub')"],
+      "reference_files": ["apps/web/pages/apps/index.tsx", "apps/web/pages/apps/[slug].tsx", "apps/web/src/lib/projects.ts"]
+    },
+    {
+      "id": "ecosystem-integrations-directories",
+      "title": "Ecosystem umbrella + standalone integrations directory",
+      "epic": "community-directories",
+      "release": "v0.3",
+      "column": "Backlog",
+      "impact": 4, "effort": 2, "risk": "low",
+      "dependencies": ["apps-showcase"],
+      "reasoning": "dev.nebius.com expresses integrations only as a static text matrix on the Token Factory page and a docs section — no browsable, filterable directory. /ecosystem is the canonical umbrella mixing community apps + ~85 partner integrations with a Kind+product filter and a 'Submit your project' GitHub-issue CTA; /integrations is the standalone partner directory. Grouped (same data + filter pattern) and placed in v0.3 next to apps; the R3F membrane hero is optional polish.",
+      "acceptance": ["/ecosystem renders apps + integrations in one grid with a working Kind + product filter and live counts", "/integrations renders the ~85-partner directory with product + category chips", "'Submit your project' opens a prefilled GitHub issue; the R3F hero degrades gracefully without WebGL"],
+      "reference_files": ["apps/web/pages/ecosystem.tsx", "apps/web/pages/integrations.tsx", "apps/web/src/lib/ecosystem-partners.ts", "apps/web/src/components/integrations/HeroSection.tsx", "apps/web/src/components/integrations/Hero3D.tsx"]
+    },
+    {
+      "id": "team-directory",
+      "title": "DevRel team people directory + member detail",
+      "epic": "community-directories",
+      "release": "v0.3",
+      "column": "Backlog",
+      "impact": 3, "effort": 2, "risk": "low",
+      "dependencies": ["directus-data-model"],
+      "reasoning": "dev.nebius.com has no people/team page — builders can't see or reach the DevRel advocates, and there's no human face to 'Builder Hours'. /team is a grid of advocates (bio, region, expertise) with a 'Book office hours' CTA when calendly_url is set, plus per-slug profiles. Read-only team_members; placed in v0.3 because it is the natural prerequisite for the office-hours booking gate in v1.1.",
+      "acceptance": ["/team renders active team_members with bio/region/expertise", "/team/<slug> shows full profile with languages + social links", "A member with calendly_url shows a 'Book office hours' CTA (links out for now; gated reveal arrives with office-hours in v1.1)"],
+      "reference_files": ["apps/web/pages/team/index.tsx", "apps/web/pages/team/[slug].tsx"]
+    },
+    {
+      "id": "fellows-directory",
+      "title": "Fellows / recognized community leaders roll-call",
+      "epic": "community-directories",
+      "release": "v0.3",
+      "column": "Backlog",
+      "impact": 2, "effort": 1, "risk": "low",
+      "dependencies": [],
+      "reasoning": "No recognition surface for top community members exists. /fellows is a curated public roll-call from a static array, emitting noindex,nofollow while being curated. Lowest effort (static data, single page, no CMS/auth) and lowest impact (hidden, niche) — a cheap recognition lever bundled into the v0.3 community release. No hard dependency since it is fully static.",
+      "acceptance": ["/fellows renders the curated roll-call with org/city/region + tagline per fellow", "Page emits noindex,nofollow and is excluded from the sitemap while curated", "No row-overlap / layout regressions in the featured + full grids"],
+      "reference_files": ["apps/web/pages/fellows.tsx", "apps/web/src/lib/fellows.ts"]
+    },
+    {
+      "id": "events-directory",
+      "title": "On-site events directory with live map + city filter",
+      "epic": "events-liveness",
+      "release": "v0.4",
+      "column": "Backlog",
+      "impact": 5, "effort": 3, "risk": "med",
+      "dependencies": ["directus-data-model"],
+      "reasoning": "dev.nebius.com has no on-site events surface — 'Hackathons & Events' and 'Builder Hours' are outbound links to nebius.com/events. An on-site dark Leaflet map with click-to-filter city pins, upcoming-vs-past split, city-alias folding, venue-local times, and Luma/Nebius RSVP deep-links keeps builders in the funnel. Leads v0.4 as the signature experience; the homepage dynamics depend on it. Medium risk only because Leaflet is client-only and needs SSR-safe dynamic import.",
+      "acceptance": ["/events renders the events collection on a Leaflet map with click-to-filter city pins/chips and an upcoming/past split", "Map is dynamically imported (no window-on-server crash) and degrades to a list if WebGL/JS unavailable", "Times display in venue-local timezone; city aliases (e.g. München→Munich) fold correctly"],
+      "reference_files": ["apps/web/pages/events/index.tsx", "apps/web/src/components/events/EventsMap.tsx", "apps/web/src/lib/event-url.ts", "apps/web/src/lib/format.ts"]
+    },
+    {
+      "id": "homepage-events-map-hero",
+      "title": "Homepage live events-map hero",
+      "epic": "events-liveness",
+      "release": "v0.4",
+      "column": "Backlog",
+      "impact": 3, "effort": 2, "risk": "med",
+      "dependencies": ["events-directory"],
+      "reasoning": "dev.nebius.com's homepage hero is a static 'choose a starting point' block. A full-bleed Leaflet globe plotting every located event + a 'Start building' CTA + a location-count footnote is a distinctive proof-of-activity above the fold that reinforces the events directory. v0.4 alongside events. Medium risk because the map/mesh are client-only above-the-fold JS that must be SSR-guarded and perf-budgeted.",
+      "acceptance": ["Homepage hero plots events with coordinates on a Leaflet globe with a working primary CTA", "Above-the-fold JS is SSR-guarded and within an agreed performance budget (LCP not regressed beyond target)", "Hero degrades to a static fallback when the map can't load"],
+      "reference_files": ["apps/web/pages/index.tsx", "apps/web/src/components/hero/HeroEventsMap.tsx", "apps/web/src/components/hero/PhosphorMesh.tsx"]
+    },
+    {
+      "id": "homepage-dynamic-content-sections",
+      "title": "Homepage dynamic sections (active events, workshop + builder spotlight)",
+      "epic": "events-liveness",
+      "release": "v0.4",
+      "column": "Backlog",
+      "impact": 3, "effort": 2, "risk": "low",
+      "dependencies": ["events-directory", "content-library", "apps-showcase"],
+      "reasoning": "dev.nebius.com's homepage is entirely static. Threading live data through it — ActiveEvents (next 3 upcoming/live as RSVP cards), WorkshopSpotlight (one curated library workshop + related rail, pinned-aware), BuilderSpotlight (one project/month deterministically) — keeps the landing page fresh without manual edits. v0.4 because each section depends on its source collection now existing.",
+      "acceptance": ["ActiveEvents shows the next 3 upcoming/live events and drives a live-event hero pill when one is active", "WorkshopSpotlight features a pinned-first library workshop with a related rail", "BuilderSpotlight cycles one project deterministically (stable within a month, UTC)"],
+      "reference_files": ["apps/web/src/components/marketing/ActiveEvents.tsx", "apps/web/src/components/marketing/WorkshopSpotlight.tsx", "apps/web/src/components/marketing/BuilderSpotlight.tsx", "apps/web/src/lib/event-url.ts"]
+    },
+    {
+      "id": "homepage-static-marketing-sections",
+      "title": "Homepage static marketing sections (coding-agents, ecosystem marquee, programs, etc.)",
+      "epic": "events-liveness",
+      "release": "v0.4",
+      "column": "Backlog",
+      "impact": 2, "effort": 2, "risk": "low",
+      "dependencies": [],
+      "reasoning": "Mostly at parity in spirit — dev.nebius.com already has product-router cards, use-cases, Community, and Programs (Startup Program, Nebius Academy). The deltas to preserve in a port: a CodingAgents/IDE section (Cursor, Cline, OpenClaw) they lack, an EcosystemPartners marquee (~85 entries), and program metric stat blocks. Bundled into v0.4 for homepage completeness. No hard data dependency (metrics are hardcoded pending a metrics collection).",
+      "acceptance": ["CodingAgents/IDE-integration section renders (Cursor/Cline/OpenClaw etc.)", "EcosystemPartners marquee renders the partner set; Programs section uses 'Nebius Academy' naming", "Program metric stat blocks render (hardcoded values flagged as TODO: wire to a metrics source)"],
+      "reference_files": ["apps/web/src/components/marketing/Products.tsx", "apps/web/src/components/marketing/CodingAgents.tsx", "apps/web/src/components/marketing/UseCases.tsx", "apps/web/src/components/marketing/Community.tsx", "apps/web/src/components/marketing/Programs.tsx", "apps/web/src/components/marketing/EcosystemPartners.tsx", "apps/web/src/components/marketing/Contact.tsx", "apps/web/src/components/marketing/BuildInPublic.tsx"]
+    },
+    {
+      "id": "search",
+      "title": "Unified search results page + header autocomplete",
+      "epic": "search-discovery",
+      "release": "v1.0",
+      "column": "Backlog",
+      "impact": 4, "effort": 3, "risk": "med",
+      "dependencies": ["content-library", "events-directory", "apps-showcase"],
+      "reasoning": "dev.nebius.com ships the same Gravity SearchProposal header widget we use, but it has no real index and no results page — nothing on-site to search. Make it real: GET /api/search backs both the debounced top-6 dropdown and a server-rendered /search?q= grid; primary path queries Typesense, falls back to Directus _icontains across events + library + projects. v1.0 because it only makes sense once indexed content exists; the Directus fallback de-risks the optional Typesense provisioning.",
+      "acceptance": ["Header search returns debounced top results; /search?q= renders a server-fetched grid (hits present in initial HTML) with Kind filter chips", "With Typesense unconfigured, the Directus fallback still returns results across library/events/apps", "Search index stays in sync on content publish (webhook or scheduled reindex documented)"],
+      "reference_files": ["apps/web/pages/search.tsx", "apps/web/pages/api/search.ts", "apps/web/src/lib/typesense.ts", "apps/web/src/components/search/SearchProposal.tsx", "apps/web/src/lib/search-types.ts"]
+    },
+    {
+      "id": "chrome-public-nav",
+      "title": "Public chrome: Products/Docs mega-menus, theme toggle, footer, auth buttons",
+      "epic": "site-chrome",
+      "release": "v1.0",
+      "column": "Backlog",
+      "impact": 2, "effort": 1, "risk": "low",
+      "dependencies": [],
+      "reasoning": "Split from the chrome gap (Design PM's hard recommendation) so the public half ships without waiting on portal/admin. dev.nebius.com has a thin public nav + footer; add Products/Docs mega-menus, a light/dark theme toggle, a richer footer linking otherwise-hidden pages, and Log in / Get started buttons. v1.0 to complete the public hub's navigation. Pure presentation, no deps.",
+      "acceptance": ["Public nav exposes Products + Docs hover/click mega-menus with the 200ms grace behavior", "Theme toggle switches light/dark and persists; footer links the full public surface", "Log in / Get started buttons are present (wire to auth in v1.1)"],
+      "reference_files": ["apps/web/src/components/chrome/PublicNav.tsx", "apps/web/src/components/chrome/ProductsMenu.tsx", "apps/web/src/components/chrome/DocsMenu.tsx", "apps/web/src/components/chrome/Footer.tsx", "apps/web/src/components/chrome/ThemeToggle.tsx"]
+    },
+    {
+      "id": "auth-sessions",
+      "title": "Builder auth + session/role gating (Directus-JWT cookies)",
+      "epic": "platform-foundation",
+      "release": "v1.1",
+      "column": "Backlog",
+      "impact": 5, "effort": 4, "risk": "high",
+      "dependencies": [],
+      "reasoning": "dev.nebius.com has zero first-party auth — every 'Log in' bounces to auth.nebius.com / external consoles. Nothing stateful or personalized can exist without a session layer: forward to Directus /auth/login, store access+refresh in httpOnly cookies, rotate expired tokens, support ?next=, expose requireRole/enforceRole. The second independent foundation (with data-model). Introduced in v1.1 on the lightest gate (office-hours) to validate it before the portal depends on it. High risk: new identity surface, token storage, CSRF/session-fixation; may need reconciliation with Nebius SSO rather than a parallel Directus identity — that decision blocks the release.",
+      "acceptance": ["Login sets httpOnly secure cookies; expired access tokens transparently refresh; logout clears session", "requireRole gate redirects signed-out users to /login?next=... and 403s wrong-role users", "Decision recorded: reuse auth.nebius.com SSO vs parallel Directus identity, with CSRF protection on auth POSTs"],
+      "reference_files": ["apps/web/pages/login.tsx", "apps/web/src/components/auth/LoginForm.tsx", "apps/web/pages/api/auth/login.ts", "apps/web/pages/api/auth/me.ts", "apps/web/pages/api/auth/logout.ts", "apps/web/src/lib/auth.ts"]
+    },
+    {
+      "id": "office-hours",
+      "title": "Office Hours booking (auth-gated Calendly reveal)",
+      "epic": "community-directories",
+      "release": "v1.1",
+      "column": "Backlog",
+      "impact": 3, "effort": 2, "risk": "med",
+      "dependencies": ["team-directory", "auth-sessions"],
+      "reasoning": "dev.nebius.com lists 'Builder Hours' as a marketing card with no booking surface. /office-hours combines recurring drop-in slots with per-advocate 1:1 slots and gates the booking reveal server-side: signed-out sees 'Sign in to book', signed-in gets the live Calendly link. Chosen as the FIRST auth-gated surface (v1.1) because it is the lowest-risk gate to validate the session layer in production — read-mostly, no money/points. Converts the existing 'Builder Hours' promise into a real funnel.",
+      "acceptance": ["Signed-out visitors see 'Sign in to book'; signed-in users see the live Calendly link", "Drop-in + per-advocate 1:1 slots render from team_members with calendly_url", "Hero uses the brand navy (#061a26), not black; no auth leak in the static HTML for signed-out users"],
+      "reference_files": ["apps/web/pages/office-hours.tsx"]
+    },
+    {
+      "id": "portal-shell",
+      "title": "Builder Portal shell + dashboard + onboarding checklist + profile editor",
+      "epic": "builder-portal",
+      "release": "v1.2",
+      "column": "Backlog",
+      "impact": 5, "effort": 4, "risk": "high",
+      "dependencies": ["auth-sessions", "directus-data-model"],
+      "reasoning": "No signed-in builder portal exists on dev.nebius.com — dashboards/usage/account all live in external consoles. /portal is the authenticated program home: stat cards, Quick Actions, recent-activity feed, points-bearing onboarding checklist, and a profile editor that PATCHes the user row (email read-only). The container every other portal write-flow lives inside; leads v1.2. High risk: builder-gated server-side mutations to user records; dashboard stats start as sample data until the aggregation is wired.",
+      "acceptance": ["/portal is reachable only when signed in as a builder; redirects to /login?next=/portal otherwise", "Profile editor PATCHes the directus_users row pinned to the session user id (cannot edit other users; email read-only)", "Checklist persists completion and dashboard cards render (sample-data items clearly flagged until aggregation lands)"],
+      "reference_files": ["apps/web/pages/portal/index.tsx", "apps/web/src/components/chrome/PortalLayout.tsx", "apps/web/src/components/chrome/PortalSidebar.tsx", "apps/web/pages/portal/checklist.tsx", "apps/web/pages/portal/profile.tsx", "apps/web/pages/api/portal/profile.ts"]
+    },
+    {
+      "id": "portal-activity-log",
+      "title": "Portal activity log + self-report a win",
+      "epic": "builder-portal",
+      "release": "v1.2",
+      "column": "Backlog",
+      "impact": 3, "effort": 3, "risk": "med",
+      "dependencies": ["portal-shell", "auth-sessions", "directus-data-model"],
+      "reasoning": "No points/activity tracking exists. The activity log lists points-bearing actions with status pills, plus /portal/activity/new to self-report a win (type, proof URL, details) into the activities collection. This is the ledger underpinning the gamified economy and the leaderboard (v2.0). v1.2 inside the portal; entries enter PENDING and are approved via Directus Studio until the admin activity queue ships in v2.0. Medium risk: user-submitted claims feed points → needs proof validation + abuse controls.",
+      "acceptance": ["/portal/activity lists the signed-in builder's activities with status pills", "/portal/activity/new writes a PENDING activities row scoped to the session user", "Points are not granted until an activity is approved (no self-grant); interim approval path via Directus Studio documented"],
+      "reference_files": ["apps/web/pages/portal/activity/index.tsx", "apps/web/pages/portal/activity/new.tsx", "apps/web/src/components/chrome/StubCallout.tsx"]
+    },
+    {
+      "id": "portal-library-submission",
+      "title": "Portal library submission (community content for review)",
+      "epic": "builder-portal",
+      "release": "v1.2",
+      "column": "Backlog",
+      "impact": 3, "effort": 2, "risk": "med",
+      "dependencies": ["portal-shell", "auth-sessions", "content-library"],
+      "reasoning": "No path exists for builders to contribute content — all library material is first-party. A submit form (title, type, level, external URL, blurb, optional markdown) creates a PENDING library_articles row; accepted entries earn +50 pts and publish. Turns the library two-sided and feeds the points economy. v1.2; moderation happens via Directus Studio until the admin library queue ships in v2.0. Medium risk: UGC entering a published collection needs moderation + sanitization (smaller blast radius than credits/events).",
+      "acceptance": ["/portal/library/submit creates a PENDING (unpublished) library_articles row; it does NOT appear on public /library until approved", "Inputs are sanitized; external URL is validated", "Approval grants +50 pts via the activity ledger (interim: manual approve in Directus Studio)"],
+      "reference_files": ["apps/web/pages/portal/library/submit.tsx", "apps/web/pages/portal/library/index.tsx", "apps/web/src/components/chrome/StubCallout.tsx"]
+    },
+    {
+      "id": "portal-ambassador-apply",
+      "title": "Portal Ambassador application",
+      "epic": "builder-portal",
+      "release": "v1.2",
+      "column": "Backlog",
+      "impact": 3, "effort": 2, "risk": "med",
+      "dependencies": ["portal-shell", "auth-sessions", "directus-data-model"],
+      "reasoning": "dev.nebius.com mentions programs but has no ambassador/advocate application funnel. A form (handle, email, city/country, what they've built, meetups to host, communities) creates a PENDING ambassador_applications row for monthly admin review — a clean, contained lead-gen flow for the community-leader pipeline. v1.2; reviewed via Directus Studio until the admin queue ships in v2.0. Medium risk: authenticated write with PII (location) → needs review queue + anti-spam.",
+      "acceptance": ["/portal/ambassador/apply writes a PENDING ambassador_applications row scoped to the session user", "Form validates required fields; PII is stored only in the gated collection (not exposed publicly)", "Basic anti-spam (one open application per user / rate limit)"],
+      "reference_files": ["apps/web/pages/portal/ambassador/apply.tsx", "apps/web/pages/api/portal/ambassador/apply.ts"]
+    },
+    {
+      "id": "portal-credit-claims",
+      "title": "Portal intro-credit claim flows (Token Factory + AI Cloud, $100)",
+      "epic": "builder-portal",
+      "release": "v1.2",
+      "column": "Backlog",
+      "impact": 5, "effort": 3, "risk": "high",
+      "dependencies": ["portal-shell", "auth-sessions", "directus-data-model"],
+      "reasoning": "The strongest acquisition lever a builder hub can own: two claim forms (claim-tf, claim-ai) POST to /api/portal/credits/claim, creating a credit_requests row (amount_usd=100, status=PENDING); AI Cloud requires justification, TF needs only the account email. Ships in v1.2 (not v2.0) to land acquisition value early — resolving the Growth-vs-Platform tension — with interim manual processing in Directus Studio; the automated approve/reject queue ships in v2.0. High risk: touches money → tightly auth-gated, rate-limited, one-claim-per-product-per-user.",
+      "acceptance": ["Signed-in builders can submit a TF or AI Cloud claim; a PENDING credit_requests row (amount_usd=100) is created", "AI Cloud claim requires a justification; duplicate claims per product per user are blocked", "Claims are processable in the interim via Directus Studio; the card explicitly notes the automated queue lands in v2.0 (no false 'approved' state shown to users before then)"],
+      "reference_files": ["apps/web/pages/portal/credits/claim-tf.tsx", "apps/web/pages/portal/credits/claim-ai.tsx", "apps/web/pages/portal/credits/index.tsx", "apps/web/pages/api/portal/credits/claim.ts"]
+    },
+    {
+      "id": "portal-event-hosting",
+      "title": "Portal host-an-event flow + my-events",
+      "epic": "builder-portal",
+      "release": "v1.2",
+      "column": "Backlog",
+      "impact": 4, "effort": 3, "risk": "high",
+      "dependencies": ["portal-shell", "auth-sessions", "directus-data-model", "events-directory"],
+      "reasoning": "No way exists for a builder to propose/host a community event or request event credits. /portal/events/new does a two-step write: create an events row (status=DRAFT, builder=session user), then a linked credit_requests row (kind=EVENT), rolling back the event if the credit request fails. v1.2 inside the portal. High risk: multi-collection transactional write tied to credits, and it injects DRAFT rows into the same events collection that powers the public directory — DRAFT must be filtered out of public /events.",
+      "acceptance": ["/portal/events/new creates a DRAFT events row + linked EVENT credit_requests row atomically (event rolled back if the credit write fails)", "DRAFT/user-submitted events never appear on the public /events directory or homepage hero", "/portal/events lists the builder's own hosted events with status"],
+      "reference_files": ["apps/web/pages/portal/events/index.tsx", "apps/web/pages/portal/events/new.tsx", "apps/web/pages/portal/events/[id].tsx", "apps/web/pages/api/portal/events/index.ts"]
+    },
+    {
+      "id": "admin-console",
+      "title": "Admin operations console (exec dashboard + builders/team management)",
+      "epic": "admin-economy",
+      "release": "v2.0",
+      "column": "Backlog",
+      "impact": 4, "effort": 4, "risk": "high",
+      "dependencies": ["auth-sessions", "directus-data-model"],
+      "reasoning": "dev.nebius.com has no admin/program-ops surface (Directus Studio is the only back office today). /admin is a dedicated console: exec dashboard with program metric cards + an open-queues list, plus live management tables for builders and team_members. Makes the program operable by DevRel without raw Directus access. Leads v2.0 as the shell every review queue plugs into. High risk: elevated privileges over user + program data; somewhat optional vs using Directus Studio directly, which is why it is sequenced last.",
+      "acceptance": ["/admin is reachable only with role=admin; builders/public are redirected/403", "Builders + team_members management tables support the documented edits with an audit trail", "Exec dashboard shows real pending counts per queue (links to the queues shipping in this release)"],
+      "reference_files": ["apps/web/pages/admin/index.tsx", "apps/web/pages/admin/builders.tsx", "apps/web/pages/admin/team.tsx", "apps/web/src/components/chrome/AdminLayout.tsx", "apps/web/src/components/chrome/AdminSidebar.tsx", "apps/web/src/components/chrome/QueueTable.tsx"]
+    },
+    {
+      "id": "admin-review-queues",
+      "title": "Admin review queues (library, credits, per-event credits, ambassador, activities)",
+      "epic": "admin-economy",
+      "release": "v2.0",
+      "column": "Backlog",
+      "impact": 4, "effort": 4, "risk": "high",
+      "dependencies": ["admin-console", "portal-credit-claims", "portal-event-hosting", "portal-library-submission", "portal-ambassador-apply", "portal-activity-log"],
+      "reasoning": "Every portal write-flow produces a PENDING record needing human review; this is the single biggest 'make it real' task — until the approve/reject handlers write back (they are no-ops today), the whole portal economy is non-functional. Grouped: queues for library submissions, intro credit claims (TF auto-approvable, AI Cloud needs review), per-event TF credit requests, ambassador apps, and self-reported activities, all via the shared QueueTable. v2.0 because it depends on the admin console plus every portal flow that feeds a queue. Highest-privilege mutations (approve money, publish content, grant points) → most review + audit trail.",
+      "acceptance": ["Each queue lists PENDING records and supports approve/reject that actually writes status + side-effects (publish entry / grant points / mark credit approved)", "Approvals are idempotent and audit-logged (who/when); rejecting requires a reason", "Approving a credit claim transitions it out of PENDING and is reflected in the builder's /portal/credits"],
+      "reference_files": ["apps/web/pages/admin/library.tsx", "apps/web/pages/admin/credit-claims.tsx", "apps/web/pages/admin/credit-requests.tsx", "apps/web/pages/admin/ambassador-applications.tsx", "apps/web/pages/admin/activities.tsx", "apps/web/src/components/chrome/QueueTable.tsx"]
+    },
+    {
+      "id": "chrome-portal-admin-shells",
+      "title": "Authenticated layout shells (PortalLayout/Sidebar + AdminLayout/Sidebar)",
+      "epic": "site-chrome",
+      "release": "v2.0",
+      "column": "Backlog",
+      "impact": 2, "effort": 1, "risk": "low",
+      "dependencies": ["portal-shell", "admin-console"],
+      "reasoning": "Second half of the split chrome gap: the authenticated navigation shells that don't exist on dev.nebius.com at all. Sequenced after the portal + admin areas exist (depends on both). Lands in v2.0 to finalize the authenticated IA once all gated surfaces are present. Low risk: presentational.",
+      "acceptance": ["PortalLayout + PortalSidebar wrap all /portal/* routes with consistent nav", "AdminLayout + AdminSidebar wrap all /admin/* routes with consistent nav + queue links", "Authenticated chrome never renders for signed-out users"],
+      "reference_files": ["apps/web/src/components/chrome/PortalLayout.tsx", "apps/web/src/components/chrome/AdminLayout.tsx", "apps/web/src/components/chrome/PortalSidebar.tsx", "apps/web/src/components/chrome/AdminSidebar.tsx"]
+    },
+    {
+      "id": "leaderboard",
+      "title": "Builder leaderboard (public top-10 widget + full gated leaderboard)",
+      "epic": "admin-economy",
+      "release": "v2.0",
+      "column": "Backlog",
+      "impact": 4, "effort": 3, "risk": "med",
+      "dependencies": ["directus-data-model", "auth-sessions", "portal-activity-log"],
+      "reasoning": "dev.nebius.com has no leaderboard/ranking — no competitive/recognition loop. A public /builders top-10 widget, a /builders/all roster, and an auth-gated /portal/leaderboard ranked by points_total (shared LeaderboardTable). Strong engagement/retention driver. v2.0 because a meaningful ranking depends on the activities/points ledger being populated and accurate — a hollow leaderboard on sample data undercuts trust, so it ships only after v1.2's activity log + v2.0's approval queues produce real points.",
+      "acceptance": ["/builders shows a top-10 widget; /builders/all shows the full roster; /portal/leaderboard is auth-gated", "Rankings are computed from real approved points (not sample data) — verified non-empty before launch", "Ties + zero-point builders handled sensibly; no PII beyond handle/name/location"],
+      "reference_files": ["apps/web/pages/builders.tsx", "apps/web/pages/builders/all.tsx", "apps/web/pages/portal/leaderboard.tsx", "apps/web/src/components/builders/LeaderboardTable.tsx"]
+    },
+    {
+      "id": "events-refresh-scrape",
+      "title": "Admin events refresh (Luma + nebius.com Tavily scrape)",
+      "epic": "admin-economy",
+      "release": "v2.0",
+      "column": "Backlog",
+      "impact": 3, "effort": 3, "risk": "med",
+      "dependencies": ["events-directory", "auth-sessions", "admin-console"],
+      "reasoning": "Keeps the events directory current without manual entry: an admin-only Refresh hits /api/events/refresh, which uses Tavily Extract to scrape lu.ma/nebiusAI + nebius.com/events, parses titles/dates/cities, dedupes by normalized title, and upserts into events. Valuable ops once the directory + admin console exist; lands in v2.0 with the rest of the admin surface. Medium risk: writes to events, calls an external scraping API with its own key/rate limits, must be admin-gated; parser brittleness is an ongoing maintenance cost.",
+      "acceptance": ["Admin-only Refresh upserts scraped events deduped by normalized title (no duplicate rows)", "Tavily key stays server-side; the endpoint is admin-gated and rate-limited", "Scrape failures degrade gracefully (existing events untouched; error surfaced to admin)"],
+      "reference_files": ["apps/web/pages/api/events/refresh.ts", "apps/web/pages/api/scrape-events.ts", "apps/web/pages/events/index.tsx"]
+    }
+  ]
+}
