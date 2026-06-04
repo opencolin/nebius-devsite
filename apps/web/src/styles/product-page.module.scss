@@ -115,13 +115,18 @@
 
 // ---- Resource cards -----------------------------------------------------
 // Three-column grid that collapses to 2 → 1 on narrow viewports.
-// Cards are text-only (title + blurb + type chip + link arrow) — the
-// same density as dev.nebius.com's card rows.
+// align-items: start lets each row size to its tallest card naturally —
+// without it, combined height:100% on the link + card creates a circular
+// dependency (row height = card height = 100% of row height) that different
+// browsers resolve inconsistently, causing the overlap visible in the
+// screenshot. Cards in the same row won't be equal-height, but that matches
+// dev.nebius.com's own style and avoids the layout bug entirely.
 
 .resourceGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+  align-items: start;
 
   @media (max-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
@@ -136,6 +141,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
+  align-items: start;
 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
@@ -146,7 +152,8 @@
   text-decoration: none;
   color: inherit;
   display: block;
-  height: 100%;
+  // No height: 100% — the card sizes to its own content now that
+  // the grid uses align-items: start.
 
   &:hover .resourceCard {
     border-color: var(--g-color-line-brand);
@@ -159,7 +166,7 @@
   flex-direction: column;
   gap: 8px;
   padding: 18px 20px 16px;
-  height: 100%;
+  // No height: 100% — same reason as resourceLink above.
   border: 1px solid var(--g-color-line-generic);
   border-radius: var(--g-border-radius-l);
   background: var(--g-color-base-float);
