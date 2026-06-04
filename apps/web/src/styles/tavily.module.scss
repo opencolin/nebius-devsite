@@ -107,7 +107,77 @@
   color: var(--g-color-text-hint);
 }
 
-// ---- Code blocks + language tabs ---------------------------------------
+// ---- Path selector — the single control for the whole guide ------------
+
+.pathPicker {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pathPickerLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--g-color-text-hint);
+}
+
+.pathSelector {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: var(--g-border-radius-l);
+  background: var(--g-color-base-float);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.pathItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pathDivider {
+  width: 1px;
+  align-self: stretch;
+  margin: 4px 4px;
+  background: var(--g-color-line-generic);
+}
+
+.pathTab {
+  appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: var(--g-border-radius-m);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--g-color-text-secondary);
+  transition: background 120ms ease, color 120ms ease;
+  white-space: nowrap;
+
+  &:hover {
+    color: var(--g-color-text-primary);
+  }
+}
+
+.pathTabActive {
+  background: var(--nb-color-highlight, #e0ff4f);
+  color: #061a26;
+  font-weight: 600;
+
+  &:hover {
+    color: #061a26;
+  }
+}
+
+// ---- Code blocks -------------------------------------------------------
 // Permanently dark surface (code reads well dark in either site theme).
 
 .code {
@@ -118,33 +188,15 @@
   max-width: 640px;
 }
 
-.codeTabs {
-  display: flex;
-  gap: 4px;
-  padding: 6px 6px 0;
+.codeCaption {
+  padding: 8px 14px;
   background: #071a25;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.codeTab {
-  appearance: none;
-  border: none;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 12px;
+  font-family: var(--g-font-family-monospace, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 11px;
   font-weight: 600;
-  padding: 8px 12px;
-  border-radius: 8px 8px 0 0;
-  cursor: pointer;
-
-  &:hover {
-    color: rgba(255, 255, 255, 0.9);
-  }
-}
-
-.codeTabActive {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .codePre {
