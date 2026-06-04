@@ -65,8 +65,14 @@ export type LibraryEntryType =
 
 // Which product landing surface(s) a library entry appears on. `library`
 // is the default umbrella; the others map to the dev.nebius.com-style
-// product pages. Added in the dev.nebius.com content migration.
-export type LibrarySurface = 'ai-cloud' | 'token-factory' | 'serverless' | 'library';
+// product pages. `tavily` is the partner web-search onboarding surface.
+// Added in the dev.nebius.com content migration.
+export type LibrarySurface =
+  | 'ai-cloud'
+  | 'token-factory'
+  | 'serverless'
+  | 'tavily'
+  | 'library';
 export type LibraryLevel = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
 
 export interface BuilderRow {

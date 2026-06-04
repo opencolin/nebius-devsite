@@ -1,0 +1,164 @@
+// Onboarding-specific styles for /tavily. Layered on top of
+// product-page.module.scss (which supplies the dark hero, section shells,
+// resource grid, and console CTA). This file adds the numbered onboarding
+// steps, the dark code blocks + language tabs, and the capabilities grid.
+
+// ---- Numbered onboarding steps -----------------------------------------
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 14px 18px;
+  align-items: start;
+}
+
+.stepNum {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  // Brand navy disc with the lime highlight numeral — matches the hero.
+  background: #061a26;
+  color: var(--nb-color-highlight, #e0ff4f);
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.stepBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0; // let code blocks scroll instead of blowing out the grid
+}
+
+.stepTitle {
+  margin: 0;
+}
+
+.stepText {
+  margin: 0;
+  max-width: 64ch;
+
+  a {
+    color: var(--g-color-text-link);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.stepActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+// ---- Code blocks + language tabs ---------------------------------------
+// Permanently dark surface (code reads well dark in either site theme).
+
+.code {
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: var(--g-border-radius-l);
+  overflow: hidden;
+  background: #071a25;
+  max-width: 640px;
+}
+
+.codeTabs {
+  display: flex;
+  gap: 4px;
+  padding: 6px 6px 0;
+  background: #071a25;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.codeTab {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.codeTabActive {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.codePre {
+  margin: 0;
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-family: var(--g-font-family-monospace, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-size: 13px;
+  line-height: 1.65;
+  color: #e6f0f5;
+
+  code {
+    font-family: inherit;
+    white-space: pre;
+  }
+}
+
+// ---- Capabilities grid -------------------------------------------------
+
+.capGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  align-items: start;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.capCard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 18px 20px;
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: var(--g-border-radius-l);
+  background: var(--g-color-base-float);
+}
+
+.capName {
+  margin: 0;
+  font-weight: 600;
+}
+
+.capDesc {
+  margin: 0;
+}
+
+// ---- Partner note ------------------------------------------------------
+
+.partnerNote {
+  margin: 0;
+  font-size: 13px;
+  color: var(--g-color-text-hint);
+}

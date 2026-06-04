@@ -259,6 +259,9 @@ export function externalLinkLabel(url: string): string {
     {match: /^(twitter\.com|x\.com)$/, verb: 'View', name: 'X'},
     {match: /^linkedin\.com$/, verb: 'View', name: 'LinkedIn'},
     {match: /^futurecoding\.ai$/, verb: 'Read', name: 'FutureCoding'},
+    // Tavily — docs subdomain first so it beats the general tavily.com match.
+    {match: /^docs\.tavily\.com$/, verb: 'Read', name: 'Tavily docs'},
+    {match: /(^|\.)tavily\.com$/, verb: 'Open', name: 'Tavily'},
   ];
   const hit = entries.find((e) => e.match.test(host));
   if (hit) return `${hit.verb} on ${hit.name}`;

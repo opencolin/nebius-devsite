@@ -27,6 +27,11 @@ const PRODUCTS = [
     tagline: 'Containerized GPU workloads — Jobs + Endpoints',
     href: '/serverless',
   },
+  {
+    label: 'Tavily',
+    tagline: 'Real-time web search & retrieval for AI agents',
+    href: '/tavily',
+  },
 ];
 
 const CLOSE_DELAY_MS = 200;
