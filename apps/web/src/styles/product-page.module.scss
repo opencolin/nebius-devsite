@@ -1,0 +1,228 @@
+// Shared styles for the three product landing pages:
+// /ai-cloud, /token-factory, /serverless.
+//
+// Visual language mirrors dev.nebius.com: dark hero with short tagline,
+// then alternating light-background sections of resource cards. Cards are
+// horizontal text-only (no cover gradient) — the type label + arrow do
+// the categorization work.
+
+// ---- Hero ---------------------------------------------------------------
+// Permanently dark regardless of site theme, same convention as
+// /office-hours. Brand navy #061a26 with a subtle lime radial glow.
+
+.hero {
+  position: relative;
+  background: #061a26;
+  overflow: hidden;
+  padding: 72px 24px 64px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 16% 22%, rgba(224, 255, 79, 0.07) 0%, rgba(224, 255, 79, 0) 40%),
+    radial-gradient(ellipse at 10% 0%, rgba(20, 60, 90, 0.5) 0%, rgba(20, 60, 90, 0) 55%);
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.heroEyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--nb-color-highlight, #e0ff4f);
+}
+
+.heroTitle {
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #ffffff;
+  margin: 0;
+  max-width: 720px;
+}
+
+.heroLede {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  max-width: 580px;
+}
+
+.heroCtas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+// ---- Sections -----------------------------------------------------------
+
+.section {
+  padding: 48px 0 56px;
+  border-bottom: 1px solid var(--g-color-line-generic);
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 80px;
+  }
+}
+
+.sectionInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.sectionHead {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sectionEyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--g-color-text-hint);
+}
+
+.sectionTitle {
+  margin: 0;
+}
+
+.sectionLede {
+  margin: 0;
+  max-width: 56ch;
+}
+
+// ---- Resource cards -----------------------------------------------------
+// Three-column grid that collapses to 2 → 1 on narrow viewports.
+// Cards are text-only (title + blurb + type chip + link arrow) — the
+// same density as dev.nebius.com's card rows.
+
+.resourceGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 580px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Wider two-column layout for pinned "featured" cards at the top.
+.featuredGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.resourceLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+
+  &:hover .resourceCard {
+    border-color: var(--g-color-line-brand);
+    transform: translateY(-1px);
+  }
+}
+
+.resourceCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 20px 16px;
+  height: 100%;
+  border: 1px solid var(--g-color-line-generic);
+  border-radius: var(--g-border-radius-l);
+  background: var(--g-color-base-float);
+  transition: border-color 120ms ease, transform 120ms ease;
+}
+
+.resourceCardHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.resourceTypeChip {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--nb-color-private-navyblue-100, rgba(5, 43, 66, 0.12));
+  color: var(--g-color-text-secondary);
+  flex-shrink: 0;
+}
+
+.resourceTitle {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.3;
+  flex: 1;
+}
+
+.resourceBlurb {
+  margin: 0;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.resourceArrow {
+  margin-top: auto;
+  padding-top: 8px;
+  font-size: 12px;
+}
+
+// ---- Console CTA strip --------------------------------------------------
+// A thin banner at the bottom of the page pointing to the product console,
+// mirroring dev.nebius.com's "Get started" footer strip.
+
+.consoleCta {
+  background: var(--g-color-base-float);
+  border-top: 1px solid var(--g-color-line-generic);
+  padding: 40px 24px;
+}
+
+.consoleCtaInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}

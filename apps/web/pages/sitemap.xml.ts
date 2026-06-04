@@ -53,6 +53,10 @@ const STATIC_ROUTES: Array<{path: string; changefreq: string; priority: number}>
   // them here so they appear regardless of which path serves them.
   {path: '/signup', changefreq: 'monthly', priority: 0.7},
   {path: '/office-hours', changefreq: 'weekly', priority: 0.7},
+  // Product landing pages — bespoke .tsx pages mirroring dev.nebius.com.
+  {path: '/ai-cloud', changefreq: 'daily', priority: 0.9},
+  {path: '/token-factory', changefreq: 'daily', priority: 0.9},
+  {path: '/serverless', changefreq: 'daily', priority: 0.9},
 ];
 
 interface Url {
