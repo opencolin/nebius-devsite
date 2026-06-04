@@ -1,0 +1,636 @@
+import {readItems} from '@directus/sdk';
+import type {GetStaticProps, InferGetStaticPropsType} from 'next';
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
+
+import {Button, Label, Text} from '@gravity-ui/uikit';
+import Link from 'next/link';
+import {useRouter} from 'next/router';
+import {useState} from 'react';
+
+import {PublicLayout} from '@/components/chrome/PublicLayout';
+import {directusServer} from '@/lib/directus';
+import {eventHref} from '@/lib/event-url';
+import {formatDateTime} from '@/lib/format';
+
+import page from '@/styles/page.module.scss';
+import styles from './events.module.scss';
+
+// Leaflet touches `window`, so the map can't SSR.
+// In the events hero the map is full-bleed dark; the loading shim is just a
+// matching dark block so the layout doesn't shift when tiles arrive.
+const EventsMap = dynamic(() => import('@/components/events/EventsMap'), {
+  ssr: false,
+  loading: () => <div className={styles.heroMapPlaceholder} />,
+});
+
+interface EventRow {
+  id: string;
+  title: string;
+  description: string;
+  format: string;
+  starts_at: string;
+  ends_at: string;
+  city: string;
+  country: string;
+  is_online: boolean;
+  product_focus: string[];
+  is_official: boolean;
+  luma_url?: string | null;
+  // Webinars + Nebius.com-hosted events live on official_url instead of
+  // luma_url. Both feed the card's RSVP link via eventHref().
+  official_url?: string | null;
+  builder_handle?: string | null;
+  location?: {type: 'Point'; coordinates: [number, number]} | null;
+}
+
+export const getStaticProps: GetStaticProps<{events: EventRow[]}> = async () => {
+  const directus = directusServer();
+  const events = (await directus.request(
+    readItems('events', {
+      filter: {status: {_eq: 'PUBLISHED'}},
+      sort: ['starts_at'],
+      fields: ['id', 'title', 'description', 'format', 'starts_at', 'ends_at', 'city', 'country', 'is_online', 'product_focus', 'is_official', 'luma_url', 'official_url', 'location'],
+      limit: -1,
+    }),
+  )) as EventRow[];
+  return {props: {events}, revalidate: 60};
+};
+
+export default function EventsPage({
+  events,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  // City filter: clicking a dot on the map sets activeCity; the lists below
+  // narrow to events in that city. Click the same dot again or hit the clear
+  // button on the active-filter pill to reset.
+  const [activeCity, setActiveCity] = useState<string | null>(null);
+
+  const handleCityClick = (city: string) => {
+    setActiveCity((prev) => (prev === city ? null : city));
+  };
+
+  // Split upcoming vs past based on the event's START date, anchored to the
+  // beginning of today (UTC). An event qualifies as "upcoming" if it
+  // hasn't started yet OR starts today. Anything that already started
+  // before today — even if it's still running — is treated as past, since
+  // the typical visitor question is "what can I attend from here on?",
+  // not "what's currently in progress?".
+  const startOfToday = new Date();
+  startOfToday.setUTCHours(0, 0, 0, 0);
+  const startOfTodayMs = startOfToday.getTime();
+  const isUpcoming = (e: EventRow) => +new Date(e.starts_at) >= startOfTodayMs;
+
+  // For the map: every upcoming event regardless of activeCity, so all city
+  // dots stay visible while a single city is selected.
+  const allUpcoming = events.filter(isUpcoming);
+
+  // For the lists below: respect activeCity if one is selected.
+  // The sentinel 'Online' isn't a real city — it maps to is_online=true so
+  // virtual events (webinars, AMAs, livestreams) get their own bucket. No
+  // real city in our data is named "Online" so the sentinel collision is
+  // safe. City comparison uses normalizeCity so "München" rows match a
+  // "Munich" chip selection (same physical city, two spellings in the
+  // source feeds).
+  const visibleEvents =
+    activeCity === 'Online'
+      ? events.filter((e) => e.is_online)
+      : activeCity
+        ? events.filter((e) => normalizeCity(e.city) === activeCity)
+        : events;
+  const upcoming = visibleEvents.filter(isUpcoming);
+  // Past events: reverse-chronological so the most recently-finished events
+  // sit at the top — that's what someone scanning "what just happened" wants.
+  const past = visibleEvents
+    .filter((e) => !isUpcoming(e))
+    .sort((a, b) => +new Date(b.starts_at) - +new Date(a.starts_at));
+
+  return (
+    <PublicLayout>
+      <Head>
+        <title>Events · Nebius Builders</title>
+        <meta
+          name="description"
+          content="Upcoming workshops, demo nights, hackathons, and office hours from the Nebius community."
+        />
+      </Head>
+      <section className={styles.hero}>
+        {/* Pin only upcoming events on the map. Past events still appear in
+            the lists below — but the globe should reflect what someone can
+            actually go to. */}
+        <EventsMap
+          events={allUpcoming}
+          onCityClick={handleCityClick}
+          activeCity={activeCity}
+          variant="dark"
+        />
+        <div className={styles.heroOverlay} />
+        <div className={styles.heroContent}>
+          <div>
+            <span className={styles.heroEyebrow}>Events</span>
+            <h1 className={styles.heroTitle}>Workshops, demos, hackathons</h1>
+            <p className={styles.heroDescription}>
+              {upcoming.length} upcoming · {past.length} past. Hosted by the
+              Nebius DevRel team and the global community of builders. Click a
+              city pin to filter.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* City chips reflect upcoming events only — same scope as the map
+          dots above, so the filter answers "where can I go?", not
+          "where has Nebius been?". A city with only past events won't
+          show as a chip; if its past entries are wanted, expand the
+          collapsed Recent section below to see them.
+          allEvents is passed separately so the Online chip can derive its
+          count from the full set (past + upcoming), since past webinars
+          + AMAs deserve to remain filterable even when there's no upcoming
+          virtual event on the calendar. */}
+      <CityFilter
+        events={allUpcoming}
+        allEvents={events}
+        activeCity={activeCity}
+        onChange={setActiveCity}
+      />
+
+      <div className={page.container} style={{paddingTop: 24}}>
+        {/* Host-an-event CTA. Sits above the Upcoming list so visitors who
+            scrolled past the map + filter see the offer first — most
+            people on /events came to attend, but anyone considering
+            running one in their city is exactly the audience we want.
+            Destination is the /localhosts CMS page ("Run a Nebius event
+            in your city"), which owns the program details and the
+            actual application form. */}
+        <HostEventBanner />
+
+        <Section
+          title="Upcoming"
+          events={upcoming}
+          emptyText={activeCity ? `No upcoming events in ${activeCity}.` : 'No upcoming events.'}
+          actions={<RefreshButton />}
+        />
+        <Section
+          title="Recent"
+          events={past.slice(0, 12)}
+          emptyText={activeCity ? undefined : 'No recent events.'}
+          collapsible
+        />
+      </div>
+    </PublicLayout>
+  );
+}
+
+function Section({
+  title,
+  events,
+  emptyText,
+  actions,
+  collapsible,
+}: {
+  title: string;
+  events: EventRow[];
+  emptyText?: string;
+  actions?: React.ReactNode;
+  // When true, the section is wrapped in a native <details>/<summary> and
+  // closed by default. Used for /events Recent — visitors come for upcoming
+  // events first; past ones live one click away.
+  collapsible?: boolean;
+}) {
+  if (!events.length && !emptyText) return null;
+
+  const body =
+    events.length === 0 ? (
+      <Text color="secondary">{emptyText}</Text>
+    ) : (
+      <div className={page.grid3}>
+        {events.map((e) => (
+          <EventCard key={e.id} event={e} />
+        ))}
+      </div>
+    );
+
+  if (collapsible) {
+    return (
+      <section style={{marginTop: 32}}>
+        <details className={styles.collapsible}>
+          <summary className={styles.sectionHeader}>
+            <Text variant="header-1" as="h2">
+              {title}{' '}
+              <Text variant="header-1" color="secondary">
+                ({events.length})
+              </Text>
+            </Text>
+          </summary>
+          <div style={{marginTop: 16}}>{body}</div>
+        </details>
+      </section>
+    );
+  }
+
+  return (
+    <section style={{marginTop: 32}}>
+      <div className={styles.sectionHeader}>
+        <Text variant="header-1" as="h2">
+          {title}
+        </Text>
+        {actions ? <div className={styles.sectionActions}>{actions}</div> : null}
+      </div>
+      {body}
+    </section>
+  );
+}
+
+// Chips pinned to the front of the city row, in this exact order, after
+// Online. Editorial picks: SF + NY + London + Berlin are the metros with
+// recurring Nebius presence, so they get permanent shelf space even on
+// quiet weeks when their count would otherwise sort them down. The rest
+// of the cities follow by count desc, then alpha.
+const PINNED_CITIES = ['San Francisco', 'New York', 'London', 'Berlin'];
+
+function CityFilter({
+  events,
+  allEvents,
+  activeCity,
+  onChange,
+}: {
+  events: EventRow[];
+  // Past + upcoming combined. Used only for the Online count so past
+  // webinars stay filterable from the chip row.
+  allEvents: EventRow[];
+  activeCity: string | null;
+  onChange: (city: string | null) => void;
+}) {
+  // Count cities. Blanks + the "—" placeholder don't qualify as chips.
+  // München and Munich fold to a single Munich count so the chip row
+  // doesn't double up on the same physical city.
+  const counts = new Map<string, number>();
+  for (const e of events) {
+    const c = normalizeCity(e.city);
+    if (!c || c === '—') continue;
+    counts.set(c, (counts.get(c) ?? 0) + 1);
+  }
+
+  // Online lives outside the city map — it's a virtual-vs-physical axis,
+  // not a geography. Derived from the FULL events list (past + upcoming)
+  // so past webinars / AMAs without a future date still get a filter
+  // entry-point. visibleEvents already uses the full events prop for
+  // filtering, so clicking Online correctly surfaces past matches.
+  const onlineCount = allEvents.filter((e) => e.is_online).length;
+
+  // Two-tier sort: pinned cities in their fixed order (skipping any with
+  // zero events to match the "no chip for empty city" rule), then the
+  // rest by count desc + alpha tiebreak.
+  const pinned = PINNED_CITIES
+    .map((city) => ({city, count: counts.get(city) ?? 0}))
+    .filter(({count}) => count > 0);
+  const others = Array.from(counts.entries())
+    .filter(([city]) => !PINNED_CITIES.includes(city))
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([city, count]) => ({city, count}));
+  const cities = [...pinned, ...others];
+
+  // Nothing to show? Skip the whole row, including the All chip.
+  if (cities.length === 0 && onlineCount === 0) return null;
+
+  return (
+    <div className={styles.cityFilter}>
+      <div className={styles.cityFilterInner}>
+        <Text variant="caption-2" color="secondary" className={styles.cityFilterLabel}>
+          Filter by city
+        </Text>
+        <div className={styles.cityChips}>
+          <Button
+            view={activeCity == null ? 'action' : 'outlined'}
+            size="m"
+            onClick={() => onChange(null)}
+          >
+            All ({events.length})
+          </Button>
+          {onlineCount > 0 ? (
+            <Button
+              view={activeCity === 'Online' ? 'action' : 'outlined'}
+              size="m"
+              onClick={() => onChange(activeCity === 'Online' ? null : 'Online')}
+            >
+              Online ({onlineCount})
+            </Button>
+          ) : null}
+          {cities.map(({city, count}) => (
+            <Button
+              key={city}
+              view={activeCity === city ? 'action' : 'outlined'}
+              size="m"
+              onClick={() => onChange(activeCity === city ? null : city)}
+            >
+              {city} ({count})
+            </Button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Horizontal CTA card pointing to /localhosts. Shown on every /events
+// pageload between the sticky city filter and the Upcoming list — the
+// natural "I see what's happening, now what if I want to bring it
+// here?" beat. Wrapped in a single <Link> so the whole card is the
+// click target (same affordance as the event cards above it). Copy
+// promises the destination concretely: not just "host an event" but
+// "Token Factory credits, swag, and amplification from us" so the
+// click is informed rather than a leap of faith.
+function HostEventBanner() {
+  return (
+    <Link href="/localhosts" className={styles.hostBannerLink}>
+      <div className={styles.hostBanner}>
+        <div className={styles.hostBannerCopy}>
+          <Text variant="caption-2" color="info" className={styles.hostBannerEyebrow}>
+            Local Hosts program
+          </Text>
+          <Text variant="subheader-2" as="h2" className={styles.hostBannerTitle}>
+            Run a Nebius event in your city.
+          </Text>
+          <Text variant="body-2" color="secondary" className={styles.hostBannerLede}>
+            Bring builders together, claim Token Factory credits for the room,
+            and get amplification from the Nebius DevRel team. We back
+            organizers with sponsorship, swag, and a starter playbook.
+          </Text>
+        </div>
+        <div className={styles.hostBannerCta}>
+          <Button view="action" size="l" pin="circle-circle">
+            Become a Local Host →
+          </Button>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function RefreshButton() {
+  const router = useRouter();
+  const [state, setState] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle');
+  const [msg, setMsg] = useState<string>('');
+
+  async function refresh() {
+    setState('loading');
+    setMsg('Scraping luma.com/nebiusAI and nebius.com/events…');
+    try {
+      const r = await fetch('/api/events/refresh', {method: 'POST'});
+      if (r.status === 401) {
+        setState('error');
+        setMsg('Sign in as admin to refresh events.');
+        return;
+      }
+      if (r.status === 403) {
+        setState('error');
+        setMsg('Admin role required.');
+        return;
+      }
+      const j = (await r.json()) as {
+        scraped: number; created: number; updated: number; skipped: number;
+        sources: Array<{source: string; ok: boolean; count: number; error?: string}>;
+      };
+      if (!r.ok) {
+        setState('error');
+        setMsg('error' in j ? String((j as {error?: string}).error) : `HTTP ${r.status}`);
+        return;
+      }
+      setState('ok');
+      setMsg(
+        `Scraped ${j.scraped} (luma + nebius.com), created ${j.created}, updated ${j.updated}, skipped ${j.skipped}.`,
+      );
+      // Trigger ISR re-fetch by full-reloading the page
+      setTimeout(() => router.replace(router.asPath), 1000);
+    } catch (err) {
+      setState('error');
+      setMsg((err as Error).message);
+    }
+  }
+
+  return (
+    <span style={{display: 'flex', flexDirection: 'column', gap: 6}}>
+      <Button view="outlined" size="m" loading={state === 'loading'} onClick={refresh}>
+        ↻ Refresh
+      </Button>
+      {msg ? (
+        <Text variant="caption-2" color={state === 'error' ? 'danger' : 'secondary'}>
+          {msg}
+        </Text>
+      ) : null}
+    </span>
+  );
+}
+
+// Event card — mirrors upstream BuilderEventCard. Cover gradient varies by
+// format (workshop / hack / demo / official). State pill (LIVE / UPCOMING /
+// PAST) sits top-left; city pill sits top-right. The card itself is the
+// link target — clicking anywhere on it pops the Luma RSVP, which keeps
+// the card single-tap-friendly.
+function EventCard({event}: {event: EventRow}) {
+  const state = eventState(event);
+  // Single fallback chain: Luma listing → Nebius webinar page → no link.
+  // See src/lib/event-url.ts for why both are checked.
+  const href = eventHref(event);
+  // Hide the description block when it's just a duplicate of the title.
+  // Several scraped events have description === title because the source
+  // listing didn't include a separate blurb; rendering both produces the
+  // "Builders & Brews BerlinBuilders & Brews Berlin" effect.
+  const showDescription =
+    event.description &&
+    event.description.trim() !== event.title.trim();
+  const cardBody = (
+    <article className={styles.card}>
+      <EventCover event={event} state={state} />
+      <div className={styles.cardBody}>
+        <Text variant="caption-2" color="secondary" className={styles.cardEyebrow}>
+          {formatLabel(event.format)}
+          {' · '}
+          {/* Venue-local timezone so Berlin events read as Berlin time
+              (CEST), not the visitor's browser TZ. cityTimezone returns
+              undefined for unmapped cities, in which case formatDateTime
+              falls back to browser-local without a TZ label. */}
+          {formatDateTime(event.starts_at, cityTimezone(event.city, event.is_online))}
+        </Text>
+        <Text variant="subheader-2" as="h3" className={styles.cardTitle}>
+          {event.title}
+        </Text>
+        {showDescription ? (
+          <Text variant="body-2" color="secondary" className={styles.cardDesc}>
+            {event.description}
+          </Text>
+        ) : null}
+        {event.product_focus.length > 0 ? (
+          <div className={styles.cardTagRow}>
+            {event.product_focus.slice(0, 3).map((t) => (
+              <Label key={t} theme="normal" size="xs">
+                {t}
+              </Label>
+            ))}
+          </div>
+        ) : null}
+      </div>
+      <footer className={styles.cardFooter}>
+        <Text variant="caption-2" color="secondary">
+          {event.is_online ? 'Online' : `${event.city || '—'}${event.country ? `, ${event.country}` : ''}`}
+        </Text>
+        {href ? (
+          <Text variant="caption-2" color="info">
+            RSVP ↗
+          </Text>
+        ) : null}
+      </footer>
+    </article>
+  );
+  return href ? (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={styles.cardLink}
+    >
+      {cardBody}
+    </a>
+  ) : (
+    <div className={styles.cardLink}>{cardBody}</div>
+  );
+}
+
+// Map an event row to a {label, theme} for the state pill on the cover.
+function eventState(event: EventRow): {label: string; tone: 'live' | 'upcoming' | 'past'} {
+  const now = Date.now();
+  const start = +new Date(event.starts_at);
+  const end = +new Date(event.ends_at);
+  if (now >= start && now <= end) return {label: 'Live', tone: 'live'};
+  if (now < start) {
+    // Show relative-day label up to a week out, otherwise just "Upcoming".
+    const days = Math.round((start - now) / (1000 * 60 * 60 * 24));
+    if (days <= 0) return {label: 'Today', tone: 'upcoming'};
+    if (days === 1) return {label: 'Tomorrow', tone: 'upcoming'};
+    if (days <= 7) return {label: `In ${days} days`, tone: 'upcoming'};
+    return {label: 'Upcoming', tone: 'upcoming'};
+  }
+  return {label: 'Past', tone: 'past'};
+}
+
+function EventCover({
+  event,
+  state,
+}: {
+  event: EventRow;
+  state: {label: string; tone: 'live' | 'upcoming' | 'past'};
+}) {
+  const variantClass = coverVariantForEvent(event);
+  return (
+    <div className={`${styles.cover} ${variantClass}`} aria-hidden>
+      <div className={styles.coverTopLeft}>
+        <span
+          className={`${styles.coverPill} ${
+            state.tone === 'live'
+              ? styles.coverPillLive
+              : state.tone === 'past'
+                ? styles.coverPillPast
+                : styles.coverPillUpcoming
+          }`}
+        >
+          {state.label}
+        </span>
+        {event.is_official ? (
+          <span className={`${styles.coverPill} ${styles.coverPillOfficial}`}>
+            Official
+          </span>
+        ) : null}
+      </div>
+      {event.city && event.city !== '—' ? (
+        <div className={styles.coverTopRight}>
+          <span className={styles.coverPill}>{event.city}</span>
+        </div>
+      ) : null}
+      <span className={styles.coverGlyph}>
+        {event.format ? formatGlyph(event.format) : '·'}
+      </span>
+    </div>
+  );
+}
+
+// Glyph shown big & translucent in the center of the cover. Cheaper than
+// per-format SVGs and reads well at the small cover size.
+function formatGlyph(format: string) {
+  const f = format.toLowerCase();
+  if (f.includes('workshop')) return '🛠';
+  if (f.includes('hack')) return '⚡';
+  if (f.includes('demo')) return '▶';
+  if (f.includes('office')) return '☕';
+  return '·';
+}
+
+function coverVariantForEvent(event: EventRow): string {
+  const f = (event.format ?? '').toLowerCase();
+  if (event.is_official) return styles.coverOfficial;
+  if (f.includes('hack')) return styles.coverHack;
+  if (f.includes('workshop')) return styles.coverWorkshop;
+  if (f.includes('demo')) return styles.coverDemo;
+  return styles.coverDefault;
+}
+
+// -----------------------------------------------------------------------------
+// City + format + timezone helpers
+// -----------------------------------------------------------------------------
+
+// München and Munich are the same physical city. Source feeds (Luma,
+// nebius.com listings) use both spellings, so without folding we get two
+// chips with count 1 each instead of one chip with count 2. Add aliases
+// here as new city collisions show up — keep keys as-stored, values as
+// canonical-display.
+const CITY_ALIASES: Record<string, string> = {
+  München: 'Munich',
+};
+
+export function normalizeCity(raw: string | null | undefined): string {
+  const trimmed = (raw ?? '').trim();
+  return CITY_ALIASES[trimmed] ?? trimmed;
+}
+
+// Format pill labels. The Directus enum is SCREAMING_SNAKE_CASE which
+// shows up raw in the card eyebrow ("·HACKATHON") and reads like a debug
+// string. Map to human labels. "OTHER" reads as a placeholder rather than
+// a category, so we relabel to "Meetup" — every OTHER event in the
+// current data is a community meetup, build night, or breakfast.
+const FORMAT_LABELS: Record<string, string> = {
+  WORKSHOP: 'Workshop',
+  DEMO_NIGHT: 'Demo night',
+  HACKATHON: 'Hackathon',
+  OFFICE_HOURS: 'Office hours',
+  OTHER: 'Meetup',
+};
+
+function formatLabel(format: string | null | undefined): string {
+  if (!format) return '';
+  return FORMAT_LABELS[format] ?? format;
+}
+
+// Map city → IANA timezone. Online events default to UTC (with a TZ
+// label), which is honest: a virtual event has no venue clock. Unmapped
+// cities return undefined and fall back to browser-local time, same as
+// the pre-fix behavior. Add cities here as the events tour expands.
+const CITY_TIMEZONES: Record<string, string> = {
+  'San Francisco': 'America/Los_Angeles',
+  Seattle: 'America/Los_Angeles',
+  'Santa Monica': 'America/Los_Angeles',
+  'New York': 'America/New_York',
+  'Ciudad de México': 'America/Mexico_City',
+  'Mexico City': 'America/Mexico_City',
+  London: 'Europe/London',
+  Paris: 'Europe/Paris',
+  Berlin: 'Europe/Berlin',
+  Munich: 'Europe/Berlin',
+  München: 'Europe/Berlin',
+  Amsterdam: 'Europe/Amsterdam',
+  Vienna: 'Europe/Vienna',
+  'Tel Aviv': 'Asia/Jerusalem',
+};
+
+function cityTimezone(city: string | null | undefined, isOnline: boolean): string | undefined {
+  if (isOnline) return 'UTC';
+  const c = (city ?? '').trim();
+  return CITY_TIMEZONES[c];
+}
