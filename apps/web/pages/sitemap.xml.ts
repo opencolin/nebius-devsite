@@ -57,8 +57,7 @@ const STATIC_ROUTES: Array<{path: string; changefreq: string; priority: number}>
   {path: '/ai-cloud', changefreq: 'daily', priority: 0.9},
   {path: '/token-factory', changefreq: 'daily', priority: 0.9},
   {path: '/serverless', changefreq: 'daily', priority: 0.9},
-  // Partner onboarding page (Tavily web-search API) — linked from the
-  // Products menu; slightly lower priority than the first-party products.
+  // Tavily web-search onboarding page — linked from the Products menu.
   {path: '/tavily', changefreq: 'weekly', priority: 0.8},
 ];
 

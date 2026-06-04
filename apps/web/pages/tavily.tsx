@@ -1,4 +1,4 @@
-// /tavily — partner developer-onboarding page for the Tavily web-search API.
+// /tavily — developer-onboarding page for Tavily, the Nebius web-search API.
 //
 // Tavily is the search/retrieval API for LLMs and agents. On the Nebius
 // Builders site it sits under the Products menu next to AI Cloud / Token
@@ -269,7 +269,7 @@ export default function TavilyPage({
       <section className={styles.hero}>
         <div className={styles.heroOverlay} aria-hidden />
         <div className={styles.heroInner}>
-          <span className={styles.heroEyebrow}>Partner · Web search API</span>
+          <span className={styles.heroEyebrow}>Web search API</span>
           <h1 className={styles.heroTitle}>Give your agents real-time web access with Tavily.</h1>
           <p className={styles.heroLede}>
             Tavily is the search and retrieval API built for LLMs and agents. Search, extract,
@@ -508,9 +508,6 @@ export default function TavilyPage({
               <ResourceCard key={e.slug} entry={e} />
             ))}
           </div>
-          <Text variant="caption-2" className={t.partnerNote}>
-            Tavily is an independent partner product. Pricing and availability are set by Tavily.
-          </Text>
         </div>
       </section>
 
