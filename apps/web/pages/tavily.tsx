@@ -131,6 +131,44 @@ console.log(response);`,
   },
 };
 
+// Coding-agent integrations. Tavily ships an MCP server (npx tavily-mcp);
+// each agent wires it up with its own config idiom. All three then expose
+// Tavily search / extract / crawl / map as tools the agent can call mid-task.
+const TOOLS = [
+  {key: 'claude-code', label: 'Claude Code'},
+  {key: 'codex', label: 'Codex'},
+  {key: 'cursor', label: 'Cursor'},
+] as const;
+type ToolKey = (typeof TOOLS)[number]['key'];
+
+const TOOL_SETUP: Record<ToolKey, {note: string; code: string}> = {
+  'claude-code': {
+    note: 'Run this in your project, then restart Claude Code and ask it to search the web.',
+    code: `claude mcp add tavily \\
+  --env TAVILY_API_KEY=tvly-YOUR_API_KEY \\
+  -- npx -y tavily-mcp@latest`,
+  },
+  codex: {
+    note: 'Add to ~/.codex/config.toml, then restart Codex.',
+    code: `[mcp_servers.tavily]
+command = "npx"
+args = ["-y", "tavily-mcp@latest"]
+env = { TAVILY_API_KEY = "tvly-YOUR_API_KEY" }`,
+  },
+  cursor: {
+    note: 'Add to ~/.cursor/mcp.json (global) or .cursor/mcp.json (project), then reload Cursor.',
+    code: `{
+  "mcpServers": {
+    "tavily": {
+      "command": "npx",
+      "args": ["-y", "tavily-mcp@latest"],
+      "env": { "TAVILY_API_KEY": "tvly-YOUR_API_KEY" }
+    }
+  }
+}`,
+  },
+};
+
 // ---- Data ---------------------------------------------------------------
 
 interface Props {
@@ -168,35 +206,39 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   return {props: {libraryResources}, revalidate: 60};
 };
 
-// ---- Code block (shared language toggle) --------------------------------
+// ---- Tabbed code block (shared by language + coding-agent selectors) -----
 
 function CodeBlock({
-  lang,
-  onLang,
-  sample,
+  tabs,
+  active,
+  onChange,
+  code,
+  label,
 }: {
-  lang: LangKey;
-  onLang: (l: LangKey) => void;
-  sample: Record<LangKey, string>;
+  tabs: ReadonlyArray<{key: string; label: string}>;
+  active: string;
+  onChange: (key: string) => void;
+  code: string;
+  label?: string;
 }) {
   return (
     <div className={t.code}>
-      <div className={t.codeTabs} role="tablist" aria-label="Language">
-        {LANGS.map((l) => (
+      <div className={t.codeTabs} role="tablist" aria-label={label ?? 'Options'}>
+        {tabs.map((tab) => (
           <button
-            key={l.key}
+            key={tab.key}
             type="button"
             role="tab"
-            aria-selected={lang === l.key}
-            className={`${t.codeTab} ${lang === l.key ? t.codeTabActive : ''}`}
-            onClick={() => onLang(l.key)}
+            aria-selected={active === tab.key}
+            className={`${t.codeTab} ${active === tab.key ? t.codeTabActive : ''}`}
+            onClick={() => onChange(tab.key)}
           >
-            {l.label}
+            {tab.label}
           </button>
         ))}
       </div>
       <pre className={t.codePre}>
-        <code>{sample[lang]}</code>
+        <code>{code}</code>
       </pre>
     </div>
   );
@@ -208,6 +250,10 @@ export default function TavilyPage({
   libraryResources,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [lang, setLang] = useState<LangKey>('py');
+  const [tool, setTool] = useState<ToolKey>('claude-code');
+  // Get started steps are collapsed by default — the page leads with the hero
+  // and capabilities; builders expand the guide when they're ready to wire in.
+  const [stepsOpen, setStepsOpen] = useState(false);
 
   return (
     <PublicLayout>
@@ -253,7 +299,7 @@ export default function TavilyPage({
         </div>
       </section>
 
-      {/* ---- Get started (numbered steps) ---- */}
+      {/* ---- Get started (collapsible, closed by default) ---- */}
       <section className={styles.section}>
         <div className={styles.sectionInner}>
           <div className={styles.sectionHead}>
@@ -261,95 +307,162 @@ export default function TavilyPage({
               Get started
             </Text>
             <Text variant="header-2" as="h2" className={styles.sectionTitle}>
-              Your first search in under five minutes.
+              <button
+                type="button"
+                className={t.disclosure}
+                aria-expanded={stepsOpen}
+                aria-controls="tavily-get-started"
+                onClick={() => setStepsOpen((v) => !v)}
+              >
+                Your first search in under five minutes.
+                <svg
+                  className={`${t.disclosureChevron} ${stepsOpen ? t.disclosureChevronOpen : ''}`}
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  aria-hidden
+                >
+                  <path
+                    d="M5 8l5 5 5-5"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </Text>
+            <Text variant="body-2" color="secondary" className={t.disclosureHint}>
+              {stepsOpen
+                ? 'API key, SDK, first search, coding agents, and Nebius.'
+                : 'API key · SDK · first search · Claude Code / Codex / Cursor · Nebius. Click to expand.'}
             </Text>
           </div>
 
-          <div className={t.steps}>
-            {/* Step 1 */}
-            <div className={t.step}>
-              <div className={t.stepNum}>1</div>
-              <div className={t.stepBody}>
-                <Text variant="subheader-2" as="h3" className={t.stepTitle}>
-                  Get your free API key
-                </Text>
-                <Text variant="body-2" color="secondary" className={t.stepText}>
-                  Create an account on the Tavily platform — you get 1,000 free API credits every
-                  month, no credit card required. Copy a key from your dashboard; it looks like{' '}
-                  <code>tvly-…</code>.
-                </Text>
-                <div className={t.stepActions}>
-                  <Button
-                    view="normal"
-                    size="m"
-                    href="https://app.tavily.com"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Open the Tavily platform ↗
-                  </Button>
+          {stepsOpen ? (
+            <div className={t.steps} id="tavily-get-started">
+              {/* Step 1 */}
+              <div className={t.step}>
+                <div className={t.stepNum}>1</div>
+                <div className={t.stepBody}>
+                  <Text variant="subheader-2" as="h3" className={t.stepTitle}>
+                    Get your free API key
+                  </Text>
+                  <Text variant="body-2" color="secondary" className={t.stepText}>
+                    Create an account on the Tavily platform — you get 1,000 free API credits every
+                    month, no credit card required. Copy a key from your dashboard; it looks like{' '}
+                    <code>tvly-…</code>.
+                  </Text>
+                  <div className={t.stepActions}>
+                    <Button
+                      view="normal"
+                      size="m"
+                      href="https://app.tavily.com"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Open the Tavily platform ↗
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className={t.step}>
+                <div className={t.stepNum}>2</div>
+                <div className={t.stepBody}>
+                  <Text variant="subheader-2" as="h3" className={t.stepTitle}>
+                    Install the SDK
+                  </Text>
+                  <Text variant="body-2" color="secondary" className={t.stepText}>
+                    Official SDKs for Python and JavaScript/TypeScript. Pick your language.
+                  </Text>
+                  <CodeBlock
+                    tabs={LANGS}
+                    active={lang}
+                    onChange={(k) => setLang(k as LangKey)}
+                    code={SAMPLES.install[lang]}
+                    label="Language"
+                  />
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className={t.step}>
+                <div className={t.stepNum}>3</div>
+                <div className={t.stepBody}>
+                  <Text variant="subheader-2" as="h3" className={t.stepTitle}>
+                    Run your first search
+                  </Text>
+                  <Text variant="body-2" color="secondary" className={t.stepText}>
+                    Four lines to a ranked, LLM-ready result set. Swap in your key and run.
+                  </Text>
+                  <CodeBlock
+                    tabs={LANGS}
+                    active={lang}
+                    onChange={(k) => setLang(k as LangKey)}
+                    code={SAMPLES.search[lang]}
+                    label="Language"
+                  />
+                </div>
+              </div>
+
+              {/* Step 4 — coding agents via MCP */}
+              <div className={t.step}>
+                <div className={t.stepNum}>4</div>
+                <div className={t.stepBody}>
+                  <Text variant="subheader-2" as="h3" className={t.stepTitle}>
+                    Add Tavily to your coding agent
+                  </Text>
+                  <Text variant="body-2" color="secondary" className={t.stepText}>
+                    Give Claude Code, Codex, or Cursor live web access through Tavily's MCP server.
+                    Pick your tool, drop in the config with your key, and your agent gains search,
+                    extract, crawl, and map tools it can call mid-task.
+                  </Text>
+                  <CodeBlock
+                    tabs={TOOLS}
+                    active={tool}
+                    onChange={(k) => setTool(k as ToolKey)}
+                    code={TOOL_SETUP[tool].code}
+                    label="Coding agent"
+                  />
+                  <Text variant="caption-2" className={t.toolNote}>
+                    {TOOL_SETUP[tool].note}
+                  </Text>
+                </div>
+              </div>
+
+              {/* Step 5 — pair with Nebius */}
+              <div className={t.step}>
+                <div className={t.stepNum}>5</div>
+                <div className={t.stepBody}>
+                  <Text variant="subheader-2" as="h3" className={t.stepTitle}>
+                    Pair Tavily with Nebius
+                  </Text>
+                  <Text variant="body-2" color="secondary" className={t.stepText}>
+                    Tavily retrieves; your Nebius model reasons. Pass Tavily's search results as
+                    context to any OpenAI-compatible chat completion on Nebius Token Factory to build
+                    agents that search the web, then synthesize grounded answers.
+                  </Text>
+                  <div className={t.stepActions}>
+                    <Button view="normal" size="m" href="/token-factory">
+                      Token Factory quickstart →
+                    </Button>
+                    <Button
+                      view="flat"
+                      size="m"
+                      href="https://docs.tavily.com/documentation/mcp"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Tavily MCP server ↗
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
-
-            {/* Step 2 */}
-            <div className={t.step}>
-              <div className={t.stepNum}>2</div>
-              <div className={t.stepBody}>
-                <Text variant="subheader-2" as="h3" className={t.stepTitle}>
-                  Install the SDK
-                </Text>
-                <Text variant="body-2" color="secondary" className={t.stepText}>
-                  Official SDKs for Python and JavaScript/TypeScript. Pick your language.
-                </Text>
-                <CodeBlock lang={lang} onLang={setLang} sample={SAMPLES.install} />
-              </div>
-            </div>
-
-            {/* Step 3 */}
-            <div className={t.step}>
-              <div className={t.stepNum}>3</div>
-              <div className={t.stepBody}>
-                <Text variant="subheader-2" as="h3" className={t.stepTitle}>
-                  Run your first search
-                </Text>
-                <Text variant="body-2" color="secondary" className={t.stepText}>
-                  Four lines to a ranked, LLM-ready result set. Swap in your key and run.
-                </Text>
-                <CodeBlock lang={lang} onLang={setLang} sample={SAMPLES.search} />
-              </div>
-            </div>
-
-            {/* Step 4 */}
-            <div className={t.step}>
-              <div className={t.stepNum}>4</div>
-              <div className={t.stepBody}>
-                <Text variant="subheader-2" as="h3" className={t.stepTitle}>
-                  Pair Tavily with Nebius
-                </Text>
-                <Text variant="body-2" color="secondary" className={t.stepText}>
-                  Tavily retrieves; your Nebius model reasons. Pass Tavily's search results as
-                  context to any OpenAI-compatible chat completion on Nebius Token Factory to build
-                  agents that search the web, then synthesize grounded answers. Or drop the Tavily
-                  MCP server into Cursor, Claude, or any MCP client.
-                </Text>
-                <div className={t.stepActions}>
-                  <Button view="normal" size="m" href="/token-factory">
-                    Token Factory quickstart →
-                  </Button>
-                  <Button
-                    view="flat"
-                    size="m"
-                    href="https://docs.tavily.com/documentation/mcp"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Tavily MCP server ↗
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
+          ) : null}
         </div>
       </section>
 

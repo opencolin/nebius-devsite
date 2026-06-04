@@ -65,6 +65,48 @@
   margin-top: 4px;
 }
 
+// ---- Collapsible "Get started" disclosure ------------------------------
+// The section title becomes the toggle (button inside the h2, the accessible
+// accordion pattern). Inherits the heading's typography via font/color.
+
+.disclosure {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+
+  &:hover .disclosureChevron {
+    color: var(--g-color-text-primary);
+  }
+}
+
+.disclosureChevron {
+  flex-shrink: 0;
+  transition: transform 160ms ease;
+  color: var(--g-color-text-secondary);
+}
+
+.disclosureChevronOpen {
+  transform: rotate(180deg);
+}
+
+.disclosureHint {
+  margin: 0;
+}
+
+.toolNote {
+  margin: 2px 0 0;
+  color: var(--g-color-text-hint);
+}
+
 // ---- Code blocks + language tabs ---------------------------------------
 // Permanently dark surface (code reads well dark in either site theme).
 
