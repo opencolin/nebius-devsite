@@ -47,7 +47,9 @@ const NAV: Array<{href: string; label: string}> = [
   // not linked from anywhere on the site, sitemap, or llms.txt while
   // the Featured roll-call is being curated. Restore by uncommenting.
   // {href: '/fellows', label: 'Fellows'},
-  {href: '/office-hours', label: 'Office Hours'},
+  // /office-hours hidden from nav — page still resolves at the URL.
+  // Restore by uncommenting.
+  // {href: '/office-hours', label: 'Office Hours'},
 ];
 
 export function PublicNav() {
