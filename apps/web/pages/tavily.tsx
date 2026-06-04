@@ -238,20 +238,31 @@ function CodeBlock({caption, code}: {caption?: string; code: string}) {
 
 // ---- Path selector — one control for the whole Get started guide ---------
 
-function PathSelector({path, onChange}: {path: PathKey; onChange: (p: PathKey) => void}) {
+function PathSelector({
+  path,
+  onChange,
+  highlight,
+}: {
+  path: PathKey;
+  onChange: (p: PathKey) => void;
+  highlight: boolean;
+}) {
   return (
     <div className={t.pathSelector} role="tablist" aria-label="How you'll use Tavily">
       {PATHS.map((p, i) => {
         // Thin divider where the SDK group ends and the agent group begins.
         const groupBreak = i > 0 && PATHS[i - 1].kind !== p.kind;
+        // Only show the active highlight once the guide is open — while
+        // collapsed the buttons read as a "pick one to begin" CTA.
+        const active = highlight && path === p.key;
         return (
           <span key={p.key} className={t.pathItem}>
             {groupBreak ? <span className={t.pathDivider} aria-hidden /> : null}
             <button
               type="button"
               role="tab"
-              aria-selected={path === p.key}
-              className={`${t.pathTab} ${path === p.key ? t.pathTabActive : ''}`}
+              aria-selected={active}
+              className={`${t.pathTab} ${active ? t.pathTabActive : ''}`}
               onClick={() => onChange(p.key)}
             >
               {p.label}
@@ -355,19 +366,26 @@ export default function TavilyPage({
             </Text>
             <Text variant="body-2" color="secondary" className={t.disclosureHint}>
               {stepsOpen
-                ? 'Get a key, pick your path, then four steps to a grounded answer.'
-                : 'Get a key, then follow the guide for Python, JavaScript, Claude Code, Codex, or Cursor. Click to expand.'}
+                ? 'Four steps to a grounded answer. Switch language or tool anytime.'
+                : 'Pick your language or tool to open the step-by-step guide.'}
             </Text>
+          </div>
+
+          {/* Master selector — always visible; selecting a path opens the guide */}
+          <div className={t.pathPicker}>
+            <span className={t.pathPickerLabel}>I&apos;ll use Tavily with</span>
+            <PathSelector
+              path={path}
+              highlight={stepsOpen}
+              onChange={(p) => {
+                setPath(p);
+                setStepsOpen(true);
+              }}
+            />
           </div>
 
           {stepsOpen ? (
             <div className={t.steps} id="tavily-get-started">
-              {/* Master selector — drives the whole guide */}
-              <div className={t.pathPicker}>
-                <span className={t.pathPickerLabel}>I&apos;ll use Tavily with</span>
-                <PathSelector path={path} onChange={setPath} />
-              </div>
-
               {/* Step 1 — universal */}
               <div className={t.step}>
                 <div className={t.stepNum}>1</div>
