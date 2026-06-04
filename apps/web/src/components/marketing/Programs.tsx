@@ -1,5 +1,5 @@
 // Programs — three cards for Builders Network (highlighted), Startup
-// Program, and AI for Tech Academy. Mirrors Products.tsx layout with
+// Program, and Nebius Academy. Mirrors Products.tsx layout with
 // fewer items.
 //
 // Ported from nb3 programs.tsx.
@@ -35,8 +35,9 @@ const PROGRAMS: Program[] = [
     href: 'https://nebius.com/startups/',
   },
   {
-    name: 'AI for Tech Academy',
-    blurb: 'Short courses for individuals and teams adopting AI.',
+    name: 'Nebius Academy',
+    blurb:
+      'Expert-led courses for developers, engineers, and teams — agentic development, AI performance engineering, onboarding, and more. Free and hybrid formats.',
     cta: 'More',
     href: 'https://academy.nebius.com/',
   },
