@@ -45,17 +45,15 @@ function toEntry(r: LibraryArticleRow): ResourceEntry {
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const directus = directusServer();
-  const raw = (await directus.request(
+  // Directus 11 JSON array fields do not support _contains — fetch all, filter in JS.
+  const allArticles = (await directus.request(
     readItems('library_articles', {
-      filter: {
-        status: {_eq: 'published'},
-        // @ts-expect-error — Directus JSON-array _contains filter
-        surface: {_contains: 'serverless'},
-      },
+      filter: {status: {_eq: 'published'}},
       sort: ['-pinned', '-is_official', 'title'],
       limit: -1,
     }),
   )) as LibraryArticleRow[];
+  const raw = allArticles.filter((r) => (r.surface ?? []).includes('serverless'));
 
   const pinned = raw.filter((r) => r.pinned).map(toEntry);
 
