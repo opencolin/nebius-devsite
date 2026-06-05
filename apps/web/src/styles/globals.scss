@@ -212,3 +212,92 @@ body {
 :focus-visible {
   outline-color: var(--nb-color-private-navyblue-400);
 }
+
+// =============================================================================
+// dev.nebius.com brand — switchable via the bottom toggle (BrandToggle.tsx),
+// which sets `data-brand` on <html>. The default (no attribute / "builders")
+// keeps the warm off-white Builders look above. `data-brand="nebius"` refines
+// the tokens to match dev.nebius.com EXACTLY (values captured from the live
+// site 2026-06-04): pure-white page, navy #052b42 ink, neon-lime accent,
+// Space Mono headings, Inter 17px body, full-pill buttons.
+//
+// Specificity note: `html[data-brand='nebius']` (element + attribute = 0,1,1)
+// beats the `.g-root_theme_light` / `.g-root_theme_dark` blocks above (one
+// class = 0,1,0), so the dev.nebius.com look applies under either theme — its
+// canonical presentation is light.
+// =============================================================================
+html[data-brand='nebius'] {
+  // Page surface → pure white (dev.nebius.com), not the warm off-white above.
+  --nb-color-primary: #ffffff;
+  --nb-color-highlight-light: #e0ff4f;
+  --nb-color-highlight: #e0ff4f;
+  --nb-color-text-highlight: #052b42;
+
+  // Navy ink scale (solid + alpha) — #052b42, the dev.nebius.com text color.
+  --nb-color-private-navyblue-1000: rgba(5, 43, 66, 1);
+  --nb-color-private-navyblue-800: rgba(5, 43, 66, 0.8);
+  --nb-color-private-navyblue-600: rgba(5, 43, 66, 0.6);
+  --nb-color-private-navyblue-400: rgba(5, 43, 66, 0.4);
+  --nb-color-private-navyblue-300: rgba(5, 43, 66, 0.3);
+  --nb-color-private-navyblue-200: rgba(5, 43, 66, 0.2);
+  --nb-color-private-navyblue-150: rgba(5, 43, 66, 0.15);
+  --nb-color-private-navyblue-100: rgba(5, 43, 66, 0.1);
+  --nb-color-private-navyblue-70: rgba(5, 43, 66, 0.07);
+  --nb-color-private-navyblue-50: rgba(5, 43, 66, 0.05);
+
+  // Gravity semantic tokens → dev.nebius.com light surface.
+  --g-color-base-background: #ffffff;
+  --g-color-base-float: #ffffff;
+  --g-color-base-generic: rgba(5, 43, 66, 0.05);
+  --g-color-base-generic-hover: rgba(5, 43, 66, 0.1);
+  --g-color-base-simple-hover: rgba(5, 43, 66, 0.06);
+  --g-color-base-modal: #ffffff;
+  --g-color-line-generic: rgba(5, 43, 66, 0.12);
+  --g-color-text-primary: #052b42;
+  --g-color-text-complementary: #052b42;
+  --g-color-text-secondary: rgba(5, 43, 66, 0.6);
+  --g-color-text-hint: rgba(5, 43, 66, 0.45);
+  --g-color-text-link: #052b42;
+  --g-color-text-link-hover: #052b42;
+
+  // Action buttons → navy fill (verified: navy bg, white text).
+  --g-color-base-brand: #052b42;
+  --g-color-base-brand-hover: rgba(5, 43, 66, 0.85);
+  --g-color-line-brand: #052b42;
+  --g-color-text-brand: #052b42;
+  --g-color-text-brand-contrast: #ffffff;
+
+  // Typography: Inter body, Space Mono display headings.
+  --g-font-family-sans: 'Inter', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  --nb-font-display: 'Space Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+}
+
+// Pure-white page + 17px base copy (dev.nebius.com).
+html[data-brand='nebius'] body {
+  background: #ffffff;
+  font-size: 17px;
+}
+
+// The signature move: headings render in Space Mono (monospace), 700, navy,
+// with a touch of tracking. Covers raw heading tags + Gravity Text variants.
+html[data-brand='nebius'] :is(h1, h2, h3, h4),
+html[data-brand='nebius'] :is(.g-text_variant_display-1,
+  .g-text_variant_display-2, .g-text_variant_display-3,
+  .g-text_variant_header-1, .g-text_variant_header-2,
+  .g-text_variant_subheader-1, .g-text_variant_subheader-2) {
+  font-family: var(--nb-font-display);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+// Full-pill buttons (verified border-radius: 999px). Override the Gravity
+// per-size variable plus the property directly.
+html[data-brand='nebius'] .g-button {
+  --g-button-border-radius: 999px;
+  border-radius: 999px;
+}
+
+// Links underline on hover, matching dev.nebius.com.
+html[data-brand='nebius'] a:hover {
+  text-decoration: underline;
+}

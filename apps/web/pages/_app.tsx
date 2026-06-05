@@ -8,6 +8,7 @@ import {ThemeProvider as GravityThemeProvider} from '@gravity-ui/uikit';
 import {FirstVisitRedirect} from '@/components/chrome/FirstVisitRedirect';
 import {MockupBanner} from '@/components/chrome/MockupBanner';
 import {ThemeProvider, useThemeToggle} from '@/components/chrome/ThemeToggle';
+import {BrandProvider, BrandToggle} from '@/components/chrome/BrandToggle';
 import {ConsentBanner} from '@/components/consent/ConsentBanner';
 
 import '@/styles/globals.scss';
@@ -18,7 +19,9 @@ const GTM_PROXY = process.env.NEXT_PUBLIC_GTM_PROXY;
 export default function App({Component, pageProps}: AppProps) {
   return (
     <ThemeProvider>
-      <ThemedShell Component={Component} pageProps={pageProps} />
+      <BrandProvider>
+        <ThemedShell Component={Component} pageProps={pageProps} />
+      </BrandProvider>
     </ThemeProvider>
   );
 }
@@ -70,6 +73,9 @@ function ThemedShell({Component, pageProps}: {Component: AppProps['Component']; 
           Stays visible regardless of scroll — reviewers who skim past
           the top strip never lose the "this is a mockup" context. */}
       <MockupBanner placement="bottom" />
+      {/* Site-wide brand switch, fixed near the bottom. Flips the whole site
+          between the Builders look and the dev.nebius.com brand. */}
+      <BrandToggle />
       <ConsentBanner />
 
       {consentGranted && gtmSrc ? (

@@ -1,0 +1,76 @@
+// Fixed bottom-left brand switch. Sits just above the 33px bottom MockupBanner
+// strip so the two never overlap. Uses brand tokens so it restyles with whatever
+// brand is active.
+
+.root {
+  position: fixed;
+  left: 16px;
+  bottom: 44px;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 6px 5px 12px;
+  background: var(--g-color-base-float, #ffffff);
+  border: 1px solid var(--g-color-line-generic, rgba(5, 43, 66, 0.12));
+  border-radius: 999px;
+  box-shadow: 0 6px 20px rgba(5, 43, 66, 0.18);
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--g-color-text-hint, rgba(5, 43, 66, 0.45));
+}
+
+.seg {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 999px;
+  background: var(--g-color-base-generic, rgba(5, 43, 66, 0.05));
+}
+
+.opt {
+  appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--g-color-text-secondary, rgba(5, 43, 66, 0.6));
+  transition: background 120ms ease, color 120ms ease;
+
+  &:hover {
+    color: var(--g-color-text-primary, #052b42);
+  }
+}
+
+.optOn {
+  background: var(--g-color-base-brand, #052b42);
+  color: var(--g-color-text-brand-contrast, #ffffff);
+
+  &:hover {
+    color: var(--g-color-text-brand-contrast, #ffffff);
+  }
+}
+
+@media (max-width: 640px) {
+  .root {
+    left: 10px;
+    bottom: 40px;
+    padding: 4px 5px;
+  }
+  .label {
+    display: none;
+  }
+  .opt {
+    padding: 5px 9px;
+    font-size: 11px;
+  }
+}

@@ -11,6 +11,11 @@ export default function Document() {
         var preferDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         var theme = stored || (preferDark ? 'dark' : 'light');
         document.documentElement.classList.add('g-root', 'g-root_theme_' + theme);
+        // Brand bootstrap — apply the dev.nebius.com brand before paint so the
+        // CSS token layer (globals.scss html[data-brand='nebius']) is live with
+        // no flash. Default 'builders'.
+        var brand = localStorage.getItem('brand') === 'nebius' ? 'nebius' : 'builders';
+        document.documentElement.setAttribute('data-brand', brand);
       } catch (e) {}
     })();
   `;
@@ -21,6 +26,15 @@ export default function Document() {
     <Html lang="en" data-scroll-behavior="smooth">
       <Head>
         <script dangerouslySetInnerHTML={{__html: themeBootstrap}} />
+        {/* Inter (body) + Space Mono (display headings) — the dev.nebius.com
+            brand's fonts. Loaded for all brands; only applied under
+            data-brand="nebius" via globals.scss. */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <body>
         {/* GTM noscript — only emitted in markup if a container ID is configured.
