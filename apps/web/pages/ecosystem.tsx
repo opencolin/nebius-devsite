@@ -167,12 +167,9 @@ export default function EcosystemPage({
           content="The Nebius ecosystem — community apps built on Nebius plus partner integrations that plug into our products."
         />
       </Head>
-      {/* Dark R3F hero with the membrane scene behind the copy. Hero3D
-          dynamic-imports under the hood so neither three nor R3F ships
-          on SSR or to any other page's bundle. Same component used to
-          live on /integrations; promoted to /ecosystem now that
-          /ecosystem is the canonical umbrella entry point and the
-          other two pages are hidden from the nav.
+      {/* Static dark hero (animated={false}). The R3F membrane animation that
+          used to render here was moved to the homepage hero; /ecosystem keeps
+          the dark hero chrome + copy with no WebGL canvas.
 
           "One place." uses a non-breaking space so the last sentence
           stays atomic — when the line would otherwise wrap between
@@ -181,6 +178,7 @@ export default function EcosystemPage({
         eyebrow="Ecosystem"
         title={'The Nebius ecosystem. One place.'}
         lede={`A library of ${projects.length + partners.length} open-source projects you can fork, drop into your own stack, or learn from. Community apps built on Nebius alongside partner integrations that plug into our products.`}
+        animated={false}
       />
 
       {/* Submit-your-project CTA. Sits between the hero and the filter bar

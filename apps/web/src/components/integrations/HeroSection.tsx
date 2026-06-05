@@ -61,23 +61,33 @@ class WebGLBoundary extends Component<{children: ReactNode}, {failed: boolean}> 
 }
 
 export interface HeroSectionProps {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   lede: string;
+  /** Optional CTA buttons rendered below the lede. */
+  actions?: ReactNode;
+  /**
+   * When false, render the static dark shell (no R3F membrane). The membrane
+   * animation lives on the homepage hero now; /ecosystem passes animated={false}.
+   */
+  animated?: boolean;
 }
 
-export function HeroSection({eyebrow, title, lede}: HeroSectionProps) {
+export function HeroSection({eyebrow, title, lede, actions, animated = true}: HeroSectionProps) {
   return (
     <section className={styles.root}>
-      <WebGLBoundary>
-        <Hero3D />
-      </WebGLBoundary>
+      {animated ? (
+        <WebGLBoundary>
+          <Hero3D />
+        </WebGLBoundary>
+      ) : null}
       <div className={styles.mask} aria-hidden />
       <div className={page.container}>
         <div className={styles.copy}>
-          <span className={styles.eyebrow}>{eyebrow}</span>
+          {eyebrow ? <span className={styles.eyebrow}>{eyebrow}</span> : null}
           <h1 className={styles.title}>{title}</h1>
           <p className={styles.lede}>{lede}</p>
+          {actions ? <div className={styles.actions}>{actions}</div> : null}
         </div>
       </div>
     </section>

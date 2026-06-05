@@ -11,12 +11,12 @@
 
 import {readItems} from '@directus/sdk';
 import type {GetStaticProps, InferGetStaticPropsType} from 'next';
-import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
 import {Button} from '@gravity-ui/uikit';
 
 import {PublicLayout} from '@/components/chrome/PublicLayout';
+import {HeroSection} from '@/components/integrations/HeroSection';
 import {ActiveEvents, type MarketingEvent} from '@/components/marketing/ActiveEvents';
 import {BuildInPublic} from '@/components/marketing/BuildInPublic';
 import {BuilderSpotlight, type SpotlightProject} from '@/components/marketing/BuilderSpotlight';
@@ -30,19 +30,6 @@ import {UseCases} from '@/components/marketing/UseCases';
 import {WorkshopSpotlight, type LibrarySpotlightEntry} from '@/components/marketing/WorkshopSpotlight';
 import {directusServer} from '@/lib/directus';
 import type {BuildersEventRow, LibraryArticleRow, ProjectRow} from '@/lib/types';
-
-import styles from './index.module.scss';
-
-// Hero map is client-only (Leaflet touches `window`).
-const HeroEventsMap = dynamic(() => import('@/components/hero/HeroEventsMap'), {
-  ssr: false,
-});
-
-interface HeroEvent {
-  id: string;
-  title: string;
-  location?: {type: 'Point'; coordinates: [number, number]} | null;
-}
 
 // TODO: replace these hard-codes with a programs/metrics collection in
 // Directus once one exists. Numbers mirror nb3 /lib/network for parity.
@@ -69,7 +56,6 @@ const MONTHS = [
 
 interface Props {
   events: MarketingEvent[];
-  heroEvents: HeroEvent[];
   liveEventCount: number;
   libraryCount: number;
   featuredWorkshop: LibrarySpotlightEntry | null;
@@ -189,15 +175,6 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     official_url: e.official_url ?? null,
   }));
 
-  // For the map hero: every event with coordinates, regardless of past/upcoming
-  // — same shape and source the old homepage used. The hero is a "where the
-  // community is" thing, not a "what's next" thing; past events still belong.
-  const heroEvents: HeroEvent[] = eventsRaw.map((e) => ({
-    id: e.id,
-    title: e.title,
-    location: e.location ?? null,
-  }));
-
   // Workshop spotlight: prefer the canonical OpenClaw entry by slug for the
   // big featured slot, fall back to the first library entry. The "related"
   // rail picks two WORKSHOP-type entries, with `pinned` workshops floated
@@ -251,7 +228,6 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   return {
     props: {
       events,
-      heroEvents,
       liveEventCount,
       libraryCount: libraryRaw.length,
       featuredWorkshop,
@@ -265,16 +241,11 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
 export default function HomePage({
   events,
-  heroEvents,
   featuredWorkshop,
   relatedWorkshops,
   monthlyProject,
   monthLabel,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const heroEventCount = heroEvents.filter(
-    (e) => e.location?.coordinates?.length === 2,
-  ).length;
-
   return (
     <PublicLayout>
       <Head>
@@ -285,33 +256,24 @@ export default function HomePage({
         />
       </Head>
 
-      {/* Map-hero — preserved from the pre-rebuild homepage at the user's
-          request. The new Hero from nebius-builders-3 is unused; the rest of
-          the marketing composition (ActiveEvents, Products, ...) renders
-          below it. */}
-      <section className={styles.hero}>
-        <HeroEventsMap events={heroEvents} />
-        <div className={styles.heroOverlay} />
-        <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>Nebius for AI Builders</h1>
-          <p className={styles.heroDescription}>
-            From training and fine-tuning to production inference at scale.
-            Plus a community of builders shipping real work — workshops, demos,
-            hackathons, office hours.
-          </p>
-          <div className={styles.heroActions}>
+      {/* Hero — the R3F membrane animation, moved here from /ecosystem.
+          HeroSection dynamic-imports Hero3D (ssr:false) so the three/R3F chunk
+          stays off SSR + other pages; on WebGL failure it falls back to the
+          static dark shell. */}
+      <HeroSection
+        title="Nebius for AI Builders"
+        lede="From training and fine-tuning to production inference at scale. Plus a community of builders shipping real work — workshops, demos, hackathons, office hours."
+        actions={
+          <>
             <Button view="action" size="xl" href="/signup">
               Start building
             </Button>
             <Button view="outlined" size="xl" href="https://docs.nebius.com" target="_blank">
               Read the docs
             </Button>
-          </div>
-          <div className={styles.heroFootnote}>
-            Live map · {heroEventCount} event locations across the network
-          </div>
-        </div>
-      </section>
+          </>
+        }
+      />
 
       <ActiveEvents events={events} />
       <Products />

@@ -97,3 +97,11 @@
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.78);
 }
+
+// Optional CTA row (homepage hero). Sits below the lede.
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
