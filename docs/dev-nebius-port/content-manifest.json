@@ -1,0 +1,108 @@
+{
+  "cr": {
+    "id": "CR-DEVNEBIUS-001",
+    "title": "Port the Nebius Builders surface into dev.nebius.com — content, then features",
+    "requestor": "Nebius DevRel (collin@dabl.club)",
+    "date": "2026-06-04",
+    "status": "Proposed",
+    "target": "dev.nebius.com (production web)",
+    "reference_build": "demo.buildspace.tv (the Builders mockup that demonstrates the target end-state)"
+  },
+  "target": {
+    "system": "dev.nebius.com",
+    "stack": "Next.js Pages Router + Gravity UI + Page Constructor + Directus CMS (+ HubSpot forms)",
+    "note": "dev.nebius.com already runs this exact stack, so both content and components port closely. It uses Directus today only as a headless asset store (no program data model)."
+  },
+  "tagging": {
+    "library_surface": ["ai-cloud", "token-factory", "serverless", "tavily", "library"],
+    "product_focus": ["tokenfactory", "aicloud", "openclaw", "soperator", "tavily"],
+    "integration_products": ["token-factory", "ai-cloud", "tavily"],
+    "library_types": ["WORKSHOP", "VIDEO", "PLAYLIST", "REPO", "BLOG", "DOCS"]
+  },
+  "content": [
+    {
+      "id": "library",
+      "name": "Content library",
+      "collection": "library_articles",
+      "count": 159,
+      "count_basis": "live on the reference build (incl. 55 dev.nebius.com resources from the Phase-1 import + a 4-wave verified discovery sweep)",
+      "types": ["WORKSHOP", "VIDEO", "PLAYLIST", "REPO", "BLOG", "DOCS"],
+      "key_fields": ["slug", "type", "title", "blurb", "level", "duration_min", "product_focus", "body_md", "external_url", "is_official", "surface", "pinned"],
+      "notes": "The content backbone. `surface` controls which product page each entry rails onto (/ai-cloud, /token-factory, /serverless, /tavily); `pinned` floats an entry to a page's quickstarts and the homepage WorkshopSpotlight. Every external URL is link-checked (oEmbed for YouTube)."
+    },
+    {
+      "id": "projects",
+      "name": "Community apps / 'built with Nebius' gallery",
+      "collection": "projects",
+      "count": 146,
+      "count_basis": "live on the reference build (community OSS + hackathon projects, fork-audited for live public repos)",
+      "key_fields": ["slug", "title", "tagline", "description", "builder_handle", "tags", "product_focus", "repo_url", "demo_url", "stars", "featured"],
+      "notes": "Social proof of what builders ship. Placeholder/test rows excluded; repo_urls audited so no dead 'View on GitHub' links. Forks credit the original creator."
+    },
+    {
+      "id": "integrations",
+      "name": "Ecosystem integrations",
+      "collection": "integrations (new)",
+      "count": 85,
+      "count_basis": "apps/web/src/lib/ecosystem-partners.ts (partner integrations: LiteLLM, LlamaIndex, LangChain, CrewAI, Tavily, Mastra, Zed, Cline, Continue, etc.)",
+      "key_fields": ["slug", "name", "category", "products", "docsUrl", "homepage", "blurb"],
+      "notes": "Currently a typed TS list for SSG. Recommend migrating to a Directus collection so DevRel can edit without a deploy. `products` uses the hyphenated enum (token-factory, ai-cloud, tavily)."
+    },
+    {
+      "id": "events",
+      "name": "Events directory",
+      "collection": "events",
+      "count": "TBC at migration (sourced from lu.ma/NebiusAI + nebius.com/events)",
+      "key_fields": ["title", "description", "format", "starts_at", "ends_at", "timezone", "venue_name", "city", "country", "location(point)", "is_online", "product_focus", "status", "is_official", "official_url", "luma_url"],
+      "notes": "Geo-coded for the live map. Keep an admin refresh (Tavily Extract scrape of Luma + nebius.com/events, dedup by normalized title)."
+    },
+    {
+      "id": "team",
+      "name": "DevRel team directory",
+      "collection": "team_members",
+      "count": "TBC at migration (active DevRel advocates)",
+      "key_fields": ["slug", "name", "title", "bio", "region", "timezone", "expertise", "languages", "active", "sort_order", "socials", "calendly_url"],
+      "notes": "Drives /team and the office-hours booking surface (calendly_url gates the 'Book office hours' CTA)."
+    },
+    {
+      "id": "fellows",
+      "name": "Fellows roll-call",
+      "collection": "fellows (static today)",
+      "count": 20,
+      "count_basis": "apps/web/src/lib/fellows.ts",
+      "key_fields": ["name", "org", "city", "region", "tagline", "photo", "linkedin"],
+      "notes": "Curated recognition surface; emits noindex,nofollow while curated. Lowest priority; static array is fine to start."
+    },
+    {
+      "id": "pages",
+      "name": "CMS pages (Page Constructor blocks)",
+      "collection": "pages",
+      "items": ["home", "builders", "office-hours", "localhosts", "signup"],
+      "key_fields": ["slug", "title", "seo_description", "seo_image", "blocks(JSON)", "status"],
+      "notes": "Marketing/program copy rendered through Gravity Page Constructor via the [...slug] catch-all. Lets DevRel spin up pages by slug without a deploy."
+    }
+  ],
+  "migration": {
+    "mechanism": "Apply the program schema (directus schema apply schema.yaml + role/permission matrix), then run idempotent ingest scripts per collection.",
+    "tooling": "docs/content-expansion/state/ingest.mjs — generic Directus ingester (library|projects): live dedup by slug + canonical URL, dry-run by default, --apply to POST. verify.mjs — URL/oEmbed link-check before ingest.",
+    "dedup": "Normalize URLs before compare; YouTube canonicalizes to yt:<videoId> (avoids collapsing all watch?v= URLs to one key); match by slug + canonical URL.",
+    "rollback": "Each ingest batch writes a rollback-*.json (delete-by-id) for one-command revert.",
+    "verification": "Re-confirm live counts from Directus aggregate at migration time (read-replica lag can make limit=-1 under-read vs aggregate count; union live ∪ verified-*.json)."
+  },
+  "risks": [
+    {"id": "R1", "area": "Identity", "level": "high", "risk": "Standing up a parallel Directus-JWT identity could conflict with the existing Nebius SSO at auth.nebius.com.", "mitigation": "Decide identity source-of-truth before any gated feature (auth-sessions card). Prefer reconciling with auth.nebius.com SSO over a parallel identity. Add CSRF protection on auth POSTs."},
+    {"id": "R2", "area": "Permissions / data exposure", "level": "high", "risk": "Per-user Directus permission scoping done wrong leaks other users' rows.", "mitigation": "Role-permission matrix with $CURRENT_USER filters; a permission-test gate in CI before portal/admin ship."},
+    {"id": "R3", "area": "Money / points mutations", "level": "high", "risk": "Credit claims, event credits, and points grants are privileged writes; the admin approve/reject handlers are no-ops on the reference build.", "mitigation": "Ship money/points write-flows last on proven rails; pair credit-claims with its admin queue; idempotent, audit-logged approvals."},
+    {"id": "R4", "area": "UGC moderation", "level": "med", "risk": "Builder-submitted library/events/activities entering published collections without review.", "mitigation": "Submissions enter PENDING/DRAFT; status-filter DRAFT out of public surfaces (esp. the events directory); admin review queues before publish."},
+    {"id": "R5", "area": "SEO / indexing", "level": "med", "risk": "DRAFT/PENDING UGC or noindex pages leaking into the sitemap; first-party content invisible to crawlers.", "mitigation": "Self-enumerating sitemap that excludes hidden pages; keep DRAFT/PENDING out of indexed surfaces; server-rendered HTML for content."},
+    {"id": "R6", "area": "Client-only / performance", "level": "med", "risk": "Leaflet map (events + homepage hero) and the R3F membrane touch window and add above-the-fold JS.", "mitigation": "SSR-safe dynamic imports, non-WebGL fallbacks, Core Web Vitals budget on the hero."},
+    {"id": "R7", "area": "Search", "level": "med", "risk": "Typesense adds an external dependency to provision and keep indexed.", "mitigation": "Ship the Directus _icontains fallback first; layer Typesense behind it; document reindex-on-publish."},
+    {"id": "R8", "area": "Scope overlap", "level": "low", "risk": "Feedback overlaps ideas.nebius.com; admin console overlaps Directus Studio.", "mitigation": "Decide build-vs-reuse per surface; admin console is partly optional vs Studio."}
+  ],
+  "signoff": [
+    {"role": "Engineering lead", "scope": "Architecture, data model, permissions"},
+    {"role": "DevRel / Product", "scope": "Content accuracy, program flows"},
+    {"role": "Design", "scope": "IA, nav, signature experiences"},
+    {"role": "Security", "scope": "Auth, UGC, money/points mutations"}
+  ]
+}

@@ -47,8 +47,13 @@ orchestrator** from the (complete, validated) gap analysis + 5 PM proposals. `va
 
 ### Tooling (all under docs/dev-nebius-port/)
 - `validate.mjs` — checks roadmap.json integrity. `node docs/dev-nebius-port/validate.mjs`
-- `gen.mjs` — regenerates ROADMAP.md + KANBAN.md; `node gen.mjs release <id>` prints a release PLAN.md
-- `mk-worktrees.sh` — (created in worktree step) cuts `port/<release>` worktrees + port-kits
+- `gen.mjs` — regenerates docs from roadmap.json (+ content-manifest.json):
+  - `node gen.mjs` → ROADMAP.md + KANBAN.md
+  - `node gen.mjs cr` → **CHANGE-REQUEST.md** (formal CR: Part A content + Part B features)
+  - `node gen.mjs release <id>` → prints a release PLAN.md
+- `content-manifest.json` — content scope/counts (159 library, 146 projects, 85 integrations, 20
+  fellows, + events/team/pages), tagging enums, migration tooling, risks, sign-off. Source for the CR's Part A.
+- `mk-worktrees.mjs` — cuts `port/<release>` worktrees + port-kits
 
 ### How to resume
 1. Read `PLAN.md` (method) + this file (status).
