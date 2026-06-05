@@ -167,18 +167,16 @@ export default function EcosystemPage({
           content="The Nebius ecosystem — community apps built on Nebius plus partner integrations that plug into our products."
         />
       </Head>
-      {/* Static dark hero (animated={false}). The R3F membrane animation that
-          used to render here was moved to the homepage hero; /ecosystem keeps
-          the dark hero chrome + copy with no WebGL canvas.
-
-          "One place." uses a non-breaking space so the last sentence
-          stays atomic — when the line would otherwise wrap between
-          "One" and "place." it wraps before "One" instead. */}
+      {/* Static, compact dark hero (animated={false} + compact). The R3F
+          membrane animation that used to render here was moved to the homepage
+          hero; /ecosystem keeps the dark hero chrome + copy with no WebGL
+          canvas, at a reduced height. */}
       <HeroSection
         eyebrow="Ecosystem"
-        title={'The Nebius ecosystem. One place.'}
+        title="Fork it, ship it, make it yours."
         lede={`A library of ${projects.length + partners.length} open-source projects you can fork, drop into your own stack, or learn from. Community apps built on Nebius alongside partner integrations that plug into our products.`}
         animated={false}
+        compact
       />
 
       {/* Submit-your-project CTA. Sits between the hero and the filter bar

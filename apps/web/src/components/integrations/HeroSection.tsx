@@ -71,11 +71,24 @@ export interface HeroSectionProps {
    * animation lives on the homepage hero now; /ecosystem passes animated={false}.
    */
   animated?: boolean;
+  /**
+   * Tighter vertical rhythm + a smaller title. Use for copy-only heroes (e.g.
+   * the static /ecosystem hero) so they don't reserve the membrane-sized
+   * height the animated homepage hero needs.
+   */
+  compact?: boolean;
 }
 
-export function HeroSection({eyebrow, title, lede, actions, animated = true}: HeroSectionProps) {
+export function HeroSection({
+  eyebrow,
+  title,
+  lede,
+  actions,
+  animated = true,
+  compact = false,
+}: HeroSectionProps) {
   return (
-    <section className={styles.root}>
+    <section className={compact ? `${styles.root} ${styles.compact}` : styles.root}>
       {animated ? (
         <WebGLBoundary>
           <Hero3D />

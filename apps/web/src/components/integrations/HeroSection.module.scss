@@ -34,6 +34,23 @@
   }
 }
 
+// Compact variant — tighter padding, no reserved min-height, smaller title.
+// Used by copy-only heroes (the static /ecosystem hero) so a hero with no
+// membrane doesn't reserve the tall vertical space the animated homepage hero
+// needs. Specificity (.root.compact) beats the base .root above.
+.root.compact {
+  padding: 56px 0 44px;
+  min-height: 0;
+
+  @media (max-width: 768px) {
+    padding: 40px 0 32px;
+  }
+
+  .title {
+    font-size: clamp(32px, 4.2vw, 46px);
+  }
+}
+
 // Left-to-right legibility mask. Solid navy on the left (where the copy
 // sits) so the title pops; fully transparent through the middle where the
 // membrane's bright lobes breathe; then a softer right-edge wash to keep
