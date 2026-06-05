@@ -119,6 +119,18 @@
   background: linear-gradient(135deg, #1f2a32 0%, #2c4a3f 50%, #84cc16 100%);
 }
 
+// Scraped cover image — fills the cover area on top of the format gradient
+// (which stays as the fallback if the image fails to load or is absent). Sits
+// below the state/city pills (z-index 1).
+.coverImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
 .coverGlyph {
   font-size: 56px;
   line-height: 1;

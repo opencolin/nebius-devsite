@@ -42,6 +42,9 @@ interface EventRow {
   official_url?: string | null;
   builder_handle?: string | null;
   location?: {type: 'Point'; coordinates: [number, number]} | null;
+  // Scraped event cover image (from the Luma listing); rendered on the card
+  // cover, with the format gradient as the fallback when null.
+  cover_image?: string | null;
 }
 
 export const getStaticProps: GetStaticProps<{events: EventRow[]}> = async () => {
@@ -50,7 +53,7 @@ export const getStaticProps: GetStaticProps<{events: EventRow[]}> = async () => 
     readItems('events', {
       filter: {status: {_eq: 'PUBLISHED'}},
       sort: ['starts_at'],
-      fields: ['id', 'title', 'description', 'format', 'starts_at', 'ends_at', 'city', 'country', 'is_online', 'product_focus', 'is_official', 'luma_url', 'official_url', 'location'],
+      fields: ['id', 'title', 'description', 'format', 'starts_at', 'ends_at', 'city', 'country', 'is_online', 'product_focus', 'is_official', 'luma_url', 'official_url', 'location', 'cover_image'],
       limit: -1,
     }),
   )) as EventRow[];
@@ -522,6 +525,10 @@ function EventCover({
   const variantClass = coverVariantForEvent(event);
   return (
     <div className={`${styles.cover} ${variantClass}`} aria-hidden>
+      {event.cover_image ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img className={styles.coverImg} src={event.cover_image} alt="" loading="lazy" />
+      ) : null}
       <div className={styles.coverTopLeft}>
         <span
           className={`${styles.coverPill} ${
@@ -545,9 +552,11 @@ function EventCover({
           <span className={styles.coverPill}>{event.city}</span>
         </div>
       ) : null}
-      <span className={styles.coverGlyph}>
-        {event.format ? formatGlyph(event.format) : '·'}
-      </span>
+      {event.cover_image ? null : (
+        <span className={styles.coverGlyph}>
+          {event.format ? formatGlyph(event.format) : '·'}
+        </span>
+      )}
     </div>
   );
 }
