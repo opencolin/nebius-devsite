@@ -22,7 +22,7 @@
 // -----------------------------------------------------------------------------
 .g-root_theme_light {
   // Brand layer (--nb-*). Mirror of nebius.com's --nb-color-* surface.
-  --nb-color-primary: rgba(243, 239, 232, 1);            // warm off-white page background
+  --nb-color-primary: #ffffff;                           // pure white page (matches nebius.com)
   --nb-color-highlight-light: #e0ff4f;                    // neon-lime joy color
   --nb-color-highlight: var(--nb-color-highlight-light);
   --nb-color-text-highlight-light: var(--g-color-text-dark-primary);
