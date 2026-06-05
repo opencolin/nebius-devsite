@@ -61,6 +61,8 @@ export default function EventsMap({events, onCityClick, activeCity, variant = 'l
   const mapInstanceRef = useRef<LeafletMap | null>(null);
   const leafletRef = useRef<LeafletNS | null>(null);
   const markerLayerRef = useRef<LeafletLayerGroup | null>(null);
+  // Hero (dark) variant rotates like the homepage; this holds the pan timer.
+  const rotationIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   // Keep the click callback in a ref so changes don't tear the map down.
   const onCityClickRef = useRef(onCityClick);
   useEffect(() => {
@@ -92,21 +94,39 @@ export default function EventsMap({events, onCityClick, activeCity, variant = 'l
       leafletRef.current = L;
 
       const map = L.map(mapRef.current, {
-        // Initial framing — dialed in from zoom 2 → 3 and centered slightly
-        // further north so the typical event spread (US west coast ↔ EU ↔
-        // Bengaluru) fills the frame instead of getting lost in the ocean.
-        // fitBounds in the marker effect tightens this further once pins
-        // are drawn.
-        center: [35, 15],
-        zoom: 3,
+        // Framing: the dark/hero variant mirrors the homepage rotating globe
+        // (whole world at zoom 2). The light variant frames tighter (zoom 3),
+        // then fitBounds tightens further once pins are drawn.
+        center: (variant === 'dark' ? [22, 5] : [35, 15]) as [number, number],
+        zoom: variant === 'dark' ? 2 : 3,
         // Hide the +/- zoom buttons in the dark/hero variant so the title
         // overlay isn't cluttered. Light variant keeps them for the
         // standalone map use case.
         zoomControl: variant === 'light',
         scrollWheelZoom: false,
         worldCopyJump: true,
+        // The dark/hero variant rotates on its own (below), so it's a
+        // decorative background — disable user pan/zoom so the auto-pan isn't
+        // fought. Light variant stays interactive for the standalone use case.
+        ...(variant === 'dark'
+          ? {dragging: false, doubleClickZoom: false, boxZoom: false, touchZoom: false, keyboard: false}
+          : {}),
       });
       mapInstanceRef.current = map;
+
+      // Hero (dark) variant: slow eastward rotation, matching the homepage
+      // HeroEventsMap (0.5px / 50ms; reset by 360° once it drifts past +540°).
+      if (variant === 'dark') {
+        rotationIntervalRef.current = setInterval(() => {
+          const m = mapInstanceRef.current;
+          if (!m) return;
+          m.panBy([0.5, 0], {animate: false});
+          const c = m.getCenter();
+          if (c.lng > 540) {
+            m.setView([c.lat, c.lng - 360], m.getZoom(), {animate: false});
+          }
+        }, 50);
+      }
 
       // dark variant uses NASA VIIRS City Lights — same satellite-from-space
       // tiles the homepage hero map uses (HeroEventsMap.tsx). Max zoom 8.
@@ -140,6 +160,10 @@ export default function EventsMap({events, onCityClick, activeCity, variant = 'l
     loadAndInit();
     return () => {
       cancelled = true;
+      if (rotationIntervalRef.current) {
+        clearInterval(rotationIntervalRef.current);
+        rotationIntervalRef.current = null;
+      }
       if (mapInstanceRef.current) {
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
@@ -175,13 +199,19 @@ export default function EventsMap({events, onCityClick, activeCity, variant = 'l
 
     const markerCoords: Array<[number, number]> = [];
 
+    // The dark/hero variant pans across world copies, so drop each dot at three
+    // longitudes (−360 / 0 / +360) to keep it visible the whole way around —
+    // same trick as the homepage HeroEventsMap. Light variant: a single dot.
+    const lngOffsets = variant === 'dark' ? [-360, 0, 360] : [0];
+
     events
       .filter((e) => e.location?.coordinates?.length === 2)
       .forEach((e) => {
         const [lng, lat] = e.location!.coordinates;
+        // Original longitude only feeds fitBounds, so it stays tight (the
+        // ±360 copies are display-only for the rotation).
         markerCoords.push([lat, lng]);
         const isActive = activeCity === e.city;
-        const marker = L.marker([lat, lng], {icon: makeIcon(isActive)});
 
         // Bind a popup as a fallback affordance (used when no callback is wired).
         const date = new Date(e.starts_at).toLocaleDateString('en-US', {
@@ -189,25 +219,27 @@ export default function EventsMap({events, onCityClick, activeCity, variant = 'l
           day: 'numeric',
         });
         const handle = e.builder_handle ? `@${e.builder_handle}` : 'Nebius';
-        marker.bindPopup(`
+
+        for (const off of lngOffsets) {
+          const marker = L.marker([lat, lng + off], {icon: makeIcon(isActive)});
+          marker.bindPopup(`
           <div style="font-family:Inter,sans-serif;min-width:220px;">
             <div style="font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(5,43,66,0.55);font-family:'Menlo',monospace;">${e.format} · ${e.city}</div>
             <div style="font-weight:600;color:#052b42;margin:4px 0 6px;line-height:1.2;">${escapeHtml(e.title)}</div>
             <div style="font-size:12px;color:rgba(5,43,66,0.7);">${date} · ${handle}</div>
           </div>
         `);
-
-        marker.on('click', () => {
-          const cb = onCityClickRef.current;
-          if (cb) {
-            // If callback is wired, suppress the popup and just filter
-            marker.closePopup();
-            cb(e.city);
-          }
-          // Otherwise let Leaflet open the popup (its default behavior)
-        });
-
-        layer.addLayer(marker);
+          marker.on('click', () => {
+            const cb = onCityClickRef.current;
+            if (cb) {
+              // If callback is wired, suppress the popup and just filter
+              marker.closePopup();
+              cb(e.city);
+            }
+            // Otherwise let Leaflet open the popup (its default behavior)
+          });
+          layer.addLayer(marker);
+        }
       });
 
     // Auto-fit to actual events ONLY when the events array changes —
@@ -218,14 +250,16 @@ export default function EventsMap({events, onCityClick, activeCity, variant = 'l
     // strip room without covering pins.
     const eventsChanged = prevEventsRef.current !== events;
     prevEventsRef.current = events;
-    if (eventsChanged && markerCoords.length > 0) {
+    // Light variant frames the actual pins; the dark/hero variant keeps the
+    // homepage-style whole-world view and rotates, so it isn't fitBounds'd.
+    if (variant !== 'dark' && eventsChanged && markerCoords.length > 0) {
       map.fitBounds(L.latLngBounds(markerCoords), {
         padding: [60, 60],
         maxZoom: 5,
         animate: false,
       });
     }
-  }, [events, activeCity, mapEpoch]);
+  }, [events, activeCity, mapEpoch, variant]);
 
   const className =
     variant === 'dark' ? `${styles.map} ${styles.fullBleed}` : styles.map;

@@ -130,8 +130,8 @@ export default function EventsPage({
             <h1 className={styles.heroTitle}>Workshops, demos, hackathons</h1>
             <p className={styles.heroDescription}>
               {upcoming.length} upcoming · {past.length} past. Hosted by the
-              Nebius DevRel team and the global community of builders. Click a
-              city pin to filter.
+              Nebius DevRel team and the global community of builders. Filter by
+              city below.
             </p>
           </div>
         </div>
