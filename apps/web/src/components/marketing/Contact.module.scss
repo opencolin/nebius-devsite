@@ -81,7 +81,7 @@
 .form {
   background: var(--g-color-base-float);
   border: 1px solid var(--g-color-line-generic);
-  border-radius: 16px;
+  border-radius: var(--nb-card-radius, 16px);
   padding: 32px;
   display: grid;
   gap: 16px;

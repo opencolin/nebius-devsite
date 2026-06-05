@@ -99,7 +99,7 @@
 .success {
   border: 1px solid var(--g-color-line-generic);
   background: var(--nb-color-private-navyblue-50-solid);
-  border-radius: 16px;
+  border-radius: var(--nb-card-radius, 16px);
   padding: 16px 20px;
 }
 

@@ -270,6 +270,19 @@ html[data-brand='nebius'] {
   // Typography: Inter body, Space Mono display headings.
   --g-font-family-sans: 'Inter', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   --nb-font-display: 'Space Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+
+  // Card geometry — dev.nebius.com cards are square (border-radius: 0). Squaring
+  // the Gravity radius tokens reshapes every token-based card/surface (library,
+  // apps, events, fellows, resource cards, Gravity .g-card, inputs, menus); the
+  // --nb-card-radius var (fallback 16px in the Builders brand) reshapes the
+  // hardcoded marketing/content cards. Pill buttons (999px) and circular avatars
+  // (50%) are set explicitly elsewhere, so they're unaffected.
+  --nb-card-radius: 0;
+  --g-border-radius-xs: 0;
+  --g-border-radius-s: 0;
+  --g-border-radius-m: 0;
+  --g-border-radius-l: 0;
+  --g-border-radius-xl: 0;
 }
 
 // Pure-white page + 17px base copy (dev.nebius.com).

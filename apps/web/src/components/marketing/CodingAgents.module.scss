@@ -62,7 +62,7 @@
   gap: 12px;
   background: var(--g-color-base-float);
   border: 1px solid var(--g-color-line-generic);
-  border-radius: 16px;
+  border-radius: var(--nb-card-radius, 16px);
   padding: 24px;
   text-decoration: none;
   color: var(--g-color-text-primary);
