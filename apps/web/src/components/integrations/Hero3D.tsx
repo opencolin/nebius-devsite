@@ -225,19 +225,23 @@ function Membrane() {
     if (reduced) return;
     if (matRef.current) matRef.current.uTime += delta;
     if (meshRef.current) {
-      meshRef.current.rotation.x += 0.12 * delta;
-      meshRef.current.rotation.y += 0.18 * delta;
+      // Steady spin around the vertical (Y) axis only, so the membrane reads
+      // like a globe / planet rotating in place. It used to tumble on both X
+      // and Y which — together with the Float wobble below — looked like a
+      // drifting blob rather than a rotating sphere. ~18s per revolution.
+      meshRef.current.rotation.y += 0.35 * delta;
     }
   });
 
   return (
-    // speed={0} freezes Float's own internal wobble in reduced-motion mode.
-    // The intensities still pass through (they multiply speed under the hood),
-    // so passing 0 is the cleanest no-anim configuration.
+    // rotationIntensity={0}: Float no longer adds its own tumble, so the mesh's
+    // single-axis Y spin above is the only rotation — a clean sphere spin. A
+    // gentle floatIntensity keeps a subtle hover for life; speed={0} freezes
+    // the float entirely in reduced-motion mode.
     <Float
-      speed={reduced ? 0 : 1.4}
-      rotationIntensity={0.6}
-      floatIntensity={1.4}
+      speed={reduced ? 0 : 1.2}
+      rotationIntensity={0}
+      floatIntensity={0.6}
     >
       <mesh ref={meshRef}>
         <icosahedronGeometry args={[1.45, 64]} />
