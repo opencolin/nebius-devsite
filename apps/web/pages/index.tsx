@@ -155,12 +155,13 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     return now >= start && now <= end;
   }).length;
 
-  // Future-ish events: starts in the future, or already started and not yet
-  // ended. ActiveEvents takes the first 3.
-  const upcoming = eventsRaw.filter((e) => {
-    const end = +new Date(e.ends_at);
-    return end >= now;
-  });
+  // Next upcoming events: only those that haven't STARTED yet (starts_at in
+  // the future). eventsRaw is already sorted by starts_at asc, so the first
+  // three are the soonest. We deliberately filter on starts_at — not ends_at —
+  // so a multi-day event that began days ago (e.g. a week-long conference)
+  // doesn't linger in the "Next up" rail looking outdated just because it
+  // technically hasn't ended. ActiveEvents takes the first 3.
+  const upcoming = eventsRaw.filter((e) => +new Date(e.starts_at) > now);
   const events: MarketingEvent[] = upcoming.slice(0, 3).map((e) => ({
     id: e.id,
     title: e.title,
