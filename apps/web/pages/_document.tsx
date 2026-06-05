@@ -26,13 +26,14 @@ export default function Document() {
     <Html lang="en" data-scroll-behavior="smooth">
       <Head>
         <script dangerouslySetInnerHTML={{__html: themeBootstrap}} />
-        {/* Inter (body) + Space Mono (display headings) — the dev.nebius.com
-            brand's fonts. Loaded for all brands; only applied under
-            data-brand="nebius" via globals.scss. */}
+        {/* Brand fonts: Inter (body, both brands), Space Mono (dev.nebius.com
+            headings), Space Grotesk (nebius.com display headings — the closest
+            free match for nebius.com's licensed Gramatika). Loaded for all
+            brands; applied per-brand via globals.scss. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
           rel="stylesheet"
         />
       </Head>

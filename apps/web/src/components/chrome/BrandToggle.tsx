@@ -76,8 +76,11 @@ export function useBrand(): BrandContextValue {
   return ctx;
 }
 
+// Internal keys stay 'builders' / 'nebius' (used by data-brand, localStorage,
+// and the globals.scss selectors) — only the user-facing labels change. The
+// default brand mirrors nebius.com; 'nebius' is the dev.nebius.com brand.
 const OPTIONS: Array<{key: Brand; label: string}> = [
-  {key: 'builders', label: 'Builders'},
+  {key: 'builders', label: 'nebius.com'},
   {key: 'nebius', label: 'dev.nebius.com'},
 ];
 

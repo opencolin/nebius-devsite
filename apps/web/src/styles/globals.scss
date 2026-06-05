@@ -131,6 +131,8 @@ body {
 body {
   background: var(--g-color-base-background);
   color: var(--g-color-text-primary);
+  // 17px base copy — matches both nebius.com and dev.nebius.com.
+  font-size: 17px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // Reserve space for the fixed bottom MockupBanner so it can't visually
@@ -142,6 +144,31 @@ body {
 ::selection {
   background: var(--nb-color-highlight);
   color: var(--nb-color-text-highlight);
+}
+
+// -----------------------------------------------------------------------------
+// Shared brand rules — apply to BOTH the nebius.com (default) and
+// dev.nebius.com brands, since the two sites share these conventions.
+// -----------------------------------------------------------------------------
+
+// Pill action buttons. nebius.com and dev.nebius.com both use fully-rounded
+// (999px) buttons (verified against both live sites 2026-06-04).
+.g-button {
+  --g-button-border-radius: 999px;
+  border-radius: 999px;
+}
+
+// Display heading font for the nebius.com brand. nebius.com sets its largest
+// headings (h1 / display) in Gramatika — a licensed typeface — with Inter for
+// h2 and below. Space Grotesk is the closest freely-available match. The
+// dev.nebius.com brand overrides --nb-font-display to Space Mono and widens the
+// rule to all headings (see the html[data-brand='nebius'] block below).
+.g-root {
+  --nb-font-display: 'Space Grotesk', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+}
+.g-root :is(h1, .g-text_variant_display-1, .g-text_variant_display-2,
+  .g-text_variant_display-3, .g-text_variant_header-1) {
+  font-family: var(--nb-font-display);
 }
 
 // -----------------------------------------------------------------------------
@@ -285,14 +312,16 @@ html[data-brand='nebius'] {
   --g-border-radius-xl: 0;
 }
 
-// Pure-white page + 17px base copy (dev.nebius.com).
+// Pure-white page (dev.nebius.com). Base font-size (17px) and pill buttons are
+// set globally now — shared with the nebius.com brand.
 html[data-brand='nebius'] body {
   background: #ffffff;
-  font-size: 17px;
 }
 
 // The signature move: headings render in Space Mono (monospace), 700, navy,
 // with a touch of tracking. Covers raw heading tags + Gravity Text variants.
+// --nb-font-display is overridden to Space Mono below, so the shared heading
+// rule + this one both resolve to mono under this brand.
 html[data-brand='nebius'] :is(h1, h2, h3, h4),
 html[data-brand='nebius'] :is(.g-text_variant_display-1,
   .g-text_variant_display-2, .g-text_variant_display-3,
@@ -301,13 +330,6 @@ html[data-brand='nebius'] :is(.g-text_variant_display-1,
   font-family: var(--nb-font-display);
   font-weight: 700;
   letter-spacing: 0.01em;
-}
-
-// Full-pill buttons (verified border-radius: 999px). Override the Gravity
-// per-size variable plus the property directly.
-html[data-brand='nebius'] .g-button {
-  --g-button-border-radius: 999px;
-  border-radius: 999px;
 }
 
 // Links underline on hover, matching dev.nebius.com.
