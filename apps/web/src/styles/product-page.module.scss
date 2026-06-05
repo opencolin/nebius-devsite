@@ -198,12 +198,15 @@
   margin: 0;
   font-weight: 600;
   line-height: 1.3;
-  flex: 1;
 }
 
+// Natural height (up to 3 lines). NOT flex:1 — the card is a flex column and
+// the arrow below uses margin-top:auto to pin itself to the bottom, so the
+// blurb must keep its content height. With flex:1 here (and on the title) the
+// two split the card's free space 50/50, squeezing the blurb below its text
+// height so overflow:hidden clipped it mid-line on equal-height cards.
 .resourceBlurb {
   margin: 0;
-  flex: 1;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
