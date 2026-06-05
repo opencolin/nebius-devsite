@@ -44,6 +44,10 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
+  // Let each card size to its content; without this the grid stretches rows and
+  // the card's height:100% (removed below) created a circular height that
+  // overlapped cards (worse after the 17px base bump).
+  align-items: start;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
@@ -63,7 +67,8 @@
   border-radius: var(--nb-card-radius, 16px);
   padding: 24px;
   transition: border-color 150ms;
-  height: 100%;
+  // No height: 100% — paired with grid `align-items: start` above so each card
+  // sizes to its own content (fixes the overlapping-cards bug).
 
   &:hover {
     border-color: var(--nb-color-private-navyblue-300);

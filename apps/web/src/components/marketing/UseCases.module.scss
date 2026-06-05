@@ -42,6 +42,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
+  align-items: start; // size each card to its content (fixes card overlap)
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, 1fr);
@@ -59,7 +60,7 @@
   transition: border-color 150ms, box-shadow 150ms;
   text-decoration: none;
   color: var(--g-color-text-primary);
-  height: 100%;
+  // No height: 100% — paired with grid `align-items: start` (fixes card overlap).
 
   &:hover {
     border-color: var(--nb-color-private-navyblue-300);
