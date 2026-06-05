@@ -131,8 +131,8 @@ body {
 body {
   background: var(--g-color-base-background);
   color: var(--g-color-text-primary);
-  // 17px base copy — matches both nebius.com and dev.nebius.com.
-  font-size: 17px;
+  // 17px base copy is set on `html.g-root body` below (needs the extra
+  // specificity to beat Gravity's .g-root font-size).
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // Reserve space for the fixed bottom MockupBanner so it can't visually
@@ -156,6 +156,12 @@ body {
 .g-button {
   --g-button-border-radius: 999px;
   border-radius: 999px;
+}
+
+// 17px base copy (both sites). A plain `body` rule (0,0,1) loses to Gravity's
+// `.g-root` font-size, so raise specificity with `html.g-root body` (0,1,2).
+html.g-root body {
+  font-size: 17px;
 }
 
 // Display heading font for the nebius.com brand. nebius.com sets its largest
