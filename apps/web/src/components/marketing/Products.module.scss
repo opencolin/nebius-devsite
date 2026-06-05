@@ -3,7 +3,9 @@
 // Factory as the recommended entry point.
 
 .root {
-  background: var(--g-color-base-background);
+  // Swapped with the ActiveEvents section ("Upcoming builder events") so the
+  // two adjacent homepage sections alternate the other way.
+  background: var(--nb-color-private-navyblue-50-solid);
   padding: 80px 0;
 
   @media (min-width: 1024px) {

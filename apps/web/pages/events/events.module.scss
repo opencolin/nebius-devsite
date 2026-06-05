@@ -347,7 +347,9 @@
   gap: 24px;
   padding: 20px 24px;
   border: 1px solid var(--g-color-line-generic);
-  border-radius: 12px;
+  // Token so the dev.nebius.com brand (--nb-card-radius: 0) squares this banner
+  // like its other cards; falls back to 12px for the nebius.com brand.
+  border-radius: var(--nb-card-radius, 12px);
   background: var(--g-color-base-float);
   transition: transform 120ms ease, border-color 120ms ease;
 }
@@ -404,7 +406,7 @@
 .hero {
   position: relative;
   width: 100%;
-  height: clamp(440px, 60vh, 600px);
+  height: clamp(590px, calc(60vh + 150px), 750px);
   overflow: hidden;
   background: #1a1a1a; // matches CARTO dark base before tiles arrive
 }

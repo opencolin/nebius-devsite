@@ -2,7 +2,9 @@
 // Card hover lifts the border and stages the meta row to top.
 
 .root {
-  background: var(--nb-color-private-navyblue-50-solid);
+  // Swapped with the Products section ("Choose a starting point") so the two
+  // adjacent homepage sections alternate the other way.
+  background: var(--g-color-base-background);
   padding: 80px 0;
 
   @media (min-width: 1024px) {

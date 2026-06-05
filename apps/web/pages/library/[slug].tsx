@@ -151,7 +151,9 @@ export default function LibraryArticle({
           <div className={styles.markdown}>
             <p>
               <em>
-                Body not available in CMS yet. {entry.external_url ? 'Use the link above to read the full content.' : ''}
+                {entry.external_url
+                  ? 'The full write-up lives on the original source — use the link above to read it.'
+                  : 'Full write-up coming soon.'}
               </em>
             </p>
           </div>

@@ -173,7 +173,7 @@ export default function EcosystemPage({
           canvas, at a reduced height. */}
       <HeroSection
         eyebrow="Ecosystem"
-        title="Open source. Fork it, ship it, make it yours."
+        title="Apps and integrations, and more."
         lede={`A library of ${projects.length + partners.length} open-source projects you can fork, drop into your own stack, or learn from. Community apps built on Nebius alongside partner integrations that plug into our products.`}
         animated={false}
         compact
