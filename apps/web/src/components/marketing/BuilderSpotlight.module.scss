@@ -3,7 +3,10 @@
 // available in this repo).
 
 .root {
-  background: var(--g-color-base-background);
+  // Lifted surface tint: in dark mode this reads lighter than the base
+  // background (#0a2638 vs #061a26); in light mode it's the #f2f4f6 tint, which
+  // also keeps this section alternating against its white neighbours.
+  background: var(--nb-color-private-navyblue-50-solid);
   padding: 80px 0;
 
   @media (min-width: 1024px) {
