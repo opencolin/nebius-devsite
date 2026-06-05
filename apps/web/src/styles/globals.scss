@@ -158,6 +158,13 @@ body {
   border-radius: 999px;
 }
 
+// dev.nebius.com uses square buttons (verified: its primary CTAs are 0px). Only
+// the dev brand squares them; the nebius.com brand keeps the pill above.
+html[data-brand='nebius'] .g-button {
+  --g-button-border-radius: 2px;
+  border-radius: 2px;
+}
+
 // 17px base copy (both sites). A plain `body` rule (0,0,1) loses to Gravity's
 // `.g-root` font-size, so raise specificity with `html.g-root body` (0,1,2).
 html.g-root body {

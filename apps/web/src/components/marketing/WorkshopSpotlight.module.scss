@@ -142,7 +142,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
-  align-items: start; // size each card to its content (fixes card overlap)
+  align-items: stretch; // equal-height cards (relatedCard flex-fills the link)
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
@@ -152,6 +152,8 @@
 .relatedLink {
   text-decoration: none;
   color: inherit;
+  display: flex;
+  flex-direction: column; // so the card flex-fills to equal height
 }
 
 .relatedCard {
@@ -161,7 +163,7 @@
   border: 1px solid var(--g-color-line-generic);
   border-radius: var(--nb-card-radius, 16px);
   overflow: hidden;
-  // No height: 100% — paired with grid `align-items: start` (fixes card overlap).
+  flex: 1; // fill the stretched link → equal-height cards (no height:100%)
   transition: border-color 150ms, box-shadow 150ms;
 
   &:hover {

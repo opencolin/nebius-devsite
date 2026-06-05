@@ -126,7 +126,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  align-items: start;
+  align-items: stretch; // equal-height cards (resourceCard flex-fills the link)
 
   @media (max-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
@@ -141,7 +141,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  align-items: start;
+  align-items: stretch; // equal-height cards (resourceCard flex-fills the link)
 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
@@ -151,9 +151,11 @@
 .resourceLink {
   text-decoration: none;
   color: inherit;
-  display: block;
-  // No height: 100% — the card sizes to its own content now that
-  // the grid uses align-items: start.
+  // Flex column so the card flex-fills the link's height. The grid stretches
+  // the link to the row height → equal-height cards, no height:100% (so no
+  // circular-overlap bug).
+  display: flex;
+  flex-direction: column;
 
   &:hover .resourceCard {
     border-color: var(--g-color-line-brand);
@@ -166,7 +168,7 @@
   flex-direction: column;
   gap: 8px;
   padding: 18px 20px 16px;
-  // No height: 100% — same reason as resourceLink above.
+  flex: 1; // fill the stretched link → equal-height cards (no height:100%)
   border: 1px solid var(--g-color-line-generic);
   border-radius: var(--g-border-radius-l);
   background: var(--g-color-base-float);

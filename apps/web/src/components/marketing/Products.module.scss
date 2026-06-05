@@ -44,10 +44,9 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
-  // Let each card size to its content; without this the grid stretches rows and
-  // the card's height:100% (removed below) created a circular height that
-  // overlapped cards (worse after the 17px base bump).
-  align-items: start;
+  // Equal-height cards via grid stretch. Safe (no overlap) because the card no
+  // longer sets height:100% — that was the circular-height cause.
+  align-items: stretch;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, 1fr);

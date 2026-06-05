@@ -89,7 +89,7 @@ export function BrandToggle() {
   const {brand, setBrand} = useBrand();
   return (
     <div className={styles.root} role="group" aria-label="Site brand / theme">
-      <span className={styles.label}>Theme</span>
+      <span className={styles.label}>Brand</span>
       <div className={styles.seg}>
         {OPTIONS.map((o) => (
           <button

@@ -42,7 +42,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
-  align-items: start; // size each card to its content (fixes card overlap)
+  align-items: stretch; // equal-height cards (no card height:100%, so no overlap)
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, 1fr);
