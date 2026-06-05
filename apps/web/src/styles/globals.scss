@@ -259,7 +259,13 @@ html.g-root body {
 // class = 0,1,0), so the dev.nebius.com look applies under either theme — its
 // canonical presentation is light.
 // =============================================================================
-html[data-brand='nebius'] {
+// Applied to the <html> root AND any nested Gravity root. The Gravity
+// <ThemeProvider> renders a nested `.g-root .g-root_theme_light` inside <body>
+// that re-defines these tokens to their Builders defaults; without the
+// descendant selector the overrides only reach <body>, leaving all page content
+// tinted (the beige #f3efe8 sections + rounded cards seen before this fix).
+html[data-brand='nebius'],
+html[data-brand='nebius'] .g-root {
   // Page surface → pure white (dev.nebius.com), not the warm off-white above.
   --nb-color-primary: #ffffff;
   --nb-color-highlight-light: #e0ff4f;
@@ -277,6 +283,12 @@ html[data-brand='nebius'] {
   --nb-color-private-navyblue-100: rgba(5, 43, 66, 0.1);
   --nb-color-private-navyblue-70: rgba(5, 43, 66, 0.07);
   --nb-color-private-navyblue-50: rgba(5, 43, 66, 0.05);
+  // Solid card/section fills → white. dev.nebius.com surfaces are white with a
+  // thin navy border, not the tinted greys the Builders brand uses.
+  --nb-color-private-navyblue-50-solid: #ffffff;
+  --nb-color-private-navyblue-100-solid: #ffffff;
+  --nb-color-private-navyblue-20-solid: #ffffff;
+  --nb-color-private-navyblue-150-solid: rgba(5, 43, 66, 0.12);
 
   // Gravity semantic tokens → dev.nebius.com light surface.
   --g-color-base-background: #ffffff;
