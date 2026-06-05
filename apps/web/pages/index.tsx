@@ -264,6 +264,7 @@ export default function HomePage({
       <HeroSection
         title="Nebius for AI Builders"
         lede="From training and fine-tuning to production inference at scale. Plus a community of builders shipping real work — workshops, demos, hackathons, office hours."
+        themed
         actions={
           <>
             <Button view="action" size="xl" href="/signup">

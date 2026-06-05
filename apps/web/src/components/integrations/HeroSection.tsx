@@ -77,6 +77,14 @@ export interface HeroSectionProps {
    * height the animated homepage hero needs.
    */
   compact?: boolean;
+  /**
+   * Follow the site's light/dark theme instead of forcing the dark surface.
+   * In light theme the background tracks the page background (white), text uses
+   * the ink tokens, and Hero3D draws dark specks; in dark theme it's the
+   * original navy treatment. The homepage hero opts in; the standalone
+   * /ecosystem hero stays dark.
+   */
+  themed?: boolean;
 }
 
 export function HeroSection({
@@ -86,12 +94,16 @@ export function HeroSection({
   actions,
   animated = true,
   compact = false,
+  themed = false,
 }: HeroSectionProps) {
+  const rootClass = [styles.root, compact && styles.compact, themed && styles.themed]
+    .filter(Boolean)
+    .join(' ');
   return (
-    <section className={compact ? `${styles.root} ${styles.compact}` : styles.root}>
+    <section className={rootClass}>
       {animated ? (
         <WebGLBoundary>
-          <Hero3D />
+          <Hero3D themed={themed} />
         </WebGLBoundary>
       ) : null}
       <div className={styles.mask} aria-hidden />

@@ -18,6 +18,8 @@ import {Float, PointMaterial, Points, shaderMaterial} from '@react-three/drei';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import * as THREE from 'three';
 
+import {useThemeType} from '@gravity-ui/uikit';
+
 import styles from './Hero3D.module.scss';
 
 // -----------------------------------------------------------------------------
@@ -251,7 +253,7 @@ function Membrane() {
 
 const HALO_COUNT = 1200;
 
-function Halo() {
+function Halo({lightMode}: {lightMode: boolean}) {
   const ref = useRef<THREE.Points>(null);
   const reduced = useReducedMotion();
 
@@ -284,11 +286,15 @@ function Halo() {
     <Points ref={ref} positions={positions} frustumCulled={false}>
       <PointMaterial
         transparent
-        color="#c8b8ff"
+        // Light mode: dark specks (the brand ink) on the white bg with normal
+        // blending — additive would wash them out to invisible. Dark mode: the
+        // original lavender specks with additive glow.
+        color={lightMode ? '#052b42' : '#c8b8ff'}
+        opacity={lightMode ? 0.55 : 1}
         size={0.018}
         sizeAttenuation
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
+        blending={lightMode ? THREE.NormalBlending : THREE.AdditiveBlending}
       />
     </Points>
   );
@@ -298,7 +304,14 @@ function Halo() {
 // Top-level Hero3D — the canvas itself
 // -----------------------------------------------------------------------------
 
-export function Hero3D() {
+export function Hero3D({themed = false}: {themed?: boolean}) {
+  // useThemeType reads the Gravity ThemeProvider context, so it must be called
+  // here in the normal React tree — NOT inside <Canvas>, whose R3F reconciler
+  // doesn't bridge outer React context. We pass the result down as a prop.
+  // lightMode only engages when the hero opted into theming (the homepage).
+  const theme = useThemeType();
+  const lightMode = themed && theme === 'light';
+
   return (
     <div className={styles.canvasWrap} aria-hidden>
       <Canvas
@@ -314,7 +327,7 @@ export function Hero3D() {
         <pointLight position={[3, 3, 3]} intensity={2.0} color="#8a6bff" />
         <pointLight position={[-3, -2, -2]} intensity={1.4} color="#ff5cb1" />
         <Membrane />
-        <Halo />
+        <Halo lightMode={lightMode} />
       </Canvas>
     </div>
   );

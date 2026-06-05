@@ -51,6 +51,43 @@
   }
 }
 
+// Theme-aware variant — the hero follows the site's light/dark theme instead
+// of forcing the dark surface. Background tracks the page background token so
+// the hero matches the surrounding (light) site rather than reading as a dark
+// island, and text uses the ink tokens. Hero3D switches its specks to dark in
+// light mode (see its `themed` prop). The homepage hero opts in via `themed`;
+// the standalone /ecosystem hero stays dark. Specificity (.root.themed …)
+// beats the hard-coded dark rules below.
+.root.themed {
+  --nb-hero-bg: var(--g-color-base-background);
+  background: var(--nb-hero-bg);
+  color: var(--g-color-text-primary);
+  border-bottom-color: var(--g-color-line-generic);
+
+  .title {
+    color: var(--g-color-text-primary);
+    text-shadow: none;
+  }
+
+  .lede {
+    color: var(--g-color-text-secondary);
+  }
+
+  .eyebrow {
+    color: var(--g-color-text-secondary);
+  }
+
+  // Left-side legibility wash derived from the (theme-aware) bg: solid behind
+  // the copy, fading out to reveal the membrane. Replaces the hard navy ramp.
+  .mask {
+    background-image: linear-gradient(
+      to right,
+      var(--nb-hero-bg) 0%,
+      transparent 58%
+    );
+  }
+}
+
 // Left-to-right legibility mask. Solid navy on the left (where the copy
 // sits) so the title pops; fully transparent through the middle where the
 // membrane's bright lobes breathe; then a softer right-edge wash to keep
