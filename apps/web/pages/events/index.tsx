@@ -6,7 +6,7 @@ import Head from 'next/head';
 import {Button, Label, Text} from '@gravity-ui/uikit';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 import {PublicLayout} from '@/components/chrome/PublicLayout';
 import {directusServer} from '@/lib/directus';
@@ -515,6 +515,34 @@ function eventState(event: EventRow): {label: string; tone: 'live' | 'upcoming' 
   return {label: 'Past', tone: 'past'};
 }
 
+// Cover image that self-heals: if the scraped URL fails to load (404, bad
+// host, malformed query string), drop the <img> and show the format gradient +
+// glyph instead of the browser's broken-image icon. Catches both errors after
+// hydration (onError) and images that already failed before React hydrated
+// (img.complete && naturalWidth === 0 on mount).
+function EventCoverImage({src, glyph}: {src: string; glyph: string}) {
+  const [failed, setFailed] = useState(false);
+  const ref = useRef<HTMLImageElement>(null);
+  useEffect(() => {
+    const img = ref.current;
+    if (img && img.complete && img.naturalWidth === 0) setFailed(true);
+  }, []);
+  if (failed) {
+    return <span className={styles.coverGlyph}>{glyph}</span>;
+  }
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      ref={ref}
+      className={styles.coverImg}
+      src={src}
+      alt=""
+      loading="lazy"
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
 function EventCover({
   event,
   state,
@@ -523,12 +551,14 @@ function EventCover({
   state: {label: string; tone: 'live' | 'upcoming' | 'past'};
 }) {
   const variantClass = coverVariantForEvent(event);
+  const glyph = event.format ? formatGlyph(event.format) : '·';
   return (
     <div className={`${styles.cover} ${variantClass}`} aria-hidden>
       {event.cover_image ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img className={styles.coverImg} src={event.cover_image} alt="" loading="lazy" />
-      ) : null}
+        <EventCoverImage src={event.cover_image} glyph={glyph} />
+      ) : (
+        <span className={styles.coverGlyph}>{glyph}</span>
+      )}
       <div className={styles.coverTopLeft}>
         <span
           className={`${styles.coverPill} ${
@@ -552,11 +582,6 @@ function EventCover({
           <span className={styles.coverPill}>{event.city}</span>
         </div>
       ) : null}
-      {event.cover_image ? null : (
-        <span className={styles.coverGlyph}>
-          {event.format ? formatGlyph(event.format) : '·'}
-        </span>
-      )}
     </div>
   );
 }
