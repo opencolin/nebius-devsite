@@ -8,7 +8,7 @@
 //   /integrations  → partner integrations only (ecosystem-partners.ts)
 //   /ecosystem     → the union of the two, mixed in one grid
 //
-// Filter chips: All / Community / Integration (kind axis) plus the
+// Filter chips: All / Hackathons / Integration (kind axis) plus the
 // product chips that apply to both kinds (Token Factory, AI Cloud,
 // OpenClaw, Soperator, Tavily). Apps-only chips like Featured /
 // Robotics / JetBrains stay on /apps; integration-only category chips
@@ -63,7 +63,7 @@ interface Project {
 
 const FILTERS = [
   'All',
-  'Community',
+  'Hackathons',
   'Integration',
   'Token Factory',
   'AI Cloud',
@@ -118,7 +118,7 @@ export default function EcosystemPage({
   const [filter, setFilter] = useState<Filter>('All');
 
   const filteredProjects = useMemo(() => {
-    if (filter === 'All' || filter === 'Community') return projects;
+    if (filter === 'All' || filter === 'Hackathons') return projects;
     if (filter === 'Integration') return [];
     const key = PRODUCT_KEYS[filter]?.apps;
     if (!key) return projects;
@@ -127,7 +127,7 @@ export default function EcosystemPage({
 
   const filteredPartners = useMemo(() => {
     if (filter === 'All' || filter === 'Integration') return partners;
-    if (filter === 'Community') return [];
+    if (filter === 'Hackathons') return [];
     const key = PRODUCT_KEYS[filter]?.integrations;
     if (!key) return [];
     return partners.filter((p) =>
@@ -140,7 +140,7 @@ export default function EcosystemPage({
   const counts = useMemo(() => {
     const c: Record<Filter, number> = {} as Record<Filter, number>;
     c.All = projects.length + partners.length;
-    c.Community = projects.length;
+    c.Hackathons = projects.length;
     c.Integration = partners.length;
     for (const [label, keys] of Object.entries(PRODUCT_KEYS)) {
       const appsCount = projects.filter((p) =>
