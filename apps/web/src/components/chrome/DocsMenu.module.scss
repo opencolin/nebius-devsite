@@ -42,6 +42,20 @@
   }
 }
 
+// State-driven rotate for triggers that aren't the native `.trigger` button
+// (e.g. ProductsMenu's "Get started" Gravity Button, which can't use the
+// `.triggerOpen &` descendant selector).
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+// Extra spacing for the chevron when it sits inside the "Get started" Button
+// (the Gravity Button doesn't add a gap between its text and the SVG the way
+// the native `.trigger` flexbox does).
+.ctaChevron {
+  margin-left: 6px;
+}
+
 // Full-width popover pinned beneath the PublicNav (52px tall). Spans the
 // viewport edge-to-edge so it looks like a mega-menu rather than a
 // dropdown anchored to the trigger.
@@ -168,4 +182,40 @@
   font-size: 14px;
   color: var(--g-color-text-hint);
   font-weight: 400;
+}
+
+// ProductsMenu-only: the free-credits CTA banner at the top of the menu.
+// Lime joy color with navy text (brand rule: navy on lime, never white).
+// Card radius follows the brand (squared under data-brand='nebius').
+.creditsCta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 14px 18px;
+  border-radius: var(--nb-card-radius, 12px);
+  background: var(--nb-color-highlight, #e0ff4f);
+  color: #052b42;
+  text-decoration: none;
+  transition: filter 120ms ease;
+
+  &:hover,
+  &:focus-visible {
+    filter: brightness(0.96);
+    outline: none;
+  }
+}
+
+.creditsCtaTitle {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.creditsCtaArrow {
+  flex-shrink: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
 }

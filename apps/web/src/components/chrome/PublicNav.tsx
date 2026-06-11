@@ -64,7 +64,6 @@ export function PublicNav() {
               {item.label}
             </Link>
           ))}
-          <ProductsMenu />
           <DocsMenu />
         </nav>
 
@@ -74,9 +73,10 @@ export function PublicNav() {
           <Button view="flat" size="m" href="/login">
             Log in
           </Button>
-          <Button view="action" size="m" href="/signup">
-            Get started
-          </Button>
+          {/* "Get started" is now the products mega-menu trigger (the old
+              standalone "Products" nav link was removed). Its top item is the
+              free-credits CTA that lands on /signup. */}
+          <ProductsMenu variant="cta" />
         </div>
       </div>
     </header>

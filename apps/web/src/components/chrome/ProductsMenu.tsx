@@ -1,14 +1,22 @@
-// ProductsMenu — hover/click dropdown in PublicNav linking to the three
-// product landing pages (/ai-cloud, /token-factory, /serverless).
+// ProductsMenu — the product mega-menu. Two trigger variants:
+//   - variant="nav" (default): a text trigger that sits inline with the
+//     other PublicNav links (the original "Products" item).
+//   - variant="cta": the right-hand "Get started" action button opens the
+//     same menu. This is how PublicNav now surfaces it — there's no longer a
+//     separate "Products" nav link; Get started IS the products menu.
 //
-// Identical hover mechanics to DocsMenu (200ms grace timer so the cursor
-// can cross the gap between trigger and dropdown without the menu closing).
-// Reuses DocsMenu.module.scss for all visual tokens.
+// The dropdown is a full-width mega-menu pinned beneath the nav (see
+// DocsMenu.module.scss .dropdown), so it renders identically regardless of
+// where the trigger sits. Hover mechanics match DocsMenu (200ms grace timer
+// so the cursor can cross the gap between trigger and dropdown).
 
+import {Button} from '@gravity-ui/uikit';
 import Link from 'next/link';
 import {useEffect, useRef, useState} from 'react';
 
-// Reuse DocsMenu's existing styles — same dropdown shape, no extra CSS.
+// Reuse DocsMenu's existing styles — same dropdown shape — plus a few
+// ProductsMenu-only additions (the Get-started chevron + the free-credits
+// banner) defined at the bottom of the same module.
 import styles from './DocsMenu.module.scss';
 
 const PRODUCTS = [
@@ -34,9 +42,13 @@ const PRODUCTS = [
   },
 ];
 
+// Top-of-menu call to action. Lands on /signup — the destination the bare
+// "Get started" button used to link to directly.
+const FREE_CREDITS_HREF = '/signup';
+
 const CLOSE_DELAY_MS = 200;
 
-export function ProductsMenu() {
+export function ProductsMenu({variant = 'nav'}: {variant?: 'nav' | 'cta'}) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -83,6 +95,25 @@ export function ProductsMenu() {
     return cancelClose;
   }, []);
 
+  const renderChevron = (extra = '') => (
+    <svg
+      aria-hidden
+      width="10"
+      height="10"
+      viewBox="0 0 10 10"
+      fill="none"
+      className={`${styles.chevron} ${open ? styles.chevronOpen : ''} ${extra}`}
+    >
+      <path
+        d="M2 4l3 3 3-3"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+
   return (
     <div
       ref={rootRef}
@@ -90,31 +121,28 @@ export function ProductsMenu() {
       onMouseEnter={handleOpen}
       onMouseLeave={scheduleClose}
     >
-      <button
-        type="button"
-        className={`${styles.trigger} ${open ? styles.triggerOpen : ''}`}
-        aria-haspopup="true"
-        aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
-      >
-        Products
-        <svg
-          aria-hidden
-          width="10"
-          height="10"
-          viewBox="0 0 10 10"
-          fill="none"
-          className={styles.chevron}
+      {variant === 'cta' ? (
+        <Button
+          view="action"
+          size="m"
+          onClick={() => setOpen((v) => !v)}
+          extraProps={{'aria-haspopup': 'menu', 'aria-expanded': open}}
         >
-          <path
-            d="M2 4l3 3 3-3"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
+          Get started
+          {renderChevron(styles.ctaChevron)}
+        </Button>
+      ) : (
+        <button
+          type="button"
+          className={`${styles.trigger} ${open ? styles.triggerOpen : ''}`}
+          aria-haspopup="true"
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+        >
+          Products
+          {renderChevron()}
+        </button>
+      )}
 
       {open ? (
         <div
@@ -124,6 +152,21 @@ export function ProductsMenu() {
           onMouseLeave={scheduleClose}
         >
           <div className={styles.dropdownInner}>
+            {/* Free-credits CTA — the primary action of this menu. */}
+            <Link
+              href={FREE_CREDITS_HREF}
+              className={styles.creditsCta}
+              role="menuitem"
+              onClick={() => setOpen(false)}
+            >
+              <span className={styles.creditsCtaTitle}>
+                Nebius Builder Network: Sign up for Free Credits
+              </span>
+              <span className={styles.creditsCtaArrow} aria-hidden>
+                →
+              </span>
+            </Link>
+
             <div className={styles.heading}>Products</div>
             <div className={styles.grid}>
               {PRODUCTS.map((p) => (
