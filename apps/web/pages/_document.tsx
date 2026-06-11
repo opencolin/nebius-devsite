@@ -1,20 +1,23 @@
 import {Html, Head, Main, NextScript} from 'next/document';
 
 export default function Document() {
-  // Pre-paint theme bootstrap (mirrors the pattern in the existing
-  // nebius-builders repo) so dark mode doesn't flash on hydration.
-  // Gravity UI looks for the `g-root_theme_*` class on <html>.
+  // Pre-paint bootstrap (mirrors the pattern in the existing nebius-builders
+  // repo) so the wrong theme/brand never flashes on hydration. Gravity UI
+  // looks for the `g-root_theme_*` class on <html>.
+  //
+  // Site ships LIGHT-FIRST on the dev.nebius.com brand: a first-time visitor
+  // (no stored choice) gets light + 'nebius' regardless of OS preference.
+  // Returning visitors keep whatever they toggled (localStorage wins).
   const themeBootstrap = `
     (function () {
       try {
         var stored = localStorage.getItem('theme');
-        var preferDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        var theme = stored || (preferDark ? 'dark' : 'light');
+        var theme = (stored === 'dark' || stored === 'light') ? stored : 'light';
         document.documentElement.classList.add('g-root', 'g-root_theme_' + theme);
-        // Brand bootstrap — apply the dev.nebius.com brand before paint so the
-        // CSS token layer (globals.scss html[data-brand='nebius']) is live with
-        // no flash. Default 'builders'.
-        var brand = localStorage.getItem('brand') === 'nebius' ? 'nebius' : 'builders';
+        // Brand bootstrap — apply the brand before paint so the CSS token layer
+        // (globals.scss html[data-brand='nebius']) is live with no flash.
+        // Default 'nebius' (the dev.nebius.com brand).
+        var brand = localStorage.getItem('brand') === 'builders' ? 'builders' : 'nebius';
         document.documentElement.setAttribute('data-brand', brand);
       } catch (e) {}
     })();

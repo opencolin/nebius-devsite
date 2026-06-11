@@ -1,6 +1,7 @@
-// Brand switch — flips the whole site between the current "Builders" look and a
-// pixel-faithful "dev.nebius.com" brand. Mirrors ThemeToggle's pattern exactly:
-//   - reads localStorage.brand on mount (default 'builders')
+// Brand switch — flips the whole site between the "Builders" (nebius.com) look
+// and a pixel-faithful "dev.nebius.com" brand. Mirrors ThemeToggle's pattern:
+//   - reads localStorage.brand on mount (default 'nebius' — the site ships on
+//     the dev.nebius.com brand; only an explicit 'builders' choice opts out)
 //   - sets `data-brand` on <html> so the CSS token layer in globals.scss applies
 //   - persists to localStorage on change
 // The pre-paint script in pages/_document.tsx applies the same attribute before
@@ -24,8 +25,11 @@ interface BrandContextValue {
 const BrandContext = createContext<BrandContextValue | null>(null);
 
 function readBrand(): Brand {
-  if (typeof window === 'undefined') return 'builders';
-  return window.localStorage.getItem('brand') === 'nebius' ? 'nebius' : 'builders';
+  if (typeof window === 'undefined') return 'nebius';
+  // Default 'nebius' (the dev.nebius.com brand) when nothing is stored;
+  // only an explicit 'builders' choice opts out. Matches the pre-paint
+  // in pages/_document.tsx.
+  return window.localStorage.getItem('brand') === 'builders' ? 'builders' : 'nebius';
 }
 
 function applyBrand(b: Brand) {
@@ -35,7 +39,9 @@ function applyBrand(b: Brand) {
 
 /** Owns the brand state. Mount once near the root (pages/_app.tsx). */
 export function BrandProvider({children}: {children: ReactNode}) {
-  const [brand, setBrandState] = useState<Brand>('builders');
+  // SSR/first-render default is 'nebius' (light-first dev.nebius.com brand);
+  // the mount effect corrects to a stored 'builders' choice if present.
+  const [brand, setBrandState] = useState<Brand>('nebius');
 
   useEffect(() => {
     const b = readBrand();
@@ -72,13 +78,13 @@ export function BrandProvider({children}: {children: ReactNode}) {
 
 export function useBrand(): BrandContextValue {
   const ctx = useContext(BrandContext);
-  if (!ctx) return {brand: 'builders', setBrand: () => undefined, toggle: () => undefined};
+  if (!ctx) return {brand: 'nebius', setBrand: () => undefined, toggle: () => undefined};
   return ctx;
 }
 
 // Internal keys stay 'builders' / 'nebius' (used by data-brand, localStorage,
-// and the globals.scss selectors) — only the user-facing labels change. The
-// default brand mirrors nebius.com; 'nebius' is the dev.nebius.com brand.
+// and the globals.scss selectors) — only the user-facing labels change.
+// 'nebius' (dev.nebius.com) is the default; 'builders' mirrors nebius.com.
 const OPTIONS: Array<{key: Brand; label: string}> = [
   {key: 'builders', label: 'nebius.com'},
   {key: 'nebius', label: 'dev.nebius.com'},

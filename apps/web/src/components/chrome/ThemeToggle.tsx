@@ -1,5 +1,6 @@
 // Light/dark toggle. Mirrors opencolin/nebius-builders' ThemeToggle pattern:
-//   - reads localStorage.theme on mount (falls back to OS prefers-color-scheme)
+//   - reads localStorage.theme on mount (defaults to light — site is
+//     light-first — when nothing is stored)
 //   - sets the theme class on <html> immediately so Gravity tokens flip
 //   - persists to localStorage on toggle
 //
@@ -31,7 +32,9 @@ function readThemeFromBrowser(): Theme {
   if (typeof window === 'undefined') return 'light';
   const stored = window.localStorage.getItem('theme');
   if (stored === 'dark' || stored === 'light') return stored;
-  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  // Site ships light-first: default to light regardless of OS preference.
+  // (Matches the pre-paint in pages/_document.tsx.)
+  return 'light';
 }
 
 function applyTheme(theme: Theme) {
