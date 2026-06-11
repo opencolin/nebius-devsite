@@ -1,0 +1,95 @@
+source,name,builder_handle,repo_url,host
+app,AF*,div-agarwal,https://github.com/Lendica-PlayGround/erp-data-ingestion,github.com
+app,agent + human,seshadri-venkatesh,https://github.com/seshadribt24/nebius,github.com
+app,AgentCommerce,diego-zuluaga,https://github.com/dzuluaga/agentcommerce,github.com
+app,AI Warehouse Fulfillment,nelson-lai,https://github.com/chinesepowered/hack-neb,github.com
+app,arm-pilot,sota-miyajima,https://github.com/Sota-sota/nebius-build-sf-2026/tree/kush,github.com
+app,Artificial Sixy,hades-li,https://github.com/Hades-HY-LI/Adaptive-Change-Harness,github.com
+app,Asha,mohammed-misran,https://github.com/misran3/asha,github.com
+app,AutoEvolve,miaosen-zhou,https://github.com/zhoumiaosen/AutoEvolve,github.com
+app,AutoRobots,warner-wu,https://github.com/anjan04/nebiushack,github.com
+app,AW3 Technology,william-schulz,https://github.com/aw3-technology/openeye.sh,github.com
+app,Berkeley Baris Boys,noah-lund-syrdal,https://github.com/NoahLundSyrdal/blueprint,github.com
+app,CaseSnipe.ai,brandon-tautuan,https://github.com/brandontautuan/caseSnipe.ai,github.com
+app,CHAI,vatsal-bajaj,https://github.com/galileo-ml/nebius-hack,github.com
+app,ChainMail,daniel-kaneshiro,https://github.com/ChainMailGlobal/chainmail-council,github.com
+app,Chase Brignac,chase-brignac,https://github.com/runrobotics/runrobot,github.com
+app,Claude Code Proxy for Nebius,KiranChilledOut,https://github.com/KiranChilledOut/claude-code-proxy,github.com
+app,Claw2Max - MechDog skill,max-maximilien,https://github.com/Maximilien-ai/mechdog-skill,github.com
+app,Clawdit,yuwen-wu,https://github.com/wuyuwenj/clawdit.git,github.com
+app,cloneSMP,sean-chiu,https://github.com/seanchiuai/cloneSMP/,github.com
+app,Code Lingua,kaushik-sivakumar,https://github.com/KaushikSiva/lingua-code,github.com
+app,ConMan Agents,sabeen-shaikh,https://github.com/SabeenSF/autonomous-contract-monitor,github.com
+app,Controlled Friction,irina-poslavsky,https://github.com/kotrie/deployment-validation.yml,github.com
+app,CrecerSpark,mario-toribio,https://github.com/marioToribi0/nebius-hackathon/tree/master,github.com
+app,Cue,sajjaad-farzad,https://github.com/sf-tools/cue,github.com
+app,Dav Yaginuma,dav-yaginuma,https://github.com/dav/IntelliJSpatialPlugin,github.com
+app,dayops,kian-kyars,https://github.com/kiankyars/dayops,github.com
+app,DoubleY,yue-chen,https://github.com/YiZhang527/react-flow-visualizer,github.com
+app,dronomy,suvasis-mukherjee,https://github.com/dronomyio/ros1_to_ros2_migration_agent.git,github.com
+app,dronomy.io,suvasis-mukherjee,https://github.com/dronomyio/Hackathon_Autonomous_flight.git,github.com
+app,Electricgoat,yaxin-wang,https://github.com/Electricgoatpod/prism,github.com
+app,FBX2Robot,reza-sanatkar,https://github.com/rezasanatkar/mjlab-hackathon,github.com
+app,Framewise,aishwarya-gune,https://github.com/agg111/framewise,github.com
+app,Frostbyte (zayd),zayd-khan,https://github.com/zaydiscold/hooke-preview,github.com
+app,ghostfeed,ilia-prikhodko,https://github.com/agi-developr/ghostfeed,github.com
+app,goldfish,cal-cu,https://github.com/calcuis/goldfish,github.com
+app,Grocery StockSense,mansi-mane,https://github.com/mansimane/nebius-hackathon,github.com
+app,Guardia,steven-yang,https://github.com/stevenybuilder/guardia,github.com
+app,Horizon Min,david-mayboroda,https://github.com/dmayboroda/horizon_min,github.com
+app,HUMMINGBIRD,lyona,https://github.com/tiyembelabs,github.com
+app,Injester,alex-shirazi,https://github.com/InjesterLol/Main,github.com
+app,JC,janice-chan,https://github.com/tulang-nb2022/robotics-simulation-training-hackathon,github.com
+app,JetBio,mahtabin-rodela,https://github.com/AUW160150/JetBrain,github.com
+app,jimmy,armin-foroughi,https://github.com/arminforoughi/nebius_k1,github.com
+app,LabPilot,rajat-patel,https://github.com/rajathpatel23/LabPilot,github.com
+app,Latent Signal,ann-catherine-jose,https://github.com/latentsignal-org/periscope,github.com
+app,Lintropy,jelle-maas,https://github.com/Typiqally/lintropy,github.com
+app,Mac Inference with an agent swarm,travis-cline,https://github.com/tmc/autoresearch-go-ane/tree/autoresearch/qwen3,github.com
+app,Merit,roman-stachur,https://github.com/romorobo/rom,github.com
+app,Miki the Robot,linda-mao,https://github.com/lindamao/nebius_hackathon,github.com
+app,Nikhil's Team,nikhil-tarigonda,https://github.com/Nikhilt2910/deckcreator/,github.com
+app,Niwa (Self Improving Robots),andres-nino,https://github.com/TheApexWu/niwa,github.com
+app,NOC AI,mason-drake,https://github.com/MasonD-007/NOC_Agent,github.com
+app,OpenClaw + Nebius,opencolin,https://github.com/opencolin/openclaw,github.com
+app,Phantom,vince-r,https://github.com/lgcy-official/Phatom-PR-Autopilot,github.com
+app,Pinpoint,het-patel,https://github.com/hetpatel-11/Pinpoint.git,github.com
+app,Pool Watch,andrzej-firek,https://github.com/Muifrend/pool-watch,github.com
+app,Pulse,yu-chen,https://github.com/waterdoog/agent-messenger.git,github.com
+app,quasa0.com,anatolii-zhukovskyi,https://github.com/quasa0/VoiceCodex,github.com
+app,RedGreen,rudy-a,https://github.com/rudranshagrawal/redgreen,github.com
+app,Robo_chat,sameer-shah,https://github.com/sameershah21,github.com
+app,RoboStore,joshua-iokua-albano,https://github.com/joshuaiokua/nebius-hackathon,github.com
+app,Robot Agent,brennan-stehling,https://github.com/brennanMKE/RobotAgent,github.com
+app,Robots For Social Good,deon-menezes,https://github.com/deonmenezes/robotics-for-social-good,github.com
+app,rOCDbot,kirill-igumenshchev,https://github.com/kirilligum/rOCDbot-cerebral-valley-hackathon-260315,github.com
+app,Rodex,yuvraj-gupta,https://github.com/YuvrajGupta1808/Rodex-IDE,github.com
+app,RuntimeFix,nelson-lai,https://github.com/chinesepowered/hack-jetbrains,github.com
+app,Safevibing,emahatsion-issac,https://github.com/amahaeitbit/saveVibing,github.com
+app,Scopecreep,bhavik-sheoran,https://github.com/BhavikFTW/Scopecreep,github.com
+app,SecureLoop,peyton-li,https://github.com/PeytonLi/JBHack,github.com
+app,ShadowDance,christopher-mckenzie,https://github.com/kristopolous/ShadowDance,github.com
+app,ShopAgent,victor-park,https://github.com/jihwan-victor-park/NebiusHack,github.com
+app,SideLine,vissh-b,https://github.com/nebiusbuildsf/sideline,github.com
+app,SkillClaw,lily-zhang,https://github.com/lilyzhng/SkillClaw,github.com
+app,Sky is Blue,sai-kavya,https://github.com/MarthalaSaiKavya/roofline-analyzer,github.com
+app,SOS-Answered!,aksh-parekh,https://github.com/aparekh02/SOS-Answered-,github.com
+app,Sous Bot,sathvick-reddy-narahari,https://github.com/DivyaNarahari97/sous-bot/tree/main,github.com
+app,Specter,krzysztof-barczynski,https://github.com/gad0lin/specter,github.com
+app,SpeedRunner,irina-poslavsky,https://github.com/kotrie/nopCommerce,github.com
+app,Splatica,andrey-shelomentsev,https://github.com/ashelomentsev/physical,github.com
+app,Swarm Protocol,eric-nans,https://github.com/The-Swarm-Protocol/Swarm,github.com
+app,SwitchCost,ayush-ojha,https://github.com/Ayush10/switchcost,github.com
+app,TaterGang,michael-ramos,https://github.com/backnotprop/plannotator/pull/591,github.com
+app,Team Big Floofy Cat,robert-cordwell,https://github.com/discordwell/doctor-auditor,github.com
+app,Team RankGuard,isha-s,https://github.com/GenieCode/rankguard-jetbrains-hackathon/,github.com
+app,thinking,aditya-mangalampalli,https://github.com/amangalampalli/hyperreasoning,github.com
+app,Topology,nigel-robinson,https://github.com/nxrobins/topology,github.com
+app,TRUE,yahya-alhinai,https://github.com/yhinai/true,github.com
+app,turtle,sam-sam,https://github.com/mochiyaki/turtle,github.com
+app,VisualCode,barkley-dai,https://github.com/degaulle/visualcode,github.com
+app,voiceClaw,zhuang-hua,https://github.com/aadebuger/voiceclaw-go,github.com
+app,Volta,saurabh-khire,https://github.com/Saurabhkhire/vibe-coding-agent-extension,github.com
+app,X-G1,kaushik-sivakumar,https://github.com/AIBotTeachesAI/quest3-g1-teleop,github.com
+app,zippling,parth-gala,https://github.com/ParthGala2k/zippling_ai_commerce,github.com
+app,trinkss,sa-sa,https://gitlab.com/trinkss-group/trinkss-project/,gitlab.com
