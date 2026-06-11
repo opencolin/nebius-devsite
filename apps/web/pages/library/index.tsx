@@ -31,7 +31,7 @@ import styles from './library.module.scss';
 // enum values so the filter matches the chips on each card.
 const FILTERS = [
   'All',
-  'Workshop',
+  'Recorded workshops',
   'Video',
   'Playlist',
   'Repo',
@@ -51,7 +51,7 @@ type Filter = (typeof FILTERS)[number];
 // YouTube playlists distinctly from the original WORKSHOP / VIDEO / REPO
 // triad).
 const TYPE_FILTER_KEY: Record<string, string> = {
-  Workshop: 'WORKSHOP',
+  'Recorded workshops': 'WORKSHOP',
   Video: 'VIDEO',
   Playlist: 'PLAYLIST',
   Repo: 'REPO',

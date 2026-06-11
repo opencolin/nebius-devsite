@@ -152,21 +152,6 @@ export function ProductsMenu({variant = 'nav'}: {variant?: 'nav' | 'cta'}) {
           onMouseLeave={scheduleClose}
         >
           <div className={styles.dropdownInner}>
-            {/* Free-credits CTA — the primary action of this menu. */}
-            <Link
-              href={FREE_CREDITS_HREF}
-              className={styles.creditsCta}
-              role="menuitem"
-              onClick={() => setOpen(false)}
-            >
-              <span className={styles.creditsCtaTitle}>
-                Nebius Builder Network: Sign up for Free Credits
-              </span>
-              <span className={styles.creditsCtaArrow} aria-hidden>
-                →
-              </span>
-            </Link>
-
             <div className={styles.heading}>Products</div>
             <div className={styles.grid}>
               {PRODUCTS.map((p) => (
@@ -181,6 +166,20 @@ export function ProductsMenu({variant = 'nav'}: {variant?: 'nav' | 'cta'}) {
                   <span className={styles.itemBlurb}>{p.tagline}</span>
                 </Link>
               ))}
+            </div>
+
+            {/* Builder Network — styled like the product items above, set
+                below them behind a divider. Lands on /signup. */}
+            <div className={styles.builderNetworkWrap}>
+              <Link
+                href={FREE_CREDITS_HREF}
+                className={styles.item}
+                role="menuitem"
+                onClick={() => setOpen(false)}
+              >
+                <span className={styles.itemTitle}>Nebius Builder Network</span>
+                <span className={styles.itemBlurb}>Sign up for free credits</span>
+              </Link>
             </div>
           </div>
         </div>

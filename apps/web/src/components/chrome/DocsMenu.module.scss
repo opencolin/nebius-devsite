@@ -184,38 +184,11 @@
   font-weight: 400;
 }
 
-// ProductsMenu-only: the free-credits CTA banner at the top of the menu.
-// Lime joy color with navy text (brand rule: navy on lime, never white).
-// Card radius follows the brand (squared under data-brand='nebius').
-.creditsCta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 20px;
-  padding: 14px 18px;
-  border-radius: var(--nb-card-radius, 12px);
-  background: var(--nb-color-highlight, #e0ff4f);
-  color: #052b42;
-  text-decoration: none;
-  transition: filter 120ms ease;
-
-  &:hover,
-  &:focus-visible {
-    filter: brightness(0.96);
-    outline: none;
-  }
-}
-
-.creditsCtaTitle {
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-.creditsCtaArrow {
-  flex-shrink: 0;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1;
+// ProductsMenu-only: the Builder Network item below the products. Styled
+// with the same `.item` look as the products; this wrap just adds the
+// divider that sets it off from the product grid above.
+.builderNetworkWrap {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--g-color-line-generic);
 }

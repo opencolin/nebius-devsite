@@ -630,7 +630,7 @@ export function normalizeCity(raw: string | null | undefined): string {
 // a category, so we relabel to "Meetup" — every OTHER event in the
 // current data is a community meetup, build night, or breakfast.
 const FORMAT_LABELS: Record<string, string> = {
-  WORKSHOP: 'Workshop',
+  WORKSHOP: 'Live workshops',
   DEMO_NIGHT: 'Demo night',
   HACKATHON: 'Hackathon',
   OFFICE_HOURS: 'Office hours',
