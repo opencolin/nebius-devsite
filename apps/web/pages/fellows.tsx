@@ -120,14 +120,14 @@ export default function FellowsPage({
           }
         />
 
-        {/* Featured rail — curated 3-wide grid above the region groups
-            (region grid currently hidden, restored via getStaticProps).
-            Current curation is 9 fellows → clean 3×3 on desktop. */}
+        {/* Cohort grid — the full Fellows roster in the on-stage slide
+            order (the region-grouped roster below is kept in code but
+            currently hidden, so this renders every Fellow). */}
         {featured.length > 0 ? (
           <section className={styles.featuredSection}>
             <header className={styles.regionHeader}>
               <Text variant="caption-2" color="secondary" className={styles.regionEyebrow}>
-                Featured
+                The cohort
               </Text>
               <Text variant="caption-2" color="secondary">
                 {featured.length} {featured.length === 1 ? 'fellow' : 'fellows'}
