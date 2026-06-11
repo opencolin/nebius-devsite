@@ -277,8 +277,8 @@ export default function HomePage({
         }
       />
 
-      <ActiveEvents events={events} />
       <Products />
+      <ActiveEvents events={events} />
       <CodingAgents />
       <UseCases />
       <WorkshopSpotlight featured={featuredWorkshop} related={relatedWorkshops} />
