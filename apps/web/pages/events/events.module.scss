@@ -9,7 +9,7 @@
 // -----------------------------------------------------------------------------
 // Event card (used by /events index grid). Mirrors the cover + body + footer
 // shape of the library and apps cards so the three pages feel consistent,
-// but uses a shorter cover (h-36 / 144px) since events lean information-dense.
+// but uses a slightly shorter cover (190px) since events lean information-dense.
 // -----------------------------------------------------------------------------
 
 .cardLink {
@@ -83,15 +83,17 @@
 }
 
 // -----------------------------------------------------------------------------
-// Event cover area — shorter than the apps/library covers (144px instead of
-// aspect-video) since events lists tend to be longer and benefit from
-// denser information per row. Variant class drives the gradient.
+// Event cover area — a bit shorter than the apps/library covers (190px
+// instead of aspect-video) since events lists tend to be longer. Raised
+// from 144px so scraped Luma covers (mostly ~16:9) keep their title text
+// instead of getting cropped top and bottom by object-fit: cover.
+// Variant class drives the gradient.
 // -----------------------------------------------------------------------------
 
 .cover {
   position: relative;
   width: 100%;
-  height: 144px;
+  height: 190px;
   display: flex;
   align-items: center;
   justify-content: center;
