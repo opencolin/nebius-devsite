@@ -727,4 +727,37 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     category: 'coding',
     products: ['token-factory'],
   },
+
+  // ================== Agent Blueprint partners (wave 5) ==================
+  // From the nebius-partner-cookbook (Agent Blueprint Recipes). Each docsUrl
+  // links to its rendered, runnable recipe in the ecosystem cookbook —
+  // curl-200 verified.
+  {
+    name: 'Pinecone',
+    blurb: 'Knowledge engine for agents — compile your data into task-ready, cited domain knowledge.',
+    docsUrl: 'https://opencolin.github.io/nebius-ecosystem-cookbook/blueprints/domain-knowledge-pinecone-nexus/',
+    category: 'search',
+    products: ['token-factory'],
+  },
+  {
+    name: 'LangSmith',
+    blurb: 'Trace, evaluate, and debug agent runs end to end.',
+    docsUrl: 'https://opencolin.github.io/nebius-ecosystem-cookbook/blueprints/observability-langsmith/',
+    category: 'observability',
+    products: ['token-factory'],
+  },
+  {
+    name: 'Stripe',
+    blurb: 'Give agents safe, approval-gated real-world actions via Stripe MCP.',
+    docsUrl: 'https://opencolin.github.io/nebius-ecosystem-cookbook/blueprints/actions-with-mcp-stripe/',
+    category: 'tooling',
+    products: ['token-factory'],
+  },
+  {
+    name: 'Snowglobe',
+    blurb: 'Simulate and stress-test agents before production.',
+    docsUrl: 'https://opencolin.github.io/nebius-ecosystem-cookbook/blueprints/testing-before-production-snowglobe/',
+    category: 'tooling',
+    products: ['token-factory'],
+  },
 ];
