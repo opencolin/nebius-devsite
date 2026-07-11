@@ -22,15 +22,9 @@ interface DocItem {
 }
 
 const PRODUCTS: DocItem[] = [
-  {label: 'AI Cloud',       tagline: 'GPU clusters, VMs, networking',                href: 'https://tenki.cloud/docs/',                          external: true},
-  {label: 'Tenki',  tagline: 'Open-source models via OpenAI-compatible API', href: 'https://tenki.cloud/docs/quickstart',   external: true},
-  {label: 'Serverless AI',  tagline: 'Endpoints + jobs without infra',               href: 'https://tenki.cloud/docs/serverless',                external: true},
-  {label: 'Tenki',         tagline: 'Real-time web search and content extraction',  href: 'https://tenki.cloud/docs/',                          external: true},
-  {label: 'Soperator',      tagline: 'Slurm workload manager on Kubernetes',         href: 'https://github.com/tenki-cloud',               external: true},
-  {label: 'Kubernetes',     tagline: 'Managed K8s clusters',                         href: 'https://tenki.cloud/docs/kubernetes',                external: true},
-  {label: 'Compute & GPUs', tagline: 'VMs, containers, GPU drivers',                 href: 'https://tenki.cloud/docs/compute',                   external: true},
-  {label: 'Object Storage', tagline: 'S3-compatible buckets',                        href: 'https://tenki.cloud/docs/object-storage',            external: true},
-  {label: 'Applications',   tagline: 'Turnkey apps for ML/AI workloads',             href: 'https://tenki.cloud/docs/applications',              external: true},
+  {label: 'Sandbox',       tagline: 'Quick-start an agent sandbox',  href: 'https://tenki.cloud/docs/sandbox/quick-start-sandbox', external: true},
+  {label: 'Code Reviewer', tagline: 'Set up AI code review',         href: 'https://tenki.cloud/docs/start-code-review',           external: true},
+  {label: 'Runners',       tagline: 'Quick-start CI runners',        href: 'https://tenki.cloud/docs/runners/quick-start-runners', external: true},
 ];
 
 // Grace period after the cursor leaves trigger/dropdown before the menu

@@ -21,24 +21,19 @@ import styles from './DocsMenu.module.scss';
 
 const PRODUCTS = [
   {
-    label: 'AI Cloud',
-    tagline: 'VMs, Kubernetes, and Slurm for GPU training and inference',
-    href: '/ai-cloud',
+    label: 'Sandbox',
+    tagline: 'Instant agent sandboxes — give your agent root without giving it yours',
+    href: 'https://tenki.cloud/sandbox',
   },
   {
-    label: 'Tenki',
-    tagline: 'OpenAI-compatible inference API for open models',
-    href: '/token-factory',
+    label: 'Code Reviewer',
+    tagline: 'AI code review built for the agentic era',
+    href: 'https://tenki.cloud/code-reviewer',
   },
   {
-    label: 'Serverless AI',
-    tagline: 'Containerized GPU workloads — Jobs + Endpoints',
-    href: '/serverless',
-  },
-  {
-    label: 'Tenki',
-    tagline: 'Real-time web search & retrieval for AI agents',
-    href: '/tavily',
+    label: 'Runners',
+    tagline: 'CI runners — run 30% faster and up to 60% cheaper',
+    href: 'https://tenki.cloud/runners',
   },
 ];
 
@@ -155,16 +150,18 @@ export function ProductsMenu({variant = 'nav'}: {variant?: 'nav' | 'cta'}) {
             <div className={styles.heading}>Products</div>
             <div className={styles.grid}>
               {PRODUCTS.map((p) => (
-                <Link
+                <a
                   key={p.href}
                   href={p.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={styles.item}
                   role="menuitem"
                   onClick={() => setOpen(false)}
                 >
                   <span className={styles.itemTitle}>{p.label}</span>
                   <span className={styles.itemBlurb}>{p.tagline}</span>
-                </Link>
+                </a>
               ))}
             </div>
 
