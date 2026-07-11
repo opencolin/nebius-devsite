@@ -61,7 +61,6 @@ const PRODUCT_FILTER_KEY: Record<string, string> = {
   'AI Cloud': 'aicloud',
   OpenClaw: 'openclaw',
   Soperator: 'soperator',
-  Tenki: 'tavily',
 };
 
 const PRODUCT_LABEL: Record<string, string> = {

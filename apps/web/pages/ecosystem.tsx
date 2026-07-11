@@ -83,7 +83,6 @@ const PRODUCT_KEYS: Record<string, {apps: string; integrations: string | null}> 
   'AI Cloud': {apps: 'aicloud', integrations: 'ai-cloud'},
   OpenClaw: {apps: 'openclaw', integrations: null}, // no integration partner uses openclaw
   Soperator: {apps: 'soperator', integrations: null},
-  Tenki: {apps: 'tavily', integrations: 'tavily'},
 };
 
 // Apps store the apps-vocabulary value; render-time label lookup.
