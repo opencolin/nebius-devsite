@@ -80,10 +80,10 @@ export default async function handler(
 
   // ---- Source 2: tenki.cloud/events ----
   try {
-    const nebiusEvents = await scrapeTenkiCom();
-    result.sources.push({source: 'tenki.cloud/events', ok: true, count: nebiusEvents.length});
-    result.scraped += nebiusEvents.length;
-    for (const e of nebiusEvents) {
+    const tenkiEvents = await scrapeTenkiCom();
+    result.sources.push({source: 'tenki.cloud/events', ok: true, count: tenkiEvents.length});
+    result.scraped += tenkiEvents.length;
+    for (const e of tenkiEvents) {
       const upserted = await upsertEvent(e);
       if (upserted === 'created') result.created++;
       else if (upserted === 'updated') result.updated++;

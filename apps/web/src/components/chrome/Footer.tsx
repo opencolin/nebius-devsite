@@ -24,7 +24,7 @@ const COL_PROGRAM: Array<{href: string; label: string; external?: boolean}> = [
   {href: '/signup', label: 'Sign up'},
 ];
 
-const COL_NEBIUS: Array<{href: string; label: string; external?: boolean}> = [
+const COL_TENKI: Array<{href: string; label: string; external?: boolean}> = [
   {href: 'https://tenki.cloud', label: 'Tenki.com ↗', external: true},
   {href: 'https://tenki.cloud/docs', label: 'Tenki ↗', external: true},
   {href: 'https://careers.tenki.cloud', label: 'Careers ↗', external: true},
@@ -47,7 +47,7 @@ export function Footer() {
           <FooterCol heading="Learn" items={COL_LEARN} />
           <FooterCol heading="Build" items={COL_BUILD} />
           <FooterCol heading="Program" items={COL_PROGRAM} />
-          <FooterCol heading="Tenki" items={COL_NEBIUS} />
+          <FooterCol heading="Tenki" items={COL_TENKI} />
         </div>
       </div>
     </footer>

@@ -161,7 +161,7 @@ body {
 
 // tenki.cloud uses square buttons (verified: its primary CTAs are 0px). Only
 // the dev brand squares them; the tenki.cloud brand keeps the pill above.
-html[data-brand='nebius'] .g-button {
+html[data-brand='tenki'] .g-button {
   --g-button-border-radius: 2px;
   border-radius: 2px;
 }
@@ -176,7 +176,7 @@ html.g-root body {
 // headings (h1 / display) in Gramatika — a licensed typeface — with Inter for
 // h2 and below. Space Grotesk is the closest freely-available match. The
 // tenki.cloud brand overrides --nb-font-display to Space Mono and widens the
-// rule to all headings (see the html[data-brand='nebius'] block below).
+// rule to all headings (see the html[data-brand='tenki'] block below).
 .g-root {
   --nb-font-display: 'Geist', 'Geist', 'Helvetica Neue', Arial, sans-serif;
 }
@@ -257,12 +257,12 @@ html.g-root body {
 // =============================================================================
 // tenki.cloud brand — switchable via the bottom toggle (BrandToggle.tsx),
 // which sets `data-brand` on <html>. The default (no attribute / "builders")
-// keeps the warm off-white Builders look above. `data-brand="nebius"` refines
+// keeps the warm off-white Builders look above. `data-brand="tenki"` refines
 // the tokens to match tenki.cloud EXACTLY (values captured from the live
 // site 2026-06-04): pure-white page, navy #000a15 ink, neon-lime accent,
 // Space Mono headings, Inter 17px body, full-pill buttons.
 //
-// Specificity note: `html[data-brand='nebius']` (element + attribute = 0,1,1)
+// Specificity note: `html[data-brand='tenki']` (element + attribute = 0,1,1)
 // beats the `.g-root_theme_light` / `.g-root_theme_dark` blocks above (one
 // class = 0,1,0), so the tenki.cloud look applies under either theme — its
 // canonical presentation is light.
@@ -272,8 +272,8 @@ html.g-root body {
 // that re-defines these tokens to their Builders defaults; without the
 // descendant selector the overrides only reach <body>, leaving all page content
 // tinted (the beige #f3efe8 sections + rounded cards seen before this fix).
-html[data-brand='nebius'],
-html[data-brand='nebius'] .g-root {
+html[data-brand='tenki'],
+html[data-brand='tenki'] .g-root {
   // Page surface → pure white (tenki.cloud), not the warm off-white above.
   --nb-color-primary: #fafafa;
   --nb-color-highlight-light: #047bff;
@@ -339,10 +339,10 @@ html[data-brand='nebius'] .g-root {
 }
 
 // -----------------------------------------------------------------------------
-// tenki.cloud — dark mode (data-brand="nebius" + the dark theme toggle).
+// tenki.cloud — dark mode (data-brand="tenki" + the dark theme toggle).
 //
 // The base dev block above forces white surfaces + navy ink under EITHER theme
-// (its `html[data-brand='nebius'] .g-root` selector, specificity 0,2,1, beats
+// (its `html[data-brand='tenki'] .g-root` selector, specificity 0,2,1, beats
 // the bare `.g-root_theme_dark` block at 0,1,0), so the dev brand never went
 // dark. This block restores a real dark mode: it re-points only the COLOR /
 // surface tokens to the deep-navy dark palette (mirrors the tenki.cloud
@@ -354,8 +354,8 @@ html[data-brand='nebius'] .g-root {
 // dev selector but wins by source order; the html selector (0,2,1) outranks the
 // base's html selector (0,1,1) outright.
 // -----------------------------------------------------------------------------
-html[data-brand='nebius'].g-root_theme_dark,
-html[data-brand='nebius'] .g-root_theme_dark {
+html[data-brand='tenki'].g-root_theme_dark,
+html[data-brand='tenki'] .g-root_theme_dark {
   // Page surface → deep navy.
   --nb-color-primary: #000a15;
 
@@ -404,7 +404,7 @@ html[data-brand='nebius'] .g-root_theme_dark {
 // tenki.cloud page background: follows the theme token, so light mode stays
 // pure white and dark mode (block above) goes deep navy. Base font-size (17px)
 // and pill/square buttons are set globally, shared with the tenki.cloud brand.
-html[data-brand='nebius'] body {
+html[data-brand='tenki'] body {
   background: var(--g-color-base-background);
 }
 
@@ -412,8 +412,8 @@ html[data-brand='nebius'] body {
 // with a touch of tracking. Covers raw heading tags + Gravity Text variants.
 // --nb-font-display is overridden to Space Mono below, so the shared heading
 // rule + this one both resolve to mono under this brand.
-html[data-brand='nebius'] :is(h1, h2, h3, h4),
-html[data-brand='nebius'] :is(.g-text_variant_display-1,
+html[data-brand='tenki'] :is(h1, h2, h3, h4),
+html[data-brand='tenki'] :is(.g-text_variant_display-1,
   .g-text_variant_display-2, .g-text_variant_display-3,
   .g-text_variant_header-1, .g-text_variant_header-2,
   .g-text_variant_subheader-1, .g-text_variant_subheader-2) {
@@ -423,6 +423,6 @@ html[data-brand='nebius'] :is(.g-text_variant_display-1,
 }
 
 // Links underline on hover, matching tenki.cloud.
-html[data-brand='nebius'] a:hover {
+html[data-brand='tenki'] a:hover {
   text-decoration: underline;
 }

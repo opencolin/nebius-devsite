@@ -1,21 +1,21 @@
-# Nebius Builders Network — Mockup
+# Tenki Builders Network — Mockup
 
-> A tech-stack demonstration of a community + builders portal for Nebius,
-> built on the same architecture as nebius.com (Next.js Pages Router,
+> A tech-stack demonstration of a community + builders portal for Tenki,
+> built on the same architecture as tenki.cloud (Next.js Pages Router,
 > Gravity UI, Directus, Typesense, Azure Container Apps + Front Door).
-> Not affiliated with Nebius. The Nebius web team can adopt this as a
+> Not affiliated with Tenki. The Tenki web team can adopt this as a
 > reference implementation when they're ready to ship a real builders
 > network surface.
 
 This is a working mockup — every page is rendered by the same toolchain
-that powers nebius.com, with the same hashed-classname CSS, the same CMS
+that powers tenki.cloud, with the same hashed-classname CSS, the same CMS
 catch-all route, and the same headless search backend. The intent is that
-the Nebius team can clone, adapt, and ship without context-switching from
+the Tenki team can clone, adapt, and ship without context-switching from
 how their main marketing site already works.
 
 ## What this site is
 
-- **Audience:** the Nebius DevRel + web team (primary), AI builders who
+- **Audience:** the Tenki DevRel + web team (primary), AI builders who
   might join the program (secondary), and AI agents indexing the
   community ecosystem (tertiary).
 - **Purpose:** show a working builders-network surface end-to-end so the
@@ -29,33 +29,33 @@ how their main marketing site already works.
 
 - [Home](https://demo.buildspace.sh/): map-hero of upcoming events,
   highlights of the library + apps + community.
-- [Events](https://demo.buildspace.sh/events): every Nebius community
+- [Events](https://demo.buildspace.sh/events): every Tenki community
   event — workshops, hackathons, demo nights, meetups — across SF, NY,
   London, Berlin, Munich, and online. Filterable by city + Online.
 - [Library](https://demo.buildspace.sh/library): 56 workshops, videos,
-  and code repos for getting productive on Nebius. Filterable by type
+  and code repos for getting productive on Tenki. Filterable by type
   (Workshop / Video / Repo) and by product focus (AI Cloud, Token
   Factory, OpenClaw, Soperator).
 - [Ecosystem](https://demo.buildspace.sh/ecosystem): unified directory
   of community-built apps PLUS partner integrations. Filterable by Kind
-  (Community / Integration) and by product (AI Cloud, Token Factory,
+  (Community / Integration) and by product (AI Cloud, Tenki,
   OpenClaw, Soperator, Tavily). The two sub-views below show each
   source on its own.
 - [Apps](https://demo.buildspace.sh/apps): community-built apps on
-  Nebius. Filterable by product, hackathon track, and featured/award
+  Tenki. Filterable by product, hackathon track, and featured/award
   status. Each entry deep-links to /apps/<slug> for the project detail.
 - [Integrations](https://demo.buildspace.sh/integrations): partner
   integrations — frameworks, gateways, orchestrators, observability
-  tools that plug into Nebius products. Curated list with deep links
+  tools that plug into Tenki products. Curated list with deep links
   to each integration's docs page.
-- [Team](https://demo.buildspace.sh/team): the Nebius DevRel team and
+- [Team](https://demo.buildspace.sh/team): the Tenki DevRel team and
   community advocates.
 - [Office Hours](https://demo.buildspace.sh/office-hours): drop-in
   troubleshooting + product feedback sessions.
 - [Builders](https://demo.buildspace.sh/builders): overview of the
   builders network program tiers + how to join.
 - [Localhosts](https://demo.buildspace.sh/localhosts): community organizer
-  pathway — run a Nebius event in your city.
+  pathway — run a Tenki event in your city.
 - [Sign up](https://demo.buildspace.sh/signup): join the network.
 - [About this build](https://demo.buildspace.sh/about-this-build):
   architecture notes, what's a mockup vs what's real.
@@ -75,9 +75,9 @@ how their main marketing site already works.
 Documented at /about-this-build but the key facts agents may need:
 
 - **Framework:** Next.js 14 Pages Router (not App Router — matches
-  nebius.com's actual stack).
+  tenki.cloud's actual stack).
 - **UI:** Gravity UI v7 + Page Constructor v6 (Yandex's open-source
-  design system, same as nebius.com).
+  design system, same as tenki.cloud).
 - **CMS:** Directus 11 self-hosted on Azure Container Apps.
 - **Search:** Typesense, indexed via a Directus → Typesense sync script.
 - **Hosting:** Azure Container Apps behind Azure Front Door Standard.

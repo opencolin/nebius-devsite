@@ -24,7 +24,7 @@ const CARDS: CommunityCard[] = [
     blurb:
       "Ask questions, share what you're building, and get help from other Tenki builders and the team.",
     cta: 'Join Discord',
-    href: 'https://discord.gg/CncTn9zVzS',
+    href: 'https://discord.gg/qNFaWrR6um',
   },
   {
     title: 'Hackathons & Events',
@@ -45,13 +45,13 @@ const CARDS: CommunityCard[] = [
     blurb:
       'Walkthroughs, demos, and technical deep dives from the Tenki team.',
     cta: 'See videos',
-    href: 'https://www.youtube.com/@nebiusofficial/videos',
+    href: 'https://github.com/tenki-cloud',
   },
   {
     title: 'X / Twitter',
     blurb:
-      'Daily updates, release threads, and the occasional GPU benchmark from @nebiusai.',
-    cta: 'Follow @nebiusai',
+      'Daily updates, release threads, and the occasional GPU benchmark from @TenkiCloud.',
+    cta: 'Follow @TenkiCloud',
     href: 'https://x.com/TenkiCloud',
   },
   {

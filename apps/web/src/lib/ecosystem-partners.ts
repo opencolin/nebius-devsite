@@ -577,7 +577,7 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   },
   {
     name: 'Hugging Face smolagents',
-    blurb: 'Minimalist code-agent framework; set provider="nebius" to run CodeAgents on Tenki open models.',
+    blurb: 'Minimalist code-agent framework; set provider="tenki" to run CodeAgents on Tenki open models.',
     docsUrl: 'https://huggingface.co/docs/smolagents/en/reference/models',
     category: 'agents',
     products: ['token-factory'],

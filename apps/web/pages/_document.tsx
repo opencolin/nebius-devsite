@@ -6,7 +6,7 @@ export default function Document() {
   // looks for the `g-root_theme_*` class on <html>.
   //
   // Site ships LIGHT-FIRST on the tenki.cloud brand: a first-time visitor
-  // (no stored choice) gets light + 'nebius' regardless of OS preference.
+  // (no stored choice) gets light + 'tenki' regardless of OS preference.
   // Returning visitors keep whatever they toggled (localStorage wins).
   const themeBootstrap = `
     (function () {
@@ -15,9 +15,9 @@ export default function Document() {
         var theme = (stored === 'dark' || stored === 'light') ? stored : 'light';
         document.documentElement.classList.add('g-root', 'g-root_theme_' + theme);
         // Brand bootstrap — apply the brand before paint so the CSS token layer
-        // (globals.scss html[data-brand='nebius']) is live with no flash.
-        // Default 'nebius' (the tenki.cloud brand).
-        var brand = localStorage.getItem('brand') === 'builders' ? 'builders' : 'nebius';
+        // (globals.scss html[data-brand='tenki']) is live with no flash.
+        // Default 'tenki' (the tenki.cloud brand).
+        var brand = localStorage.getItem('brand') === 'builders' ? 'builders' : 'tenki';
         document.documentElement.setAttribute('data-brand', brand);
       } catch (e) {}
     })();

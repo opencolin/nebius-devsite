@@ -1,6 +1,6 @@
 // Brand switch — flips the whole site between the "Builders" (tenki.cloud) look
 // and a pixel-faithful "tenki.cloud" brand. Mirrors ThemeToggle's pattern:
-//   - reads localStorage.brand on mount (default 'nebius' — the site ships on
+//   - reads localStorage.brand on mount (default 'tenki' — the site ships on
 //     the tenki.cloud brand; only an explicit 'builders' choice opts out)
 //   - sets `data-brand` on <html> so the CSS token layer in globals.scss applies
 //   - persists to localStorage on change
@@ -14,7 +14,7 @@ import type {ReactNode} from 'react';
 
 import styles from './BrandToggle.module.scss';
 
-export type Brand = 'builders' | 'nebius';
+export type Brand = 'builders' | 'tenki';
 
 interface BrandContextValue {
   brand: Brand;
@@ -25,11 +25,11 @@ interface BrandContextValue {
 const BrandContext = createContext<BrandContextValue | null>(null);
 
 function readBrand(): Brand {
-  if (typeof window === 'undefined') return 'nebius';
-  // Default 'nebius' (the tenki.cloud brand) when nothing is stored;
+  if (typeof window === 'undefined') return 'tenki';
+  // Default 'tenki' (the tenki.cloud brand) when nothing is stored;
   // only an explicit 'builders' choice opts out. Matches the pre-paint
   // in pages/_document.tsx.
-  return window.localStorage.getItem('brand') === 'builders' ? 'builders' : 'nebius';
+  return window.localStorage.getItem('brand') === 'builders' ? 'builders' : 'tenki';
 }
 
 function applyBrand(b: Brand) {
@@ -39,9 +39,9 @@ function applyBrand(b: Brand) {
 
 /** Owns the brand state. Mount once near the root (pages/_app.tsx). */
 export function BrandProvider({children}: {children: ReactNode}) {
-  // SSR/first-render default is 'nebius' (light-first tenki.cloud brand);
+  // SSR/first-render default is 'tenki' (light-first tenki.cloud brand);
   // the mount effect corrects to a stored 'builders' choice if present.
-  const [brand, setBrandState] = useState<Brand>('nebius');
+  const [brand, setBrandState] = useState<Brand>('tenki');
 
   useEffect(() => {
     const b = readBrand();
@@ -61,7 +61,7 @@ export function BrandProvider({children}: {children: ReactNode}) {
 
   const toggle = useCallback(() => {
     setBrandState((prev) => {
-      const next: Brand = prev === 'nebius' ? 'builders' : 'nebius';
+      const next: Brand = prev === 'tenki' ? 'builders' : 'tenki';
       applyBrand(next);
       try {
         window.localStorage.setItem('brand', next);
@@ -78,16 +78,16 @@ export function BrandProvider({children}: {children: ReactNode}) {
 
 export function useBrand(): BrandContextValue {
   const ctx = useContext(BrandContext);
-  if (!ctx) return {brand: 'nebius', setBrand: () => undefined, toggle: () => undefined};
+  if (!ctx) return {brand: 'tenki', setBrand: () => undefined, toggle: () => undefined};
   return ctx;
 }
 
-// Internal keys stay 'builders' / 'nebius' (used by data-brand, localStorage,
+// Internal keys stay 'builders' / 'tenki' (used by data-brand, localStorage,
 // and the globals.scss selectors) — only the user-facing labels change.
-// 'nebius' (tenki.cloud) is the default; 'builders' mirrors tenki.cloud.
+// 'tenki' (tenki.cloud) is the default; 'builders' mirrors tenki.cloud.
 const OPTIONS: Array<{key: Brand; label: string}> = [
   {key: 'builders', label: 'tenki.cloud'},
-  {key: 'nebius', label: 'tenki.cloud'},
+  {key: 'tenki', label: 'tenki.cloud'},
 ];
 
 /** Fixed bottom control. Segmented two-option switch. */
