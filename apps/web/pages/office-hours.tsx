@@ -324,7 +324,7 @@ export default function OfficeHoursPage({
           <Button
             view="action"
             size="xl"
-            href="https://discord.gg/nebius"
+            href="https://discord.gg/qNFaWrR6um"
             target="_blank"
           >
             Join Discord →

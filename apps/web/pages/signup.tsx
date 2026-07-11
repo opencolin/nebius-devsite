@@ -66,7 +66,7 @@ export default function SignupPage({
         <title>Join the Tenki Builders Network</title>
         <meta
           name="description"
-          content="Sign up for the Tenki Builder Program — $100 in Tenki + AI Cloud credits, a community of builders shipping real work, and a path to Ambassador."
+          content="Sign up for the Tenki Builders Network — $100 in Tenki credits, a community of builders shipping real work, and a path to Ambassador."
         />
         <meta property="og:title" content="Join the Tenki Builders Network" />
         <meta
@@ -85,13 +85,14 @@ export default function SignupPage({
             Build with Tenki. Get rewarded for shipping.
           </Text>
           <Text variant="body-2" color="secondary" as="p" className={styles.heroLede}>
-            $100 in Tenki and AI Cloud credits when you sign up.
-            Workshops, hackathons, and office hours run by the community.
+            $100 in Tenki credits when you sign up — spend across Sandbox,
+            Runners, and Code Reviewer. Workshops, hackathons, and office hours
+            run by the community.
           </Text>
           <ul className={styles.proof}>
             <li>
               <strong>$100</strong>
-              <span>in Tenki + AI Cloud credits</span>
+              <span>in Tenki credits</span>
             </li>
             <li>
               <strong>2,800+</strong>
