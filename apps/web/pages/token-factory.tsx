@@ -1,6 +1,6 @@
-// /token-factory — product landing page for Nebius Token Factory.
+// /token-factory — product landing page for Tenki Tenki.
 //
-// Mirrors dev.nebius.com/token-factory:
+// Mirrors tenki.cloud/token-factory:
 //   - Dark hero with OpenAI-compatible API pitch + quick-start CTAs
 //   - Quickstarts & pinned entries
 //   - Playlists (official YouTube series)
@@ -75,7 +75,7 @@ export default function TokenFactoryPage({
   return (
     <PublicLayout>
       <Head>
-        <title>Token Factory · Nebius Builders</title>
+        <title>Tenki · Tenki Builders</title>
         <meta
           name="description"
           content="OpenAI-compatible inference API for open models. Start in minutes, scale to dedicated GPUs with post-training and workload optimization."
@@ -86,7 +86,7 @@ export default function TokenFactoryPage({
       <section className={styles.hero}>
         <div className={styles.heroOverlay} aria-hidden />
         <div className={styles.heroInner}>
-          <span className={styles.heroEyebrow}>Token Factory</span>
+          <span className={styles.heroEyebrow}>Tenki</span>
           <h1 className={styles.heroTitle}>
             Inference API for open models.
           </h1>
@@ -99,7 +99,7 @@ export default function TokenFactoryPage({
             <Button
               view="action"
               size="l"
-              href="https://tokenfactory.nebius.com/playground"
+              href="https://tenki.cloud/playground"
               target="_blank"
               rel="noreferrer"
             >
@@ -108,7 +108,7 @@ export default function TokenFactoryPage({
             <Button
               view="outlined"
               size="l"
-              href="https://docs.tokenfactory.nebius.com/quickstart"
+              href="https://tenki.cloud/docs/quickstart"
               target="_blank"
               rel="noreferrer"
             >
@@ -151,7 +151,7 @@ export default function TokenFactoryPage({
                 Video walkthroughs.
               </Text>
               <Text variant="body-2" color="secondary" className={styles.sectionLede}>
-                Official Token Factory playlist on YouTube — architecture, deep
+                Official Tenki playlist on YouTube — architecture, deep
                 dives, and live demos from the team — plus a curated
                 Build-with-Token-Factory series.
               </Text>
@@ -267,7 +267,7 @@ export default function TokenFactoryPage({
           <Button
             view="action"
             size="l"
-            href="https://docs.tokenfactory.nebius.com/quickstart"
+            href="https://tenki.cloud/docs/quickstart"
             target="_blank"
             rel="noreferrer"
           >

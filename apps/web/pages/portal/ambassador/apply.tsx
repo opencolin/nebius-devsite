@@ -72,7 +72,7 @@ export default function AmbassadorApplyPage({
         <PageHeader
           eyebrow="Program"
           title="Apply for Ambassador"
-          description="Ambassadors host recurring events, get a quarterly stipend, and a direct line to Nebius DevRel + product. Applications reviewed monthly."
+          description="Ambassadors host recurring events, get a quarterly stipend, and a direct line to Tenki DevRel + product. Applications reviewed monthly."
         />
         <Card
           view="filled"
@@ -102,7 +102,7 @@ export default function AmbassadorApplyPage({
       <PageHeader
         eyebrow="Program"
         title="Apply for Ambassador"
-        description="Ambassadors host recurring events, get a quarterly stipend, and a direct line to Nebius DevRel + product. Applications reviewed monthly."
+        description="Ambassadors host recurring events, get a quarterly stipend, and a direct line to Tenki DevRel + product. Applications reviewed monthly."
       />
 
       <form onSubmit={onSubmit}>

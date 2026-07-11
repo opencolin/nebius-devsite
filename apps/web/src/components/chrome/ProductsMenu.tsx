@@ -26,7 +26,7 @@ const PRODUCTS = [
     href: '/ai-cloud',
   },
   {
-    label: 'Token Factory',
+    label: 'Tenki',
     tagline: 'OpenAI-compatible inference API for open models',
     href: '/token-factory',
   },
@@ -177,7 +177,7 @@ export function ProductsMenu({variant = 'nav'}: {variant?: 'nav' | 'cta'}) {
                 role="menuitem"
                 onClick={() => setOpen(false)}
               >
-                <span className={styles.itemTitle}>Nebius Builder Network</span>
+                <span className={styles.itemTitle}>Tenki Builder Network</span>
                 <span className={styles.itemBlurb}>Sign up for free credits</span>
               </Link>
             </div>

@@ -44,7 +44,7 @@ export function WorkshopSpotlight({featured, related}: Props) {
               Watch what shipped, run it yourself.
             </Text>
             <Text variant="body-2" color="secondary" className={styles.body}>
-              Workshops, videos, and example repos curated by Nebius DevRel and
+              Workshops, videos, and example repos curated by Tenki DevRel and
               the community.
             </Text>
           </div>

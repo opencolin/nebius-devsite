@@ -75,7 +75,7 @@ const DROP_INS: Array<{
     title: 'Builders & Brews London',
     city: 'London',
     blurb:
-      'London co-working drop-in for AI builders at Encode Hub. Coffee on, laptops out, Token Factory credits available for the room.',
+      'London co-working drop-in for AI builders at Encode Hub. Coffee on, laptops out, Tenki credits available for the room.',
     cadence: 'Every other Tuesday · 18:00 BST',
     url: 'https://lu.ma/builders-brews-london',
     host: '@priya',
@@ -93,7 +93,7 @@ const DROP_INS: Array<{
     title: 'Builders & Brews Berlin',
     city: 'Berlin',
     blurb:
-      'Berlin co-working session at St. Oberholz. Talk to other AI builders, get unstuck on your stack, claim Token Factory credits.',
+      'Berlin co-working session at St. Oberholz. Talk to other AI builders, get unstuck on your stack, claim Tenki credits.',
     cadence: 'Wednesdays · 18:30 CET',
     url: 'https://lu.ma/builders-brews-berlin',
     host: '@jonas',
@@ -136,10 +136,10 @@ export default function OfficeHoursPage({
   return (
     <PublicLayout>
       <Head>
-        <title>{`Office Hours · Nebius Builders`}</title>
+        <title>{`Office Hours · Tenki Builders`}</title>
         <meta
           name="description"
-          content="Open public office-hours plus weekly 1:1 slots with the Nebius Builders team — one per region. Bring a real question; we'll bring a working session."
+          content="Open public office-hours plus weekly 1:1 slots with the Tenki Builders team — one per region. Bring a real question; we'll bring a working session."
         />
       </Head>
 
@@ -156,7 +156,7 @@ export default function OfficeHoursPage({
           <h1 className={styles.heroTitle}>Drop in. Get unstuck.</h1>
           <p className={styles.heroDescription}>
             Open public office-hours events plus weekly 1:1 slots with the
-            Nebius Builders team — one per region. Bring a real question;
+            Tenki Builders team — one per region. Bring a real question;
             we&apos;ll bring a working session.
           </p>
           <div className={styles.heroActions}>
@@ -246,7 +246,7 @@ export default function OfficeHoursPage({
                     {m.name}
                   </Text>
                   <Text variant="caption-2" color="secondary" className={styles.advocateTitle}>
-                    {m.title.replace(', Nebius', '')}
+                    {m.title.replace(', Tenki', '')}
                   </Text>
                   <Text variant="caption-2" color="secondary">
                     {m.city ? `${m.city} · ${m.timezone}` : `${m.region} · ${m.timezone}`}
@@ -329,7 +329,7 @@ export default function OfficeHoursPage({
           >
             Join Discord →
           </Button>
-          <Button view="outlined" size="xl" href="mailto:builders@nebius.com">
+          <Button view="outlined" size="xl" href="mailto:builders@tenki.cloud">
             Email the team
           </Button>
         </div>

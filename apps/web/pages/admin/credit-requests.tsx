@@ -24,7 +24,7 @@ export default function CreditRequestsAdmin() {
       <PageHeader
         eyebrow="Queues"
         title="Per-event credit requests"
-        description={`${ROWS.length} pending. Approve to allocate Token Factory credits at $50–500 per attendee.`}
+        description={`${ROWS.length} pending. Approve to allocate Tenki credits at $50–500 per attendee.`}
       />
 
       <div style={{marginTop: 24}}>

@@ -15,7 +15,7 @@ export default function PhosphorMeshDemo() {
   return (
     <>
       <Head>
-        <title>PhosphorMesh demo · Nebius Builders</title>
+        <title>PhosphorMesh demo · Tenki Builders</title>
         <meta name="robots" content="noindex" />
       </Head>
 

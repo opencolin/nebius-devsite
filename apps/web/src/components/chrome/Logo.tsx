@@ -1,4 +1,4 @@
-// Nebius lockup: the official Nebius logo SVG (lime pill + dark-navy mark) +
+// Tenki lockup: the official Tenki logo SVG (lime pill + dark-navy mark) +
 // "Builders" wordmark on the right. Mirrors the Logo component in the
 // upstream opencolin/nebius-builders repo, restyled for the Gravity-token
 // chassis.
@@ -17,12 +17,12 @@ export function Logo({brandOnly = false}: Props) {
     <Link
       href="/"
       className={styles.root}
-      aria-label="Nebius Builders Network — home"
+      aria-label="Tenki Builders Network — home"
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/nebius-logo.svg"
-        alt="Nebius"
+        src="/tenki-logo.svg"
+        alt="Tenki"
         width={102}
         height={28}
         className={styles.mark}

@@ -1,6 +1,6 @@
-// /ai-cloud — product landing page for Nebius AI Cloud.
+// /ai-cloud — product landing page for Tenki AI Cloud.
 //
-// Mirrors the structure of dev.nebius.com/ai-cloud:
+// Mirrors the structure of tenki.cloud/ai-cloud:
 //   - Dark hero with the product pitch + quick-start CTAs
 //   - Quickstarts rail (pinned entries)
 //   - Resources & guides (blog posts + videos)
@@ -80,10 +80,10 @@ export default function AiCloudPage({
   return (
     <PublicLayout>
       <Head>
-        <title>AI Cloud · Nebius Builders</title>
+        <title>AI Cloud · Tenki Builders</title>
         <meta
           name="description"
-          content="VMs, Kubernetes, and Slurm for AI training and inference on high-performance GPU infrastructure. Quickstarts, guides, and reference implementations for Nebius AI Cloud."
+          content="VMs, Kubernetes, and Slurm for AI training and inference on high-performance GPU infrastructure. Quickstarts, guides, and reference implementations for Tenki AI Cloud."
         />
       </Head>
 
@@ -102,7 +102,7 @@ export default function AiCloudPage({
             <Button
               view="action"
               size="l"
-              href="https://console.nebius.com/"
+              href="https://console.tenki.cloud/"
               target="_blank"
               rel="noreferrer"
             >
@@ -111,7 +111,7 @@ export default function AiCloudPage({
             <Button
               view="outlined"
               size="l"
-              href="https://docs.nebius.com/"
+              href="https://tenki.cloud/docs/"
               target="_blank"
               rel="noreferrer"
             >
@@ -176,7 +176,7 @@ export default function AiCloudPage({
               </Text>
               <Text variant="body-2" color="secondary" className={styles.sectionLede}>
                 Tutorials, best practices, and production patterns for GPU
-                training, inference, and orchestration on Nebius AI Cloud.
+                training, inference, and orchestration on Tenki AI Cloud.
               </Text>
             </div>
             <div className={styles.resourceGrid}>
@@ -201,7 +201,7 @@ export default function AiCloudPage({
               </Text>
               <Text variant="body-2" color="secondary" className={styles.sectionLede}>
                 Drop-in recipes and solutions library repos for K8s, Soperator,
-                SkyPilot, vLLM, and more on Nebius AI Cloud.
+                SkyPilot, vLLM, and more on Tenki AI Cloud.
               </Text>
             </div>
             <div className={styles.resourceGrid}>
@@ -243,7 +243,7 @@ export default function AiCloudPage({
           <Button
             view="action"
             size="l"
-            href="https://console.nebius.com/"
+            href="https://console.tenki.cloud/"
             target="_blank"
             rel="noreferrer"
           >

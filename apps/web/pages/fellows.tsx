@@ -1,7 +1,7 @@
-// /fellows — the Nebius Builders Network fellows directory.
+// /fellows — the Tenki Builders Network fellows directory.
 //
 // Fellows are independent community leaders (event organizers, OSS
-// contributors, DevRel folks) recognized by Nebius. This page is the
+// contributors, DevRel folks) recognized by Tenki. This page is the
 // public-facing roll call; the underlying candidate-pool spreadsheet
 // (with email, status, internal notes) lives in Confluence.
 //
@@ -65,10 +65,10 @@ export default function FellowsPage({
   return (
     <PublicLayout>
       <Head>
-        <title>Fellows · Nebius Builders</title>
+        <title>Fellows · Tenki Builders</title>
         <meta
           name="description"
-          content="Independent community leaders in the Nebius Builders Network — event organizers, open-source contributors, and developer advocates across EMEA, North America, LATAM, and APJ."
+          content="Independent community leaders in the Tenki Builders Network — event organizers, open-source contributors, and developer advocates across EMEA, North America, LATAM, and APJ."
         />
         {/* Page is intentionally hidden from the public site (no nav link,
             not in sitemap, not in llms.txt). noindex + nofollow keeps
@@ -82,8 +82,8 @@ export default function FellowsPage({
       <div className={page.container}>
         <PageHeader
           eyebrow="Fellows"
-          title="Nebius Fellows"
-          description="A global cohort of independent community leaders helping shape the Nebius ecosystem. Fellows organize events, ship open source, create tutorials, and connect Nebius products to the builders using them. Know someone who fits the program? Nominate them."
+          title="Tenki Fellows"
+          description="A global cohort of independent community leaders helping shape the Tenki ecosystem. Fellows organize events, ship open source, create tutorials, and connect Tenki products to the builders using them. Know someone who fits the program? Nominate them."
           actions={
             <Button
               view="action"

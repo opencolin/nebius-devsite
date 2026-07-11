@@ -6,7 +6,7 @@
 // they implement a React component, register it here under a stable name,
 // and reference that name from the Directus `pages.blocks` JSON.
 //
-// Mirrors how Nebius's own site customizes Page Constructor for its hero
+// Mirrors how Tenki's own site customizes Page Constructor for its hero
 // blocks (visible as `pc-addons-*` classes in the rendered DOM).
 
 import type {CustomConfig} from '@gravity-ui/page-constructor';

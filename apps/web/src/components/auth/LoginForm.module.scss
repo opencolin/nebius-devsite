@@ -1,4 +1,4 @@
-// Login layout — mirrors the Nebius Token Factory login screen.
+// Login layout — mirrors the Tenki Tenki login screen.
 //
 // Two columns at ≥900px (dark banner | gradient + white card), stacked at
 // <900px. The dark banner background and card paddings are taken from
@@ -71,8 +71,8 @@
   }
 }
 
-// The Nebius mark already ships as a lime pill with navy NEBIUS text — it
-// reads great on dark, so no filter. Sized to match the Token Factory
+// The Tenki mark already ships as a lime pill with navy NEBIUS text — it
+// reads great on dark, so no filter. Sized to match the Tenki
 // upstream lockup (28px tall pill).
 .lockupMark {
   display: block;
@@ -169,7 +169,7 @@
 }
 
 // Wrapper from <ThemeProvider rootClassName>. Gravity's `g-root` paints a
-// background using `--g-color-base-background` (which Nebius overrides to
+// background using `--g-color-base-background` (which Tenki overrides to
 // the warm off-white) — that beats the gradient panel below it. We force
 // transparent so the gradient shows through, and use flex so the card
 // stays centered inside the right panel.

@@ -14,10 +14,10 @@ import styles from './BuildInPublic.module.scss';
 type SubmitState = 'idle' | 'submitting' | 'done' | 'error';
 
 const SOCIALS: Array<{href: string; label: string}> = [
-  {href: 'https://x.com/nebiusai', label: 'X / Twitter'},
-  {href: 'https://www.linkedin.com/company/nebius', label: 'LinkedIn'},
+  {href: 'https://x.com/TenkiCloud', label: 'X / Twitter'},
+  {href: 'https://www.linkedin.com/company/tenki-cloud', label: 'LinkedIn'},
   {href: 'https://www.youtube.com/@nebiusofficial/videos', label: 'YouTube'},
-  {href: 'https://nebius.com/blog?tags=builder-updates', label: 'Blog'},
+  {href: 'https://tenki.cloud/blog?tags=builder-updates', label: 'Blog'},
 ];
 
 export function BuildInPublic() {

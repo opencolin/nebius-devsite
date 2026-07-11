@@ -13,7 +13,7 @@ import page from '@/styles/page.module.scss';
 export const getServerSideProps: GetServerSideProps = async (ctx) => requireRole('builder', ctx);
 
 const CREDITS = [
-  {name: 'Token Factory $100', kind: 'TF', status: 'CLAIMED', balance: 67, total: 100},
+  {name: 'Tenki $100', kind: 'TF', status: 'CLAIMED', balance: 67, total: 100},
   {name: 'AI Cloud $100', kind: 'AI', status: 'PENDING', balance: 0, total: 100},
   {name: 'Per-event credits — Brooklyn workshop', kind: 'TF', status: 'APPROVED', balance: 200, total: 200},
 ];
@@ -27,7 +27,7 @@ export default function CreditsPage() {
       <PageHeader
         eyebrow="Events"
         title="Credits"
-        description="Your intro credits and per-event allocations. Token Factory and AI Cloud are tracked separately."
+        description="Your intro credits and per-event allocations. Tenki and AI Cloud are tracked separately."
       />
 
       <div style={{display: 'flex', flexDirection: 'column', gap: 12, marginTop: 24, maxWidth: 720}}>
@@ -51,10 +51,10 @@ export default function CreditsPage() {
           <Text variant="caption-2" color="secondary">CLAIM</Text>
           <Text variant="subheader-2">Need to claim a fresh allocation?</Text>
           <Text variant="body-2" color="secondary">
-            Each builder gets one $100 Token Factory + one $100 AI Cloud allocation per year.
+            Each builder gets one $100 Tenki + one $100 AI Cloud allocation per year.
           </Text>
           <div style={{display: 'flex', gap: 8, marginTop: 12}}>
-            <Link href="/portal/credits/claim-tf" style={{color: 'var(--g-color-text-link)'}}>Token Factory →</Link>
+            <Link href="/portal/credits/claim-tf" style={{color: 'var(--g-color-text-link)'}}>Tenki →</Link>
             <Link href="/portal/credits/claim-ai" style={{color: 'var(--g-color-text-link)', marginLeft: 16}}>AI Cloud →</Link>
           </div>
         </Card>

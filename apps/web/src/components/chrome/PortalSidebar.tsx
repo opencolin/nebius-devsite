@@ -51,7 +51,7 @@ const GROUPS: NavGroup[] = [
   {
     label: 'INTRO CREDITS',
     items: [
-      {href: '/portal/credits/claim-tf', label: 'Token Factory $100', badge: '✓'},
+      {href: '/portal/credits/claim-tf', label: 'Tenki $100', badge: '✓'},
       {href: '/portal/credits/claim-ai', label: 'AI Cloud $100', badge: '…'},
     ],
   },

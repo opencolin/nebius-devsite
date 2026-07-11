@@ -1,5 +1,5 @@
-// Login screen — mirrors the layout of https://auth.tokenfactory.nebius.com/ui/login
-// exactly: dark navy banner on the left with the Nebius lockup + headline,
+// Login screen — mirrors the layout of https://auth.tenki.cloud/ui/login
+// exactly: dark navy banner on the left with the Tenki lockup + headline,
 // gradient panel on the right with a centered white card. The card surfaces
 // three OAuth-style entry points (Google, GitHub, SSO) the same way Token
 // Factory does. We don't have OAuth wired in this build, so those buttons
@@ -83,12 +83,12 @@ export function LoginForm({nextHref = '/portal'}: Props) {
         <Link
           href="/"
           className={styles.lockup}
-          aria-label="Nebius Builders — home"
+          aria-label="Tenki Builders — home"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/nebius-logo.svg"
-            alt="Nebius"
+            src="/tenki-logo.svg"
+            alt="Tenki"
             width={102}
             height={28}
             className={styles.lockupMark}
@@ -109,7 +109,7 @@ export function LoginForm({nextHref = '/portal'}: Props) {
 
         <div className={styles.bannerCopy}>
           <h1 className={styles.bannerTitle}>
-            The community<br />shipping with Nebius
+            The community<br />shipping with Tenki
           </h1>
           <p className={styles.bannerLede}>
             Earn credits, claim ambassador status, and book time with the
@@ -131,7 +131,7 @@ export function LoginForm({nextHref = '/portal'}: Props) {
         <div className={styles.card}>
           <header className={styles.cardHead}>
             <h2 className={styles.cardTitle}>
-              Welcome to<br />Nebius Builders
+              Welcome to<br />Tenki Builders
             </h2>
             <p className={styles.cardTagline}>
               Build faster · Earn credits · Belong
@@ -227,7 +227,7 @@ export function LoginForm({nextHref = '/portal'}: Props) {
 
 // -----------------------------------------------------------------------------
 // Icons — inlined SVG so the OAuth button doesn't need an extra image
-// asset or runtime fetch from static.nebius.com. Google + SSO (key) icons
+// asset or runtime fetch from static.tenki.cloud. Google + SSO (key) icons
 // removed alongside their buttons; restore from git history if you re-enable
 // those providers later.
 // -----------------------------------------------------------------------------

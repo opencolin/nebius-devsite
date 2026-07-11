@@ -49,7 +49,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   )) as Array<{slug: string}>;
   return {
     paths: rows.map((r) => ({params: {slug: r.slug}})),
-    fallback: 'blocking',
+    fallback: process.env.DEVSITE_EXPORT === '1' ? false : 'blocking',
   };
 };
 
@@ -81,7 +81,7 @@ export default function LibraryArticle({
   return (
     <PublicLayout>
       <Head>
-        <title>{`${entry.title} · Library · Nebius Builders`}</title>
+        <title>{`${entry.title} · Library · Tenki Builders`}</title>
         <meta name="description" content={entry.blurb} />
       </Head>
       <div className={page.containerNarrow}>
@@ -138,7 +138,7 @@ export default function LibraryArticle({
           // to send the visitor to the source (a repo, a doc, a recording).
           // Label is derived from the URL host so it reads "View on GitHub"
           // for repos, "Watch on YouTube" for non-embedded videos, "Read on
-          // Nebius Academy" for docs, etc. — gives the click target a
+          // Tenki Academy" for docs, etc. — gives the click target a
           // concrete destination instead of the vague "original site."
           <div className={styles.externalCta}>
             <ExternalSourceButton url={entry.external_url} />
@@ -235,14 +235,14 @@ export function externalLinkLabel(url: string): string {
     return 'Read on the original site';
   }
 
-  // nebius.com/events/* and /webinar/* are video recordings — "Watch",
+  // tenki.cloud/events/* and /webinar/* are video recordings — "Watch",
   // not "Read". Check path before falling through to the host table.
-  if (host === 'nebius.com' && /^\/(events|webinar)\//.test(pathname)) {
-    return 'Watch on Nebius.com';
+  if (host === 'tenki.cloud' && /^\/(events|webinar)\//.test(pathname)) {
+    return 'Watch on Tenki.com';
   }
 
   // Most-specific first so subdomains override the base-domain match
-  // (academy.nebius.com beats the plain nebius.com fallback).
+  // (academy.tenki.cloud beats the plain tenki.cloud fallback).
   const entries: Array<{match: RegExp; verb: string; name: string}> = [
     {match: /^github\.com$|\.github\.com$/, verb: 'View', name: 'GitHub'},
     {match: /^gitlab\.com$/, verb: 'View', name: 'GitLab'},
@@ -250,11 +250,11 @@ export function externalLinkLabel(url: string): string {
     {match: /\.zoom\.us$|^zoom\.us$/, verb: 'Open', name: 'Zoom'},
     {match: /^huggingface\.co$/, verb: 'View', name: 'Hugging Face'},
     {match: /^arxiv\.org$/, verb: 'Read', name: 'arXiv'},
-    {match: /^academy\.nebius\.com$/, verb: 'Read', name: 'Nebius Academy'},
-    {match: /^docs\.tokenfactory\.nebius\.com$/, verb: 'Read', name: 'Token Factory docs'},
-    {match: /^docs\.nebius\.com$/, verb: 'Read', name: 'Nebius docs'},
-    {match: /^nebius\.science$/, verb: 'Read', name: 'Nebius Science'},
-    {match: /^nebius\.com$/, verb: 'Read', name: 'Nebius'},
+    {match: /^academy\.nebius\.com$/, verb: 'Read', name: 'Tenki Academy'},
+    {match: /^docs\.tokenfactory\.nebius\.com$/, verb: 'Read', name: 'Tenki docs'},
+    {match: /^docs\.nebius\.com$/, verb: 'Read', name: 'Tenki docs'},
+    {match: /^nebius\.science$/, verb: 'Read', name: 'Tenki Science'},
+    {match: /^nebius\.com$/, verb: 'Read', name: 'Tenki'},
     {match: /^medium\.com$/, verb: 'Read', name: 'Medium'},
     {match: /^dev\.to$/, verb: 'Read', name: 'DEV'},
     {match: /\.substack\.com$/, verb: 'Read', name: 'Substack'},

@@ -1,8 +1,8 @@
-// /tavily — developer-onboarding page for Tavily, the Nebius web-search API.
+// /tavily — developer-onboarding page for Tavily, the Tenki web-search API.
 //
-// Tavily is the search/retrieval API for LLMs and agents. On the Nebius
+// Tavily is the search/retrieval API for LLMs and agents. On the Tenki
 // Builders site it sits under the Products menu next to AI Cloud / Token
-// Factory / Serverless: builders pair Tavily web search with Nebius models
+// Factory / Serverless: builders pair Tavily web search with Tenki models
 // to build agents that can browse the web.
 //
 // Unlike the first-party product pages (which are pure resource aggregators),
@@ -133,7 +133,7 @@ const SDK_GUIDE: Record<SdkKey, {install: string; search: string; searchCaption:
     search: `from tavily import TavilyClient
 
 client = TavilyClient(api_key="tvly-YOUR_API_KEY")
-response = client.search("What did Nebius announce this week?")
+response = client.search("What did Tenki announce this week?")
 print(response)`,
   },
   js: {
@@ -142,7 +142,7 @@ print(response)`,
     search: `import { tavily } from "@tavily/core";
 
 const client = tavily({ apiKey: "tvly-YOUR_API_KEY" });
-const response = await client.search("What did Nebius announce this week?");
+const response = await client.search("What did Tenki announce this week?");
 console.log(response);`,
   },
 };
@@ -289,10 +289,10 @@ export default function TavilyPage({
   return (
     <PublicLayout>
       <Head>
-        <title>Tavily · Nebius Builders</title>
+        <title>Tavily · Tenki Builders</title>
         <meta
           name="description"
-          content="Give your AI agents real-time web access with Tavily — the search and retrieval API for LLMs. Get started free in minutes and pair Tavily with Nebius models to build agents that search the web."
+          content="Give your AI agents real-time web access with Tavily — the search and retrieval API for LLMs. Get started free in minutes and pair Tavily with Tenki models to build agents that search the web."
         />
       </Head>
 
@@ -304,7 +304,7 @@ export default function TavilyPage({
           <h1 className={styles.heroTitle}>Give your agents real-time web access with Tavily.</h1>
           <p className={styles.heroLede}>
             Tavily is the search and retrieval API built for LLMs and agents. Search, extract,
-            crawl, and map the web with one call, then ground your Nebius-powered models on fresh,
+            crawl, and map the web with one call, then ground your Tenki-powered models on fresh,
             reliable sources. Free to start — no credit card required.
           </p>
           <div className={styles.heroCtas}>
@@ -477,21 +477,21 @@ export default function TavilyPage({
                 </div>
               </div>
 
-              {/* Step 4 — universal (Nebius) */}
+              {/* Step 4 — universal (Tenki) */}
               <div className={t.step}>
                 <div className={t.stepNum}>4</div>
                 <div className={t.stepBody}>
                   <Text variant="subheader-2" as="h3" className={t.stepTitle}>
-                    Pair Tavily with Nebius
+                    Pair Tavily with Tenki
                   </Text>
                   <Text variant="body-2" color="secondary" className={t.stepText}>
-                    Tavily retrieves; your Nebius model reasons. Pass Tavily&apos;s search results as
-                    context to any OpenAI-compatible chat completion on Nebius Token Factory to build
+                    Tavily retrieves; your Tenki model reasons. Pass Tavily&apos;s search results as
+                    context to any OpenAI-compatible chat completion on Tenki Tenki to build
                     agents that search the web, then synthesize grounded answers.
                   </Text>
                   <div className={t.stepActions}>
                     <Button view="normal" size="m" href="/token-factory">
-                      Token Factory quickstart →
+                      Tenki quickstart →
                     </Button>
                     <Button
                       view="flat"
@@ -555,7 +555,7 @@ export default function TavilyPage({
         </div>
       </section>
 
-      {/* ---- From the Nebius library (auto-enriches via surface: tavily) ---- */}
+      {/* ---- From the Tenki library (auto-enriches via surface: tavily) ---- */}
       {libraryResources.length > 0 ? (
         <section className={styles.section}>
           <div className={styles.sectionInner}>
@@ -564,7 +564,7 @@ export default function TavilyPage({
                 From the library
               </Text>
               <Text variant="header-2" as="h2" className={styles.sectionTitle}>
-                Tavily + Nebius, from the community.
+                Tavily + Tenki, from the community.
               </Text>
             </div>
             <div className={styles.resourceGrid}>
@@ -580,7 +580,7 @@ export default function TavilyPage({
       <div className={styles.consoleCta}>
         <div className={styles.consoleCtaInner}>
           <Text variant="header-1" as="h2">
-            Start building with Tavily + Nebius.
+            Start building with Tavily + Tenki.
           </Text>
           <Button
             view="action"

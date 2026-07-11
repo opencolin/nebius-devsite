@@ -5,7 +5,7 @@
 //
 // Featured set is hand-picked here — easy to swap. We pick by docsUrl
 // (not by name) because some partner names are non-unique across the
-// Tavily + Nebius integration tables (Agno, LangChain, CrewAI exist
+// Tavily + Tenki integration tables (Agno, LangChain, CrewAI exist
 // twice with different docs pages).
 
 import Link from 'next/link';
@@ -27,9 +27,9 @@ import styles from './EcosystemPartners.module.scss';
 // src/lib/ecosystem-partners.ts — the lookup at render time is by
 // docsUrl equality so any drift here silently drops the featured card.
 const FEATURED_URLS: ReadonlyArray<string> = [
-  'https://docs.tokenfactory.nebius.com/integrations/api/hugging-face',         // Hugging Face
-  'https://docs.tokenfactory.nebius.com/integrations/frameworks/langchain',     // LangChain
-  'https://docs.nebius.com/applications/standalone/nvidia-nim',                 // NVIDIA NIM
+  'https://tenki.cloud/docs/integrations/api/hugging-face',         // Hugging Face
+  'https://tenki.cloud/docs/integrations/frameworks/langchain',     // LangChain
+  'https://tenki.cloud/docs/applications/standalone/nvidia-nim',                 // NVIDIA NIM
 ];
 
 export function EcosystemPartners() {
@@ -49,7 +49,7 @@ export function EcosystemPartners() {
             Integrations
           </Text>
           <Text variant="header-2" as="h2" className={styles.title}>
-            Pick the tools you already love. They work on Nebius.
+            Pick the tools you already love. They work on Tenki.
           </Text>
           <Text variant="body-2" color="secondary" className={styles.body}>
             First-party integration docs for the frameworks, gateways, and

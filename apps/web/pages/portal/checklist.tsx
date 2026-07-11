@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (ctx) =>
 const ITEMS: Array<{label: string; pts: number; done: boolean}> = [
   {label: 'Sign up', pts: 5, done: true},
   {label: 'Connect GitHub', pts: 10, done: true},
-  {label: 'Claim Token Factory $100', pts: 25, done: true},
+  {label: 'Claim Tenki $100', pts: 25, done: true},
   {label: 'Claim AI Cloud $100', pts: 25, done: false},
   {label: 'Submit your first library entry', pts: 50, done: false},
   {label: 'Host your first event', pts: 200, done: false},

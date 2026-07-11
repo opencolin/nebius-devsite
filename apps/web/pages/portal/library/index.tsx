@@ -13,7 +13,7 @@ import page from '@/styles/page.module.scss';
 export const getServerSideProps: GetServerSideProps = async (ctx) => requireRole('builder', ctx);
 
 const SUBMISSIONS = [
-  {slug: 'running-openclaw-on-nebius', title: 'Running OpenClaw on Nebius', status: 'PUBLISHED', pts: 50},
+  {slug: 'running-openclaw-on-nebius', title: 'Running OpenClaw on Tenki', status: 'PUBLISHED', pts: 50},
   {slug: 'fine-tune-llama-101', title: 'Fine-tune Llama 101 on H100s', status: 'PENDING', pts: 0},
 ];
 

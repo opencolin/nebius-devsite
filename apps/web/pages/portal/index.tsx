@@ -54,7 +54,7 @@ export default function PortalDashboard({
           </Text>
           <ActionLink href="/portal/events/new" label="Host an event" />
           <ActionLink href="/portal/library/submit" label="Submit a library entry" />
-          <ActionLink href="/portal/credits/claim-tf" label="Claim Token Factory $100" />
+          <ActionLink href="/portal/credits/claim-tf" label="Claim Tenki $100" />
           <ActionLink href="/portal/credits/claim-ai" label="Claim AI Cloud $100" />
           <ActionLink href="/portal/ambassador/apply" label="Apply for Ambassador →" />
         </Card>
@@ -63,8 +63,8 @@ export default function PortalDashboard({
           <Text variant="caption-2" color="secondary">
             RECENT ACTIVITY
           </Text>
-          <Activity label="Submitted: Running OpenClaw on Nebius" pts={50} time="2d ago" />
-          <Activity label="Hosted: Token Factory Workshop NYC" pts={120} time="5d ago" />
+          <Activity label="Submitted: Running OpenClaw on Tenki" pts={50} time="2d ago" />
+          <Activity label="Hosted: Tenki Workshop NYC" pts={120} time="5d ago" />
           <Activity label="Connected GitHub" pts={10} time="2w ago" />
         </Card>
       </div>

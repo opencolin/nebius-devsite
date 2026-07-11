@@ -3,7 +3,7 @@
 // Until the visitor explicitly accepts, _app.tsx withholds the GTM bootstrap
 // script. Once accepted, we set localStorage['nb_consent'] = 'granted' and
 // fire a `nb:consent-granted` event that _app picks up to inject GTM.
-// Mirrors the gating pattern Nebius uses for HubSpot/Demandbase/Hotjar/etc.
+// Mirrors the gating pattern Tenki uses for HubSpot/Demandbase/Hotjar/etc.
 
 import {Button, Text} from '@gravity-ui/uikit';
 import {useEffect, useState} from 'react';
@@ -42,10 +42,10 @@ export function ConsentBanner() {
         {/* Plain <a>, not next/link: there's no internal /legal/privacy page
             in the CMS, and Link was prefetching the data JSON on mount →
             10-15 console 404s per page nav sitewide. External link to
-            Nebius's real privacy notice is the honest answer for a tech-
+            Tenki's real privacy notice is the honest answer for a tech-
             stack demo site that isn't running its own legal surface. */}
         <a
-          href="https://nebius.com/legal/privacy-notice"
+          href="https://tenki.cloud/legal/privacy-notice"
           target="_blank"
           rel="noopener noreferrer"
         >

@@ -1,6 +1,6 @@
-// Products — 4-up grid for AI Cloud, Token Factory (highlighted), Serverless,
+// Products — 4-up grid for AI Cloud, Tenki (highlighted), Serverless,
 // and Tavily. Each card has a primary "Start building" link and a secondary
-// "How-tos" link to docs. Token Factory wears a navy border + lime ring to
+// "How-tos" link to docs. Tenki wears a navy border + lime ring to
 // flag it as the recommended entry point.
 //
 // Ported from nb3 products.tsx, Tailwind → CSS Module + Gravity.
@@ -26,18 +26,18 @@ const PRODUCTS: Product[] = [
     name: 'AI Cloud',
     blurb:
       'Spin up GPU VMs and multi-node clusters for training and custom stacks, with full control.',
-    primaryHref: 'https://docs.nebius.com/compute/quickstart',
+    primaryHref: 'https://tenki.cloud/docs/compute/quickstart',
     primaryLabel: 'Start building',
-    secondaryHref: 'https://docs.nebius.com/tutorials/rag',
+    secondaryHref: 'https://tenki.cloud/docs/tutorials/rag',
     secondaryLabel: 'How-tos',
   },
   {
-    name: 'Token Factory',
+    name: 'Tenki',
     blurb:
       'Serve open-source models via an OpenAI-compatible API with real-time and batch inference, dedicated endpoints, and production SLAs.',
-    primaryHref: 'https://docs.tokenfactory.nebius.com/quickstart',
+    primaryHref: 'https://tenki.cloud/docs/quickstart',
     primaryLabel: 'Start building',
-    secondaryHref: 'https://github.com/nebius/token-factory-cookbook',
+    secondaryHref: 'https://github.com/tenki-cloud/token-factory-cookbook',
     secondaryLabel: 'How-tos',
     highlight: true,
   },
@@ -45,9 +45,9 @@ const PRODUCTS: Product[] = [
     name: 'Serverless',
     blurb:
       'Build and deploy serverless AI jobs and endpoints from your container in minutes — no Kubernetes, no infrastructure.',
-    primaryHref: 'https://docs.nebius.com/serverless/quickstart/jobs',
+    primaryHref: 'https://tenki.cloud/docs/serverless/quickstart/jobs',
     primaryLabel: 'Start building',
-    secondaryHref: 'https://docs.nebius.com/serverless/tutorials/deploy-model',
+    secondaryHref: 'https://tenki.cloud/docs/serverless/tutorials/deploy-model',
     secondaryLabel: 'How-tos',
   },
   {

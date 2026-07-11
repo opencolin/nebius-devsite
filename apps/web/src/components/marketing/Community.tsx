@@ -22,7 +22,7 @@ const CARDS: CommunityCard[] = [
   {
     title: 'Discord',
     blurb:
-      "Ask questions, share what you're building, and get help from other Nebius builders and the team.",
+      "Ask questions, share what you're building, and get help from other Tenki builders and the team.",
     cta: 'Join Discord',
     href: 'https://discord.gg/CncTn9zVzS',
   },
@@ -38,12 +38,12 @@ const CARDS: CommunityCard[] = [
     blurb:
       'Examples, templates, and reference architectures to copy-paste into your stack.',
     cta: 'Go to repos',
-    href: 'https://github.com/nebius',
+    href: 'https://github.com/tenki-cloud',
   },
   {
     title: 'YouTube',
     blurb:
-      'Walkthroughs, demos, and technical deep dives from the Nebius team.',
+      'Walkthroughs, demos, and technical deep dives from the Tenki team.',
     cta: 'See videos',
     href: 'https://www.youtube.com/@nebiusofficial/videos',
   },
@@ -52,14 +52,14 @@ const CARDS: CommunityCard[] = [
     blurb:
       'Daily updates, release threads, and the occasional GPU benchmark from @nebiusai.',
     cta: 'Follow @nebiusai',
-    href: 'https://x.com/nebiusai',
+    href: 'https://x.com/TenkiCloud',
   },
   {
     title: 'LinkedIn',
     blurb:
       'Company announcements, partnerships, and team posts. Good follow if your stakeholders live here.',
     cta: 'Follow on LinkedIn',
-    href: 'https://www.linkedin.com/company/nebius',
+    href: 'https://www.linkedin.com/company/tenki-cloud',
   },
 ];
 
@@ -103,7 +103,7 @@ export function Community() {
           </Text>
           <Text variant="body-2" color="secondary" className={styles.body}>
             Get help, share what you&rsquo;re building, and connect with other
-            Nebius builders.
+            Tenki builders.
           </Text>
         </header>
 

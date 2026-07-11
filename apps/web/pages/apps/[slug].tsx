@@ -57,7 +57,7 @@ interface Builder {
 // Keys are the single-word Directus enum values (tokenfactory / aicloud),
 // not the underscored form — same fix as /apps/index.tsx and /library.
 const PRODUCT_LABEL: Record<string, string> = {
-  tokenfactory: 'Token Factory',
+  tokenfactory: 'Tenki',
   aicloud: 'AI Cloud',
   openclaw: 'OpenClaw',
   soperator: 'Soperator',
@@ -72,11 +72,11 @@ const HACKATHON_META: Record<
   {label: string; href: string} | null
 > = {
   robotics: {
-    label: 'Nebius.Build Hackathon — Robotics edition',
+    label: 'Tenki.Build Hackathon — Robotics edition',
     href: '/events',
   },
   jetbrains: {
-    label: 'Nebius × JetBrains × Codex IDE Hackathon',
+    label: 'Tenki × JetBrains × Codex IDE Hackathon',
     href: '/events',
   },
   none: null,
@@ -96,7 +96,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: rows
       .filter((r) => !isPlaceholderProject(r))
       .map((r) => ({params: {slug: r.slug}})),
-    fallback: 'blocking',
+    fallback: process.env.DEVSITE_EXPORT === '1' ? false : 'blocking',
   };
 };
 
@@ -156,7 +156,7 @@ export default function ProjectPage({
   return (
     <PublicLayout>
       <Head>
-        <title>{`${project.title} · Nebius Builders`}</title>
+        <title>{`${project.title} · Tenki Builders`}</title>
         <meta name="description" content={project.tagline} />
       </Head>
 

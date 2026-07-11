@@ -69,10 +69,10 @@ export default function BuildersDirectoryPage({
   return (
     <PublicLayout>
       <Head>
-        <title>Builders directory · Nebius Builders</title>
+        <title>Builders directory · Tenki Builders</title>
         <meta
           name="description"
-          content="Filterable directory of every builder in the Nebius Builders Network."
+          content="Filterable directory of every builder in the Tenki Builders Network."
         />
       </Head>
       <div className={page.container}>

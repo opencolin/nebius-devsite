@@ -42,17 +42,17 @@ export default function TeamPage({
   return (
     <PublicLayout>
       <Head>
-        <title>Team · Nebius Builders</title>
+        <title>Team · Tenki Builders</title>
         <meta
           name="description"
-          content="Meet the Nebius DevRel team. Office hours, no gatekeeping."
+          content="Meet the Tenki DevRel team. Office hours, no gatekeeping."
         />
       </Head>
       <div className={page.container}>
         <PageHeader
           eyebrow="Team"
-          title="Meet the Nebius DevRel team"
-          description="Reach the right person on the Nebius DevRel team directly — dev advocates, engineers, program leads. 15-minute office hours, no gatekeeping. Cover questions about events, content, infrastructure, hiring leads — whatever helps you ship."
+          title="Meet the Tenki DevRel team"
+          description="Reach the right person on the Tenki DevRel team directly — dev advocates, engineers, program leads. 15-minute office hours, no gatekeeping. Cover questions about events, content, infrastructure, hiring leads — whatever helps you ship."
         />
 
         <div className={page.grid3}>
@@ -64,7 +64,7 @@ export default function TeamPage({
                     {m.name}
                   </Text>
                   <Text variant="caption-2" color="secondary" className={styles.title}>
-                    {m.title.replace(', Nebius', '')}
+                    {m.title.replace(', Tenki', '')}
                   </Text>
                   <Text variant="caption-2" color="secondary">
                     {m.region}

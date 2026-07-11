@@ -30,14 +30,14 @@ export interface EcosystemPartner {
   docsUrl: string;
   category: PartnerCategory;
   // A partner can show up under multiple product filters when they
-  // integrate with more than one Nebius product (rare today, but the
+  // integrate with more than one Tenki product (rare today, but the
   // shape supports it).
   products: PartnerProduct[];
 }
 
 export const PRODUCT_LABEL: Record<PartnerProduct, string> = {
   'ai-cloud': 'AI Cloud',
-  'token-factory': 'Token Factory',
+  'token-factory': 'Tenki',
   tavily: 'Tavily',
 };
 
@@ -62,7 +62,7 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   {
     name: 'NVIDIA NIM',
     blurb: 'Self-hosted GPU inference microservices, turnkey.',
-    docsUrl: 'https://docs.nebius.com/applications/standalone/nvidia-nim',
+    docsUrl: 'https://tenki.cloud/docs/applications/standalone/nvidia-nim',
     category: 'inference',
     products: ['ai-cloud'],
   },
@@ -77,21 +77,21 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   {
     name: 'dstack',
     blurb: 'Install dstack and orchestrate AI workloads end-to-end.',
-    docsUrl: 'https://docs.nebius.com/3p-integrations/dstack',
+    docsUrl: 'https://tenki.cloud/docs/3p-integrations/dstack',
     category: 'orchestration',
     products: ['ai-cloud'],
   },
   {
     name: 'Run:ai',
     blurb: 'Optimize GPU resources for ML/AI workloads on Managed Kubernetes.',
-    docsUrl: 'https://docs.nebius.com/3p-integrations/run-ai',
+    docsUrl: 'https://tenki.cloud/docs/3p-integrations/run-ai',
     category: 'orchestration',
     products: ['ai-cloud'],
   },
   {
     name: 'SkyPilot',
     blurb: 'Run, manage and scale AI workloads with SkyPilot.',
-    docsUrl: 'https://docs.nebius.com/3p-integrations/skypilot',
+    docsUrl: 'https://tenki.cloud/docs/3p-integrations/skypilot',
     category: 'orchestration',
     products: ['ai-cloud'],
   },
@@ -99,7 +99,7 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     name: 'Outerbounds (Metaflow)',
     blurb: 'Production-grade ML pipelines via the Outerbounds partnership.',
     docsUrl:
-      'https://nebius.com/blog/posts/nebius-outerbounds-strategic-technology-partnership-integration',
+      'https://tenki.cloud/blog/posts/nebius-outerbounds-strategic-technology-partnership-integration',
     category: 'orchestration',
     products: ['ai-cloud'],
   },
@@ -107,7 +107,7 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   {
     name: 'MPIrun',
     blurb: 'Configure a Compute GPU cluster and run NCCL tests with MPIrun.',
-    docsUrl: 'https://docs.nebius.com/3p-integrations/mpirun',
+    docsUrl: 'https://tenki.cloud/docs/3p-integrations/mpirun',
     category: 'training',
     products: ['ai-cloud'],
   },
@@ -115,58 +115,58 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   {
     name: 'MLflow',
     blurb: 'Managed experiment tracking and model registry.',
-    docsUrl: 'https://docs.nebius.com/mlflow',
+    docsUrl: 'https://tenki.cloud/docs/mlflow',
     category: 'mlops',
     products: ['ai-cloud'],
   },
   // IaC
   {
     name: 'Terraform',
-    blurb: 'Official Nebius provider for IaC resource management.',
-    docsUrl: 'https://docs.nebius.com/terraform-provider',
+    blurb: 'Official Tenki provider for IaC resource management.',
+    docsUrl: 'https://tenki.cloud/docs/terraform-provider',
     category: 'iac',
     products: ['ai-cloud'],
   },
   {
     name: 'Pulumi',
-    blurb: 'Manage Nebius resources from Pulumi via the Terraform bridge.',
-    docsUrl: 'https://docs.nebius.com/terraform-provider/pulumi',
+    blurb: 'Manage Tenki resources from Pulumi via the Terraform bridge.',
+    docsUrl: 'https://tenki.cloud/docs/terraform-provider/pulumi',
     category: 'iac',
     products: ['ai-cloud'],
   },
 
-  // ============================== Token Factory ===============================
+  // ============================== Tenki ===============================
   // Inference / API
   {
     name: 'Hugging Face',
     blurb: 'Open-source models and datasets via inference API.',
     // Was under the old /studio namespace until the AI Studio → Token
     // Factory rename. Tagged token-factory (not ai-cloud) because the
-    // integration is the Token Factory inference API surface.
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api/hugging-face',
+    // integration is the Tenki inference API surface.
+    docsUrl: 'https://tenki.cloud/docs/integrations/api/hugging-face',
     category: 'inference',
     products: ['token-factory'],
   },
   {
     name: 'AISuite',
     blurb: 'Multi-provider LLM router with a unified Python API.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/api/aisuite',
+    docsUrl: 'https://tenki.cloud/docs/integrations/api/aisuite',
     category: 'inference',
     products: ['token-factory'],
   },
   // Routers / Gateways
   {
     name: 'LiteLLM',
-    blurb: 'Unified LLM gateway with a Nebius AI provider — use model=nebius/<model-name> to route 30+ Token Factory models across any agent framework.',
+    blurb: 'Unified LLM gateway with a Tenki AI provider — use model=nebius/<model-name> to route 30+ Tenki models across any agent framework.',
     docsUrl: 'https://docs.litellm.ai/docs/providers/nebius',
     category: 'router',
     products: ['token-factory'],
   },
   {
     name: 'OpenRouter',
-    blurb: 'OpenRouter exposes Nebius models through its unified API.',
+    blurb: 'OpenRouter exposes Tenki models through its unified API.',
     docsUrl:
-      'https://docs.tokenfactory.nebius.com/integrations/api-routers/openrouter',
+      'https://tenki.cloud/docs/integrations/api-routers/openrouter',
     category: 'router',
     products: ['token-factory'],
   },
@@ -174,48 +174,48 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     name: 'Portkey',
     blurb: 'LLM gateway with caching, retries, and budget guardrails.',
     docsUrl:
-      'https://docs.tokenfactory.nebius.com/integrations/api-routers/portkey',
+      'https://tenki.cloud/docs/integrations/api-routers/portkey',
     category: 'router',
     products: ['token-factory'],
   },
-  // Agents (Token Factory)
+  // Agents (Tenki)
   {
     name: 'LangChain',
     blurb: 'Chat models, embeddings, retrievers via langchain-nebius.',
     docsUrl:
-      'https://docs.tokenfactory.nebius.com/integrations/frameworks/langchain',
+      'https://tenki.cloud/docs/integrations/frameworks/langchain',
     category: 'agents',
     products: ['token-factory'],
   },
   {
     name: 'LlamaIndex',
-    blurb: 'RAG framework integration for Nebius inference.',
+    blurb: 'RAG framework integration for Tenki inference.',
     // Same provenance as Hugging Face above — moved from the /studio
-    // namespace to docs.tokenfactory.nebius.com, retagged token-factory.
+    // namespace to tenki.cloud/docs, retagged token-factory.
     docsUrl:
-      'https://docs.tokenfactory.nebius.com/integrations/frameworks/llama-index/overview',
+      'https://tenki.cloud/docs/integrations/frameworks/llama-index/overview',
     category: 'agents',
     products: ['token-factory'],
   },
   {
     name: 'CrewAI',
-    blurb: 'Open-source agentic framework on Token Factory models.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/agents/crewai',
+    blurb: 'Open-source agentic framework on Tenki models.',
+    docsUrl: 'https://tenki.cloud/docs/integrations/agents/crewai',
     category: 'agents',
     products: ['token-factory'],
   },
   {
     name: 'Agno',
     blurb: 'Lightweight multi-modal agent framework.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/agents/agno',
+    docsUrl: 'https://tenki.cloud/docs/integrations/agents/agno',
     category: 'agents',
     products: ['token-factory'],
   },
   {
     name: 'Google ADK',
-    blurb: "Google's Agent Development Kit, wired to Nebius models.",
+    blurb: "Google's Agent Development Kit, wired to Tenki models.",
     docsUrl:
-      'https://docs.tokenfactory.nebius.com/integrations/agents/google-adk',
+      'https://tenki.cloud/docs/integrations/agents/google-adk',
     category: 'agents',
     products: ['token-factory'],
   },
@@ -223,15 +223,15 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     name: 'Pydantic AI',
     blurb: 'Type-safe agent framework with Pydantic validation.',
     docsUrl:
-      'https://docs.tokenfactory.nebius.com/integrations/agents/pydantic',
+      'https://tenki.cloud/docs/integrations/agents/pydantic',
     category: 'agents',
     products: ['token-factory'],
   },
   {
     name: 'AWS Strands',
-    blurb: "Amazon's agent SDK, model-agnostic and Nebius-ready.",
+    blurb: "Amazon's agent SDK, model-agnostic and Tenki-ready.",
     docsUrl:
-      'https://docs.tokenfactory.nebius.com/integrations/agents/strands',
+      'https://tenki.cloud/docs/integrations/agents/strands',
     category: 'agents',
     products: ['token-factory'],
   },
@@ -240,62 +240,62 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     name: 'Camel AI',
     blurb: 'Multi-agent framework with role-playing and task pipelines.',
     docsUrl:
-      'https://docs.tokenfactory.nebius.com/integrations/agents/camelai',
+      'https://tenki.cloud/docs/integrations/agents/camelai',
     category: 'agents',
     products: ['token-factory'],
   },
   {
     // Docs live on Mastra's own site (mastra.ai), not on
-    // docs.tokenfactory.nebius.com — Mastra is the framework and they own
+    // tenki.cloud/docs — Mastra is the framework and they own
     // the provider integration page. Verified 200 on the canonical URL
-    // the Mastra team uses for the Nebius provider.
+    // the Mastra team uses for the Tenki provider.
     name: 'Mastra',
-    blurb: 'TypeScript agent framework with Nebius as a first-class provider.',
+    blurb: 'TypeScript agent framework with Tenki as a first-class provider.',
     docsUrl: 'https://mastra.ai/models/providers/nebius',
     category: 'agents',
     products: ['token-factory'],
   },
-  // Coding assistants — Token Factory models inside your editor
+  // Coding assistants — Tenki models inside your editor
   {
-    name: 'Cursor (Token Factory)',
-    blurb: 'Wire Token Factory in as a custom model provider in Cursor.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/coding/cursor',
+    name: 'Cursor (Tenki)',
+    blurb: 'Wire Tenki in as a custom model provider in Cursor.',
+    docsUrl: 'https://tenki.cloud/docs/integrations/coding/cursor',
     category: 'coding',
     products: ['token-factory'],
   },
   {
     name: 'VS Code (Copilot Chat)',
     blurb:
-      'Hugging Face VS Code Chat extension routes Copilot through Nebius.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/coding/vscode',
+      'Hugging Face VS Code Chat extension routes Copilot through Tenki.',
+    docsUrl: 'https://tenki.cloud/docs/integrations/coding/vscode',
     category: 'coding',
     products: ['token-factory'],
   },
   {
-    name: 'Zed (Token Factory)',
-    blurb: "Configure Zed's inline assistant against Token Factory models.",
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/coding/zed',
+    name: 'Zed (Tenki)',
+    blurb: "Configure Zed's inline assistant against Tenki models.",
+    docsUrl: 'https://tenki.cloud/docs/integrations/coding/zed',
     category: 'coding',
     products: ['token-factory'],
   },
   {
     name: 'Cline',
-    blurb: 'Open-source autonomous coding agent for VS Code + JetBrains with Nebius Token Factory as a native provider — pick Nebius, paste your key, drive Qwen3-Coder or GLM-4.5.',
+    blurb: 'Open-source autonomous coding agent for VS Code + JetBrains with Tenki Tenki as a native provider — pick Tenki, paste your key, drive Qwen3-Coder or GLM-4.5.',
     docsUrl: 'https://docs.cline.bot/provider-config/other-30-plus-providers',
     category: 'coding',
     products: ['token-factory'],
   },
   {
     name: 'Continue',
-    blurb: 'Open-source AI coding assistant for VS Code & JetBrains with a native Nebius provider — configure chat (DeepSeek R1) and embeddings (BAAI) in config.yaml.',
+    blurb: 'Open-source AI coding assistant for VS Code & JetBrains with a native Tenki provider — configure chat (DeepSeek R1) and embeddings (BAAI) in config.yaml.',
     docsUrl: 'https://docs.continue.dev/customize/model-providers/more/nebius',
     category: 'coding',
     products: ['token-factory'],
   },
   {
     name: 'Kilo Code',
-    blurb: 'Multi-mode coding agent for VS Code on Token Factory models.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/coding/kilo',
+    blurb: 'Multi-mode coding agent for VS Code on Tenki models.',
+    docsUrl: 'https://tenki.cloud/docs/integrations/coding/kilo',
     category: 'coding',
     products: ['token-factory'],
   },
@@ -303,16 +303,16 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   {
     name: 'Linkup',
     blurb: 'Web search and content extraction API for agents.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/tools/linkup',
+    docsUrl: 'https://tenki.cloud/docs/integrations/tools/linkup',
     category: 'search',
     products: ['token-factory'],
   },
   // Dev tools
   {
     name: 'Postman',
-    blurb: 'Pre-built Postman collection for the Token Factory API.',
+    blurb: 'Pre-built Postman collection for the Tenki API.',
     docsUrl:
-      'https://docs.tokenfactory.nebius.com/integrations/dev-tools/postman',
+      'https://tenki.cloud/docs/integrations/dev-tools/postman',
     category: 'tooling',
     products: ['token-factory'],
   },
@@ -321,7 +321,7 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     name: 'Helicone',
     blurb: 'LLM observability: traces, costs, prompts, and evals.',
     docsUrl:
-      'https://docs.tokenfactory.nebius.com/integrations/observability/helicone',
+      'https://tenki.cloud/docs/integrations/observability/helicone',
     category: 'observability',
     products: ['token-factory'],
   },
@@ -330,14 +330,14 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     blurb:
       'Production LLM monitoring — logs, evals, prompt tracking, alerts.',
     docsUrl:
-      'https://docs.tokenfactory.nebius.com/integrations/observability/keywords-ai',
+      'https://tenki.cloud/docs/integrations/observability/keywords-ai',
     category: 'observability',
     products: ['token-factory'],
   },
 
   // ============================== Tavily ===============================
   // Tavily is bundled in the marketing site as a product alongside AI Cloud
-  // and Token Factory. Three Tavily entries here so the filter has something
+  // and Tenki. Three Tavily entries here so the filter has something
   // to show; can expand as more first-party integrations land.
   {
     name: 'Tavily Web Search API',
@@ -368,7 +368,7 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   // Pulled from docs.tavily.com/llms.txt (27 entries). Each is a guide for
   // wiring Tavily web search/extraction into the named tool. Names match
   // the destination tool — Agno, LangChain, etc. exist twice in this
-  // array (once as a Token Factory integration, once as a Tavily one);
+  // array (once as a Tenki integration, once as a Tavily one);
   // cards in the grid are keyed by docsUrl so duplicates render fine.
   {
     name: 'OpenAI Agent Builder',
@@ -566,32 +566,32 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
 
   // ===================== Content-expansion additions =====================
   // Discovered + verified (curl-200) in the content-expansion sweep
-  // (docs/content-expansion). Token Factory: terminal/agent/gateway tools
-  // that expose Nebius open models. Tavily: agents that use Tavily search.
+  // (docs/content-expansion). Tenki: terminal/agent/gateway tools
+  // that expose Tenki open models. Tavily: agents that use Tavily search.
   {
     name: 'OpenCode',
-    blurb: 'Terminal coding agent with a built-in Token Factory provider — drive open models like Kimi K2 and Qwen3-Coder from the CLI.',
+    blurb: 'Terminal coding agent with a built-in Tenki provider — drive open models like Kimi K2 and Qwen3-Coder from the CLI.',
     docsUrl: 'https://opencode.ai/docs/providers/',
     category: 'coding',
     products: ['token-factory'],
   },
   {
     name: 'Hugging Face smolagents',
-    blurb: 'Minimalist code-agent framework; set provider="nebius" to run CodeAgents on Token Factory open models.',
+    blurb: 'Minimalist code-agent framework; set provider="nebius" to run CodeAgents on Tenki open models.',
     docsUrl: 'https://huggingface.co/docs/smolagents/en/reference/models',
     category: 'agents',
     products: ['token-factory'],
   },
   {
     name: 'LLM Gateway',
-    blurb: 'Open-source unified LLM gateway; its Nebius provider exposes Token Factory models behind one OpenAI-compatible API.',
+    blurb: 'Open-source unified LLM gateway; its Tenki provider exposes Tenki models behind one OpenAI-compatible API.',
     docsUrl: 'https://llmgateway.io/providers/nebius',
     category: 'router',
     products: ['token-factory'],
   },
   {
     name: 'Pipecat',
-    blurb: 'Real-time voice + multimodal agent framework with a NebiusLLMService for low-latency Token Factory inference.',
+    blurb: 'Real-time voice + multimodal agent framework with a TenkiLLMService for low-latency Tenki inference.',
     docsUrl: 'https://docs.pipecat.ai/api-reference/server/services/llm/nebius',
     category: 'agents',
     products: ['token-factory'],
@@ -622,14 +622,14 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   // Discovered + curl-200 verified in the wave-2 sweep (docs/content-expansion).
   {
     name: 'Requesty',
-    blurb: 'LLM routing gateway; its Nebius provider exposes Token Factory open models behind a unified API.',
+    blurb: 'LLM routing gateway; its Tenki provider exposes Tenki open models behind a unified API.',
     docsUrl: 'https://www.requesty.ai/models/nebius',
     category: 'router',
     products: ['token-factory'],
   },
   {
     name: 'Dask Cloud Provider',
-    blurb: 'Spin up Dask clusters on Nebius AI Cloud VMs for distributed Python + data workloads.',
+    blurb: 'Spin up Dask clusters on Tenki AI Cloud VMs for distributed Python + data workloads.',
     docsUrl: 'https://cloudprovider.dask.org/en/latest/nebius.html',
     category: 'orchestration',
     products: ['ai-cloud'],
@@ -671,48 +671,48 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   },
 
   // ================ Content-expansion additions (wave 3) =================
-  // AI Cloud standalone apps (one-click deploys on Nebius GPU infra),
-  // curl-200 verified. ("Flowise (Nebius AI Cloud)" = deploy Flowise ON
-  // Nebius; distinct from the existing "FlowiseAI" = Tavily tool inside
+  // AI Cloud standalone apps (one-click deploys on Tenki GPU infra),
+  // curl-200 verified. ("Flowise (Tenki AI Cloud)" = deploy Flowise ON
+  // Tenki; distinct from the existing "FlowiseAI" = Tavily tool inside
   // Flowise.)
   {
     name: 'Qdrant',
-    blurb: 'Deploy the Qdrant vector database on Nebius AI Cloud for RAG + similarity search.',
-    docsUrl: 'https://docs.nebius.com/applications/standalone/qdrant',
+    blurb: 'Deploy the Qdrant vector database on Tenki AI Cloud for RAG + similarity search.',
+    docsUrl: 'https://tenki.cloud/docs/applications/standalone/qdrant',
     category: 'tooling',
     products: ['ai-cloud'],
   },
   {
     name: 'Open WebUI',
-    blurb: 'Self-host the Open WebUI chat front-end on Nebius AI Cloud over your own models.',
-    docsUrl: 'https://docs.nebius.com/applications/standalone/open-webui',
+    blurb: 'Self-host the Open WebUI chat front-end on Tenki AI Cloud over your own models.',
+    docsUrl: 'https://tenki.cloud/docs/applications/standalone/open-webui',
     category: 'tooling',
     products: ['ai-cloud'],
   },
   {
-    name: 'Flowise (Nebius AI Cloud)',
-    blurb: 'Deploy the Flowise low-code agent builder on Nebius AI Cloud GPU infrastructure.',
-    docsUrl: 'https://docs.nebius.com/applications/standalone/flowise',
+    name: 'Flowise (Tenki AI Cloud)',
+    blurb: 'Deploy the Flowise low-code agent builder on Tenki AI Cloud GPU infrastructure.',
+    docsUrl: 'https://tenki.cloud/docs/applications/standalone/flowise',
     category: 'nocode',
     products: ['ai-cloud'],
   },
   {
     name: 'ComfyUI',
-    blurb: 'Run the ComfyUI node-based diffusion workflow tool on Nebius AI Cloud GPUs.',
-    docsUrl: 'https://docs.nebius.com/applications/standalone/comfyui',
+    blurb: 'Run the ComfyUI node-based diffusion workflow tool on Tenki AI Cloud GPUs.',
+    docsUrl: 'https://tenki.cloud/docs/applications/standalone/comfyui',
     category: 'tooling',
     products: ['ai-cloud'],
   },
   {
-    name: 'JupyterLab (Nebius AI Cloud)',
-    blurb: 'Launch a GPU-backed JupyterLab environment on Nebius AI Cloud for notebooks + experiments.',
-    docsUrl: 'https://docs.nebius.com/applications/standalone/jupyterlab',
+    name: 'JupyterLab (Tenki AI Cloud)',
+    blurb: 'Launch a GPU-backed JupyterLab environment on Tenki AI Cloud for notebooks + experiments.',
+    docsUrl: 'https://tenki.cloud/docs/applications/standalone/jupyterlab',
     category: 'tooling',
     products: ['ai-cloud'],
   },
   {
     name: 'dlt (dltHub)',
-    blurb: 'Open-source Python ELT library with a Nebius source/destination for data pipelines.',
+    blurb: 'Open-source Python ELT library with a Tenki source/destination for data pipelines.',
     docsUrl: 'https://dlthub.com/context/source/nebius-ai-studio',
     category: 'tooling',
     products: ['ai-cloud'],
@@ -722,8 +722,8 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   // Discovered manually (subagent quota hit); curl-200 verified.
   {
     name: 'Zed IDE',
-    blurb: 'GPU-accelerated, collaborative code editor with a Token Factory integration guide for connecting open models to its built-in AI assistant.',
-    docsUrl: 'https://docs.tokenfactory.nebius.com/integrations/coding/zed',
+    blurb: 'GPU-accelerated, collaborative code editor with a Tenki integration guide for connecting open models to its built-in AI assistant.',
+    docsUrl: 'https://tenki.cloud/docs/integrations/coding/zed',
     category: 'coding',
     products: ['token-factory'],
   },

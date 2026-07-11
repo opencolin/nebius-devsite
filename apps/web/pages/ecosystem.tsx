@@ -1,7 +1,7 @@
 // /ecosystem — unified directory of community apps + partner integrations.
 //
 // Surfaces both data sources in one mixed grid with a Kind filter chip,
-// so visitors can browse the full Nebius ecosystem in one place. The
+// so visitors can browse the full Tenki ecosystem in one place. The
 // canonical pages for each source still exist:
 //
 //   /apps          → community-built projects only (Directus `projects`)
@@ -9,7 +9,7 @@
 //   /ecosystem     → the union of the two, mixed in one grid
 //
 // Filter chips: All / Hackathons / Integration (kind axis) plus the
-// product chips that apply to both kinds (Token Factory, AI Cloud,
+// product chips that apply to both kinds (Tenki, AI Cloud,
 // OpenClaw, Soperator, Tavily). Apps-only chips like Featured /
 // Robotics / JetBrains stay on /apps; integration-only category chips
 // (Agents, No-code, Coding, etc.) stay on /integrations.
@@ -65,7 +65,7 @@ const FILTERS = [
   'All',
   'Hackathons',
   'Integration',
-  'Token Factory',
+  'Tenki',
   'AI Cloud',
   'OpenClaw',
   'Soperator',
@@ -79,7 +79,7 @@ type Filter = (typeof FILTERS)[number];
 // PRODUCT_KEYS holds the matching value in each so a single chip can
 // filter both data sources without duplication.
 const PRODUCT_KEYS: Record<string, {apps: string; integrations: string | null}> = {
-  'Token Factory': {apps: 'tokenfactory', integrations: 'token-factory'},
+  'Tenki': {apps: 'tokenfactory', integrations: 'token-factory'},
   'AI Cloud': {apps: 'aicloud', integrations: 'ai-cloud'},
   OpenClaw: {apps: 'openclaw', integrations: null}, // no integration partner uses openclaw
   Soperator: {apps: 'soperator', integrations: null},
@@ -88,7 +88,7 @@ const PRODUCT_KEYS: Record<string, {apps: string; integrations: string | null}> 
 
 // Apps store the apps-vocabulary value; render-time label lookup.
 const APPS_PRODUCT_LABEL: Record<string, string> = {
-  tokenfactory: 'Token Factory',
+  tokenfactory: 'Tenki',
   aicloud: 'AI Cloud',
   openclaw: 'OpenClaw',
   soperator: 'Soperator',
@@ -161,10 +161,10 @@ export default function EcosystemPage({
   return (
     <PublicLayout>
       <Head>
-        <title>{`Ecosystem · Nebius Builders`}</title>
+        <title>{`Ecosystem · Tenki Builders`}</title>
         <meta
           name="description"
-          content="The Nebius ecosystem — community apps built on Nebius plus partner integrations that plug into our products."
+          content="The Tenki ecosystem — community apps built on Tenki plus partner integrations that plug into our products."
         />
       </Head>
       {/* Static, compact dark hero (animated={false} + compact). The R3F
@@ -174,7 +174,7 @@ export default function EcosystemPage({
       <HeroSection
         eyebrow="Ecosystem"
         title="Apps and integrations, and more."
-        lede={`A library of ${projects.length + partners.length} open-source projects you can fork, drop into your own stack, or learn from. Community apps built on Nebius alongside partner integrations that plug into our products.`}
+        lede={`A library of ${projects.length + partners.length} open-source projects you can fork, drop into your own stack, or learn from. Community apps built on Tenki alongside partner integrations that plug into our products.`}
         animated={false}
         compact
       />
@@ -443,7 +443,7 @@ function SubmitProjectBanner() {
       target="_blank"
       rel="noopener noreferrer"
       className={styles.submitBannerLink}
-      aria-label="Submit your project to the Nebius ecosystem directory"
+      aria-label="Submit your project to the Tenki ecosystem directory"
     >
       <div className={styles.submitBanner}>
         <div className={styles.submitBannerCopy}>
@@ -451,11 +451,11 @@ function SubmitProjectBanner() {
             Submit your project
           </Text>
           <Text variant="subheader-2" as="h2" className={styles.submitBannerTitle}>
-            Built something on Nebius? Add it to the directory.
+            Built something on Tenki? Add it to the directory.
           </Text>
           <Text variant="body-2" color="secondary" className={styles.submitBannerLede}>
             Community apps and integrations are both welcome. The form takes
-            about two minutes — repo, demo, who built it, which Nebius
+            about two minutes — repo, demo, who built it, which Tenki
             products it uses, and a couple of optional bits. We review every
             submission and reach out if we need anything else.
           </Text>
@@ -479,7 +479,7 @@ function SubmitProjectBanner() {
 // Fields collected:
 //   Project: name, tagline, description, type (community vs integration)
 //   Links:   repo, live demo, YouTube demo, logo
-//   Tech:    Nebius products used, tags, license
+//   Tech:    Tenki products used, tags, license
 //   Creator: name, GitHub handle, contact, company
 //   Consent: social-amplification permission
 //   Free:    anything else
@@ -494,8 +494,8 @@ function submitProjectIssueUrl(): string {
     '**Description (2-3 sentences):**',
     '',
     '**Type (pick one):**',
-    '- [ ] Community app — built on Nebius',
-    '- [ ] Integration — connects a third-party tool or framework to Nebius',
+    '- [ ] Community app — built on Tenki',
+    '- [ ] Integration — connects a third-party tool or framework to Tenki',
     '',
     '## Links',
     '**Repo URL (GitHub):**',
@@ -507,8 +507,8 @@ function submitProjectIssueUrl(): string {
     '**Logo URL (square image, optional):**',
     '',
     '## Tech',
-    '**Nebius product(s) used (check all that apply):**',
-    '- [ ] Token Factory',
+    '**Tenki product(s) used (check all that apply):**',
+    '- [ ] Tenki',
     '- [ ] AI Cloud',
     '- [ ] OpenClaw',
     '- [ ] Soperator',
@@ -528,7 +528,7 @@ function submitProjectIssueUrl(): string {
     '**Company / org (optional):**',
     '',
     '## Permissions',
-    '**Can we amplify this on Nebius social channels?**',
+    '**Can we amplify this on Tenki social channels?**',
     '- [ ] Yes, please share on Twitter / LinkedIn / Discord',
     '- [ ] Not yet — keep it internal until I say so',
     '',

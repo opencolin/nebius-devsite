@@ -23,7 +23,7 @@ export default function HostNewEventPage() {
   const [country, setCountry] = useState('');
   const [expectedAttendees, setExpectedAttendees] = useState('');
   const [agenda, setAgenda] = useState('');
-  const [needsFromNebius, setNeedsFromNebius] = useState('');
+  const [needsFromTenki, setNeedsFromTenki] = useState('');
   const [amountUsd, setAmountUsd] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -46,7 +46,7 @@ export default function HostNewEventPage() {
           country,
           expected_attendees: expectedAttendees,
           agenda,
-          needs_from_nebius: needsFromNebius,
+          needs_from_nebius: needsFromTenki,
           amount_usd: amountUsd,
         }),
       });
@@ -71,7 +71,7 @@ export default function HostNewEventPage() {
         <PageHeader
           eyebrow="Events"
           title="Host an event"
-          description="Apply to host a Nebius-supported event. We'll respond within 48h with credit allocation, swag shipping, and advocate support."
+          description="Apply to host a Tenki-supported event. We'll respond within 48h with credit allocation, swag shipping, and advocate support."
         />
         <Card
           view="filled"
@@ -102,7 +102,7 @@ export default function HostNewEventPage() {
       <PageHeader
         eyebrow="Events"
         title="Host an event"
-        description="Apply to host a Nebius-supported event. We'll respond within 48h with credit allocation, swag shipping, and advocate support."
+        description="Apply to host a Tenki-supported event. We'll respond within 48h with credit allocation, swag shipping, and advocate support."
       />
 
       <form onSubmit={onSubmit}>
@@ -110,7 +110,7 @@ export default function HostNewEventPage() {
           <Text variant="caption-2" color="secondary">EVENT BASICS</Text>
           <TextInput
             label="Title"
-            placeholder="e.g. Fine-tuning Llama on Nebius"
+            placeholder="e.g. Fine-tuning Llama on Tenki"
             value={title}
             onUpdate={setTitle}
           />
@@ -172,11 +172,11 @@ export default function HostNewEventPage() {
             onUpdate={setAgenda}
           />
           <LabeledTextArea
-            label="What you need from Nebius"
+            label="What you need from Tenki"
             rows={3}
             placeholder="Credits, swag, advocate as a speaker, sample code, etc."
-            value={needsFromNebius}
-            onUpdate={setNeedsFromNebius}
+            value={needsFromTenki}
+            onUpdate={setNeedsFromTenki}
           />
           {error ? (
             <Text variant="body-2" color="danger" role="alert">

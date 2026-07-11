@@ -97,7 +97,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
             'product_focus',
             'is_official',
             'luma_url',
-            // Nebius-hosted webinars carry official_url instead of luma_url;
+            // Tenki-hosted webinars carry official_url instead of luma_url;
             // ActiveEvents falls back to it via eventHref().
             'official_url',
             'location',
@@ -250,7 +250,7 @@ export default function HomePage({
   return (
     <PublicLayout>
       <Head>
-        <title>Nebius for AI Builders</title>
+        <title>Tenki for AI Builders</title>
         <meta
           name="description"
           content="From training and fine-tuning to production inference at scale. Plus a community of builders shipping real work."
@@ -262,7 +262,7 @@ export default function HomePage({
           stays off SSR + other pages; on WebGL failure it falls back to the
           static dark shell. */}
       <HeroSection
-        title="Nebius for AI Builders"
+        title="Tenki for AI Builders"
         lede="From training and fine-tuning to production inference at scale. Plus a community of builders shipping real work — workshops, demos, hackathons, office hours."
         themed
         actions={
@@ -270,7 +270,7 @@ export default function HomePage({
             <Button view="action" size="xl" href="/signup">
               Start building
             </Button>
-            <Button view="outlined" size="xl" href="https://docs.nebius.com" target="_blank">
+            <Button view="outlined" size="xl" href="https://tenki.cloud/docs" target="_blank">
               Read the docs
             </Button>
           </>
