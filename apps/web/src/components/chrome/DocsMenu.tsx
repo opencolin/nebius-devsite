@@ -25,7 +25,7 @@ const PRODUCTS: DocItem[] = [
   {label: 'AI Cloud',       tagline: 'GPU clusters, VMs, networking',                href: 'https://tenki.cloud/docs/',                          external: true},
   {label: 'Tenki',  tagline: 'Open-source models via OpenAI-compatible API', href: 'https://tenki.cloud/docs/quickstart',   external: true},
   {label: 'Serverless AI',  tagline: 'Endpoints + jobs without infra',               href: 'https://tenki.cloud/docs/serverless',                external: true},
-  {label: 'Tavily',         tagline: 'Real-time web search and content extraction',  href: 'https://docs.tavily.com/',                          external: true},
+  {label: 'Tenki',         tagline: 'Real-time web search and content extraction',  href: 'https://tenki.cloud/docs/',                          external: true},
   {label: 'Soperator',      tagline: 'Slurm workload manager on Kubernetes',         href: 'https://github.com/tenki-cloud',               external: true},
   {label: 'Kubernetes',     tagline: 'Managed K8s clusters',                         href: 'https://tenki.cloud/docs/kubernetes',                external: true},
   {label: 'Compute & GPUs', tagline: 'VMs, containers, GPU drivers',                 href: 'https://tenki.cloud/docs/compute',                   external: true},

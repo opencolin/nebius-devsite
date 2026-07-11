@@ -102,7 +102,7 @@ export default function IntegrationsPage({
         <title>Integrations · Tenki Builders</title>
         <meta
           name="description"
-          content="Every Tenki integration in one filterable directory — products (AI Cloud, Tenki, Tavily) and categories (agents, gateway, orchestration, and more)."
+          content="Every Tenki integration in one filterable directory — products (AI Cloud, Tenki, Tenki) and categories (agents, gateway, orchestration, and more)."
         />
       </Head>
 

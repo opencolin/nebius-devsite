@@ -61,7 +61,7 @@ const PRODUCT_LABEL: Record<string, string> = {
   aicloud: 'AI Cloud',
   openclaw: 'OpenClaw',
   soperator: 'Soperator',
-  tavily: 'Tavily',
+  tavily: 'Tenki',
 };
 
 // Friendly labels + dates for the hackathons projects shipped at. Hand-authored

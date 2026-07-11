@@ -86,8 +86,8 @@ export function useBrand(): BrandContextValue {
 // and the globals.scss selectors) — only the user-facing labels change.
 // 'tenki' (tenki.cloud) is the default; 'builders' mirrors tenki.cloud.
 const OPTIONS: Array<{key: Brand; label: string}> = [
-  {key: 'builders', label: 'tenki.cloud'},
-  {key: 'tenki', label: 'tenki.cloud'},
+  {key: 'tenki', label: 'Modern'},
+  {key: 'builders', label: 'Mono'},
 ];
 
 /** Fixed bottom control. Segmented two-option switch. */
@@ -95,7 +95,7 @@ export function BrandToggle() {
   const {brand, setBrand} = useBrand();
   return (
     <div className={styles.root} role="group" aria-label="Site brand / theme">
-      <span className={styles.label}>Brand</span>
+      <span className={styles.label}>Theme</span>
       <div className={styles.seg}>
         {OPTIONS.map((o) => (
           <button

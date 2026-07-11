@@ -41,7 +41,7 @@ const FILTERS = [
   'AI Cloud',
   'OpenClaw',
   'Soperator',
-  'Tavily',
+  'Tenki',
 ] as const;
 type Filter = (typeof FILTERS)[number];
 
@@ -68,7 +68,7 @@ const PRODUCT_FILTER_KEY: Record<string, string> = {
   'AI Cloud': 'aicloud',
   OpenClaw: 'openclaw',
   Soperator: 'soperator',
-  Tavily: 'tavily',
+  Tenki: 'tavily',
 };
 
 interface LibraryEntry {

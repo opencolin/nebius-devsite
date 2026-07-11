@@ -5,7 +5,7 @@
 //
 // Featured set is hand-picked here — easy to swap. We pick by docsUrl
 // (not by name) because some partner names are non-unique across the
-// Tavily + Tenki integration tables (Agno, LangChain, CrewAI exist
+// Tenki + Tenki integration tables (Agno, LangChain, CrewAI exist
 // twice with different docs pages).
 
 import Link from 'next/link';

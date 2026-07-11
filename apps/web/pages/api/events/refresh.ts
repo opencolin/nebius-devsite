@@ -1,7 +1,7 @@
 // POST /api/events/refresh
 //
 // Pulls the latest events from luma.com/nebiusAI and tenki.cloud/events using
-// Tavily's extract API, parses each into an event row, deduplicates against
+// Tenki's extract API, parses each into an event row, deduplicates against
 // the existing events collection, and upserts.
 //
 // Dedupe rules (per pipeline notes):
@@ -114,7 +114,7 @@ async function tavilyExtract(url: string): Promise<string> {
     },
     body: JSON.stringify({urls: [url], extract_depth: 'advanced', format: 'markdown'}),
   });
-  if (!r.ok) throw new Error(`Tavily ${url}: ${r.status}`);
+  if (!r.ok) throw new Error(`Tenki ${url}: ${r.status}`);
   const j = (await r.json()) as {results: Array<{raw_content?: string; content?: string}>};
   return j.results?.[0]?.raw_content ?? j.results?.[0]?.content ?? '';
 }
@@ -129,7 +129,7 @@ async function scrapeTenkiCom(): Promise<ScrapedEvent[]> {
   return parseTenkiComMarkdown(md);
 }
 
-// Both Luma and tenki.cloud render JS; Tavily Extract turns them into markdown.
+// Both Luma and tenki.cloud render JS; Tenki Extract turns them into markdown.
 // We pull headings (event titles) plus the surrounding "City · Date" line.
 function parseLumaMarkdown(md: string): ScrapedEvent[] {
   const events: ScrapedEvent[] = [];

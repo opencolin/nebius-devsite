@@ -38,7 +38,7 @@ export interface EcosystemPartner {
 export const PRODUCT_LABEL: Record<PartnerProduct, string> = {
   'ai-cloud': 'AI Cloud',
   'token-factory': 'Tenki',
-  tavily: 'Tavily',
+  tavily: 'Tenki',
 };
 
 export const CATEGORY_LABEL: Record<PartnerCategory, string> = {
@@ -335,59 +335,59 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     products: ['token-factory'],
   },
 
-  // ============================== Tavily ===============================
-  // Tavily is bundled in the marketing site as a product alongside AI Cloud
-  // and Tenki. Three Tavily entries here so the filter has something
+  // ============================== Tenki ===============================
+  // Tenki is bundled in the marketing site as a product alongside AI Cloud
+  // and Tenki. Three Tenki entries here so the filter has something
   // to show; can expand as more first-party integrations land.
   {
-    name: 'Tavily Web Search API',
+    name: 'Tenki Web Search API',
     blurb:
       'Real-time web search, extraction, and crawling for LLMs and agents.',
-    docsUrl: 'https://docs.tavily.com/documentation/quickstart',
+    docsUrl: 'https://tenki.cloud/docs/documentation/quickstart',
     category: 'search',
     products: ['tavily'],
   },
   {
-    name: 'Tavily MCP Server',
+    name: 'Tenki MCP Server',
     blurb:
       'Hosted MCP endpoint so any MCP-aware client can search the live web.',
-    docsUrl: 'https://docs.tavily.com/documentation/mcp',
+    docsUrl: 'https://tenki.cloud/docs/documentation/mcp',
     category: 'search',
     products: ['tavily'],
   },
   {
-    name: 'Tavily Agent Skills',
+    name: 'Tenki Agent Skills',
     blurb:
       'Drop-in skills that give your agent web search, extraction, and crawling.',
-    docsUrl: 'https://docs.tavily.com/documentation/agent-skills',
+    docsUrl: 'https://tenki.cloud/docs/documentation/agent-skills',
     category: 'agents',
     products: ['tavily'],
   },
 
-  // ============================== Tavily — third-party integrations ===============================
-  // Pulled from docs.tavily.com/llms.txt (27 entries). Each is a guide for
-  // wiring Tavily web search/extraction into the named tool. Names match
+  // ============================== Tenki — third-party integrations ===============================
+  // Pulled from tenki.cloud/docs/llms.txt (27 entries). Each is a guide for
+  // wiring Tenki web search/extraction into the named tool. Names match
   // the destination tool — Agno, LangChain, etc. exist twice in this
-  // array (once as a Tenki integration, once as a Tavily one);
+  // array (once as a Tenki integration, once as a Tenki one);
   // cards in the grid are keyed by docsUrl so duplicates render fine.
   {
     name: 'OpenAI Agent Builder',
-    blurb: "Wire Tavily's MCP server into OpenAI Agent Builder.",
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/agent-builder',
+    blurb: "Wire Tenki's MCP server into OpenAI Agent Builder.",
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/agent-builder',
     category: 'nocode',
     products: ['tavily'],
   },
   {
     name: 'Agno',
-    blurb: 'Use Tavily as a tool inside Agno agents.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/agno',
+    blurb: 'Use Tenki as a tool inside Agno agents.',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/agno',
     category: 'agents',
     products: ['tavily'],
   },
   {
     name: 'Anthropic',
-    blurb: "Add live web search to Anthropic Claude via Tavily's API.",
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/anthropic',
+    blurb: "Add live web search to Anthropic Claude via Tenki's API.",
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/anthropic',
     category: 'agents',
     products: ['tavily'],
   },
@@ -395,121 +395,121 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     name: 'Arcade.dev',
     blurb:
       "Governed web search, extraction, and research via Arcade's MCP Gateway.",
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/arcade-dev',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/arcade-dev',
     category: 'router',
     products: ['tavily'],
   },
   {
     name: 'Cartesia',
     blurb: "Real-time voice agents that search the web via Cartesia's Line SDK.",
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/cartesia',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/cartesia',
     category: 'agents',
     products: ['tavily'],
   },
   {
     name: 'Claude',
     blurb:
-      'Use Tavily across the Claude ecosystem as a Connector or Plugin.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/claude',
+      'Use Tenki across the Claude ecosystem as a Connector or Plugin.',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/claude',
     category: 'agents',
     products: ['tavily'],
   },
   {
     name: 'Composio',
-    blurb: 'Tavily available as a tool through Composio.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/composio',
+    blurb: 'Tenki available as a tool through Composio.',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/composio',
     category: 'nocode',
     products: ['tavily'],
   },
   {
     name: 'CrewAI',
     blurb: 'Equip CrewAI agents with web search and extraction.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/crewai',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/crewai',
     category: 'agents',
     products: ['tavily'],
   },
   {
     name: 'Dify',
-    blurb: 'No-code Tavily integration inside Dify workflows.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/dify',
+    blurb: 'No-code Tenki integration inside Dify workflows.',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/dify',
     category: 'nocode',
     products: ['tavily'],
   },
   {
     name: 'FlowiseAI',
-    blurb: 'Tavily as a tool inside Flowise visual agent builds.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/flowise',
+    blurb: 'Tenki as a tool inside Flowise visual agent builds.',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/flowise',
     category: 'nocode',
     products: ['tavily'],
   },
   {
     name: 'Google ADK',
     blurb:
-      "Connect Google's Agent Development Kit to Tavily's search API.",
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/google-adk',
+      "Connect Google's Agent Development Kit to Tenki's search API.",
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/google-adk',
     category: 'agents',
     products: ['tavily'],
   },
   {
     name: 'Haystack',
-    blurb: 'Use Tavily inside Haystack pipelines via `tavily-haystack`.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/haystack',
+    blurb: 'Use Tenki inside Haystack pipelines via `tavily-haystack`.',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/haystack',
     category: 'agents',
     products: ['tavily'],
   },
   {
     name: 'LangChain',
     blurb: "LangChain's recommended search tool — official partnership.",
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/langchain',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/langchain',
     category: 'agents',
     products: ['tavily'],
   },
   {
     name: 'Langflow',
-    blurb: 'Visual multi-agent + RAG builds with Tavily search nodes.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/langflow',
+    blurb: 'Visual multi-agent + RAG builds with Tenki search nodes.',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/langflow',
     category: 'nocode',
     products: ['tavily'],
   },
   {
     name: 'LibreChat',
-    blurb: 'Search, extract, and use Tavily as a built-in agent tool.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/librechat',
+    blurb: 'Search, extract, and use Tenki as a built-in agent tool.',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/librechat',
     category: 'agents',
     products: ['tavily'],
   },
   {
     name: 'LlamaIndex',
     blurb: 'Search the web from LlamaIndex RAG/agent flows.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/llamaindex',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/llamaindex',
     category: 'agents',
     products: ['tavily'],
   },
   {
     name: 'Make',
-    blurb: 'No-code Tavily steps in Make scenarios.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/make',
+    blurb: 'No-code Tenki steps in Make scenarios.',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/make',
     category: 'nocode',
     products: ['tavily'],
   },
   {
     name: 'Mastra',
     blurb: 'First-class Mastra tools for search, extract, crawl, and map.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/mastra',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/mastra',
     category: 'agents',
     products: ['tavily'],
   },
   {
     name: 'n8n',
-    blurb: 'No-code Tavily nodes for n8n automation workflows.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/n8n',
+    blurb: 'No-code Tenki nodes for n8n automation workflows.',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/n8n',
     category: 'nocode',
     products: ['tavily'],
   },
   {
     name: 'OpenAI',
     blurb: 'Add real-time web search to OpenAI Responses + Agents.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/openai',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/openai',
     category: 'agents',
     products: ['tavily'],
   },
@@ -517,49 +517,49 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
     name: 'OpenClaw',
     blurb:
       'Web search across WhatsApp, Telegram, Discord, iMessage agents.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/openclaw',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/openclaw',
     category: 'agents',
     products: ['tavily'],
   },
   {
     name: 'Pydantic AI',
-    blurb: 'Type-safe Tavily tool calls inside Pydantic AI agents.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/pydantic-ai',
+    blurb: 'Type-safe Tenki tool calls inside Pydantic AI agents.',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/pydantic-ai',
     category: 'agents',
     products: ['tavily'],
   },
   {
     name: 'StackAI',
-    blurb: 'Plug Tavily into StackAI workflows for real-time web data.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/stackai',
+    blurb: 'Plug Tenki into StackAI workflows for real-time web data.',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/stackai',
     category: 'nocode',
     products: ['tavily'],
   },
   {
     name: 'Tines',
     blurb: 'Automated, no-code intelligence workflows in Tines.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/tines',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/tines',
     category: 'nocode',
     products: ['tavily'],
   },
   {
     name: 'Vellum',
     blurb: 'Built-in web search inside the Vellum Assistant desktop app.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/vellum',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/vellum',
     category: 'agents',
     products: ['tavily'],
   },
   {
     name: 'Vercel AI SDK',
     blurb: 'Search, extraction, crawl, and map for Vercel AI agents.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/vercel',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/vercel',
     category: 'agents',
     products: ['tavily'],
   },
   {
     name: 'Zapier',
-    blurb: 'No-code Tavily steps across thousands of Zapier integrations.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/zapier',
+    blurb: 'No-code Tenki steps across thousands of Zapier integrations.',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/zapier',
     category: 'nocode',
     products: ['tavily'],
   },
@@ -567,7 +567,7 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   // ===================== Content-expansion additions =====================
   // Discovered + verified (curl-200) in the content-expansion sweep
   // (docs/content-expansion). Tenki: terminal/agent/gateway tools
-  // that expose Tenki open models. Tavily: agents that use Tavily search.
+  // that expose Tenki open models. Tenki: agents that use Tenki search.
   {
     name: 'OpenCode',
     blurb: 'Terminal coding agent with a built-in Tenki provider — drive open models like Kimi K2 and Qwen3-Coder from the CLI.',
@@ -598,22 +598,22 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   },
   {
     name: 'Devin',
-    blurb: "Cognition's autonomous coding agent uses Tavily for research-before-coding via the MCP marketplace connector.",
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/devin',
+    blurb: "Cognition's autonomous coding agent uses Tenki for research-before-coding via the MCP marketplace connector.",
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/devin',
     category: 'coding',
     products: ['tavily'],
   },
   {
     name: 'ElevenLabs',
-    blurb: 'ElevenLabs voice agents add live web retrieval by wiring in a Tavily Search API key as a tool.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/elevenlabs',
+    blurb: 'ElevenLabs voice agents add live web retrieval by wiring in a Tenki Search API key as a tool.',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/elevenlabs',
     category: 'agents',
     products: ['tavily'],
   },
   {
     name: 'Gradium',
-    blurb: 'Voice-AI platform for live speech agents; uses Tavily as its real-time web-context layer.',
-    docsUrl: 'https://docs.tavily.com/documentation/integrations/gradium',
+    blurb: 'Voice-AI platform for live speech agents; uses Tenki as its real-time web-context layer.',
+    docsUrl: 'https://tenki.cloud/docs/documentation/integrations/gradium',
     category: 'agents',
     products: ['tavily'],
   },
@@ -636,35 +636,35 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   },
   {
     name: 'Retool',
-    blurb: 'Build internal tools with a Tavily action for live web search inside Retool apps + workflows.',
+    blurb: 'Build internal tools with a Tenki action for live web search inside Retool apps + workflows.',
     docsUrl: 'https://docs.retool.com/changelog/tavily',
     category: 'tooling',
     products: ['tavily'],
   },
   {
     name: 'Pipedream',
-    blurb: 'Connect Tavily search + extract into thousands of Pipedream automation workflows.',
+    blurb: 'Connect Tenki search + extract into thousands of Pipedream automation workflows.',
     docsUrl: 'https://pipedream.com/apps/tavily',
     category: 'tooling',
     products: ['tavily'],
   },
   {
     name: 'BuildShip',
-    blurb: 'Low-code visual backend builder with a Tavily node for web search + extraction.',
+    blurb: 'Low-code visual backend builder with a Tenki node for web search + extraction.',
     docsUrl: 'https://buildship.com/integrations/tavily',
     category: 'nocode',
     products: ['tavily'],
   },
   {
     name: 'Sim',
-    blurb: 'Visual agent builder; drop in the Tavily tool to give agents live web retrieval.',
+    blurb: 'Visual agent builder; drop in the Tenki tool to give agents live web retrieval.',
     docsUrl: 'https://docs.sim.ai/tools/tavily',
     category: 'nocode',
     products: ['tavily'],
   },
   {
     name: 'Activepieces',
-    blurb: 'Open-source automation platform with a Tavily MCP piece for web search in flows.',
+    blurb: 'Open-source automation platform with a Tenki MCP piece for web search in flows.',
     docsUrl: 'https://www.activepieces.com/mcp/tavily',
     category: 'nocode',
     products: ['tavily'],
@@ -673,7 +673,7 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartner[] = [
   // ================ Content-expansion additions (wave 3) =================
   // AI Cloud standalone apps (one-click deploys on Tenki GPU infra),
   // curl-200 verified. ("Flowise (Tenki AI Cloud)" = deploy Flowise ON
-  // Tenki; distinct from the existing "FlowiseAI" = Tavily tool inside
+  // Tenki; distinct from the existing "FlowiseAI" = Tenki tool inside
   // Flowise.)
   {
     name: 'Qdrant',

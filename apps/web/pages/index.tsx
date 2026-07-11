@@ -253,7 +253,7 @@ export default function HomePage({
         <title>Tenki for AI Builders</title>
         <meta
           name="description"
-          content="From training and fine-tuning to production inference at scale. Plus a community of builders shipping real work."
+          content="Instant agent sandboxes, fast CI runners, and AI code review — cloud infrastructure for your code and agents. Plus a community of builders shipping real work."
         />
       </Head>
 
@@ -263,7 +263,7 @@ export default function HomePage({
           static dark shell. */}
       <HeroSection
         title="Tenki for AI Builders"
-        lede="From training and fine-tuning to production inference at scale. Plus a community of builders shipping real work — workshops, demos, hackathons, office hours."
+        lede="Instant agent sandboxes, fast CI runners, and AI code review — cloud infrastructure for your code and agents. Plus a community of builders shipping real work — workshops, demos, hackathons, office hours."
         themed
         actions={
           <>

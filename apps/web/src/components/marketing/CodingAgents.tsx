@@ -3,7 +3,7 @@
 // shape: name + blurb + one or more "View X →" links at the bottom.
 //
 // Combined cards: editors that have both a Tenki-model integration AND
-// a Tavily-search integration get a single card with two CTAs (Claude
+// a Tenki-search integration get a single card with two CTAs (Claude
 // Code, Cursor) rather than two separate cards. The Entry shape uses an
 // array of links to support both cases — single-link cards render as one
 // wrapped <a>, multi-link cards render as a <div> with link buttons.
@@ -28,12 +28,12 @@ const ENTRIES: Entry[] = [
   {
     name: 'Claude Code',
     blurb:
-      'Drop in the open-source Tenki Skill so Claude Code knows Tenki, AI Cloud, and Serverless. Add the Tavily MCP server to search the live web from your shell.',
+      'Drop in the open-source Tenki Skill so Claude Code knows Tenki, AI Cloud, and Serverless. Add the Tenki MCP server to search the live web from your shell.',
     links: [
       {label: 'Tenki Skill', url: 'https://github.com/opencolin/nebius-skill'},
       {
-        label: 'Tavily MCP',
-        url: 'https://docs.tavily.com/documentation/mcp#connect-to-claude-code',
+        label: 'Tenki MCP',
+        url: 'https://tenki.cloud/docs/documentation/mcp#connect-to-claude-code',
       },
     ],
   },
@@ -41,44 +41,44 @@ const ENTRIES: Entry[] = [
   {
     name: 'Cursor',
     blurb:
-      'Wire Tenki in as a custom model provider, and add the Tavily MCP server for in-editor web search and extraction.',
+      'Wire Tenki in as a custom model provider, and add the Tenki MCP server for in-editor web search and extraction.',
     links: [
       {
         label: 'Tenki models',
         url: 'https://tenki.cloud/docs/integrations/coding/cursor',
       },
       {
-        label: 'Tavily MCP',
-        url: 'https://docs.tavily.com/documentation/mcp#connect-to-cursor',
+        label: 'Tenki MCP',
+        url: 'https://tenki.cloud/docs/documentation/mcp#connect-to-cursor',
       },
     ],
   },
   // Single-link entries.
   {
-    name: 'Tavily Agent Skills',
+    name: 'Tenki Agent Skills',
     blurb:
       'Pre-built skills that give your agent web search, extraction, and crawling out of the box.',
     links: [
-      {label: 'View docs', url: 'https://docs.tavily.com/documentation/agent-skills'},
+      {label: 'View docs', url: 'https://tenki.cloud/docs/documentation/agent-skills'},
     ],
   },
   // OpenAI Codex — third combined card alongside Claude Code + Cursor.
   // First link points at the open-source codex-nebius config repo
   // (label reads "Tenki models" since that's what the link configures
-  // Codex to use; the repo name is incidental). Second is the Tavily
+  // Codex to use; the repo name is incidental). Second is the Tenki
   // MCP setup for the OpenAI Responses + Agents SDK.
   {
     name: 'OpenAI Codex',
     blurb:
-      'Configure OpenAI Codex to use Tenki coding models, and add the Tavily MCP server for live web search inside your terminal.',
+      'Configure OpenAI Codex to use Tenki coding models, and add the Tenki MCP server for live web search inside your terminal.',
     links: [
       {
         label: 'Tenki models',
         url: 'https://github.com/opencolin/codex-nebius',
       },
       {
-        label: 'Tavily MCP',
-        url: 'https://docs.tavily.com/documentation/mcp#openai',
+        label: 'Tenki MCP',
+        url: 'https://tenki.cloud/docs/documentation/mcp#openai',
       },
     ],
   },

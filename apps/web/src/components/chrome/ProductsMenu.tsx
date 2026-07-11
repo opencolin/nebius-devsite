@@ -36,7 +36,7 @@ const PRODUCTS = [
     href: '/serverless',
   },
   {
-    label: 'Tavily',
+    label: 'Tenki',
     tagline: 'Real-time web search & retrieval for AI agents',
     href: '/tavily',
   },

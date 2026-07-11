@@ -44,7 +44,7 @@ const FILTERS = [
   'AI Cloud',
   'OpenClaw',
   'Soperator',
-  'Tavily',
+  'Tenki',
   'Robotics',
   'JetBrains',
   'Other',
@@ -61,7 +61,7 @@ const PRODUCT_FILTER_KEY: Record<string, string> = {
   'AI Cloud': 'aicloud',
   OpenClaw: 'openclaw',
   Soperator: 'soperator',
-  Tavily: 'tavily',
+  Tenki: 'tavily',
 };
 
 const PRODUCT_LABEL: Record<string, string> = {
@@ -69,7 +69,7 @@ const PRODUCT_LABEL: Record<string, string> = {
   aicloud: 'AI Cloud',
   openclaw: 'OpenClaw',
   soperator: 'Soperator',
-  tavily: 'Tavily',
+  tavily: 'Tenki',
 };
 
 export const getStaticProps: GetStaticProps<{projects: Project[]}> = async () => {

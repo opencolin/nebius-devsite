@@ -10,7 +10,7 @@
 //
 // Filter chips: All / Hackathons / Integration (kind axis) plus the
 // product chips that apply to both kinds (Tenki, AI Cloud,
-// OpenClaw, Soperator, Tavily). Apps-only chips like Featured /
+// OpenClaw, Soperator, Tenki). Apps-only chips like Featured /
 // Robotics / JetBrains stay on /apps; integration-only category chips
 // (Agents, No-code, Coding, etc.) stay on /integrations.
 //
@@ -69,7 +69,7 @@ const FILTERS = [
   'AI Cloud',
   'OpenClaw',
   'Soperator',
-  'Tavily',
+  'Tenki',
 ] as const;
 type Filter = (typeof FILTERS)[number];
 
@@ -83,7 +83,7 @@ const PRODUCT_KEYS: Record<string, {apps: string; integrations: string | null}> 
   'AI Cloud': {apps: 'aicloud', integrations: 'ai-cloud'},
   OpenClaw: {apps: 'openclaw', integrations: null}, // no integration partner uses openclaw
   Soperator: {apps: 'soperator', integrations: null},
-  Tavily: {apps: 'tavily', integrations: 'tavily'},
+  Tenki: {apps: 'tavily', integrations: 'tavily'},
 };
 
 // Apps store the apps-vocabulary value; render-time label lookup.
@@ -92,7 +92,7 @@ const APPS_PRODUCT_LABEL: Record<string, string> = {
   aicloud: 'AI Cloud',
   openclaw: 'OpenClaw',
   soperator: 'Soperator',
-  tavily: 'Tavily',
+  tavily: 'Tenki',
 };
 
 export const getStaticProps: GetStaticProps<{
@@ -512,7 +512,7 @@ function submitProjectIssueUrl(): string {
     '- [ ] AI Cloud',
     '- [ ] OpenClaw',
     '- [ ] Soperator',
-    '- [ ] Tavily',
+    '- [ ] Tenki',
     '',
     '**Tags / keywords (comma-separated, optional):**',
     '',
