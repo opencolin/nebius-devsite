@@ -19,14 +19,11 @@ import {PublicLayout} from '@/components/chrome/PublicLayout';
 import {HeroSection} from '@/components/integrations/HeroSection';
 import {ActiveEvents, type MarketingEvent} from '@/components/marketing/ActiveEvents';
 import {BuildInPublic} from '@/components/marketing/BuildInPublic';
-import {BuilderSpotlight, type SpotlightProject} from '@/components/marketing/BuilderSpotlight';
-import {CodingAgents} from '@/components/marketing/CodingAgents';
+import type {SpotlightProject} from '@/components/marketing/BuilderSpotlight';
 import {Community} from '@/components/marketing/Community';
 import {Contact} from '@/components/marketing/Contact';
-import {EcosystemPartners} from '@/components/marketing/EcosystemPartners';
 import {Products} from '@/components/marketing/Products';
 import {Programs} from '@/components/marketing/Programs';
-import {UseCases} from '@/components/marketing/UseCases';
 import {WorkshopSpotlight, type LibrarySpotlightEntry} from '@/components/marketing/WorkshopSpotlight';
 import {directusServer} from '@/lib/directus';
 import type {BuildersEventRow, LibraryArticleRow, ProjectRow} from '@/lib/types';
@@ -244,8 +241,6 @@ export default function HomePage({
   events,
   featuredWorkshop,
   relatedWorkshops,
-  monthlyProject,
-  monthLabel,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <PublicLayout>
@@ -279,13 +274,9 @@ export default function HomePage({
 
       <Products />
       <ActiveEvents events={events} />
-      <CodingAgents />
-      <UseCases />
       <WorkshopSpotlight featured={featuredWorkshop} related={relatedWorkshops} />
-      <BuilderSpotlight project={monthlyProject} monthLabel={monthLabel} />
       <Community />
       <Programs />
-      <EcosystemPartners />
       <Contact />
       <BuildInPublic />
     </PublicLayout>

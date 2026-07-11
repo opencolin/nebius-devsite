@@ -45,6 +45,9 @@ function formatLabel(format: string): string {
 }
 
 export function ActiveEvents({events}: Props) {
+  // No published events yet (collection cleared for the Tenki rebuild) — hide
+  // the whole rail rather than render an empty "Upcoming events" header.
+  if (events.length === 0) return null;
   const next = events.slice(0, 3);
 
   return (
