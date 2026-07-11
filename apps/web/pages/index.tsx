@@ -26,7 +26,7 @@ import {Products} from '@/components/marketing/Products';
 import {Programs} from '@/components/marketing/Programs';
 import {WorkshopSpotlight, type LibrarySpotlightEntry} from '@/components/marketing/WorkshopSpotlight';
 import {directusServer} from '@/lib/directus';
-import type {BuildersEventRow, LibraryArticleRow, ProjectRow} from '@/lib/types';
+import type {BuildersEventRow, LibraryArticleRow} from '@/lib/types';
 
 // TODO: replace these hard-codes with a programs/metrics collection in
 // Directus once one exists. Numbers mirror nb3 /lib/network for parity.
@@ -76,7 +76,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     }
   };
 
-  const [eventsRaw, libraryRaw, projectsRaw] = await Promise.all([
+  const [eventsRaw, libraryRaw] = await Promise.all([
     safeRequest(
       directus.request(
         readItems('events', {
@@ -122,24 +122,6 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
           limit: -1,
         }),
       ) as Promise<LibraryArticleRow[]>,
-    ),
-    safeRequest(
-      directus.request(
-        readItems('projects', {
-          sort: ['-featured', 'title'],
-          fields: [
-            'slug',
-            'title',
-            'tagline',
-            'description',
-            'builder_handle',
-            'tags',
-            'product_focus',
-            'repo_url',
-          ],
-          limit: -1,
-        }),
-      ) as Promise<ProjectRow[]>,
     ),
   ]);
 
@@ -201,26 +183,11 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     .slice(0, 2)
     .map(toLibrary);
 
-  // Monthly project: same picker as upstream, cycles on the 1st of each
-  // month UTC. If projects collection is empty, the BuilderSpotlight
-  // section renders nothing.
+  // BuilderSpotlight was removed from the homepage during the Tenki rebuild
+  // (the projects collection still holds Nebius content), so we no longer read
+  // projects or serialize a monthly project into the page. monthLabel is kept
+  // only as a harmless prop.
   const monthDate = new Date();
-  const monthIndex = monthDate.getUTCFullYear() * 12 + monthDate.getUTCMonth();
-  const project =
-    projectsRaw.length > 0 ? projectsRaw[monthIndex % projectsRaw.length] : null;
-  const monthlyProject: SpotlightProject | null = project
-    ? {
-        slug: project.slug,
-        title: project.title,
-        tagline: project.tagline,
-        description: project.description,
-        builderHandle: project.builder_handle,
-        builderName: project.builder_handle, // No name field on ProjectRow yet
-        tags: project.tags ?? [],
-        productFocus: project.product_focus ?? [],
-        repoUrl: project.repo_url ?? null,
-      }
-    : null;
   const monthLabel = `${MONTHS[monthDate.getUTCMonth()]} ${monthDate.getUTCFullYear()}`;
 
   return {
@@ -230,7 +197,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
       libraryCount: libraryRaw.length,
       featuredWorkshop,
       relatedWorkshops,
-      monthlyProject,
+      monthlyProject: null,
       monthLabel,
     },
     revalidate: 60,
