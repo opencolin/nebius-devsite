@@ -86,8 +86,8 @@ export function useBrand(): BrandContextValue {
 // and the globals.scss selectors) — only the user-facing labels change.
 // 'tenki' (tenki.cloud) is the default; 'builders' mirrors tenki.cloud.
 const OPTIONS: Array<{key: Brand; label: string}> = [
-  {key: 'tenki', label: 'Modern'},
-  {key: 'builders', label: 'Mono'},
+  {key: 'tenki', label: 'Mono'},
+  {key: 'builders', label: 'Modern'},
 ];
 
 /** Fixed bottom control. Segmented two-option switch. */
