@@ -1,6 +1,6 @@
 // Site-wide banner that flags this build as a non-production stack
 // demonstration so reviewers, screenshots, and inbound links can't
-// confuse it with the real Tenki Builders Network.
+// confuse it with the real Nebius Builders Network.
 //
 // Two placements, both mounted from _app.tsx so they appear on every
 // page (public, portal, admin, login):
@@ -34,7 +34,7 @@ export function MockupBanner({placement = 'top'}: {placement?: 'top' | 'bottom'}
         <span className={styles.copy}>
           {isBottom
             ? 'Stack demo — not the live Builders Network.'
-            : 'Tech-stack demonstration. Not affiliated with Tenki and not the live Builders Network.'}
+            : 'Tech-stack demonstration. Not affiliated with Nebius and not the live Builders Network.'}
         </span>
         <Link href="/about-this-build" className={styles.link}>
           About this build →

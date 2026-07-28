@@ -45,7 +45,7 @@ function ThemedShell({Component, pageProps}: {Component: AppProps['Component']; 
     return () => window.removeEventListener('nb:consent-granted', onGrant);
   }, []);
 
-  // Stape sGTM proxy domain (mirrors gw.stape.run on tenki.cloud) — when set,
+  // Stape sGTM proxy domain (mirrors gw.stape.run on nebius.com) — when set,
   // we point the GTM script at the proxy origin instead of googletagmanager.com.
   // This is what makes attribution survive ad-blockers in prod.
   const gtmSrc =
@@ -74,7 +74,7 @@ function ThemedShell({Component, pageProps}: {Component: AppProps['Component']; 
           the top strip never lose the "this is a mockup" context. */}
       <MockupBanner placement="bottom" />
       {/* Site-wide brand switch, fixed near the bottom. Flips the whole site
-          between the Builders look and the tenki.cloud brand. */}
+          between the Builders look and the dev.nebius.com brand. */}
       <BrandToggle />
       <ConsentBanner />
 

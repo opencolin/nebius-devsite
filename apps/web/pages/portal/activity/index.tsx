@@ -11,9 +11,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) =>
   requireRole('builder', ctx);
 
 const ROWS = [
-  {kind: 'Library submission', detail: 'Running OpenClaw on Tenki', pts: 50, status: 'APPROVED', date: '2026-05-08'},
-  {kind: 'Event hosted', detail: 'Tenki Workshop · NYC (40 RSVPs)', pts: 120, status: 'APPROVED', date: '2026-05-04'},
-  {kind: 'Self-reported', detail: 'Tweeted about Tenki', pts: 5, status: 'PENDING', date: '2026-05-12'},
+  {kind: 'Library submission', detail: 'Running OpenClaw on Nebius', pts: 50, status: 'APPROVED', date: '2026-05-08'},
+  {kind: 'Event hosted', detail: 'Token Factory Workshop · NYC (40 RSVPs)', pts: 120, status: 'APPROVED', date: '2026-05-04'},
+  {kind: 'Self-reported', detail: 'Tweeted about Nebius', pts: 5, status: 'PENDING', date: '2026-05-12'},
 ];
 
 export default function ActivityPage(_props: InferGetServerSidePropsType<typeof getServerSideProps>) {

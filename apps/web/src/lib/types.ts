@@ -64,9 +64,9 @@ export type LibraryEntryType =
   | 'PLAYLIST';
 
 // Which product landing surface(s) a library entry appears on. `library`
-// is the default umbrella; the others map to the tenki.cloud-style
-// product pages. `tavily` is the Tenki web-search onboarding surface.
-// Added in the tenki.cloud content migration.
+// is the default umbrella; the others map to the dev.nebius.com-style
+// product pages. `tavily` is the Tavily web-search onboarding surface.
+// Added in the dev.nebius.com content migration.
 export type LibrarySurface =
   | 'ai-cloud'
   | 'token-factory'
@@ -129,7 +129,7 @@ export interface LibraryArticleRow {
   external_url?: string | null;
   is_official: boolean;
   submitter?: string | null;
-  // Editorial curation fields (added in the tenki.cloud content
+  // Editorial curation fields (added in the dev.nebius.com content
   // migration). `surface` controls which product landing page(s) the
   // entry appears on; `pinned` floats it to the top of its surface's
   // rail — including the homepage WorkshopSpotlight.

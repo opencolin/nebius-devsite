@@ -23,10 +23,10 @@ import styles from './signup.module.scss';
 // the swiper-resolution workaround in place.
 const CmsRenderer = dynamic(() => import('@/components/CmsRenderer'), {ssr: true});
 
-// Real Tenki signup URL — for the mockup this is what "join the
+// Real Nebius signup URL — for the mockup this is what "join the
 // program" actually means: create an account, claim the trial credits,
 // follow the Builder onboarding checklist.
-const SIGNUP_URL = 'https://console.tenki.cloud/signup';
+const SIGNUP_URL = 'https://console.nebius.com/signup';
 
 interface Props {
   cms: PageRow | null;
@@ -63,12 +63,12 @@ export default function SignupPage({
   return (
     <PublicLayout>
       <Head>
-        <title>Join the Tenki Builders Network</title>
+        <title>Join the Nebius Builders Network</title>
         <meta
           name="description"
-          content="Sign up for the Tenki Builders Network — $100 in Tenki credits, a community of builders shipping real work, and a path to Ambassador."
+          content="Sign up for the Nebius Builder Program — $100 in Token Factory + AI Cloud credits, a community of builders shipping real work, and a path to Ambassador."
         />
-        <meta property="og:title" content="Join the Tenki Builders Network" />
+        <meta property="og:title" content="Join the Nebius Builders Network" />
         <meta
           property="og:description"
           content="$100 in credits. Workshops + office hours. Tier up as you ship."
@@ -82,17 +82,16 @@ export default function SignupPage({
             Builder Program
           </Text>
           <Text variant="display-2" as="h1" className={styles.heroTitle}>
-            Build with Tenki. Get rewarded for shipping.
+            Build with Nebius. Get rewarded for shipping.
           </Text>
           <Text variant="body-2" color="secondary" as="p" className={styles.heroLede}>
-            $100 in Tenki credits when you sign up — spend across Sandbox,
-            Runners, and Code Reviewer. Workshops, hackathons, and office hours
-            run by the community.
+            $100 in Token Factory and AI Cloud credits when you sign up.
+            Workshops, hackathons, and office hours run by the community.
           </Text>
           <ul className={styles.proof}>
             <li>
               <strong>$100</strong>
-              <span>in Tenki credits</span>
+              <span>in Token Factory + AI Cloud credits</span>
             </li>
             <li>
               <strong>2,800+</strong>

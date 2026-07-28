@@ -2,8 +2,8 @@
 // integrations they can drop into their existing coding agent. Card
 // shape: name + blurb + one or more "View X →" links at the bottom.
 //
-// Combined cards: editors that have both a Tenki-model integration AND
-// a Tenki-search integration get a single card with two CTAs (Claude
+// Combined cards: editors that have both a Nebius-model integration AND
+// a Tavily-search integration get a single card with two CTAs (Claude
 // Code, Cursor) rather than two separate cards. The Entry shape uses an
 // array of links to support both cases — single-link cards render as one
 // wrapped <a>, multi-link cards render as a <div> with link buttons.
@@ -28,12 +28,12 @@ const ENTRIES: Entry[] = [
   {
     name: 'Claude Code',
     blurb:
-      'Drop in the open-source Tenki Skill so Claude Code knows Tenki, AI Cloud, and Serverless. Add the Tenki MCP server to search the live web from your shell.',
+      'Drop in the open-source Nebius Skill so Claude Code knows Token Factory, AI Cloud, and Serverless. Add the Tavily MCP server to search the live web from your shell.',
     links: [
-      {label: 'Tenki Skill', url: 'https://github.com/opencolin/nebius-skill'},
+      {label: 'Nebius Skill', url: 'https://github.com/opencolin/nebius-skill'},
       {
-        label: 'Tenki MCP',
-        url: 'https://tenki.cloud/docs/documentation/mcp#connect-to-claude-code',
+        label: 'Tavily MCP',
+        url: 'https://docs.tavily.com/documentation/mcp#connect-to-claude-code',
       },
     ],
   },
@@ -41,51 +41,51 @@ const ENTRIES: Entry[] = [
   {
     name: 'Cursor',
     blurb:
-      'Wire Tenki in as a custom model provider, and add the Tenki MCP server for in-editor web search and extraction.',
+      'Wire Token Factory in as a custom model provider, and add the Tavily MCP server for in-editor web search and extraction.',
     links: [
       {
-        label: 'Tenki models',
-        url: 'https://tenki.cloud/docs/integrations/coding/cursor',
+        label: 'Nebius models',
+        url: 'https://docs.tokenfactory.nebius.com/integrations/coding/cursor',
       },
       {
-        label: 'Tenki MCP',
-        url: 'https://tenki.cloud/docs/documentation/mcp#connect-to-cursor',
+        label: 'Tavily MCP',
+        url: 'https://docs.tavily.com/documentation/mcp#connect-to-cursor',
       },
     ],
   },
   // Single-link entries.
   {
-    name: 'Tenki Agent Skills',
+    name: 'Tavily Agent Skills',
     blurb:
       'Pre-built skills that give your agent web search, extraction, and crawling out of the box.',
     links: [
-      {label: 'View docs', url: 'https://tenki.cloud/docs/documentation/agent-skills'},
+      {label: 'View docs', url: 'https://docs.tavily.com/documentation/agent-skills'},
     ],
   },
   // OpenAI Codex — third combined card alongside Claude Code + Cursor.
   // First link points at the open-source codex-nebius config repo
-  // (label reads "Tenki models" since that's what the link configures
-  // Codex to use; the repo name is incidental). Second is the Tenki
+  // (label reads "Nebius models" since that's what the link configures
+  // Codex to use; the repo name is incidental). Second is the Tavily
   // MCP setup for the OpenAI Responses + Agents SDK.
   {
     name: 'OpenAI Codex',
     blurb:
-      'Configure OpenAI Codex to use Tenki coding models, and add the Tenki MCP server for live web search inside your terminal.',
+      'Configure OpenAI Codex to use Nebius coding models, and add the Tavily MCP server for live web search inside your terminal.',
     links: [
       {
-        label: 'Tenki models',
+        label: 'Nebius models',
         url: 'https://github.com/opencolin/codex-nebius',
       },
       {
-        label: 'Tenki MCP',
-        url: 'https://tenki.cloud/docs/documentation/mcp#openai',
+        label: 'Tavily MCP',
+        url: 'https://docs.tavily.com/documentation/mcp#openai',
       },
     ],
   },
   {
     name: 'VS Code (Github Copilot)',
     blurb:
-      "Hugging Face's VS Code Chat extension — routes Github Copilot through Tenki Tenki models.",
+      "Hugging Face's VS Code Chat extension — routes Github Copilot through Nebius Token Factory models.",
     links: [
       {
         label: 'View extension',
@@ -96,42 +96,42 @@ const ENTRIES: Entry[] = [
   {
     name: 'Cline',
     blurb:
-      'Open-source AI coding agent for VSCode + JetBrains. Direct access to Tenki coding models.',
+      'Open-source AI coding agent for VSCode + JetBrains. Direct access to Nebius coding models.',
     links: [
       {
         label: 'View docs',
-        url: 'https://tenki.cloud/docs/integrations/coding/cline',
+        url: 'https://docs.tokenfactory.nebius.com/integrations/coding/cline',
       },
     ],
   },
   {
     name: 'Continue',
-    blurb: 'Open-source autopilot for VS Code & JetBrains, pointed at Tenki.',
+    blurb: 'Open-source autopilot for VS Code & JetBrains, pointed at Nebius.',
     links: [
       {
         label: 'View docs',
-        url: 'https://tenki.cloud/docs/integrations/coding/continue',
+        url: 'https://docs.tokenfactory.nebius.com/integrations/coding/continue',
       },
     ],
   },
   {
     name: 'Kilo Code',
-    blurb: 'Multi-mode coding agent for VS Code on Tenki models.',
+    blurb: 'Multi-mode coding agent for VS Code on Token Factory models.',
     links: [
       {
         label: 'View docs',
-        url: 'https://tenki.cloud/docs/integrations/coding/kilo',
+        url: 'https://docs.tokenfactory.nebius.com/integrations/coding/kilo',
       },
     ],
   },
   // Zed — last per latest sort.
   {
     name: 'Zed',
-    blurb: "Configure Zed's inline assistant against Tenki models.",
+    blurb: "Configure Zed's inline assistant against Token Factory models.",
     links: [
       {
         label: 'View docs',
-        url: 'https://tenki.cloud/docs/integrations/coding/zed',
+        url: 'https://docs.tokenfactory.nebius.com/integrations/coding/zed',
       },
     ],
   },
@@ -146,11 +146,11 @@ export function CodingAgents() {
             Coding Agents
           </Text>
           <Text variant="header-2" as="h2" className={styles.title}>
-            Bring Tenki into the editor you already use.
+            Bring Nebius into the editor you already use.
           </Text>
           <Text variant="body-2" color="secondary" className={styles.body}>
             Drop-in skills and MCP servers for Claude Code, Cursor, and OpenAI
-            clients. Same Tenki credentials; your agent just gets more useful.
+            clients. Same Nebius credentials; your agent just gets more useful.
           </Text>
         </header>
 

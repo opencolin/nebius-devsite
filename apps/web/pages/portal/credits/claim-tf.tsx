@@ -54,12 +54,12 @@ export default function ClaimTFPage({
     return (
       <PortalLayout>
         <Head>
-          <title>Claim Tenki $100 · Builder portal</title>
+          <title>Claim Token Factory $100 · Builder portal</title>
         </Head>
         <PageHeader
           eyebrow="Intro credits"
-          title="Claim Tenki $100"
-          description="A $100 prepaid Tenki balance lands on your account within 1 business day."
+          title="Claim Token Factory $100"
+          description="A $100 prepaid Token Factory balance lands on your account within 1 business day."
         />
         <Card
           view="filled"
@@ -74,7 +74,7 @@ export default function ClaimTFPage({
             Claim submitted.
           </Text>
           <Text variant="body-2" color="secondary">
-            We&apos;ll credit $100 to your Tenki account at{' '}
+            We&apos;ll credit $100 to your Token Factory account at{' '}
             <strong>{submittedEmail}</strong> within one business day.
           </Text>
         </Card>
@@ -85,19 +85,19 @@ export default function ClaimTFPage({
   return (
     <PortalLayout>
       <Head>
-        <title>Claim Tenki $100 · Builder portal</title>
+        <title>Claim Token Factory $100 · Builder portal</title>
       </Head>
       <PageHeader
         eyebrow="Intro credits"
-        title="Claim Tenki $100"
-        description="A $100 prepaid Tenki balance lands on your account within 1 business day."
+        title="Claim Token Factory $100"
+        description="A $100 prepaid Token Factory balance lands on your account within 1 business day."
       />
 
       <form onSubmit={onSubmit}>
         <Card view="filled" className={page.cardBody} style={{maxWidth: 640, marginTop: 24}}>
           <Text variant="caption-2" color="secondary">YOUR TOKEN FACTORY ACCOUNT</Text>
           <TextInput
-            label="Tenki account email"
+            label="Token Factory account email"
             type="email"
             placeholder="you@org.com"
             value={accountEmail}

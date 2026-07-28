@@ -2,7 +2,7 @@
 // matches ActiveEvents to stripe sections.
 //
 // Ported from nb3 use-cases.tsx. All three cards link out to external
-// tenki.cloud/docs / github.com URLs (no internal routing).
+// docs.nebius.com / github.com URLs (no internal routing).
 
 import {Text} from '@gravity-ui/uikit';
 
@@ -19,19 +19,19 @@ const CASES: UseCase[] = [
     title: 'Inference',
     blurb:
       'Serve open models in production with a simple API, real-time or batch inference, dedicated endpoints, and autoscaling for traffic spikes.',
-    href: 'https://tenki.cloud/docs/ai-models-inference/overview',
+    href: 'https://docs.tokenfactory.nebius.com/ai-models-inference/overview',
   },
   {
     title: 'Training & Fine-tuning',
     blurb:
       'Train new models or fine-tune existing ones with scalable GPU jobs, track experiments, and push the best checkpoint into production.',
-    href: 'https://github.com/tenki-cloud/blob/main/k8s-training',
+    href: 'https://github.com/nebius/nebius-solutions-library/blob/main/k8s-training',
   },
   {
     title: 'Industries AI Applications',
     blurb:
       'Build domain-specific workflows in healthcare, robotics, and more with secure data access, guardrails, and reusable patterns for RAG, copilots, and automation.',
-    href: 'https://tenki.cloud/docs/applications/standalone/nvidia-nim',
+    href: 'https://docs.nebius.com/applications/standalone/nvidia-nim',
   },
 ];
 

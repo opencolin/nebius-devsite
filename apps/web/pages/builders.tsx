@@ -79,12 +79,12 @@ export default function BuildersPage({
   return (
     <PublicLayout>
       <Head>
-        <title>Builders · Tenki Builders Network</title>
+        <title>Builders · Nebius Builders Network</title>
         <meta
           name="description"
           content={
             cms?.seo_description ??
-            'The Tenki Builders Network: ambassadors, contributors, and hackathon winners shipping real work on Tenki.'
+            'The Nebius Builders Network: ambassadors, contributors, and hackathon winners shipping real work on Nebius.'
           }
         />
       </Head>

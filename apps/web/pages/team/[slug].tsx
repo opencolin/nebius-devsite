@@ -39,7 +39,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   )) as Array<{slug: string}>;
   return {
     paths: rows.map((r) => ({params: {slug: r.slug}})),
-    fallback: process.env.DEVSITE_EXPORT === '1' ? false : 'blocking',
+    fallback: 'blocking',
   };
 };
 
@@ -62,7 +62,7 @@ export default function TeamMemberPage({
   return (
     <PublicLayout>
       <Head>
-        <title>{`${member.name} · Tenki Builders`}</title>
+        <title>{`${member.name} · Nebius Builders`}</title>
         <meta name="description" content={member.bio.slice(0, 160)} />
       </Head>
       <div className={page.containerNarrow}>

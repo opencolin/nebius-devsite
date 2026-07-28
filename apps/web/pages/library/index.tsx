@@ -37,17 +37,17 @@ const FILTERS = [
   'Repo',
   'Blog',
   'Docs',
-  'Tenki',
+  'Token Factory',
   'AI Cloud',
   'OpenClaw',
   'Soperator',
-  'Tenki',
+  'Tavily',
 ] as const;
 type Filter = (typeof FILTERS)[number];
 
 // Maps human filter labels to the Directus type enum values (added BLOG /
-// DOCS / PLAYLIST in the tenki.cloud content migration so we could
-// categorize tenki.cloud/blog posts, tenki.cloud/docs docs pages, and
+// DOCS / PLAYLIST in the dev.nebius.com content migration so we could
+// categorize nebius.com/blog posts, docs.nebius.com docs pages, and
 // YouTube playlists distinctly from the original WORKSHOP / VIDEO / REPO
 // triad).
 const TYPE_FILTER_KEY: Record<string, string> = {
@@ -64,10 +64,11 @@ const TYPE_FILTER_KEY: Record<string, string> = {
 // chips even though the data carries many matches. Verified against the live
 // product_focus arrays — the underscore form never appears.
 const PRODUCT_FILTER_KEY: Record<string, string> = {
-  'Tenki': 'tokenfactory',
+  'Token Factory': 'tokenfactory',
   'AI Cloud': 'aicloud',
   OpenClaw: 'openclaw',
   Soperator: 'soperator',
+  Tavily: 'tavily',
 };
 
 interface LibraryEntry {
@@ -128,17 +129,17 @@ export default function LibraryPage({
   return (
     <PublicLayout>
       <Head>
-        <title>{`Library · Tenki Builders`}</title>
+        <title>{`Library · Nebius Builders`}</title>
         <meta
           name="description"
-          content="Workshops, videos, and repos for getting productive on Tenki."
+          content="Workshops, videos, and repos for getting productive on Nebius."
         />
       </Head>
       <div className={page.container}>
         <PageHeader
           eyebrow="Library"
           title="Workshops, videos, and code"
-          description={`${entries.length} resources for getting productive on Tenki — from a 5-minute first-deploy walkthrough to deep training-job recipes.`}
+          description={`${entries.length} resources for getting productive on Nebius — from a 5-minute first-deploy walkthrough to deep training-job recipes.`}
         />
       </div>
 

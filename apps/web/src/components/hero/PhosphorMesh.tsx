@@ -2,7 +2,7 @@
 //
 // A WebGL ribbon mesh deformed in a vertex shader, then post-processed with
 // UnrealBloom for the signature "phosphor glow" halo. Dark-mode counterpart
-// to the Tenki lime ribbon (tenki.cloud mobile-green3.jpg).
+// to the Nebius lime ribbon (nebius.com mobile-green3.jpg).
 //
 // Defaults are the Soft Haze (B1a) config locked in during /design-shotgun:
 //   - palette: deep forest → forest → tw-lime-500 → bright lime peak
@@ -49,7 +49,7 @@ export interface PhosphorMeshProps {
   className?: string;
   /** Wrapper aspect ratio (width/height). Default 16/9. */
   aspectRatio?: number;
-  /** Override the 4-stop gradient. Defaults to Tenki lime palette. */
+  /** Override the 4-stop gradient. Defaults to Nebius lime palette. */
   palette?: Partial<PhosphorMeshPalette>;
   /** Override one or more UnrealBloom params. */
   bloom?: PhosphorMeshBloom;
@@ -179,7 +179,7 @@ export function PhosphorMesh({
       let height = mount.clientHeight || 1;
 
       const scene = new THREE.Scene();
-      // Background lives on the parent .root via CSS (#0c1825 — tenki.cloud
+      // Background lives on the parent .root via CSS (#0c1825 — nebius.com
       // dark navy). Setting scene.background here would route the color
       // through ACES tone mapping + UnrealBloom, which crushes the navy
       // toward black. Transparent canvas + CSS-driven bg gives us a clean,

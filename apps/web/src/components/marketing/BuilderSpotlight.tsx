@@ -51,7 +51,7 @@ export function BuilderSpotlight({project, monthLabel}: Props) {
             One project, every month, picked by the team.
           </Text>
           <Text variant="body-2" color="secondary" className={styles.body}>
-            A featured build from a Tenki Builder, Ambassador, or someone on
+            A featured build from a Nebius Builder, Ambassador, or someone on
             the team. Rotates on the 1st.
           </Text>
         </header>

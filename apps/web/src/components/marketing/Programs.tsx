@@ -1,5 +1,5 @@
 // Programs — three cards for Builders Network (highlighted), Startup
-// Program, and Tenki Academy. Mirrors Products.tsx layout with
+// Program, and Nebius Academy. Mirrors Products.tsx layout with
 // fewer items.
 //
 // Ported from nb3 programs.tsx.
@@ -22,7 +22,7 @@ const PROGRAMS: Program[] = [
   {
     name: 'Builders Network',
     blurb:
-      'Run events, post tutorials, build with Tenki. Earn up to $2,600 of credits as you climb tiers. Get promoted to Contributor and Ambassador on points.',
+      'Run events, post tutorials, build with Nebius. Earn up to $2,600 of credits as you climb tiers. Get promoted to Contributor and Ambassador on points.',
     cta: 'Learn more',
     href: '/builders',
     highlight: true,
@@ -30,16 +30,16 @@ const PROGRAMS: Program[] = [
   {
     name: 'Startup Program',
     blurb:
-      'Credits, guidance, and infrastructure support for teams building on Tenki.',
+      'Credits, guidance, and infrastructure support for teams building on Nebius.',
     cta: 'More',
-    href: 'https://tenki.cloud/startups/',
+    href: 'https://nebius.com/startups/',
   },
   {
-    name: 'Tenki Academy',
+    name: 'Nebius Academy',
     blurb:
       'Expert-led courses for developers, engineers, and teams — agentic development, AI performance engineering, onboarding, and more. Free and hybrid formats.',
     cta: 'More',
-    href: 'https://academy.tenki.cloud/',
+    href: 'https://academy.nebius.com/',
   },
 ];
 
@@ -89,7 +89,7 @@ export function Programs() {
             Programs for builders
           </Text>
           <Text variant="header-2" as="h2" className={styles.title}>
-            Three ways to get more from Tenki
+            Three ways to get more from Nebius
           </Text>
           <Text variant="body-2" color="secondary" className={styles.body}>
             Credits, infrastructure support, and standing in the community.

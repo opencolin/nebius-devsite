@@ -1,12 +1,12 @@
 // POST /api/events/refresh
 //
-// Pulls the latest events from luma.com/nebiusAI and tenki.cloud/events using
-// Tenki's extract API, parses each into an event row, deduplicates against
+// Pulls the latest events from luma.com/nebiusAI and nebius.com/events using
+// Tavily's extract API, parses each into an event row, deduplicates against
 // the existing events collection, and upserts.
 //
 // Dedupe rules (per pipeline notes):
 //   - Normalize title: strip whitespace, lowercase, collapse common
-//     short→long city collisions (Tenki.Build/LON ↔ Tenki.Build/LONDON).
+//     short→long city collisions (Nebius.Build/LON ↔ Nebius.Build/LONDON).
 //   - Match on (normalized title, starts_at-day) tuple. If a row already
 //     exists, PATCH it; otherwise POST a new one.
 //
@@ -21,7 +21,7 @@ const DIRECTUS_URL = process.env.DIRECTUS_URL ?? 'http://localhost:8055';
 const TAVILY_KEY = process.env.TAVILY_API_KEY;
 
 interface ScrapedEvent {
-  source: 'luma' | 'tenki.cloud';
+  source: 'luma' | 'nebius.com';
   title: string;
   url: string;
   city?: string;
@@ -78,12 +78,12 @@ export default async function handler(
     });
   }
 
-  // ---- Source 2: tenki.cloud/events ----
+  // ---- Source 2: nebius.com/events ----
   try {
-    const tenkiEvents = await scrapeTenkiCom();
-    result.sources.push({source: 'tenki.cloud/events', ok: true, count: tenkiEvents.length});
-    result.scraped += tenkiEvents.length;
-    for (const e of tenkiEvents) {
+    const nebiusEvents = await scrapeNebiusCom();
+    result.sources.push({source: 'nebius.com/events', ok: true, count: nebiusEvents.length});
+    result.scraped += nebiusEvents.length;
+    for (const e of nebiusEvents) {
       const upserted = await upsertEvent(e);
       if (upserted === 'created') result.created++;
       else if (upserted === 'updated') result.updated++;
@@ -91,7 +91,7 @@ export default async function handler(
     }
   } catch (err) {
     result.sources.push({
-      source: 'tenki.cloud/events',
+      source: 'nebius.com/events',
       ok: false,
       count: 0,
       error: (err as Error).message,
@@ -114,7 +114,7 @@ async function tavilyExtract(url: string): Promise<string> {
     },
     body: JSON.stringify({urls: [url], extract_depth: 'advanced', format: 'markdown'}),
   });
-  if (!r.ok) throw new Error(`Tenki ${url}: ${r.status}`);
+  if (!r.ok) throw new Error(`Tavily ${url}: ${r.status}`);
   const j = (await r.json()) as {results: Array<{raw_content?: string; content?: string}>};
   return j.results?.[0]?.raw_content ?? j.results?.[0]?.content ?? '';
 }
@@ -124,20 +124,20 @@ async function scrapeLuma(): Promise<ScrapedEvent[]> {
   return parseLumaMarkdown(md);
 }
 
-async function scrapeTenkiCom(): Promise<ScrapedEvent[]> {
-  const md = await tavilyExtract('https://tenki.cloud/events');
-  return parseTenkiComMarkdown(md);
+async function scrapeNebiusCom(): Promise<ScrapedEvent[]> {
+  const md = await tavilyExtract('https://nebius.com/events');
+  return parseNebiusComMarkdown(md);
 }
 
-// Both Luma and tenki.cloud render JS; Tenki Extract turns them into markdown.
+// Both Luma and nebius.com render JS; Tavily Extract turns them into markdown.
 // We pull headings (event titles) plus the surrounding "City · Date" line.
 function parseLumaMarkdown(md: string): ScrapedEvent[] {
   const events: ScrapedEvent[] = [];
   const lines = md.split('\n');
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
-    // Luma event titles look like: "## Tenki.Build · London" or
-    // "[Tenki.Build · London](https://lu.ma/...)"
+    // Luma event titles look like: "## Nebius.Build · London" or
+    // "[Nebius.Build · London](https://lu.ma/...)"
     const hMatch = line.match(/^#{2,3}\s+(.+)/);
     const linkMatch = line.match(/^\[([^\]]+)\]\((https:\/\/lu\.ma\/[a-z0-9-]+)\)/i);
     const title = hMatch?.[1] ?? linkMatch?.[1];
@@ -165,17 +165,17 @@ function parseLumaMarkdown(md: string): ScrapedEvent[] {
   return dedupeWithin(events);
 }
 
-function parseTenkiComMarkdown(md: string): ScrapedEvent[] {
+function parseNebiusComMarkdown(md: string): ScrapedEvent[] {
   const events: ScrapedEvent[] = [];
   const lines = md.split('\n');
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
-    // tenki.cloud/events titles often appear as bold links or h3s
+    // nebius.com/events titles often appear as bold links or h3s
     const hMatch = line.match(/^#{2,3}\s+(.+)/);
     const linkMatch = line.match(/^\[([^\]]+)\]\((https:\/\/nebius\.com\/events\/[^\)]+)\)/i);
     const title = hMatch?.[1] ?? linkMatch?.[1];
     if (!title || title.length < 4 || title.length > 120) continue;
-    const url = linkMatch?.[2] ?? 'https://tenki.cloud/events';
+    const url = linkMatch?.[2] ?? 'https://nebius.com/events';
     let starts_at: string | undefined;
     let city: string | undefined;
     for (let j = 1; j <= 4 && i + j < lines.length; j++) {
@@ -190,7 +190,7 @@ function parseTenkiComMarkdown(md: string): ScrapedEvent[] {
       const cityMatch = ahead.match(/\b(San Francisco|London|New York|NYC|Brooklyn|Berlin|Tokyo|Singapore|Bangalore|Online|Virtual|Paris|Amsterdam)\b/i);
       if (cityMatch && !city) city = normalizeCity(cityMatch[1]);
     }
-    events.push({source: 'tenki.cloud', title, url, city, starts_at});
+    events.push({source: 'nebius.com', title, url, city, starts_at});
   }
   return dedupeWithin(events);
 }
@@ -258,9 +258,9 @@ async function upsertEvent(e: ScrapedEvent): Promise<'created' | 'updated' | 'sk
     is_online: e.city === 'Online',
     product_focus: [],
     status: 'PUBLISHED',
-    is_official: e.source === 'tenki.cloud',
+    is_official: e.source === 'nebius.com',
     luma_url: e.source === 'luma' ? e.url : null,
-    official_url: e.source === 'tenki.cloud' ? e.url : null,
+    official_url: e.source === 'nebius.com' ? e.url : null,
   };
 
   // Look up by normalized title

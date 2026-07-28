@@ -1,6 +1,6 @@
-# demo.buildspace.sh — a tech-stack mockup of the Tenki Builders Network,
+# demo.buildspace.sh — a tech-stack mockup of the Nebius Builders Network,
 # built on the same Next.js Pages Router + Gravity UI + Directus + Typesense
-# stack as tenki.cloud. Public content; we WANT crawlers and AI agents
+# stack as nebius.com. Public content; we WANT crawlers and AI agents
 # indexing it so the team can use it as a reference implementation.
 
 # Default: open to everyone, including AI training crawlers. If you're a

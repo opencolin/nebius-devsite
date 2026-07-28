@@ -40,11 +40,11 @@ interface Project {
 const FILTERS = [
   'All',
   'Featured',
-  'Tenki',
+  'Token Factory',
   'AI Cloud',
   'OpenClaw',
   'Soperator',
-  'Tenki',
+  'Tavily',
   'Robotics',
   'JetBrains',
   'Other',
@@ -57,18 +57,19 @@ type Filter = (typeof FILTERS)[number];
 // the actual enum values via Directus REST (apps + library both store
 // "tokenfactory" / "aicloud" — never the underscored forms).
 const PRODUCT_FILTER_KEY: Record<string, string> = {
-  'Tenki': 'tokenfactory',
+  'Token Factory': 'tokenfactory',
   'AI Cloud': 'aicloud',
   OpenClaw: 'openclaw',
   Soperator: 'soperator',
+  Tavily: 'tavily',
 };
 
 const PRODUCT_LABEL: Record<string, string> = {
-  tokenfactory: 'Tenki',
+  tokenfactory: 'Token Factory',
   aicloud: 'AI Cloud',
   openclaw: 'OpenClaw',
   soperator: 'Soperator',
-  tavily: 'Tenki',
+  tavily: 'Tavily',
 };
 
 export const getStaticProps: GetStaticProps<{projects: Project[]}> = async () => {
@@ -116,16 +117,16 @@ export default function ProjectsPage({
   return (
     <PublicLayout>
       <Head>
-        <title>{`Apps · Tenki Builders`}</title>
+        <title>{`Apps · Nebius Builders`}</title>
         <meta
           name="description"
-          content="Open-source apps built on Tenki by the community."
+          content="Open-source apps built on Nebius by the community."
         />
       </Head>
       <div className={page.container}>
         <PageHeader
           eyebrow="Apps"
-          title="Built on Tenki"
+          title="Built on Nebius"
           description={`${projects.length} community apps. Featured + award-winning entries surface first.`}
         />
       </div>

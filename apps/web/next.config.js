@@ -15,18 +15,6 @@ const nextConfig = {
   // `next start` it's disabled, because `next start` is incompatible with
   // standalone output and silently serves stale dev chunks otherwise.
   ...(process.env.BUILD_STANDALONE === '1' ? {output: 'standalone'} : {}),
-  // Static export of the PUBLIC pages for GitHub Pages hosting under the
-  // /nebius-ecosystem-cookbook/devsite/ subpath. Gated on DEVSITE_EXPORT so it
-  // is completely inert for dev / prod-SSR builds. See scripts/export-devsite.sh
-  // (holds out the SSR portal/admin pages, which `output: export` can't build).
-  ...(process.env.DEVSITE_EXPORT === '1'
-    ? {
-        output: 'export',
-        basePath: '/nebius-ecosystem-cookbook/devsite',
-        assetPrefix: '/nebius-ecosystem-cookbook/devsite',
-        trailingSlash: false,
-      }
-    : {}),
   // Server-side ISR + on-demand revalidate of CMS pages. Bumped from default 60s
   // to fit larger Directus payloads on first build.
   staticPageGenerationTimeout: 180,

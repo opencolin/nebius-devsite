@@ -1,63 +1,63 @@
-// Products — 3-up grid for Tenki's core products: Sandbox, Code Reviewer,
-// and Runners. Each card shows a price, a headline, a short blurb, and
-// Start for Free / Learn More / Docs links. Sandbox wears the highlight ring
-// as the flagship agent-infrastructure entry point.
+// Products — 4-up grid for AI Cloud, Token Factory (highlighted), Serverless,
+// and Tavily. Each card has a primary "Start building" link and a secondary
+// "How-tos" link to docs. Token Factory wears a navy border + lime ring to
+// flag it as the recommended entry point.
+//
+// Ported from nb3 products.tsx, Tailwind → CSS Module + Gravity.
+
+import Link from 'next/link';
 
 import {Text} from '@gravity-ui/uikit';
 
 import styles from './Products.module.scss';
 
-interface ProductLink {
-  label: string;
-  href: string;
-}
-
 interface Product {
   name: string;
-  price: string;
-  tagline: string;
   blurb: string;
-  links: ProductLink[];
+  primaryHref: string;
+  primaryLabel: string;
+  secondaryHref: string;
+  secondaryLabel: string;
   highlight?: boolean;
 }
 
 const PRODUCTS: Product[] = [
   {
-    name: 'Sandbox',
-    price: '~$0.00276/minute',
-    tagline: 'Give your agent root without giving it yours',
+    name: 'AI Cloud',
     blurb:
-      'Select from SDK and/or ADE for agentic-driven multi-tasking workflows.',
-    links: [
-      {label: 'Start for Free', href: 'https://tenki.cloud/sandbox'},
-      {label: 'Learn More', href: 'https://tenki.cloud/sandbox'},
-      {label: 'Docs', href: 'https://tenki.cloud/docs/sandbox/quick-start-sandbox'},
-    ],
+      'Spin up GPU VMs and multi-node clusters for training and custom stacks, with full control.',
+    primaryHref: 'https://docs.nebius.com/compute/quickstart',
+    primaryLabel: 'Start building',
+    secondaryHref: 'https://docs.nebius.com/tutorials/rag',
+    secondaryLabel: 'How-tos',
+  },
+  {
+    name: 'Token Factory',
+    blurb:
+      'Serve open-source models via an OpenAI-compatible API with real-time and batch inference, dedicated endpoints, and production SLAs.',
+    primaryHref: 'https://docs.tokenfactory.nebius.com/quickstart',
+    primaryLabel: 'Start building',
+    secondaryHref: 'https://github.com/nebius/token-factory-cookbook',
+    secondaryLabel: 'How-tos',
     highlight: true,
   },
   {
-    name: 'Code Reviewer',
-    price: '$1.00/review',
-    tagline: 'The reviewer built for the agentic era',
+    name: 'Serverless',
     blurb:
-      'Understands your codebase to catch critical issues, so you can deploy with confidence.',
-    links: [
-      {label: 'Start for Free', href: 'https://tenki.cloud/code-reviewer'},
-      {label: 'Learn More', href: 'https://tenki.cloud/code-reviewer'},
-      {label: 'Docs', href: 'https://tenki.cloud/docs/start-code-review'},
-    ],
+      'Build and deploy serverless AI jobs and endpoints from your container in minutes — no Kubernetes, no infrastructure.',
+    primaryHref: 'https://docs.nebius.com/serverless/quickstart/jobs',
+    primaryLabel: 'Start building',
+    secondaryHref: 'https://docs.nebius.com/serverless/tutorials/deploy-model',
+    secondaryLabel: 'How-tos',
   },
   {
-    name: 'Runners',
-    price: '$0.002/core/minute',
-    tagline: 'Run 30% Faster and Up to 60% Cheaper',
+    name: 'Tavily',
     blurb:
-      'Supports private and public repositories, with x64 and macOS environments.',
-    links: [
-      {label: 'Start for Free', href: 'https://tenki.cloud/runners'},
-      {label: 'Learn More', href: 'https://tenki.cloud/runners'},
-      {label: 'Docs', href: 'https://tenki.cloud/docs/runners/quick-start-runners'},
-    ],
+      'Real-time web search and content extraction for LLMs and agents via API and SDKs.',
+    primaryHref: 'https://docs.tavily.com/documentation/quickstart',
+    primaryLabel: 'Start building',
+    secondaryHref: 'https://docs.tavily.com/examples/hub',
+    secondaryLabel: 'How-tos',
   },
 ];
 
@@ -70,10 +70,18 @@ function ProductLink({
   className: string;
   children: React.ReactNode;
 }) {
+  const isExternal = href.startsWith('http');
+  if (isExternal) {
+    return (
+      <a href={href} target="_blank" rel="noreferrer" className={className}>
+        {children} &uarr;
+      </a>
+    );
+  }
   return (
-    <a href={href} target="_blank" rel="noreferrer" className={className}>
-      {children} &uarr;
-    </a>
+    <Link href={href} className={className}>
+      {children} &rarr;
+    </Link>
   );
 }
 
@@ -89,7 +97,7 @@ export function Products() {
             Choose a starting point for your work
           </Text>
           <Text variant="body-2" color="secondary" className={styles.body}>
-            Three products. Pick the one that fits how you want to build.
+            Four products. Pick the one that fits how you want to build.
           </Text>
         </header>
 
@@ -99,30 +107,19 @@ export function Products() {
               key={p.name}
               className={`${styles.card} ${p.highlight ? styles.cardHighlight : ''}`}
             >
-              <div className={styles.cardHead}>
-                <Text variant="subheader-2" as="h3" className={styles.cardTitle}>
-                  {p.name}
-                </Text>
-                <Text variant="caption-2" color="secondary" className={styles.cardPrice}>
-                  {p.price}
-                </Text>
-              </div>
-              <Text variant="subheader-1" as="p" className={styles.cardTagline}>
-                {p.tagline}
+              <Text variant="subheader-2" as="h3" className={styles.cardTitle}>
+                {p.name}
               </Text>
               <Text variant="body-2" color="secondary" className={styles.cardBlurb}>
                 {p.blurb}
               </Text>
               <div className={styles.cardFooter}>
-                {p.links.map((l, i) => (
-                  <ProductLink
-                    key={l.label}
-                    href={l.href}
-                    className={i === 0 ? styles.linkPrimary : styles.linkSecondary}
-                  >
-                    {l.label}
-                  </ProductLink>
-                ))}
+                <ProductLink href={p.primaryHref} className={styles.linkPrimary}>
+                  {p.primaryLabel}
+                </ProductLink>
+                <ProductLink href={p.secondaryHref} className={styles.linkSecondary}>
+                  {p.secondaryLabel}
+                </ProductLink>
               </div>
             </div>
           ))}

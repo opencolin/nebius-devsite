@@ -8,7 +8,7 @@
 //                          routes that proxy authenticated requests through
 //                          Directus's per-role permissions.
 //
-// These mirror the pattern Tenki's own site uses to fetch CMS pages from
+// These mirror the pattern Nebius's own site uses to fetch CMS pages from
 // nebius.directus.app at build/revalidate time.
 
 import {

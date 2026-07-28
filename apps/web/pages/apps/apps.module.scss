@@ -575,8 +575,8 @@
   gap: 24px;
   padding: 20px 24px;
   border: 1px solid var(--g-color-line-generic);
-  // Token so the tenki.cloud brand (--nb-card-radius: 0) squares this banner
-  // like its other cards; falls back to 12px for the tenki.cloud brand.
+  // Token so the dev.nebius.com brand (--nb-card-radius: 0) squares this banner
+  // like its other cards; falls back to 12px for the nebius.com brand.
   border-radius: var(--nb-card-radius, 12px);
   background: var(--g-color-base-float);
   transition: transform 120ms ease, border-color 120ms ease;

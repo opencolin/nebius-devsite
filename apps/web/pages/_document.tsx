@@ -5,8 +5,8 @@ export default function Document() {
   // repo) so the wrong theme/brand never flashes on hydration. Gravity UI
   // looks for the `g-root_theme_*` class on <html>.
   //
-  // Site ships LIGHT-FIRST on the tenki.cloud brand: a first-time visitor
-  // (no stored choice) gets light + 'tenki' regardless of OS preference.
+  // Site ships LIGHT-FIRST on the dev.nebius.com brand: a first-time visitor
+  // (no stored choice) gets light + 'nebius' regardless of OS preference.
   // Returning visitors keep whatever they toggled (localStorage wins).
   const themeBootstrap = `
     (function () {
@@ -15,9 +15,9 @@ export default function Document() {
         var theme = (stored === 'dark' || stored === 'light') ? stored : 'light';
         document.documentElement.classList.add('g-root', 'g-root_theme_' + theme);
         // Brand bootstrap — apply the brand before paint so the CSS token layer
-        // (globals.scss html[data-brand='tenki']) is live with no flash.
-        // Default 'tenki' (the tenki.cloud brand).
-        var brand = localStorage.getItem('brand') === 'builders' ? 'builders' : 'tenki';
+        // (globals.scss html[data-brand='nebius']) is live with no flash.
+        // Default 'nebius' (the dev.nebius.com brand).
+        var brand = localStorage.getItem('brand') === 'builders' ? 'builders' : 'nebius';
         document.documentElement.setAttribute('data-brand', brand);
       } catch (e) {}
     })();
@@ -29,9 +29,9 @@ export default function Document() {
     <Html lang="en" data-scroll-behavior="smooth">
       <Head>
         <script dangerouslySetInnerHTML={{__html: themeBootstrap}} />
-        {/* Brand fonts: Inter (body, both brands), Space Mono (tenki.cloud
-            headings), Space Grotesk (tenki.cloud display headings — the closest
-            free match for tenki.cloud's licensed Gramatika). Loaded for all
+        {/* Brand fonts: Inter (body, both brands), Space Mono (dev.nebius.com
+            headings), Space Grotesk (nebius.com display headings — the closest
+            free match for nebius.com's licensed Gramatika). Loaded for all
             brands; applied per-brand via globals.scss. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

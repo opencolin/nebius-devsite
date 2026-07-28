@@ -7,7 +7,7 @@ import styles from './Footer.module.scss';
 const COL_LEARN: Array<{href: string; label: string; external?: boolean}> = [
   {href: '/library', label: 'Library'},
   {href: '/office-hours', label: 'Office hours'},
-  {href: 'https://tenki.cloud/docs', label: 'Docs ↗', external: true},
+  {href: 'https://docs.nebius.com', label: 'Docs ↗', external: true},
 ];
 
 const COL_BUILD: Array<{href: string; label: string; external?: boolean}> = [
@@ -24,10 +24,10 @@ const COL_PROGRAM: Array<{href: string; label: string; external?: boolean}> = [
   {href: '/signup', label: 'Sign up'},
 ];
 
-const COL_TENKI: Array<{href: string; label: string; external?: boolean}> = [
-  {href: 'https://tenki.cloud', label: 'Tenki.com ↗', external: true},
-  {href: 'https://tenki.cloud/docs', label: 'Tenki ↗', external: true},
-  {href: 'https://careers.tenki.cloud', label: 'Careers ↗', external: true},
+const COL_NEBIUS: Array<{href: string; label: string; external?: boolean}> = [
+  {href: 'https://nebius.com', label: 'Nebius.com ↗', external: true},
+  {href: 'https://docs.tokenfactory.nebius.com', label: 'Token Factory ↗', external: true},
+  {href: 'https://careers.nebius.com', label: 'Careers ↗', external: true},
 ];
 
 export function Footer() {
@@ -38,16 +38,16 @@ export function Footer() {
           <Logo />
           <p className={styles.tagline}>
             Workshops, demos, hackathons, office hours — built by the community,
-            on Tenki.
+            on Nebius.
           </p>
-          <p className={styles.legal}>© 2026 Tenki B.V.</p>
+          <p className={styles.legal}>© 2026 Nebius B.V.</p>
         </div>
 
         <div className={styles.cols}>
           <FooterCol heading="Learn" items={COL_LEARN} />
           <FooterCol heading="Build" items={COL_BUILD} />
           <FooterCol heading="Program" items={COL_PROGRAM} />
-          <FooterCol heading="Tenki" items={COL_TENKI} />
+          <FooterCol heading="Nebius" items={COL_NEBIUS} />
         </div>
       </div>
     </footer>

@@ -27,7 +27,7 @@ export interface MarketingEvent {
   product_focus: string[];
   is_official: boolean;
   luma_url?: string | null;
-  // Tenki.com-hosted webinars (e.g. SemiAnalysis collab) come in on
+  // Nebius.com-hosted webinars (e.g. SemiAnalysis collab) come in on
   // official_url, not luma_url; both feed the CTA via eventHref().
   official_url?: string | null;
 }
@@ -45,9 +45,6 @@ function formatLabel(format: string): string {
 }
 
 export function ActiveEvents({events}: Props) {
-  // No published events yet (collection cleared for the Tenki rebuild) — hide
-  // the whole rail rather than render an empty "Upcoming events" header.
-  if (events.length === 0) return null;
   const next = events.slice(0, 3);
 
   return (
@@ -59,10 +56,10 @@ export function ActiveEvents({events}: Props) {
               Next up
             </Text>
             <Text variant="header-2" as="h2" className={styles.title}>
-              Upcoming Tenki builder events
+              Upcoming Nebius builder events
             </Text>
             <Text variant="body-2" color="secondary" className={styles.body}>
-              Builder-hosted meetups and the Tenki official tour. Tenki
+              Builder-hosted meetups and the Nebius official tour. Token Factory
               keys load on the day.
             </Text>
           </div>
@@ -73,7 +70,7 @@ export function ActiveEvents({events}: Props) {
 
         <div className={styles.grid}>
           {next.map((e) => {
-            // Luma → Tenki webinar → internal /events anchor (always
+            // Luma → Nebius webinar → internal /events anchor (always
             // truthy). external check stays the same: only http(s) URLs
             // get target="_blank".
             const href = eventHref(e) ?? `/events#${e.id}`;

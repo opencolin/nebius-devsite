@@ -2,15 +2,15 @@
 //
 // Events have two possible URLs in Directus: `luma_url` (Luma listing — what
 // the events refresher writes when source=luma) and `official_url` (the
-// Tenki webinar page — what the refresher writes when source=tenki.cloud).
+// Nebius webinar page — what the refresher writes when source=nebius.com).
 // Most events have exactly one of the two; the rendering needs to pick
 // whichever is present.
 //
 // Previously each surface inlined its own fallback chain and at least three
 // (homepage map, /events page, ActiveEvents marketing block) only checked
-// `luma_url`, silently dropping the link for any tenki.cloud-sourced event.
+// `luma_url`, silently dropping the link for any nebius.com-sourced event.
 // The user-reported bug: "Calculating the total cost of a GPU cluster |
-// Tenki × SemiAnalysis" was source=tenki.cloud so `luma_url` was null,
+// Nebius × SemiAnalysis" was source=nebius.com so `luma_url` was null,
 // `official_url` had the correct webinar URL, but the card rendered with
 // no link.
 //

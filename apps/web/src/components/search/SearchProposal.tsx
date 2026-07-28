@@ -1,5 +1,5 @@
 // Header search box, debounced, talks to /api/search.
-// Class names mirror Tenki's signature `SearchProposal_*` CSS Module pattern.
+// Class names mirror Nebius's signature `SearchProposal_*` CSS Module pattern.
 //
 // Two paths to results:
 //   1. Autocomplete dropdown (live, debounced 200ms) shows up to 6 hits.

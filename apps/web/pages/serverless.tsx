@@ -1,6 +1,6 @@
-// /serverless — product landing page for Tenki Serverless AI.
+// /serverless — product landing page for Nebius Serverless AI.
 //
-// Mirrors tenki.cloud/serverless:
+// Mirrors dev.nebius.com/serverless:
 //   - Dark hero with the Jobs / Endpoints pitch
 //   - Quickstarts (pinned)
 //   - Jobs section
@@ -81,7 +81,7 @@ export default function ServerlessPage({
   return (
     <PublicLayout>
       <Head>
-        <title>Serverless AI · Tenki Builders</title>
+        <title>Serverless AI · Nebius Builders</title>
         <meta
           name="description"
           content="Run containerized AI workloads on GPUs without managing infrastructure. Jobs run to completion; Endpoints serve real-time requests. Provision on demand, release automatically."
@@ -106,7 +106,7 @@ export default function ServerlessPage({
             <Button
               view="action"
               size="l"
-              href="https://console.tenki.cloud/serverless"
+              href="https://console.nebius.com/serverless"
               target="_blank"
               rel="noreferrer"
             >
@@ -115,7 +115,7 @@ export default function ServerlessPage({
             <Button
               view="outlined"
               size="l"
-              href="https://tenki.cloud/docs/serverless/overview"
+              href="https://docs.nebius.com/serverless/overview"
               target="_blank"
               rel="noreferrer"
             >
@@ -255,7 +255,7 @@ export default function ServerlessPage({
           <Button
             view="action"
             size="l"
-            href="https://console.tenki.cloud/serverless"
+            href="https://console.nebius.com/serverless"
             target="_blank"
             rel="noreferrer"
           >

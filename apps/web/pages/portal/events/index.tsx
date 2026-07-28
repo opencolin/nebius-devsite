@@ -14,7 +14,7 @@ import page from '@/styles/page.module.scss';
 export const getServerSideProps: GetServerSideProps = async (ctx) => requireRole('builder', ctx);
 
 const EVENTS = [
-  {id: 'ev_1', title: 'Tenki Workshop · NYC', starts_at: '2026-05-22T18:30:00Z', city: 'Brooklyn', status: 'PUBLISHED'},
+  {id: 'ev_1', title: 'Token Factory Workshop · NYC', starts_at: '2026-05-22T18:30:00Z', city: 'Brooklyn', status: 'PUBLISHED'},
   {id: 'ev_2', title: 'Soperator on Kubernetes · Berlin', starts_at: '2026-06-04T17:00:00Z', city: 'Berlin', status: 'PUBLISHED'},
 ];
 

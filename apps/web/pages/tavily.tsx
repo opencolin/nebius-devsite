@@ -1,8 +1,8 @@
-// /tavily — developer-onboarding page for Tenki, the Tenki web-search API.
+// /tavily — developer-onboarding page for Tavily, the Nebius web-search API.
 //
-// Tenki is the search/retrieval API for LLMs and agents. On the Tenki
+// Tavily is the search/retrieval API for LLMs and agents. On the Nebius
 // Builders site it sits under the Products menu next to AI Cloud / Token
-// Factory / Serverless: builders pair Tenki web search with Tenki models
+// Factory / Serverless: builders pair Tavily web search with Nebius models
 // to build agents that can browse the web.
 //
 // Unlike the first-party product pages (which are pure resource aggregators),
@@ -29,7 +29,7 @@ import t from '@/styles/tavily.module.scss';
 
 // ---- Static content -----------------------------------------------------
 
-// Curated official Tenki resources — always shown, independent of the CMS.
+// Curated official Tavily resources — always shown, independent of the CMS.
 const RESOURCES: ResourceEntry[] = [
   {
     slug: 'tavily-docs',
@@ -38,7 +38,7 @@ const RESOURCES: ResourceEntry[] = [
     type: 'DOCS',
     level: 'BEGINNER',
     duration_min: null,
-    external_url: 'https://tenki.cloud/docs',
+    external_url: 'https://docs.tavily.com',
     is_official: true,
     pinned: false,
   },
@@ -49,7 +49,7 @@ const RESOURCES: ResourceEntry[] = [
     type: 'DOCS',
     level: 'INTERMEDIATE',
     duration_min: null,
-    external_url: 'https://tenki.cloud/docs/documentation/api-reference/introduction',
+    external_url: 'https://docs.tavily.com/documentation/api-reference/introduction',
     is_official: true,
     pinned: false,
   },
@@ -67,11 +67,11 @@ const RESOURCES: ResourceEntry[] = [
   {
     slug: 'tavily-mcp',
     title: 'MCP Server',
-    blurb: 'Drop Tenki web search into Claude, Cursor, and any MCP client.',
+    blurb: 'Drop Tavily web search into Claude, Cursor, and any MCP client.',
     type: 'DOCS',
     level: 'INTERMEDIATE',
     duration_min: null,
-    external_url: 'https://tenki.cloud/docs/documentation/mcp',
+    external_url: 'https://docs.tavily.com/documentation/mcp',
     is_official: true,
     pinned: false,
   },
@@ -82,7 +82,7 @@ const RESOURCES: ResourceEntry[] = [
     type: 'REPO',
     level: 'INTERMEDIATE',
     duration_min: null,
-    external_url: 'https://tenki.cloud/docs/examples/hub',
+    external_url: 'https://docs.tavily.com/examples/hub',
     is_official: true,
     pinned: false,
   },
@@ -93,7 +93,7 @@ const RESOURCES: ResourceEntry[] = [
     type: 'DOCS',
     level: 'BEGINNER',
     duration_min: null,
-    external_url: 'https://tenki.cloud/docs/documentation/api-credits',
+    external_url: 'https://docs.tavily.com/documentation/api-credits',
     is_official: true,
     pinned: false,
   },
@@ -106,9 +106,9 @@ const CAPABILITIES: Array<{name: string; desc: string}> = [
   {name: 'Map', desc: "Discover a site's link graph to plan retrieval and coverage."},
 ];
 
-// A single "how will you use Tenki?" selector drives the whole guide. Two
+// A single "how will you use Tavily?" selector drives the whole guide. Two
 // workflows: SDK (Python / JavaScript — install the SDK and call the API) and
-// MCP (Claude Code / Codex / Cursor — add Tenki's MCP server, then use it).
+// MCP (Claude Code / Codex / Cursor — add Tavily's MCP server, then use it).
 const PATHS = [
   {key: 'py', label: 'Python', kind: 'sdk'},
   {key: 'js', label: 'JavaScript', kind: 'sdk'},
@@ -130,10 +130,10 @@ const SDK_GUIDE: Record<SdkKey, {install: string; search: string; searchCaption:
   py: {
     install: 'pip install tavily-python',
     searchCaption: 'Python',
-    search: `from tavily import TenkiClient
+    search: `from tavily import TavilyClient
 
-client = TenkiClient(api_key="tvly-YOUR_API_KEY")
-response = client.search("What did Tenki announce this week?")
+client = TavilyClient(api_key="tvly-YOUR_API_KEY")
+response = client.search("What did Nebius announce this week?")
 print(response)`,
   },
   js: {
@@ -142,12 +142,12 @@ print(response)`,
     search: `import { tavily } from "@tavily/core";
 
 const client = tavily({ apiKey: "tvly-YOUR_API_KEY" });
-const response = await client.search("What did Tenki announce this week?");
+const response = await client.search("What did Nebius announce this week?");
 console.log(response);`,
   },
 };
 
-// MCP paths: config to add Tenki's MCP server, where it goes, and how to use
+// MCP paths: config to add Tavily's MCP server, where it goes, and how to use
 // it. All three run the same tavily-mcp server (search / extract / crawl / map).
 const MCP_GUIDE: Record<
   McpKey,
@@ -159,7 +159,7 @@ const MCP_GUIDE: Record<
   --env TAVILY_API_KEY=tvly-YOUR_API_KEY \\
   -- npx -y tavily-mcp@latest`,
     where: 'Run this in your project, then restart Claude Code.',
-    use: 'Ask Claude Code something current — "search the web for the latest open-weight model releases" — and it will call Tenki and cite its sources.',
+    use: 'Ask Claude Code something current — "search the web for the latest open-weight model releases" — and it will call Tavily and cite its sources.',
   },
   codex: {
     configCaption: '~/.codex/config.toml',
@@ -168,7 +168,7 @@ command = "npx"
 args = ["-y", "tavily-mcp@latest"]
 env = { TAVILY_API_KEY = "tvly-YOUR_API_KEY" }`,
     where: 'Add to ~/.codex/config.toml, then restart Codex.',
-    use: 'Ask Codex to research something live; it will call the Tenki search and extract tools mid-task.',
+    use: 'Ask Codex to research something live; it will call the Tavily search and extract tools mid-task.',
   },
   cursor: {
     configCaption: '~/.cursor/mcp.json',
@@ -182,7 +182,7 @@ env = { TAVILY_API_KEY = "tvly-YOUR_API_KEY" }`,
   }
 }`,
     where: 'Add to ~/.cursor/mcp.json (global) or .cursor/mcp.json (project), then reload Cursor.',
-    use: "In Cursor's Agent chat, ask it to search the web and approve the Tenki tool when prompted.",
+    use: "In Cursor's Agent chat, ask it to search the web and approve the Tavily tool when prompted.",
   },
 };
 
@@ -248,7 +248,7 @@ function PathSelector({
   highlight: boolean;
 }) {
   return (
-    <div className={t.pathSelector} role="tablist" aria-label="How you'll use Tenki">
+    <div className={t.pathSelector} role="tablist" aria-label="How you'll use Tavily">
       {PATHS.map((p, i) => {
         // Thin divider where the SDK group ends and the agent group begins.
         const groupBreak = i > 0 && PATHS[i - 1].kind !== p.kind;
@@ -276,7 +276,7 @@ function PathSelector({
 
 // ---- Page ---------------------------------------------------------------
 
-export default function TenkiPage({
+export default function TavilyPage({
   libraryResources,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   // One selector (Python / JavaScript / Claude Code / Codex / Cursor) drives
@@ -289,10 +289,10 @@ export default function TenkiPage({
   return (
     <PublicLayout>
       <Head>
-        <title>Tenki · Tenki Builders</title>
+        <title>Tavily · Nebius Builders</title>
         <meta
           name="description"
-          content="Give your AI agents real-time web access with Tenki — the search and retrieval API for LLMs. Get started free in minutes and pair Tenki with Tenki models to build agents that search the web."
+          content="Give your AI agents real-time web access with Tavily — the search and retrieval API for LLMs. Get started free in minutes and pair Tavily with Nebius models to build agents that search the web."
         />
       </Head>
 
@@ -301,10 +301,10 @@ export default function TenkiPage({
         <div className={styles.heroOverlay} aria-hidden />
         <div className={styles.heroInner}>
           <span className={styles.heroEyebrow}>Web search API</span>
-          <h1 className={styles.heroTitle}>Give your agents real-time web access with Tenki.</h1>
+          <h1 className={styles.heroTitle}>Give your agents real-time web access with Tavily.</h1>
           <p className={styles.heroLede}>
-            Tenki is the search and retrieval API built for LLMs and agents. Search, extract,
-            crawl, and map the web with one call, then ground your Tenki-powered models on fresh,
+            Tavily is the search and retrieval API built for LLMs and agents. Search, extract,
+            crawl, and map the web with one call, then ground your Nebius-powered models on fresh,
             reliable sources. Free to start — no credit card required.
           </p>
           <div className={styles.heroCtas}>
@@ -320,7 +320,7 @@ export default function TenkiPage({
             <Button
               view="outlined"
               size="l"
-              href="https://tenki.cloud/docs"
+              href="https://docs.tavily.com"
               target="_blank"
               rel="noreferrer"
             >
@@ -373,7 +373,7 @@ export default function TenkiPage({
 
           {/* Master selector — always visible; selecting a path opens the guide */}
           <div className={t.pathPicker}>
-            <span className={t.pathPickerLabel}>I&apos;ll use Tenki with</span>
+            <span className={t.pathPickerLabel}>I&apos;ll use Tavily with</span>
             <PathSelector
               path={path}
               highlight={stepsOpen}
@@ -394,7 +394,7 @@ export default function TenkiPage({
                     Get your free API key
                   </Text>
                   <Text variant="body-2" color="secondary" className={t.stepText}>
-                    Create an account on the Tenki platform — you get 1,000 free API credits every
+                    Create an account on the Tavily platform — you get 1,000 free API credits every
                     month, no credit card required. Copy a key from your dashboard; it looks like{' '}
                     <code>tvly-…</code>.
                   </Text>
@@ -406,7 +406,7 @@ export default function TenkiPage({
                       target="_blank"
                       rel="noreferrer"
                     >
-                      Open the Tenki platform ↗
+                      Open the Tavily platform ↗
                     </Button>
                   </div>
                 </div>
@@ -419,10 +419,10 @@ export default function TenkiPage({
                   {isMcp(path) ? (
                     <>
                       <Text variant="subheader-2" as="h3" className={t.stepTitle}>
-                        Add the Tenki MCP server to {pathLabel(path)}
+                        Add the Tavily MCP server to {pathLabel(path)}
                       </Text>
                       <Text variant="body-2" color="secondary" className={t.stepText}>
-                        One config and {pathLabel(path)} gains Tenki&apos;s search, extract, crawl,
+                        One config and {pathLabel(path)} gains Tavily&apos;s search, extract, crawl,
                         and map tools, callable mid-task.
                       </Text>
                       <CodeBlock
@@ -454,7 +454,7 @@ export default function TenkiPage({
                   {isMcp(path) ? (
                     <>
                       <Text variant="subheader-2" as="h3" className={t.stepTitle}>
-                        Use Tenki in {pathLabel(path)}
+                        Use Tavily in {pathLabel(path)}
                       </Text>
                       <Text variant="body-2" color="secondary" className={t.stepText}>
                         {MCP_GUIDE[path].use}
@@ -477,30 +477,30 @@ export default function TenkiPage({
                 </div>
               </div>
 
-              {/* Step 4 — universal (Tenki) */}
+              {/* Step 4 — universal (Nebius) */}
               <div className={t.step}>
                 <div className={t.stepNum}>4</div>
                 <div className={t.stepBody}>
                   <Text variant="subheader-2" as="h3" className={t.stepTitle}>
-                    Pair Tenki with Tenki
+                    Pair Tavily with Nebius
                   </Text>
                   <Text variant="body-2" color="secondary" className={t.stepText}>
-                    Tenki retrieves; your Tenki model reasons. Pass Tenki&apos;s search results as
-                    context to any OpenAI-compatible chat completion on Tenki Tenki to build
+                    Tavily retrieves; your Nebius model reasons. Pass Tavily&apos;s search results as
+                    context to any OpenAI-compatible chat completion on Nebius Token Factory to build
                     agents that search the web, then synthesize grounded answers.
                   </Text>
                   <div className={t.stepActions}>
                     <Button view="normal" size="m" href="/token-factory">
-                      Tenki quickstart →
+                      Token Factory quickstart →
                     </Button>
                     <Button
                       view="flat"
                       size="m"
-                      href="https://tenki.cloud/docs/documentation/mcp"
+                      href="https://docs.tavily.com/documentation/mcp"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      Tenki MCP server ↗
+                      Tavily MCP server ↗
                     </Button>
                   </div>
                 </div>
@@ -536,7 +536,7 @@ export default function TenkiPage({
         </div>
       </section>
 
-      {/* ---- Build with Tenki (curated resources) ---- */}
+      {/* ---- Build with Tavily (curated resources) ---- */}
       <section className={styles.section}>
         <div className={styles.sectionInner}>
           <div className={styles.sectionHead}>
@@ -544,7 +544,7 @@ export default function TenkiPage({
               Resources
             </Text>
             <Text variant="header-2" as="h2" className={styles.sectionTitle}>
-              Build with Tenki.
+              Build with Tavily.
             </Text>
           </div>
           <div className={styles.resourceGrid}>
@@ -555,7 +555,7 @@ export default function TenkiPage({
         </div>
       </section>
 
-      {/* ---- From the Tenki library (auto-enriches via surface: tavily) ---- */}
+      {/* ---- From the Nebius library (auto-enriches via surface: tavily) ---- */}
       {libraryResources.length > 0 ? (
         <section className={styles.section}>
           <div className={styles.sectionInner}>
@@ -564,7 +564,7 @@ export default function TenkiPage({
                 From the library
               </Text>
               <Text variant="header-2" as="h2" className={styles.sectionTitle}>
-                Tenki + Tenki, from the community.
+                Tavily + Nebius, from the community.
               </Text>
             </div>
             <div className={styles.resourceGrid}>
@@ -580,7 +580,7 @@ export default function TenkiPage({
       <div className={styles.consoleCta}>
         <div className={styles.consoleCtaInner}>
           <Text variant="header-1" as="h2">
-            Start building with Tenki + Tenki.
+            Start building with Tavily + Nebius.
           </Text>
           <Button
             view="action"

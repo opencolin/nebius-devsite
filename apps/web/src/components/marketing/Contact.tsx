@@ -37,8 +37,8 @@ export function Contact() {
                 <span className={styles.icon} aria-hidden>
                   &#9993;
                 </span>
-                <a href="mailto:builders@tenki.cloud" className={styles.infoLink}>
-                  builders@tenki.cloud
+                <a href="mailto:builders@nebius.com" className={styles.infoLink}>
+                  builders@nebius.com
                 </a>
               </li>
               <li className={styles.infoItem}>
@@ -64,7 +64,7 @@ export function Contact() {
               <TextInput
                 id="contact-email"
                 type="email"
-                placeholder="colin@tenki.cloud"
+                placeholder="colin@nebius.com"
                 size="l"
               />
             </div>
@@ -72,7 +72,7 @@ export function Contact() {
               <label htmlFor="contact-company" className={styles.label}>
                 Company
               </label>
-              <TextInput id="contact-company" placeholder="Tenki" size="l" />
+              <TextInput id="contact-company" placeholder="Nebius" size="l" />
             </div>
             <div className={styles.field}>
               <label htmlFor="contact-msg" className={styles.label}>

@@ -19,14 +19,17 @@ import {PublicLayout} from '@/components/chrome/PublicLayout';
 import {HeroSection} from '@/components/integrations/HeroSection';
 import {ActiveEvents, type MarketingEvent} from '@/components/marketing/ActiveEvents';
 import {BuildInPublic} from '@/components/marketing/BuildInPublic';
-import type {SpotlightProject} from '@/components/marketing/BuilderSpotlight';
+import {BuilderSpotlight, type SpotlightProject} from '@/components/marketing/BuilderSpotlight';
+import {CodingAgents} from '@/components/marketing/CodingAgents';
 import {Community} from '@/components/marketing/Community';
 import {Contact} from '@/components/marketing/Contact';
+import {EcosystemPartners} from '@/components/marketing/EcosystemPartners';
 import {Products} from '@/components/marketing/Products';
 import {Programs} from '@/components/marketing/Programs';
+import {UseCases} from '@/components/marketing/UseCases';
 import {WorkshopSpotlight, type LibrarySpotlightEntry} from '@/components/marketing/WorkshopSpotlight';
 import {directusServer} from '@/lib/directus';
-import type {BuildersEventRow, LibraryArticleRow} from '@/lib/types';
+import type {BuildersEventRow, LibraryArticleRow, ProjectRow} from '@/lib/types';
 
 // TODO: replace these hard-codes with a programs/metrics collection in
 // Directus once one exists. Numbers mirror nb3 /lib/network for parity.
@@ -76,7 +79,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     }
   };
 
-  const [eventsRaw, libraryRaw] = await Promise.all([
+  const [eventsRaw, libraryRaw, projectsRaw] = await Promise.all([
     safeRequest(
       directus.request(
         readItems('events', {
@@ -94,7 +97,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
             'product_focus',
             'is_official',
             'luma_url',
-            // Tenki-hosted webinars carry official_url instead of luma_url;
+            // Nebius-hosted webinars carry official_url instead of luma_url;
             // ActiveEvents falls back to it via eventHref().
             'official_url',
             'location',
@@ -122,6 +125,24 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
           limit: -1,
         }),
       ) as Promise<LibraryArticleRow[]>,
+    ),
+    safeRequest(
+      directus.request(
+        readItems('projects', {
+          sort: ['-featured', 'title'],
+          fields: [
+            'slug',
+            'title',
+            'tagline',
+            'description',
+            'builder_handle',
+            'tags',
+            'product_focus',
+            'repo_url',
+          ],
+          limit: -1,
+        }),
+      ) as Promise<ProjectRow[]>,
     ),
   ]);
 
@@ -183,11 +204,26 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     .slice(0, 2)
     .map(toLibrary);
 
-  // BuilderSpotlight was removed from the homepage during the Tenki rebuild
-  // (the projects collection still holds Nebius content), so we no longer read
-  // projects or serialize a monthly project into the page. monthLabel is kept
-  // only as a harmless prop.
+  // Monthly project: same picker as upstream, cycles on the 1st of each
+  // month UTC. If projects collection is empty, the BuilderSpotlight
+  // section renders nothing.
   const monthDate = new Date();
+  const monthIndex = monthDate.getUTCFullYear() * 12 + monthDate.getUTCMonth();
+  const project =
+    projectsRaw.length > 0 ? projectsRaw[monthIndex % projectsRaw.length] : null;
+  const monthlyProject: SpotlightProject | null = project
+    ? {
+        slug: project.slug,
+        title: project.title,
+        tagline: project.tagline,
+        description: project.description,
+        builderHandle: project.builder_handle,
+        builderName: project.builder_handle, // No name field on ProjectRow yet
+        tags: project.tags ?? [],
+        productFocus: project.product_focus ?? [],
+        repoUrl: project.repo_url ?? null,
+      }
+    : null;
   const monthLabel = `${MONTHS[monthDate.getUTCMonth()]} ${monthDate.getUTCFullYear()}`;
 
   return {
@@ -197,7 +233,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
       libraryCount: libraryRaw.length,
       featuredWorkshop,
       relatedWorkshops,
-      monthlyProject: null,
+      monthlyProject,
       monthLabel,
     },
     revalidate: 60,
@@ -208,14 +244,16 @@ export default function HomePage({
   events,
   featuredWorkshop,
   relatedWorkshops,
+  monthlyProject,
+  monthLabel,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <PublicLayout>
       <Head>
-        <title>Tenki for AI Builders</title>
+        <title>Nebius for AI Builders</title>
         <meta
           name="description"
-          content="Instant agent sandboxes, fast CI runners, and AI code review — cloud infrastructure for your code and agents. Plus a community of builders shipping real work."
+          content="From training and fine-tuning to production inference at scale. Plus a community of builders shipping real work."
         />
       </Head>
 
@@ -224,15 +262,15 @@ export default function HomePage({
           stays off SSR + other pages; on WebGL failure it falls back to the
           static dark shell. */}
       <HeroSection
-        title="Tenki for AI Builders"
-        lede="Instant agent sandboxes, fast CI runners, and AI code review — cloud infrastructure for your code and agents. Plus a community of builders shipping real work — workshops, demos, hackathons, office hours."
+        title="Nebius for AI Builders"
+        lede="From training and fine-tuning to production inference at scale. Plus a community of builders shipping real work — workshops, demos, hackathons, office hours."
         themed
         actions={
           <>
             <Button view="action" size="xl" href="/signup">
               Start building
             </Button>
-            <Button view="outlined" size="xl" href="https://tenki.cloud/docs" target="_blank">
+            <Button view="outlined" size="xl" href="https://docs.nebius.com" target="_blank">
               Read the docs
             </Button>
           </>
@@ -241,9 +279,13 @@ export default function HomePage({
 
       <Products />
       <ActiveEvents events={events} />
+      <CodingAgents />
+      <UseCases />
       <WorkshopSpotlight featured={featuredWorkshop} related={relatedWorkshops} />
+      <BuilderSpotlight project={monthlyProject} monthLabel={monthLabel} />
       <Community />
       <Programs />
+      <EcosystemPartners />
       <Contact />
       <BuildInPublic />
     </PublicLayout>

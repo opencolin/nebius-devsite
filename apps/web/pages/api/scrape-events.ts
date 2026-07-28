@@ -1,6 +1,6 @@
 // GET /api/scrape-events
 // Mirrors the upstream endpoint that re-scrapes Luma for the latest official
-// Tenki events and refreshes the events collection. In this mockup it's a
+// Nebius events and refreshes the events collection. In this mockup it's a
 // stub — production wiring would call out to a Luma scraper or webhook
 // receiver and PATCH the events collection.
 

@@ -99,10 +99,10 @@ export default function IntegrationsPage({
   return (
     <PublicLayout>
       <Head>
-        <title>Integrations · Tenki Builders</title>
+        <title>Integrations · Nebius Builders</title>
         <meta
           name="description"
-          content="Every Tenki integration in one filterable directory — products (AI Cloud, Tenki, Tenki) and categories (agents, gateway, orchestration, and more)."
+          content="Every Nebius integration in one filterable directory — products (AI Cloud, Token Factory, Tavily) and categories (agents, gateway, orchestration, and more)."
         />
       </Head>
 
@@ -114,7 +114,7 @@ export default function IntegrationsPage({
         <PageHeader
           eyebrow="Integrations"
           title="Every integration. One page."
-          description="Frameworks, gateways, orchestrators, and observability tools that integrate with Tenki products. Pick a filter to narrow it down."
+          description="Frameworks, gateways, orchestrators, and observability tools that integrate with Nebius products. Pick a filter to narrow it down."
         />
       </div>
 

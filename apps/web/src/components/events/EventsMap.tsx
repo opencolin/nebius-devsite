@@ -218,7 +218,7 @@ export default function EventsMap({events, onCityClick, activeCity, variant = 'l
           month: 'short',
           day: 'numeric',
         });
-        const handle = e.builder_handle ? `@${e.builder_handle}` : 'Tenki';
+        const handle = e.builder_handle ? `@${e.builder_handle}` : 'Nebius';
 
         for (const off of lngOffsets) {
           const marker = L.marker([lat, lng + off], {icon: makeIcon(isActive)});

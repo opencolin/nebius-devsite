@@ -1,5 +1,5 @@
 // ResourceCard — horizontal text-only card for the product landing pages.
-// Mirrors tenki.cloud's resource card style: type chip + title + blurb
+// Mirrors dev.nebius.com's resource card style: type chip + title + blurb
 // + link arrow. No cover gradient — the type label does the categorization.
 //
 // Rendered on /ai-cloud, /token-factory, /serverless.

@@ -22,9 +22,9 @@ const CARDS: CommunityCard[] = [
   {
     title: 'Discord',
     blurb:
-      "Ask questions, share what you're building, and get help from other Tenki builders and the team.",
+      "Ask questions, share what you're building, and get help from other Nebius builders and the team.",
     cta: 'Join Discord',
-    href: 'https://discord.gg/qNFaWrR6um',
+    href: 'https://discord.gg/CncTn9zVzS',
   },
   {
     title: 'Hackathons & Events',
@@ -38,28 +38,28 @@ const CARDS: CommunityCard[] = [
     blurb:
       'Examples, templates, and reference architectures to copy-paste into your stack.',
     cta: 'Go to repos',
-    href: 'https://github.com/tenki-cloud',
+    href: 'https://github.com/nebius',
   },
   {
     title: 'YouTube',
     blurb:
-      'Walkthroughs, demos, and technical deep dives from the Tenki team.',
+      'Walkthroughs, demos, and technical deep dives from the Nebius team.',
     cta: 'See videos',
-    href: 'https://github.com/tenki-cloud',
+    href: 'https://www.youtube.com/@nebiusofficial/videos',
   },
   {
     title: 'X / Twitter',
     blurb:
-      'Daily updates, release threads, and the occasional GPU benchmark from @TenkiCloud.',
-    cta: 'Follow @TenkiCloud',
-    href: 'https://x.com/TenkiCloud',
+      'Daily updates, release threads, and the occasional GPU benchmark from @nebiusai.',
+    cta: 'Follow @nebiusai',
+    href: 'https://x.com/nebiusai',
   },
   {
     title: 'LinkedIn',
     blurb:
       'Company announcements, partnerships, and team posts. Good follow if your stakeholders live here.',
     cta: 'Follow on LinkedIn',
-    href: 'https://www.linkedin.com/company/tenki-cloud',
+    href: 'https://www.linkedin.com/company/nebius',
   },
 ];
 
@@ -103,7 +103,7 @@ export function Community() {
           </Text>
           <Text variant="body-2" color="secondary" className={styles.body}>
             Get help, share what you&rsquo;re building, and connect with other
-            Tenki builders.
+            Nebius builders.
           </Text>
         </header>
 

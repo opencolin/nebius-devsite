@@ -48,7 +48,7 @@ export default function AdminTeam({
       <PageHeader
         eyebrow="Manage"
         title="DevRel team"
-        description="Add, deactivate, or update Tenki DevRel team members. Active members appear on /team."
+        description="Add, deactivate, or update Nebius DevRel team members. Active members appear on /team."
       />
 
       <div style={{marginTop: 24}}>

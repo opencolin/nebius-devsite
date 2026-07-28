@@ -37,7 +37,7 @@ interface EventRow {
   product_focus: string[];
   is_official: boolean;
   luma_url?: string | null;
-  // Webinars + Tenki.com-hosted events live on official_url instead of
+  // Webinars + Nebius.com-hosted events live on official_url instead of
   // luma_url. Both feed the card's RSVP link via eventHref().
   official_url?: string | null;
   builder_handle?: string | null;
@@ -110,10 +110,10 @@ export default function EventsPage({
   return (
     <PublicLayout>
       <Head>
-        <title>Events · Tenki Builders</title>
+        <title>Events · Nebius Builders</title>
         <meta
           name="description"
-          content="Upcoming workshops, demo nights, hackathons, and office hours from the Tenki community."
+          content="Upcoming workshops, demo nights, hackathons, and office hours from the Nebius community."
         />
       </Head>
       <section className={styles.hero}>
@@ -133,7 +133,7 @@ export default function EventsPage({
             <h1 className={styles.heroTitle}>Workshops, demos, hackathons</h1>
             <p className={styles.heroDescription}>
               {upcoming.length} upcoming · {past.length} past. Hosted by the
-              Tenki DevRel team and the global community of builders. Filter by
+              Nebius DevRel team and the global community of builders. Filter by
               city below.
             </p>
           </div>
@@ -142,7 +142,7 @@ export default function EventsPage({
 
       {/* City chips reflect upcoming events only — same scope as the map
           dots above, so the filter answers "where can I go?", not
-          "where has Tenki been?". A city with only past events won't
+          "where has Nebius been?". A city with only past events won't
           show as a chip; if its past entries are wanted, expand the
           collapsed Recent section below to see them.
           allEvents is passed separately so the Online chip can derive its
@@ -161,7 +161,7 @@ export default function EventsPage({
             scrolled past the map + filter see the offer first — most
             people on /events came to attend, but anyone considering
             running one in their city is exactly the audience we want.
-            Destination is the /localhosts CMS page ("Run a Tenki event
+            Destination is the /localhosts CMS page ("Run a Nebius event
             in your city"), which owns the program details and the
             actual application form. */}
         <HostEventBanner />
@@ -245,7 +245,7 @@ function Section({
 
 // Chips pinned to the front of the city row, in this exact order, after
 // Online. Editorial picks: SF + NY + London + Berlin are the metros with
-// recurring Tenki presence, so they get permanent shelf space even on
+// recurring Nebius presence, so they get permanent shelf space even on
 // quiet weeks when their count would otherwise sort them down. The rest
 // of the cities follow by count desc, then alpha.
 const PINNED_CITIES = ['San Francisco', 'New York', 'London', 'Berlin'];
@@ -340,7 +340,7 @@ function CityFilter({
 // here?" beat. Wrapped in a single <Link> so the whole card is the
 // click target (same affordance as the event cards above it). Copy
 // promises the destination concretely: not just "host an event" but
-// "Tenki credits, swag, and amplification from us" so the
+// "Token Factory credits, swag, and amplification from us" so the
 // click is informed rather than a leap of faith.
 function HostEventBanner() {
   return (
@@ -351,11 +351,11 @@ function HostEventBanner() {
             Local Hosts program
           </Text>
           <Text variant="subheader-2" as="h2" className={styles.hostBannerTitle}>
-            Run a Tenki event in your city.
+            Run a Nebius event in your city.
           </Text>
           <Text variant="body-2" color="secondary" className={styles.hostBannerLede}>
-            Bring builders together, claim Tenki credits for the room,
-            and get amplification from the Tenki DevRel team. We back
+            Bring builders together, claim Token Factory credits for the room,
+            and get amplification from the Nebius DevRel team. We back
             organizers with sponsorship, swag, and a starter playbook.
           </Text>
         </div>
@@ -376,7 +376,7 @@ function RefreshButton() {
 
   async function refresh() {
     setState('loading');
-    setMsg('Scraping luma.com/nebiusAI and tenki.cloud/events…');
+    setMsg('Scraping luma.com/nebiusAI and nebius.com/events…');
     try {
       const r = await fetch('/api/events/refresh', {method: 'POST'});
       if (r.status === 401) {
@@ -400,7 +400,7 @@ function RefreshButton() {
       }
       setState('ok');
       setMsg(
-        `Scraped ${j.scraped} (luma + tenki.cloud), created ${j.created}, updated ${j.updated}, skipped ${j.skipped}.`,
+        `Scraped ${j.scraped} (luma + nebius.com), created ${j.created}, updated ${j.updated}, skipped ${j.skipped}.`,
       );
       // Trigger ISR re-fetch by full-reloading the page
       setTimeout(() => router.replace(router.asPath), 1000);
@@ -431,7 +431,7 @@ function RefreshButton() {
 // the card single-tap-friendly.
 function EventCard({event}: {event: EventRow}) {
   const state = eventState(event);
-  // Single fallback chain: Luma listing → Tenki webinar page → no link.
+  // Single fallback chain: Luma listing → Nebius webinar page → no link.
   // See src/lib/event-url.ts for why both are checked.
   const href = eventHref(event);
   // Hide the description block when it's just a duplicate of the title.
@@ -611,7 +611,7 @@ function coverVariantForEvent(event: EventRow): string {
 // -----------------------------------------------------------------------------
 
 // München and Munich are the same physical city. Source feeds (Luma,
-// tenki.cloud listings) use both spellings, so without folding we get two
+// nebius.com listings) use both spellings, so without folding we get two
 // chips with count 1 each instead of one chip with count 2. Add aliases
 // here as new city collisions show up — keep keys as-stored, values as
 // canonical-display.

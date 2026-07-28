@@ -1,6 +1,6 @@
 // Public top nav. Built from Gravity UI primitives so the markup matches
-// tenki.cloud's `g-button g-button_view_normal`-style classnames out of the
-// box. Logo is the official Tenki mark + "Builders" wordmark.
+// nebius.com's `g-button g-button_view_normal`-style classnames out of the
+// box. Logo is the official Nebius mark + "Builders" wordmark.
 
 import {Button} from '@gravity-ui/uikit';
 import Link from 'next/link';

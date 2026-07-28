@@ -1,7 +1,7 @@
-// Tenki Fellows — the official cohort as unveiled on stage: 12 Fellows,
+// Nebius Fellows — the official cohort as unveiled on stage: 12 Fellows,
 // 12 cities, 9 countries, 1 global network. Each Fellow is an independent
 // community leader (event organizer, OSS contributor, educator, founder)
-// helping shape the Tenki ecosystem.
+// helping shape the Nebius ecosystem.
 //
 // Only public-facing fields surface here — name, region, city, role,
 // company, LinkedIn (when known), a short tagline, and a local photo when

@@ -56,7 +56,7 @@ export default async function handler(
   const city = typeof body.city === 'string' ? body.city.trim() : '';
   const country = typeof body.country === 'string' ? body.country.trim() : '';
   const agenda = typeof body.agenda === 'string' ? body.agenda.trim() : '';
-  const needsFromTenki =
+  const needsFromNebius =
     typeof body.needs_from_nebius === 'string' ? body.needs_from_nebius.trim() : '';
 
   // expected_attendees + amount_usd can come in as either string or number
@@ -91,7 +91,7 @@ export default async function handler(
   // Default ends_at to +2h — admin can tighten this when reviewing.
   const endsAt = new Date(startsAtDate.getTime() + 2 * 3600_000).toISOString();
 
-  const description = [agenda, needsFromTenki && `\n\nNeeds: ${needsFromTenki}`]
+  const description = [agenda, needsFromNebius && `\n\nNeeds: ${needsFromNebius}`]
     .filter(Boolean)
     .join('')
     .trim();
@@ -143,7 +143,7 @@ export default async function handler(
     `Format: ${format}`,
     `When: ${startsAt}`,
     expectedAttendeesNum ? `Expected attendees: ${expectedAttendeesNum}` : '',
-    needsFromTenki ? `\nNeeds:\n${needsFromTenki}` : '',
+    needsFromNebius ? `\nNeeds:\n${needsFromNebius}` : '',
   ]
     .filter(Boolean)
     .join('\n')

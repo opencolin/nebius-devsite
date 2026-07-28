@@ -1,11 +1,11 @@
-// CMS catch-all — the same shape as tenki.cloud's `/[[...slug]]` route.
+// CMS catch-all — the same shape as nebius.com's `/[[...slug]]` route.
 //
 // Every URL that isn't matched by a more specific page (e.g. /portal/*,
 // /admin/*, /api/*) lands here. We look up a `pages` row in Directus by
 // slug, pass its `blocks` JSON to Page Constructor, and let the renderer
 // instantiate the configured Gravity UI blocks.
 //
-// `revalidate: 60` matches the s-maxage=60 served by tenki.cloud.
+// `revalidate: 60` matches the s-maxage=60 served by nebius.com.
 
 import {readItems} from '@directus/sdk';
 import type {GetStaticPaths, GetStaticProps, InferGetStaticPropsType} from 'next';
@@ -58,7 +58,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       .map((p) => ({
         params: {slug: p.slug.split('/')},
       })),
-    fallback: process.env.DEVSITE_EXPORT === '1' ? false : 'blocking',
+    fallback: 'blocking',
   };
 };
 

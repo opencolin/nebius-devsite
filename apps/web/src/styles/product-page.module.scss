@@ -1,7 +1,7 @@
 // Shared styles for the three product landing pages:
 // /ai-cloud, /token-factory, /serverless.
 //
-// Visual language mirrors tenki.cloud: dark hero with short tagline,
+// Visual language mirrors dev.nebius.com: dark hero with short tagline,
 // then alternating light-background sections of resource cards. Cards are
 // horizontal text-only (no cover gradient) — the type label + arrow do
 // the categorization work.
@@ -120,7 +120,7 @@
 // dependency (row height = card height = 100% of row height) that different
 // browsers resolve inconsistently, causing the overlap visible in the
 // screenshot. Cards in the same row won't be equal-height, but that matches
-// tenki.cloud's own style and avoids the layout bug entirely.
+// dev.nebius.com's own style and avoids the layout bug entirely.
 
 .resourceGrid {
   display: grid;
@@ -221,7 +221,7 @@
 
 // ---- Console CTA strip --------------------------------------------------
 // A thin banner at the bottom of the page pointing to the product console,
-// mirroring tenki.cloud's "Get started" footer strip.
+// mirroring dev.nebius.com's "Get started" footer strip.
 
 .consoleCta {
   background: var(--g-color-base-float);
